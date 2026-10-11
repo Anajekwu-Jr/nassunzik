@@ -1,0 +1,689 @@
+[
+  {
+    "id": "01",
+    "slug": "data-analytics",
+    "title": "Data Analytics",
+    "tagline": "Turning data into evidence for better decisions.",
+    "domain": "Technology & Data",
+    "formula": "Statistics + Business Context + Analytical Tools",
+    "overview": "Data Analytics is one of the most accessible modern career paths for a Statistics graduate. A data analyst takes raw or semi-structured information, investigates it, identifies patterns and trends, communicates findings, and helps an organisation make better decisions. The industry can change, but the analytical foundation travels with you.",
+    "reality_check": "Good analytics is not simply 'Put data into Excel and make a chart.' The statistical foundation matters. An analyst needs to understand variation, distributions, relationships, sampling, uncertainty, and the crucial difference between an apparent pattern and a meaningful, statistically significant one.",
+    "unizik_courses": [
+      { "code": "STA 111", "title": "Descriptive Statistics", "level": 100, "role": "Measures of central tendency, dispersion, exploratory data summaries, and foundational graphical representation." },
+      { "code": "STA 121", "title": "Statistical Inference I", "level": 100, "role": "Foundations of estimation, hypothesis formulation, and basic testing logic." },
+      { "code": "STA 112", "title": "Probability 1", "level": 100, "role": "Understanding sample spaces, random events, and foundational probability rules." },
+      { "code": "STA 122", "title": "Statistical Computing 1", "level": 100, "role": "Introduction to computational problem-solving and algorithmic data processing." },
+      { "code": "STA 221", "title": "Statistical Inference II", "level": 200, "role": "Parametric hypothesis testing, confidence intervals, Type I & II errors, and p-value interpretation." },
+      { "code": "STA 231", "title": "Statistical Computing II", "level": 200, "role": "Hands-on data manipulation and numerical computation." },
+      { "code": "NAU-STA 341", "title": "Regression Analysis I", "level": 300, "role": "Linear relationships, ordinary least squares, residual diagnostics, and bivariate modeling." },
+      { "code": "NAU-STA 351", "title": "Analysis of Variance I", "level": 300, "role": "One-way and two-way ANOVA, experimental variation, and group difference testing." },
+      { "code": "STA 324", "title": "Survey Methods & Sampling Theory", "level": 300, "role": "Sampling error, stratified sampling, cluster designs, and bias reduction." },
+      { "code": "NAU-STA 421", "title": "Times Analysis (Time Series)", "level": 400, "role": "Trend decomposition, seasonality, stationarity, and empirical forecasting." }
+    ],
+    "skills_to_add": [
+      "Advanced Excel (XLOOKUP, Pivot Tables, Power Query)",
+      "SQL (Joins, Window Functions, Aggregations, CTEs)",
+      "Power BI or Tableau (Interactive Dashboards, DAX, KPI cards)",
+      "Python (Pandas, Seaborn) or R (Tidyverse, ggplot2)",
+      "Data Cleaning & Exploratory Data Analysis (EDA)",
+      "Data Visualisation & Narrative Storytelling",
+      "Business Intelligence & Executive KPI Reporting"
+    ],
+    "potential_roles": [
+      "Data Analyst",
+      "Business Intelligence Analyst",
+      "Research Analyst",
+      "Operations Analyst",
+      "Product Analyst",
+      "Marketing Analyst",
+      "Reporting Analyst",
+      "Quantitative Analyst"
+    ],
+    "workplaces": [
+      "Commercial Banks & Central Bank",
+      "Fintechs & Digital Payment Platforms",
+      "Telecommunications Companies (MTN, Airtel)",
+      "Management Consulting & Advisory Firms",
+      "Hospitals & Health Maintenance Organisations (HMOs)",
+      "E-commerce & Logistics Giants",
+      "Government Agencies & National Bureau of Statistics (NBS)",
+      "Non-Governmental Organisations (NGOs) & International Development Agencies"
+    ],
+    "portfolio_projects": [
+      "Supermarket Sales & Profitability Dashboard: Ingest transactional data into SQL, build interactive Power BI dashboard tracking revenue, gross margins, and regional sales spikes.",
+      "Customer Churn Exploratory Analysis: Use Python/Pandas to uncover behavioral drivers of telecommunication subscription attrition.",
+      "Survey Data Processing Pipeline: Clean and synthesize noisy multi-variable questionnaire data using R tidyverse, producing executive visual summaries."
+    ],
+    "progression": "Junior Data Analyst → Senior Data Analyst → Analytics Lead → Head of Analytics / BI Director"
+  },
+  {
+    "id": "02",
+    "slug": "data-science",
+    "title": "Data Science",
+    "tagline": "Statistics + Computing + Domain Knowledge.",
+    "domain": "Technology & Data",
+    "formula": "Probability & Inference + Scientific Programming + Predictive Modeling",
+    "overview": "Data Science goes beyond describing what happened in the past. It investigates: What is likely to happen next? What underlying factors explain it? Can we predict it? Can we build a self-contained system that learns systematically from historical data? This is where classical Statistics intersects vigorously with computational computer science and machine learning.",
+    "reality_check": "A Statistics degree does NOT automatically make you a Data Scientist. Statistics gives you the mathematical intuition and inference rigor, but you must deliberately build the computational, algorithmic, and software engineering layer outside lectures.",
+    "unizik_courses": [
+      { "code": "STA 211", "title": "Probability II", "level": 200, "role": "Random variables, joint probability distributions, and mathematical expectation." },
+      { "code": "STA 221", "title": "Statistical Inference II", "level": 200, "role": "Point estimation (MLE, Method of Moments) and asymptotic properties." },
+      { "code": "COS 201", "title": "Computer Programming I (C++)", "level": 200, "role": "Algorithmic thinking, memory allocation, control flow, and computational logic." },
+      { "code": "MTH 201", "title": "Linear Algebra I", "level": 200, "role": "Vector spaces, matrices, determinants, and linear transformations." },
+      { "code": "STA 331", "title": "Statistical Computing III", "level": 300, "role": "Numerical algorithms, optimization, and statistical programming." },
+      { "code": "NAU-STA 341", "title": "Regression Analysis I", "level": 300, "role": "Multivariate modeling, matrix form of OLS, and prediction intervals." },
+      { "code": "NAU-STA 421", "title": "Times Analysis", "level": 400, "role": "Autoregressive (AR), Moving Average (MA), ARIMA, and seasonal forecasting." },
+      { "code": "NAU-STA 461", "title": "Multivariate Analysis I", "level": 400, "role": "Principal Component Analysis (PCA), Factor Analysis, Discriminant Analysis, and Cluster Analysis." },
+      { "code": "NAU-STA 432", "title": "Non-parametric Methods", "level": 400, "role": "Distribution-free modeling, kernel estimation, and robust inference." }
+    ],
+    "skills_to_add": [
+      "Python ecosystem: NumPy, Pandas, Scipy, Matplotlib",
+      "Scikit-Learn (Supervised & Unsupervised Machine Learning)",
+      "SQL for Big Data Extraction & Aggregation",
+      "Feature Engineering & Feature Selection",
+      "Model Validation: Cross-Validation, ROC-AUC, Precision-Recall",
+      "Version Control with Git & GitHub",
+      "Jupyter Notebooks, Google Colab, and Scripting"
+    ],
+    "potential_roles": [
+      "Data Scientist",
+      "Applied Data Scientist",
+      "Machine Learning Analyst",
+      "Quantitative Researcher",
+      "Decision Scientist",
+      "Predictive Modeller"
+    ],
+    "workplaces": [
+      "Technology & Software Companies",
+      "Fintech Platforms & Neo-banks",
+      "Telecommunication Networks",
+      "Ride-Hailing & Logistics Tech (Bolt, Uber, Kobo360)",
+      "Health-Tech & Telemedicine Startups",
+      "Risk & Fraud Analytics Units"
+    ],
+    "portfolio_projects": [
+      "Loan Default Prediction Classifier: Train and validate logistic regression and gradient boosting models on microfinance datasets, optimizing precision/recall.",
+      "Customer Segmentation via Unsupervised Learning: Apply PCA and K-Means clustering on credit card transaction profiles to identify high-value merchant groups.",
+      "Real Estate Price Prediction: Build an end-to-end regression model with regularisation (Lasso/Ridge) to predict housing prices from spatial features."
+    ],
+    "progression": "Associate Data Scientist → Data Scientist → Senior Data Scientist → Lead Data Scientist → VP of Data Science"
+  },
+  {
+    "id": "03",
+    "slug": "machine-learning-ai",
+    "title": "Machine Learning & Artificial Intelligence",
+    "tagline": "The mathematical foundation beneath modern artificial intelligence.",
+    "domain": "Technology & Data",
+    "formula": "Probability & Linear Algebra + Algorithms + Neural Frameworks + Software Engineering",
+    "overview": "Modern AI systems depend heavily on data. Machine learning involves algorithms learning patterns from massive datasets to make automated decisions or generate outputs. Statistics is what helps you understand what happens beneath the predictions: estimation, bias vs. variance, loss functions, uncertainty, and mathematical generalisation.",
+    "reality_check": "Statistics gives you the mathematical reason why models converge, but serious ML Engineering requires software engineering discipline: object-oriented programming, data structures, algorithm complexity, Docker containers, APIs, and cloud systems knowledge. You cannot just import a library; you must engineer production-grade systems.",
+    "unizik_courses": [
+      { "code": "STA 211", "title": "Probability II", "level": 200, "role": "Conditional distributions, Bayes theorem, and probabilistic foundations of classification." },
+      { "code": "MTH 201", "title": "Linear Algebra I", "level": 200, "role": "Eigenvalues, eigenvectors, matrix decompositions, and high-dimensional space." },
+      { "code": "MTH 204", "title": "Linear Algebra II", "level": 200, "role": "Inner product spaces, orthogonal projections, and quadratic forms." },
+      { "code": "STA 312", "title": "Distribution Theory I", "level": 300, "role": "Order statistics, extreme values, bivariate normal distributions, and moment generating functions." },
+      { "code": "NAU-STA 342", "title": "Statistical Application of Matrix Algebra", "level": 300, "role": "Idempotent matrices, quadratic forms distribution, and generalized inverses." },
+      { "code": "NAU-STA 461", "title": "Multivariate Analysis I", "level": 400, "role": "Dimensionality reduction (PCA), Canonical correlation, and high-dimensional geometry." },
+      { "code": "NAU-STA 424", "title": "Stochastic Processes", "level": 400, "role": "Markov chains, transition probability matrices, and probabilistic state spaces." }
+    ],
+    "skills_to_add": [
+      "Python Data Structures & OOP",
+      "PyTorch or TensorFlow (Neural Networks & Tensor Computations)",
+      "Scikit-Learn for Classical ML Benchmarks",
+      "Mathematics of Optimization: Gradient Descent, Backpropagation",
+      "Natural Language Processing (NLP) & Transformer Architectures",
+      "Computer Vision Foundations (CNNs, Image Processing)",
+      "Model Deployment: FastAPI, Docker, ONNX, and Cloud Inference (AWS/GCP)"
+    ],
+    "potential_roles": [
+      "Machine Learning Engineer",
+      "Machine Learning Scientist",
+      "Applied Scientist",
+      "AI Engineer",
+      "Computer Vision / NLP Specialist",
+      "AI Researcher"
+    ],
+    "workplaces": [
+      "Global Technology Enterprises",
+      "AI Startups & Research Labs",
+      "Autonomous Systems & Robotics Labs",
+      "Fintech Fraud Prevention Teams",
+      "Voice & Language AI Companies"
+    ],
+    "portfolio_projects": [
+      "End-to-End Image Classification Service: Train a ResNet model with PyTorch on medical imagery, deploy via FastAPI in a Docker container.",
+      "Algorithmic Fraud Detection: Build an imbalanced classification pipeline with SMOTE, XGBoost, and SHAP explainability analysis.",
+      "Custom Neural Network from Scratch: Write backpropagation and stochastic gradient descent using pure NumPy without high-level frameworks."
+    ],
+    "progression": "Junior ML Engineer → ML Engineer → Senior ML Engineer → Staff AI Scientist → Principal AI Architect"
+  },
+  {
+    "id": "04",
+    "slug": "finance-banking-risk",
+    "title": "Finance, Banking & Risk",
+    "tagline": "Systems of decisions under uncertainty: where numbers meet capital.",
+    "domain": "Finance & Risk",
+    "formula": "Probability + Time Series + Econometrics + Financial Markets",
+    "overview": "Financial systems are essentially giant engines making decisions under uncertainty. That makes Statistics extraordinarily relevant. Whether a bank is evaluating credit risk, detecting ATM card fraud, forecasting interest rate shocks, or optimizing multi-asset investment portfolios, statistical thinking drives the bottom line.",
+    "reality_check": "Statistics + Finance is a completely different career direction from Statistics + Technology. Same degree, but a different skill stack. You need to understand economic indicators, financial statements, balance sheets, and regulatory frameworks (Basel accords, IFRS 9) alongside your statistical models.",
+    "unizik_courses": [
+      { "code": "ECO 111", "title": "Principles of Economics I", "level": 100, "role": "Microeconomic foundations, demand/supply curves, price elasticity, and consumer theory." },
+      { "code": "ECO 112", "title": "Principles of Economics II", "level": 100, "role": "Macroeconomics, monetary policy, inflation, banking, and national income accounting." },
+      { "code": "STA 211", "title": "Probability II", "level": 200, "role": "Continuous probability models and expectation in financial uncertainty." },
+      { "code": "STA 212", "title": "Introduction to Social & Economic Statistics", "level": 200, "role": "Index numbers, cost-of-living indices, purchasing power parity, and economic surveys." },
+      { "code": "NAU-STA 371", "title": "Operations Research I", "level": 300, "role": "Linear programming, simplex method, dual theory, and portfolio optimization." },
+      { "code": "NAU-STA 421", "title": "Times Analysis (Time Series)", "level": 400, "role": "Volatility modeling, ARCH/GARCH processes, auto-correlation, and asset price forecasting." },
+      { "code": "NAU-STA 424", "title": "Stochastic Processes", "level": 400, "role": "Random walks, Brownian motion, Poisson processes, and derivative pricing intuition." },
+      { "code": "NAU-STA 471", "title": "Operations Research II", "level": 400, "role": "Dynamic programming, queuing systems, and inventory management." },
+      { "code": "STA 422", "title": "Logical Background of Statistics & Decision Theory", "level": 400, "role": "Loss functions, minimax criteria, Bayesian risk decisions, and utility theory." }
+    ],
+    "skills_to_add": [
+      "Financial Modeling in Excel (DCF, Scenario Analysis)",
+      "Python for Finance (yfinance, Pandas, Quantlib)",
+      "SQL for Large Banking Transaction Warehouses",
+      "Risk Modeling: Value at Risk (VaR), Expected Shortfall, Stress Testing",
+      "IFRS 9 Expected Credit Loss (ECL) Modeling Concepts",
+      "Knowledge of Treasury, Fixed Income, and Equity Markets"
+    ],
+    "potential_roles": [
+      "Risk Analyst",
+      "Credit Risk Modeller",
+      "Quantitative Analyst (Quant)",
+      "Financial Data Analyst",
+      "Treasury Analyst",
+      "Fraud Analytics Specialist",
+      "Portfolio Performance Analyst"
+    ],
+    "workplaces": [
+      "Tier-1 Commercial Banks (Access, GTCO, Zenith, UBA, FirstBank)",
+      "Central Bank of Nigeria (CBN) & Regulatory Bodies",
+      "Asset Management Firms (Stanbic IBTC, ARM, FBNQuest)",
+      "Fintech Credit & Lending Companies (FairMoney, Carbon)",
+      "Credit Rating Agencies (Agusto & Co, Fitch Nigeria)"
+    ],
+    "portfolio_projects": [
+      "Credit Scoring Scorecard Model: Develop a logistic regression probability of default (PD) scorecard with Weight of Evidence (WoE) and Information Value (IV).",
+      "Stock Volatility Forecasting with GARCH: Model NGX 30 index volatility using ARCH/GARCH models in R/Python.",
+      "Loan Portfolio Stress Testing Engine: Build an interactive financial stress-testing simulator testing balance sheet resilience under macroeconomic shocks."
+    ],
+    "progression": "Risk Analyst → Senior Credit Modeller → Risk Manager → Chief Risk Officer (CRO) / Head of Quant"
+  },
+  {
+    "id": "05",
+    "slug": "actuarial-science-insurance",
+    "title": "Actuarial Science & Insurance",
+    "tagline": "The mathematical science of long-term risk and solvency.",
+    "domain": "Finance & Risk",
+    "formula": "Probability Distributions + Actuarial Mathematics + Life Contingencies + Financial Theory",
+    "overview": "Insurance is fundamentally about uncertainty, mortality, catastrophic events, and systemic risk. Actuaries use mathematics, statistics, and financial theory to calculate the financial impact of risk and ensure that insurance companies, pension funds, and sovereign funds remain solvent decades into the future.",
+    "reality_check": "A university degree in Statistics gives you an incredible head-start, but becoming a fully certified Actuary requires passing rigorous professional examinations (IFoA in the UK, SOA in the USA, or CIA). It is a demanding, prestigious, highly paid profession that requires commitment to lifelong credentialing.",
+    "unizik_courses": [
+      { "code": "NAU-MAT 112", "title": "Intro to Actuarial Mathematics I", "level": 100, "role": "Compound interest, annuities, present value of cashflows, and loan amortisation." },
+      { "code": "STA 112", "title": "Probability 1", "level": 100, "role": "Foundations of discrete and continuous probability models." },
+      { "code": "MTH 212", "title": "Introduction to Actuarial Mathematics", "level": 200, "role": "Survival models, mortality tables, life annuities, and net premiums." },
+      { "code": "STA 211", "title": "Probability II", "level": 200, "role": "Joint distributions, transformation of variables, and conditional expectation." },
+      { "code": "STA 312", "title": "Distribution Theory I", "level": 300, "role": "Gamma, Weibull, Pareto, Log-normal distributions used to model insurance claim severity." },
+      { "code": "NAU-STA 361", "title": "Demography", "level": 300, "role": "Life tables, fertility rates, mortality schedules, and population projection." },
+      { "code": "NAU-STA 424", "title": "Stochastic Processes", "level": 400, "role": "Ruin theory, Poisson compound processes, and claim frequency modeling." },
+      { "code": "STA 412", "title": "Distribution Theory II", "level": 400, "role": "Compound distributions and aggregate risk modeling." }
+    ],
+    "skills_to_add": [
+      "Preparation for Professional Exams (IFoA CM1/CS1/CB1 or SOA FAM/SRM)",
+      "Advanced Excel & VBA for Actuarial Valuation Models",
+      "R or Python for Loss Distribution Fitting and Reserving",
+      "Understanding of Life, Health, and General Insurance (Property & Casualty)",
+      "Pension Scheme Valuation Principles",
+      "Solvency II & IFRS 17 Insurance Accounting Standards"
+    ],
+    "potential_roles": [
+      "Actuarial Analyst",
+      "Insurance Pricing Analyst",
+      "Reserving Analyst",
+      "Pension Actuarial Consultant",
+      "Underwriting Risk Specialist",
+      "Certified Actuary (FIA / FSA)"
+    ],
+    "workplaces": [
+      "Life & Non-Life Insurance Companies (Leadway, AIICO, Custodian, AXA Mansard)",
+      "Pension Fund Administrators (PFAs) & PenCom",
+      "Reinsurance Firms (Continental Reinsurance, Africa Re)",
+      "Actuarial Consulting Firms (Ernst & Young, PwC, Deloitte, Actuarial Partners)",
+      "National Health Insurance Schemes"
+    ],
+    "portfolio_projects": [
+      "Insurance Claim Loss Distribution Fitting: Fit Weibull and Pareto distributions to historical claims data using maximum likelihood estimation in R.",
+      "Life Annuity & Premium Calculator: Build a dynamic life table and net single premium calculator in Python for diverse age cohorts.",
+      "General Insurance Reserving using Chain Ladder Method: Implement the classical triangulation chain ladder model in Excel to estimate outstanding claim reserves."
+    ],
+    "progression": "Actuarial Trainee → Qualified Actuary (Associate) → Lead Actuary (Fellow) → Appointed Actuary / Chief Actuary"
+  },
+  {
+    "id": "06",
+    "slug": "biostatistics-health-data",
+    "title": "Biostatistics & Health Data",
+    "tagline": "Statistics saving lives: clinical trials, epidemiology, and public health.",
+    "domain": "Health & Biology",
+    "formula": "Survival Analysis + Epidemiology + Experimental Design + Clinical Computing",
+    "overview": "Statistics becomes extraordinarily powerful when applied to human health and medical science. Biostatisticians design randomized controlled trials, evaluate whether new vaccines or pharmaceuticals work, investigate disease outbreaks, measure risk factors in populations, and help prevent pandemics.",
+    "reality_check": "In health and medical sciences, false conclusions cost human lives. Rigour is paramount. P-values, confidence intervals, sample sizes, and blinding are not abstract academic exercises — they determine whether a drug receives clinical approval or is withdrawn from the market.",
+    "unizik_courses": [
+      { "code": "NAU-BIO 101 / 102", "title": "General Biology I & II", "level": 100, "role": "Biological systems, genetics, and physiological mechanisms." },
+      { "code": "STA 111", "title": "Descriptive Statistics", "level": 100, "role": "Rates, ratios, vital statistics, and epidemiological proportions." },
+      { "code": "STA 221", "title": "Statistical Inference II", "level": 200, "role": "Hypothesis testing in medical comparisons and clinical significance." },
+      { "code": "NAU-STA 381", "title": "Biometry", "level": 300, "role": "Biological assays, dose-response curves, LD50 estimation, and bio-equivalence." },
+      { "code": "NAU-STA 362", "title": "Statistical Methods In Epidemiology", "level": 300, "role": "Cohort studies, case-control odds ratios, relative risk, and attributable risk." },
+      { "code": "NAU-STA 351", "title": "Analysis of Variance I", "level": 300, "role": "Comparing multiple treatment interventions across clinical groups." },
+      { "code": "NAU-STA 451", "title": "Design And Analysis of Experiment", "level": 400, "role": "Randomized Complete Block Designs (RCBD), Latin Squares, and factorial trials." },
+      { "code": "NAU-STA 432", "title": "Non-parametric Methods", "level": 400, "role": "Wilcoxon rank-sum, Mann-Whitney U test, and Kruskal-Wallis for clinical ordinal scales." }
+    ],
+    "skills_to_add": [
+      "R (Bioconductor, survival, epiR packages)",
+      "SAS Programming (The pharmaceutical industry standard for FDA/EMA submissions)",
+      "Survival Analysis (Kaplan-Meier Curves, Cox Proportional Hazards)",
+      "Clinical Trial Protocols & GCP (Good Clinical Practice) Guidelines",
+      "Public Health Data Systems: DHIS2, WHO Global Health Observatory",
+      "Scientific Writing & Medical Study Design"
+    ],
+    "potential_roles": [
+      "Biostatistician",
+      "Health Data Analyst",
+      "Clinical Research Associate (CRA)",
+      "Statistical Programmer (SAS/R)",
+      "Epidemiological Analyst",
+      "Public Health Monitoring & Evaluation Specialist"
+    ],
+    "workplaces": [
+      "Pharmaceutical Corporations (Pfizer, GSK, Novartis, Emzor)",
+      "World Health Organization (WHO) & Africa CDC",
+      "Nigeria Centre for Disease Control (NCDC)",
+      "Medical Research Institutes (NIMR, KEMRI)",
+      "Global Health NGOs (Bill & Melinda Gates Foundation, Médecins Sans Frontières)",
+      "Teaching Hospitals & Medical Universities"
+    ],
+    "portfolio_projects": [
+      "Malaria Treatment Clinical Trial Analysis: Compare two anti-malarial regimens using Kaplan-Meier survival curves and log-rank tests in R.",
+      "Epidemiological Risk Factor Modeling: Investigate determinants of hypertension in urban populations using multivariable logistic regression.",
+      "Sample Size Calculation Tool for Vaccine Efficacy: Develop a power calculation script ensuring statistical significance with minimal sample burden."
+    ],
+    "progression": "Junior Biostatistician → Senior Biostatistician → Principal Statistician → Director of Biometrics"
+  },
+  {
+    "id": "07",
+    "slug": "econometrics-economic-analysis",
+    "title": "Econometrics & Economic Analysis",
+    "tagline": "Empirical economics: testing economic theory with hard data.",
+    "domain": "Economics & Policy",
+    "formula": "Macro/Micro Economics + Advanced Regression + Time Series + Causal Inference",
+    "overview": "Econometrics applies statistical methods to economic questions. How does an interest rate hike affect consumer expenditure? What factors drive unemployment in emerging markets? Does an educational subsidy policy genuinely improve school outcomes? Econometricians use data to distinguish genuine economic causation from mere correlation.",
+    "reality_check": "Economics is not physics; you cannot easily run laboratory experiments on entire national economies. Econometricians must master observational causal inference: instrumental variables, difference-in-differences, and panel data methods to isolate true economic mechanisms.",
+    "unizik_courses": [
+      { "code": "ECO 111 / 112", "title": "Principles of Economics I & II", "level": 100, "role": "Supply, demand, markets, national accounts, fiscal and monetary policies." },
+      { "code": "ECO 211 / 212", "title": "Micro Economics I & II", "level": 200, "role": "Consumer choice theory, firm behavior, market structures, and equilibrium." },
+      { "code": "STA 212", "title": "Introduction to Social & Economic Statistics", "level": 200, "role": "Inflation measurement, consumer price index (CPI), trade balances, and national surveys." },
+      { "code": "NAU-STA 341", "title": "Regression Analysis I", "level": 300, "role": "Assumptions of OLS regression and classical econometric diagnostics." },
+      { "code": "NAU-STA 421", "title": "Times Analysis", "level": 400, "role": "Cointegration, Granger causality, Vector Autoregressions (VAR), and error-correction models." },
+      { "code": "NAU-STA 441", "title": "Regression Analysis II", "level": 400, "role": "Heteroscedasticity, multicollinearity, autocorrelation, and robust standard errors." }
+    ],
+    "skills_to_add": [
+      "Stata or R or Python (Statsmodels) for Econometric Estimation",
+      "Panel Data Analysis (Fixed Effects, Random Effects models)",
+      "Causal Inference (Instrumental Variables, Difference-in-Differences)",
+      "Economic Datasets: World Bank Development Indicators, IMF, CBN, NBS",
+      "Macroeconomic Policy Analysis & Brief Preparation",
+      "Scientific Econometric Report Writing"
+    ],
+    "potential_roles": [
+      "Econometrician",
+      "Economic Analyst",
+      "Macroeconomic Policy Analyst",
+      "Development Economist",
+      "Financial Market Research Economist",
+      "Monetary Policy Researcher"
+    ],
+    "workplaces": [
+      "Central Bank of Nigeria (CBN) Research Department",
+      "National Bureau of Statistics (NBS)",
+      "Ministry of Finance, Budget & National Planning",
+      "International Monetary Fund (IMF) & World Bank",
+      "African Development Bank (AfDB)",
+      "Economic Think-Tanks (NESG, Brookings Africa, CSEA Nigeria)"
+    ],
+    "portfolio_projects": [
+      "Inflation Dynamics and Exchange Rate Pass-Through: Estimate a VAR model examining how currency depreciation impacts consumer prices in Nigeria.",
+      "Impact Evaluation of Agricultural Fertilizer Subsidies: Apply Difference-in-Differences methodology to survey data to evaluate crop output changes.",
+      "Household Poverty Determinants in Nigeria: Fit an ordered probit model on NBS Living Standards Survey data."
+    ],
+    "progression": "Economic Research Analyst → Senior Economist → Lead Econometrician → Chief Economist"
+  },
+  {
+    "id": "08",
+    "slug": "technology-product-analytics",
+    "title": "Technology & Product Analytics",
+    "tagline": "How tech giants use Statistics to optimize apps used by millions.",
+    "domain": "Technology & Data",
+    "formula": "A/B Testing & Hypothesis Testing + Product Metrics + SQL + Behavioral Data",
+    "overview": "When a technology company launches a new feature, changes an onboarding screen, or redesigns a checkout funnel, they don't guess — they experiment. Product Analytics uses statistical hypothesis testing, A/B experimentation, cohort analysis, and behavioral data to optimize user experience, engagement, and retention.",
+    "reality_check": "Every time you see a headline like 'Tech company tested 41 shades of blue,' that is applied Design of Experiments and Hypothesis Testing in action. A single poorly tested product change can cost an e-commerce platform millions of dollars.",
+    "unizik_courses": [
+      { "code": "STA 111", "title": "Descriptive Statistics", "level": 100, "role": "Distributions of user session duration, click rates, and median latency." },
+      { "code": "STA 221", "title": "Statistical Inference II", "level": 200, "role": "Two-sample hypothesis testing, z-tests, t-tests, power analysis, and significance." },
+      { "code": "COS 201", "title": "Computer Programming I", "level": 200, "role": "Data manipulation and computational understanding of digital events." },
+      { "code": "NAU-STA 351", "title": "Analysis of Variance I", "level": 300, "role": "Multi-variant A/B/n testing comparing three or more user experience variations." },
+      { "code": "NAU-STA 451", "title": "Design And Analysis of Experiment", "level": 400, "role": "Factorial design, interaction effects between features, and variance reduction." },
+      { "code": "NAU-STA 432", "title": "Non-parametric Methods", "level": 400, "role": "Evaluating heavily skewed non-normal user behavior (e.g. app purchase frequency)." }
+    ],
+    "skills_to_add": [
+      "SQL (Querying complex event logs, clickstreams, and user funnels)",
+      "A/B Testing Frameworks: Minimum Detectable Effect (MDE), Sample Ratio Mismatch (SRM)",
+      "Product Analytics Platforms: Mixpanel, Amplitude, Google Analytics 4",
+      "Metrics Definition: North Star Metric, Retention curves, LTV, CAC, DAU/MAU",
+      "Python for Experiment Simulation & Bootstrap Resampling",
+      "Cross-functional Collaboration with Product Managers & Software Engineers"
+    ],
+    "potential_roles": [
+      "Product Analyst",
+      "Experimentation Specialist",
+      "Growth Analyst",
+      "Product Data Scientist",
+      "User Behavior Analyst"
+    ],
+    "workplaces": [
+      "Consumer Tech & Mobile Apps (Piggyvest, Flutterwave, Moniepoint)",
+      "Streaming Platforms & Social Media Apps",
+      "Global Tech Companies (Google, Meta, Spotify, Booking.com)",
+      "SaaS Software Companies",
+      "Digital Gaming Studios"
+    ],
+    "portfolio_projects": [
+      "Mobile App Onboarding A/B Test Simulator: Simulate a two-variant conversion experiment in Python, calculating p-value, confidence intervals, and statistical power.",
+      "User Retention & Cohort Decay Analysis: Query a mock clickstream database with SQL to track 30-day user retention cohorts.",
+      "E-commerce Checkout Funnel Optimization: Analyze drop-off rates across multi-step purchase funnels and pinpoint statistical bottlenecks."
+    ],
+    "progression": "Associate Product Analyst → Product Analyst → Senior Product Analyst → Staff Product Scientist → Head of Product Analytics"
+  },
+  {
+    "id": "09",
+    "slug": "business-intelligence-decision-science",
+    "title": "Business Intelligence & Decision Science",
+    "tagline": "Architecting the data nervous system of modern enterprises.",
+    "domain": "Business & Industry",
+    "formula": "Data Warehousing + Semantic Modeling + Business Strategy + BI Tools",
+    "overview": "Enterprises generate massive data across sales, inventory, procurement, and accounting. Business Intelligence combines data engineering, semantic data modeling, and statistical reporting to answer executive questions: Which regions are driving growth? Which product lines are losing margin? How should we allocate next quarter's inventory?",
+    "reality_check": "BI is distinct from ordinary data analytics. A BI professional builds resilient enterprise pipelines and reusable semantic data models (Star schemas, Kimball methodology), not just one-off spreadsheets.",
+    "unizik_courses": [
+      { "code": "BUA 101 / 102", "title": "Introduction to Business I & II", "level": 100, "role": "Business structures, commercial functions, accounting cycles, and organizational objectives." },
+      { "code": "STA 111", "title": "Descriptive Statistics", "level": 100, "role": "Summary metrics, quartiles, indices, and institutional reporting." },
+      { "code": "AMS 101", "title": "Principles of Management", "level": 200, "role": "Organizational governance, operational hierarchy, and decision hierarchies." },
+      { "code": "NAU-STA 371", "title": "Operations Research I", "level": 300, "role": "Resource allocation, transportation models, and supply optimization." },
+      { "code": "NAU-STA 421", "title": "Times Analysis", "level": 400, "role": "Revenue forecasting, inventory projection, and seasonal budgeting." },
+      { "code": "STA 422", "title": "Logical Background of Statistics & Decision Theory", "level": 400, "role": "Decision trees, Bayesian decision rules, risk payoffs, and utility curves." }
+    ],
+    "skills_to_add": [
+      "Dimensional Data Modeling (Star Schema, Snowflake Schema, Fact & Dimension tables)",
+      "Advanced Power BI / DAX / Power Query",
+      "Tableau Desktop & Tableau Server",
+      "Enterprise SQL & Data Warehouses (Snowflake, BigQuery, PostgreSQL)",
+      "ETL / ELT Pipeline Concepts (dbt, Airflow)",
+      "Financial & Commercial KPI Frameworks"
+    ],
+    "potential_roles": [
+      "Business Intelligence Analyst",
+      "BI Developer / Engineer",
+      "Decision Scientist",
+      "Commercial Analytics Lead",
+      "Management Information Systems (MIS) Analyst"
+    ],
+    "workplaces": [
+      "Fast-Moving Consumer Goods (FMCG: Unilever, Nestlé, Nigerian Breweries)",
+      "Large Retail Chains & Supermarket Networks",
+      "Telecommunication Networks (MTN, Globacom)",
+      "Commercial Banking Head Offices",
+      "Supply Chain & Distribution Conglomerates"
+    ],
+    "portfolio_projects": [
+      "Enterprise Sales & Inventory Star Schema: Design a data warehouse schema with FactSales and DimProduct, DimStore, and DimDate tables in PostgreSQL.",
+      "Executive Financial Performance Dashboard in Power BI: Build a multi-currency P&L dashboard with drill-through capability down to store level.",
+      "Customer Lifetime Value & RFM Segmentation: Segment retail customers by Recency, Frequency, and Monetary value to optimize promotional spend."
+    ],
+    "progression": "BI Analyst → Senior BI Developer → BI Lead → Enterprise Data Architect → Director of Data & Insights"
+  },
+  {
+    "id": "10",
+    "slug": "operations-manufacturing-quality",
+    "title": "Operations, Manufacturing & Quality Control",
+    "tagline": "Statistics on the factory floor: precision, reliability, and Lean Six Sigma.",
+    "domain": "Business & Industry",
+    "formula": "Statistical Process Control + Design of Experiments + Reliability + Operations Research",
+    "overview": "Statistics isn't only about computers and office desks; it lives on the factory floor, in bottling plants, and in aviation maintenance. Manufacturing organisations use statistical process control (SPC) to monitor machinery drift, identify defect causes, eliminate process variation, and ensure millions of products meet safety specifications.",
+    "reality_check": "In manufacturing and engineering, you cannot inspect every single bottle of beverage or pharmaceutical tablet destructively. You must rely on rigorous acceptance sampling plans and control charts (Shewhart charts, CUSUM) to guarantee safety and compliance.",
+    "unizik_courses": [
+      { "code": "STA 202", "title": "Statistics for Physical Sciences & Engineering", "level": 200, "role": "Measurement error, experimental propagation of error, and engineering statistics." },
+      { "code": "STA 221", "title": "Statistical Inference II", "level": 200, "role": "Tolerance intervals, specification limits, and hypothesis testing on production lines." },
+      { "code": "NAU-STA 322", "title": "Statistical Quality Control I", "level": 300, "role": "X-bar charts, R-charts, p-charts, process capability indices (Cp, Cpk), and lot acceptance sampling." },
+      { "code": "NAU-STA 351", "title": "Analysis of Variance I", "level": 300, "role": "Process parameter tuning and identifying variation between production batches." },
+      { "code": "NAU-STA 371", "title": "Operations Research I", "level": 300, "role": "Supply chain optimization, production scheduling, and inventory control." },
+      { "code": "NAU-STA 451", "title": "Design And Analysis of Experiment", "level": 400, "role": "Response Surface Methodology, 2^k factorial designs, and Taguchi robust engineering." },
+      { "code": "NAU-STA 471", "title": "Operations Research II", "level": 400, "role": "Queuing models for factory assembly lines and reliability theory." },
+      { "code": "NAU-STA 481", "title": "Statistical Quality Control II", "level": 400, "role": "Advanced multivariate control charts, EWMA, and continuous quality assurance." }
+    ],
+    "skills_to_add": [
+      "Minitab (The global industrial statistical software for manufacturing)",
+      "Lean Six Sigma Methodologies (DMAIC, Green/Black Belt certification concepts)",
+      "Root Cause Analysis (Fishbone diagrams, Pareto charts)",
+      "Reliability Engineering & Mean Time Between Failures (MTBF)",
+      "ISO 9001 Quality Management System Standards",
+      "Process Simulation and Supply Chain Optimization"
+    ],
+    "potential_roles": [
+      "Quality Assurance (QA) Statistician",
+      "Quality Control Engineer",
+      "Operations Research Analyst",
+      "Continuous Improvement Specialist",
+      "Supply Chain Optimization Analyst",
+      "Reliability Engineer"
+    ],
+    "workplaces": [
+      "Industrial Manufacturing Plants (Dangote Cement, BUA, Innoson Vehicle Manufacturing)",
+      "Food & Beverage Giants (Nigerian Breweries, Guinness, Coca-Cola/NBC)",
+      "Pharmaceutical Production Facilities",
+      "Oil & Gas Refinery and Pipeline Operations",
+      "Aviation & Aerospace Maintenance Units",
+      "Standard Organisation of Nigeria (SON) & NAFDAC"
+    ],
+    "portfolio_projects": [
+      "Beverage Bottling Volume Control Chart: Monitor automated bottle filling volume with X-bar and S control charts, calculating Cpk process capability in Minitab/Python.",
+      "Factorial Experiment on Concrete Curing Strength: Analyze a 2^3 factorial experiment optimizing cement ratio, temperature, and curing time for maximal compressive strength.",
+      "Inventory Re-order Optimization Engine: Implement an Economic Order Quantity (EOQ) and safety stock model under stochastic lead times."
+    ],
+    "progression": "QC Analyst → Quality Assurance Specialist → Quality Manager → Director of Plant Operations"
+  },
+  {
+    "id": "11",
+    "slug": "government-policy-development",
+    "title": "Government, Policy & Development",
+    "tagline": "Statistics for the nation: censuses, economic indicators, and public good.",
+    "domain": "Economics & Policy",
+    "formula": "Demography + Survey Sampling + Social Statistics + Monitoring & Evaluation",
+    "overview": "This is one of Statistics' oldest and most vital callings — the word 'Statistics' originally derived from 'State-istics'. Governments, international agencies, and NGOs require accurate statistics to count populations, track poverty, plan hospitals, formulate educational policies, allocate budgetary funds, and evaluate humanitarian interventions.",
+    "reality_check": "National policy decisions affect millions of citizens. A faulty census, an unrepresentative survey sample, or a biased inflation metric can lead to misallocated national budgets, unbuilt schools, and undetected poverty crises.",
+    "unizik_courses": [
+      { "code": "STA 111", "title": "Descriptive Statistics", "level": 100, "role": "Population metrics, civil registration data, and national demographic basics." },
+      { "code": "STA 212", "title": "Introduction to Social & Economic Statistics", "level": 200, "role": "Poverty lines, human development index (HDI), employment rates, and living standards." },
+      { "code": "NAU-STA 361", "title": "Demography", "level": 300, "role": "Fertility analysis, life expectancy calculations, migration flows, and population pyramids." },
+      { "code": "STA 324", "title": "Survey Methods and Sampling Theory", "level": 300, "role": "Designing national master sample frames, multi-stage cluster sampling, and non-sampling errors." },
+      { "code": "NAU-STA 421", "title": "Times Analysis", "level": 400, "role": "Forecasting population growth, economic output, and sovereign debt burdens." }
+    ],
+    "skills_to_add": [
+      "CSPro (The international census and survey data processing tool used by NBS & UN)",
+      "Monitoring & Evaluation (M&E) Frameworks & Theory of Change",
+      "Stata or SPSS or R for Large National Household Surveys (DHS, MICS, LSMS)",
+      "Geographic Information Systems (QGIS / ArcGIS) for Spatial Census Mapping",
+      "Public Policy Impact Assessment Writing"
+    ],
+    "potential_roles": [
+      "Government Statistician",
+      "Demographer",
+      "Monitoring & Evaluation (M&E) Specialist",
+      "Policy Research Analyst",
+      "Survey Methodologist",
+      "Development Data Officer"
+    ],
+    "workplaces": [
+      "National Bureau of Statistics (NBS)",
+      "National Population Commission (NPC)",
+      "United Nations Agencies (UNDP, UNICEF, UNFPA, FAO)",
+      "International Development Organizations (USAID, FCDO, EU)",
+      "Federal & State Ministries of Planning, Education, and Health",
+      "Research Think-Tanks & Policy Advocacy Institutes"
+    ],
+    "portfolio_projects": [
+      "National Demographic Health Survey (NDHS) Analysis: Analyze child immunization coverage across Nigerian geopolitical zones using weighted survey statistics in Stata/R.",
+      "State-Level Multidimensional Poverty Index: Compute poverty headcount and intensity indices using household survey indicators.",
+      "Sub-National Population Projection Model: Project Anambra State school-age population over the next 15 years using cohort-component demographic methods."
+    ],
+    "progression": "Statistical Officer → Senior Statistician → Chief Statistician → Director of National Statistics / State Statistician General"
+  },
+  {
+    "id": "12",
+    "slug": "research-academia",
+    "title": "Research & Academia",
+    "tagline": "Advancing the frontiers of mathematical and applied knowledge.",
+    "domain": "Research & Earth",
+    "formula": "B.Sc. Statistics → M.Sc. → Ph.D. → Breakthrough Scientific Contributions",
+    "overview": "Some students discover during their degree that they genuinely love mathematical theory, proving theorems, developing novel estimation techniques, and advancing human knowledge. Statistics is the bedrock of the entire scientific method: separating genuine signal from noise, and solid evidence from pure coincidence.",
+    "reality_check": "Academic excellence requires patience and deep mathematical commitment. You will progress from foundational undergraduate coursework to postgraduate master's and doctoral research, contributing peer-reviewed papers to international scientific journals and mentoring future generations of statisticians.",
+    "unizik_courses": [
+      { "code": "STA 211", "title": "Probability II", "level": 200, "role": "Rigorous probability axioms, transformations, and generating functions." },
+      { "code": "MTH 231", "title": "Introduction to Mathematical Methods", "level": 200, "role": "Differential equations, Fourier analysis, and advanced calculus." },
+      { "code": "STA 311", "title": "Probability III", "level": 300, "role": "Characteristic functions, laws of large numbers, and central limit theorems." },
+      { "code": "STA 312", "title": "Distribution Theory I", "level": 300, "role": "Exotic continuous and discrete distribution families and derivation of moments." },
+      { "code": "STA 321", "title": "Statistical Inference III", "level": 300, "role": "Cramér-Rao lower bound, sufficiency, completeness, and uniformly most powerful tests." },
+      { "code": "STA 411", "title": "Probability IV", "level": 400, "role": "Measure-theoretic probability intuition, martingales, and convergence in law." },
+      { "code": "STA 413", "title": "Statistical Inference IV", "level": 400, "role": "Likelihood ratio tests, Wald tests, Lagrange multiplier tests, and Bayesian estimation." },
+      { "code": "STA 412", "title": "Distribution Theory II", "level": 400, "role": "Non-central distributions, quadratic forms, and asymptotic expansions." },
+      { "code": "NAU-STA 491", "title": "Seminar", "level": 400, "role": "Scientific presentation, literature review, and academic defense." },
+      { "code": "STA 499", "title": "Project", "level": 400, "role": "Original empirical or theoretical dissertation under faculty supervision." }
+    ],
+    "skills_to_add": [
+      "LaTeX for Professional Mathematical Typesetting",
+      "R & Python for Simulation Studies and Monte Carlo Experiments",
+      "Academic Literature Search: Google Scholar, JSTOR, ScienceDirect, arXiv",
+      "Research Methodology, Hypothesis Formulation, and Academic Writing",
+      "Peer-Review Publishing Standards and Ethical Research Practices",
+      "Preparation for GRE / International Graduate Scholarships (Commonwealth, Chevening, Fulbright)"
+    ],
+    "potential_roles": [
+      "Graduate Research Assistant",
+      "University Lecturer / Professor",
+      "Theoretical Statistician",
+      "Research Fellow at Scientific Institutes",
+      "Statistical Consultant for Academic Dissertations"
+    ],
+    "workplaces": [
+      "Universities & Higher Education Institutions Worldwide",
+      "International Research Institutes (CERN, Max Planck, Alan Turing Institute)",
+      "National Research Councils",
+      "Private Research Laboratories & Think-Tanks"
+    ],
+    "portfolio_projects": [
+      "Novel Probability Distribution Generator: Propose a new generalized family of distributions, derive its moments, quantile function, and fit it to real-world survival data.",
+      "Monte Carlo Simulation Study: Compare the empirical power of five normality tests (Shapiro-Wilk, Anderson-Darling, Jarque-Bera, Lilliefors, KS) under varying sample sizes.",
+      "Undergraduate Final Year Project (STA 499): Complete a rigorous, reproducible statistical thesis with verified R code and LaTeX documentation."
+    ],
+    "progression": "Graduate Assistant → Assistant Lecturer → Senior Lecturer → Associate Professor → Chair / Professor of Statistics"
+  },
+  {
+    "id": "13",
+    "slug": "agriculture-environment",
+    "title": "Agriculture & Environment",
+    "tagline": "Critical for Africa's future: food security, climate science, and geospatial modeling.",
+    "domain": "Research & Earth",
+    "formula": "Agronomic Experiments + Spatial Statistics + Climate Data + Remote Sensing",
+    "overview": "Agriculture remains the backbone of the African economy, while climate change poses an urgent existential challenge. Statistics supports agricultural field trials, crop yield predictions, soil nutrient modeling, flood risk mapping, and food-security surveillance. When Statistics is paired with GIS and remote sensing, it becomes a powerful geospatial science.",
+    "reality_check": "In agricultural experiments, crops don't grow in sterile laboratories. They are subject to soil heterogeneity, rainfall fluctuations, and pest infestations. Classical experimental design (RCBD, Split-Plot, Factorial) was literally invented in agriculture to solve these exact real-world challenges.",
+    "unizik_courses": [
+      { "code": "STA 111", "title": "Descriptive Statistics", "level": 100, "role": "Rainfall indices, harvest weight distributions, and agricultural data collection." },
+      { "code": "NAU-STA 351", "title": "Analysis of Variance I", "level": 300, "role": "Comparing fertilizer treatments, soil types, and seed variety yields." },
+      { "code": "NAU-STA 381", "title": "Biometry", "level": 300, "role": "Biological assays, pesticide dosage effectiveness, and biological growth curves." },
+      { "code": "NAU-STA 451", "title": "Design And Analysis of Experiment", "level": 400, "role": "Split-plot designs, randomized blocks, and agricultural field layout planning." },
+      { "code": "NAU-STA 421", "title": "Times Analysis", "level": 400, "role": "Rainfall time series, temperature trend modeling, and drought periodicity." },
+      { "code": "STA 202", "title": "Statistics for Physical Sciences & Engineering", "level": 200, "role": "Environmental measurements, atmospheric sensors, and physical calibration." }
+    ],
+    "skills_to_add": [
+      "QGIS or ArcGIS (Spatial Mapping & Geographic Data Analysis)",
+      "R Spatial packages (sf, terra, raster, spatstat)",
+      "Satellite Remote Sensing Data: Google Earth Engine, Sentinel, Landsat",
+      "Crop Simulation & Yield Modeling Concepts",
+      "Environmental Impact Assessment Methodologies",
+      "Food Security Indexing & Early Warning Systems"
+    ],
+    "potential_roles": [
+      "Agricultural Statistician",
+      "Environmental Data Scientist",
+      "Geospatial / GIS Analyst",
+      "Climate Risk Modeller",
+      "Food Security & Early Warning Analyst"
+    ],
+    "workplaces": [
+      "International Institute of Tropical Agriculture (IITA, Ibadan)",
+      "Food and Agriculture Organization (FAO)",
+      "National Agricultural Research Institutes (NIHORT, NCRI, NRCRI Umudike)",
+      "Environmental Protection Agencies (NESREA, State Ministries of Environment)",
+      "Agritech Startups (ThriveAgric, AFEX Commodities Exchange)",
+      "Climate Change Research Institutes"
+    ],
+    "portfolio_projects": [
+      "Split-Plot Agricultural Trial Analysis: Evaluate the interaction of irrigation levels and maize hybrids on grain yield using ANOVA in R.",
+      "Spatial Flood Vulnerability Mapping: Combine rainfall historical data and elevation models in QGIS to map flood risk zones across the Niger River Basin.",
+      "Cassava Yield Prediction with Satellite NDVI: Correlate satellite vegetative indices with farm harvest weights to build a pre-harvest yield forecasting model."
+    ],
+    "progression": "Agro-Statistical Officer → Environmental Data Analyst → Senior Geospatial Statistician → Lead Agricultural Scientist"
+  },
+  {
+    "id": "14",
+    "slug": "genomics-bioinformatics",
+    "title": "Genomics & Bioinformatics",
+    "tagline": "Decoding the human genome with high-dimensional statistical computing.",
+    "domain": "Health & Biology",
+    "formula": "High-Dimensional Statistics + Molecular Biology + Bio-computing + Next-Gen Sequencing",
+    "overview": "Modern biological research produces massive datasets: billions of DNA base pairs, RNA expressions across thousands of cells, and complex gene networks. Genomics and bioinformatics use high-dimensional Statistics, multiple hypothesis testing corrections, and machine learning to identify disease-causing genetic mutations and design targeted molecular therapies.",
+    "reality_check": "In genomics, you often have 20,000 genes measured for only 100 patient samples — the classical 'p >> n' curse of dimensionality. Standard naive statistics collapses. You must master false discovery rates (FDR), regularization, and high-dimensional matrix methods to discover true biological signals.",
+    "unizik_courses": [
+      { "code": "NAU-BIO 101 / 102", "title": "General Biology I & II", "level": 100, "role": "DNA structure, Mendelian inheritance, genetics, and protein synthesis." },
+      { "code": "STA 211", "title": "Probability II", "level": 200, "role": "Joint distributions and probabilistic models of allele inheritance." },
+      { "code": "MTH 201", "title": "Linear Algebra I", "level": 200, "role": "High-dimensional matrix calculations and vector spaces in gene expression matrices." },
+      { "code": "STA 221", "title": "Statistical Inference II", "level": 200, "role": "Hypothesis testing, p-values, and statistical error control." },
+      { "code": "NAU-STA 461", "title": "Multivariate Analysis I", "level": 400, "role": "Principal Component Analysis (PCA) and clustering applied to single-cell RNA-seq." },
+      { "code": "NAU-STA 381", "title": "Biometry", "level": 300, "role": "Biological variation and quantitative genetics." },
+      { "code": "NAU-STA 432", "title": "Non-parametric Methods", "level": 400, "role": "Robust ranking methods across heterogeneous biological sequencing experiments." }
+    ],
+    "skills_to_add": [
+      "R Bioconductor Ecosystem (DESeq2, edgeR, Seurat)",
+      "Python for Bioinformatics (Biopython, Scanpy)",
+      "Multiple Testing Correction (Benjamini-Hochberg False Discovery Rate, Bonferroni)",
+      "Next-Generation Sequencing (NGS) Data Formats: FASTQ, BAM, VCF",
+      "Linux Command Line & High-Performance Computing (HPC) Clusters",
+      "Biological Database Navigation: NCBI, Ensembl, TCGA"
+    ],
+    "potential_roles": [
+      "Bioinformatics Data Scientist",
+      "Statistical Geneticist",
+      "Computational Biologist",
+      "Genomic Data Analyst",
+      "Molecular Data Scientist"
+    ],
+    "workplaces": [
+      "African Centre of Excellence for Genomics of Infectious Diseases (ACEGID, Ede)",
+      "Genomics Research Institutes (Wellcome Sanger Institute, Broad Institute)",
+      "Biotechnology & Gene Therapy Companies",
+      "Personalized Medicine Diagnostic Labs",
+      "Cancer Research Centers & Virology Laboratories"
+    ],
+    "portfolio_projects": [
+      "Differential Gene Expression Analysis: Analyze RNA-seq count data using DESeq2 in R to identify statistically significant upregulated genes in breast cancer tissue.",
+      "Genome-Wide Association Study (GWAS) Quality Control: Clean and test genetic variant associations, plotting Manhattan and QQ-plots with Benjamini-Hochberg FDR correction.",
+      "Single-Cell Clustering of Immune Cells: Use PCA and UMAP in Python/Scanpy to cluster thousands of white blood cells by gene expression profiles."
+    ],
+    "progression": "Bioinformatics Analyst → Computational Biologist → Senior Statistical Geneticist → Director of Genomics Analytics"
+  }
+]

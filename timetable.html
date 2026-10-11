@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lecture Timetable | NASS UNIZIK Department of Statistics</title>
+  <meta name="description" content="Official lecture schedules, hall venues, and course allocations for Department of Statistics students at Nnamdi Azikiwe University.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <!-- Progressive Web App (PWA) Manifest & Meta -->
+  <meta name="theme-color" content="#0c2340">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="NASS UNIZIK">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png">
+  <link rel="icon" type="image/jpeg" href="/resources/images/nass-logo.jpg">
+
+  <script src="/js/theme.js"></script>
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="institutional-topbar">
+    <div class="container topbar-content">
+      <div class="topbar-left">
+        <span class="topbar-motto">Facts from Figures</span>
+        <span class="topbar-divider">|</span>
+        <span>Department of Statistics, Nnamdi Azikiwe University</span>
+      </div>
+      <div class="topbar-right">
+        <a href="/contacts.html" class="topbar-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Student Helpdesk</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <div class="header-left">
+        <button type="button" class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="/" class="header-brand">
+          <img src="/resources/images/nass-logo.jpg" alt="Logo" class="brand-logo">
+          <div class="brand-info">
+            <span class="brand-title">NASS UNIZIK</span>
+            <span class="brand-subtitle">Department of Statistics</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="main-nav" id="mainNav" aria-label="Primary Navigation">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/academia.html" class="nav-link">Academia</a>
+        <a href="/past-questions.html" class="nav-link">Past Questions</a>
+        <a href="/timetable.html" class="nav-link active">Timetable</a>
+        <a href="/siwes.html" class="nav-link">SIWES</a>
+        <a href="/administration.html" class="nav-link">Staff</a>
+        <a href="/nass.html" class="nav-link">NASS Exco</a>
+        <a href="/archive.html" class="nav-link">Gallery</a>
+        <a href="/news.html" class="nav-link">News</a>
+        <a href="/events.html" class="nav-link">Events</a>
+        <a href="#install-app" class="nav-link nav-install-btn" title="Install NASS UNIZIK Mobile App (Android & iOS)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+            <line x1="12" y1="18" x2="12.01" y2="18"/>
+          </svg>
+          <span>Install App</span>
+        </a>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="search-trigger-btn" aria-label="Open Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="search-placeholder">Search...</span>
+          <kbd class="search-shortcut">Ctrl K</kbd>
+        </button>
+        <button type="button" class="theme-toggle-btn header-theme-toggle" aria-label="Switch Light/Dark Theme" title="Switch Light/Dark Theme">
+          <span class="theme-toggle-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+          <span class="theme-toggle-label">Theme</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="mobile-drawer-header">
+      <div class="mobile-drawer-brand">NASS UNIZIK</div>
+      <button type="button" class="mobile-drawer-close" id="mobileDrawerClose">&times;</button>
+    </div>
+    <ul class="mobile-nav-list">
+      <li><a href="/" class="mobile-nav-link">Home</a></li>
+      <li><a href="/academia.html" class="mobile-nav-link">Academia & Courses</a></li>
+      <li><a href="/past-questions.html" class="mobile-nav-link">Past Questions Repository</a></li>
+      <li><a href="/timetable.html" class="mobile-nav-link active">Lecture Timetable</a></li>
+      <li><a href="/siwes.html" class="mobile-nav-link">SIWES Industrial Training</a></li>
+      <li><a href="/administration.html" class="mobile-nav-link">Administration & Staff</a></li>
+      <li><a href="/nass.html" class="mobile-nav-link">NASS Executive Council</a></li>
+      <li><a href="/archive.html" class="mobile-nav-link">Gallery & Photos</a></li>
+      <li><a href="/news.html" class="mobile-nav-link">Departmental News</a></li>
+      <li><a href="/events.html" class="mobile-nav-link">Events & Workshops</a></li>
+      <li><a href="/about.html" class="mobile-nav-link">About Department</a></li>
+      <li>
+        <a href="#install-app" class="mobile-nav-link mobile-install-btn">
+          <span class="mobile-nav-icon" style="display:inline-flex; align-items:center; color:#fbbf24;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+              <path d="M12 6v6m-3-3 3 3 3-3"/>
+            </svg>
+          </span>
+          <span>Install App (Android & iOS)</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <main>
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="container page-header-container">
+        <div class="breadcrumbs">
+          <a href="/">Home</a> <span>/</span> <span>Timetable</span>
+        </div>
+        <h1 class="page-title">Harmonized Lecture Timetable</h1>
+        <p class="page-lead">
+          Official departmental lecture schedule, lecture hall allocations, practical computer lab sessions, and course lecturer assignments.
+        </p>
+      </div>
+    </div>
+
+    <!-- Timetable Section -->
+    <section class="section">
+      <div class="container">
+        
+        <!-- Controls & Filters -->
+        <div class="filter-bar">
+          <div>
+            <span style="font-size: 0.8125rem; font-weight: 600; color: var(--text-secondary); margin-right: 8px;">Level:</span>
+            <div class="filter-btn-group" id="timetableLevelGroup" style="display: inline-flex;">
+              <button class="filter-btn active" data-level="100">100 Level</button>
+              <button class="filter-btn" data-level="200">200 Level</button>
+              <button class="filter-btn" data-level="300">300 Level</button>
+              <button class="filter-btn" data-level="400">400 Level</button>
+            </div>
+          </div>
+
+          <div>
+            <span style="font-size: 0.8125rem; font-weight: 600; color: var(--text-secondary); margin-right: 8px;">Semester:</span>
+            <div class="filter-btn-group" id="timetableSemesterGroup" style="display: inline-flex;">
+              <button class="filter-btn active" data-semester="1">First Semester</button>
+              <button class="filter-btn" data-semester="2">Second Semester</button>
+            </div>
+          </div>
+
+          <div style="margin-left: auto;">
+            <button class="btn btn-sm btn-outline" onclick="window.print();">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:-2px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect width="12" height="8" x="6" y="14"></rect></svg>Print Timetable
+            </button>
+          </div>
+        </div>
+
+        <!-- Timetable Notice Alert -->
+        <div class="announcement-banner">
+          <span class="announcement-icon" style="display:inline-flex;align-items:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+          <div>
+            <div class="announcement-title">Lecture Attendance Policy</div>
+            <div class="announcement-text">
+              University regulations mandate a minimum of 75% attendance for eligibility in end-of-semester examinations. Students are urged to arrive at least 5 minutes prior to scheduled lecture times.
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="table-responsive">
+          <table class="data-table" id="timetableTable">
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Time Window</th>
+                <th>Course Code</th>
+                <th>Course Title</th>
+                <th>Lecturer</th>
+                <th>Allocated Venue</th>
+              </tr>
+            </thead>
+            <tbody id="timetableBody">
+              <!-- Loaded dynamically via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top: 24px; font-size: 0.8125rem; color: var(--text-muted); text-align: right;">
+          Approved by: Departmental Timetable Committee & Head of Department
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Institutional Footer -->
+  <footer class="site-footer" id="siteFooter">
+    <div class="container footer-top">
+      <div class="footer-grid">
+        
+        <!-- Column 1: Brand & Motto -->
+        <div>
+          <div class="footer-brand-title">NASS UNIZIK</div>
+          <div class="footer-motto">Facts from Figures</div>
+          <p class="footer-text">
+            The National Association of Students of Statistics (NASS), Department of Statistics, Faculty of Physical Sciences, Nnamdi Azikiwe University, Awka, Anambra State, Nigeria.
+          </p>
+          <div style="font-size: 0.8125rem; color: #94a3b8;">
+            Dedicated to promoting statistical literacy, academic rigour, and professional excellence.
+          </div>
+        </div>
+
+        <!-- Column 2: Academic Links -->
+        <div>
+          <h4 class="footer-col-title">Academia</h4>
+          <ul class="footer-links">
+            <li><a href="/academia.html">Course Catalog</a></li>
+            <li><a href="/past-questions.html">Past Questions</a></li>
+            <li><a href="/timetable.html">Lecture Timetable</a></li>
+            <li><a href="/siwes.html">SIWES Manual</a></li>
+            <li><a href="/projects.html">Project Guidelines</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Quick Links & Media -->
+        <div>
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="/archive.html">Gallery</a></li>
+            <li><a href="/news.html">Departmental News</a></li>
+            <li><a href="/events.html">Events & Workshops</a></li>
+            <li><a href="/about.html">Departmental Profile</a></li>
+            <li><a href="/contacts.html">Key Contacts & Helpdesk</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Contact Information -->
+        <div>
+          <h4 class="footer-col-title">Departmental Office</h4>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span data-setting="office_location">Statistics Admintrative Office, Ground floor, New Physical Sciences Building, science village, Unizik, Awka</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span data-setting="email">statistics@unizik.edu.ng</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <a href="/contacts.html" style="color: #cbd5e1;">Student Helpdesk & Advisory</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mandatory Footer Bottom Bar with EXACT Attribution -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <div>
+          &copy; <span id="currentYear">2026</span> Department of Statistics, Nnamdi Azikiwe University. All Rights Reserved.
+        </div>
+        <div class="footer-credit">
+          Created by PhanCore
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/icons.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings-sync.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/nav.js"></script>
+  <script>
+    let activeLevel = 100;
+    let activeSemester = 1;
+
+    async function loadTimetable() {
+      const tbody = document.getElementById('timetableBody');
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 30px;">Loading timetable schedule...</td></tr>`;
+
+      try {
+        const entries = await NassAPI.getTimetable({ level: activeLevel, semester: activeSemester });
+        if (!entries || entries.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                No timetable entries scheduled for ${activeLevel} Level (Semester ${activeSemester}) at this time.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = entries.map(item => `
+          <tr>
+            <td><strong>${item.day}</strong></td>
+            <td><span class="badge badge-neutral">${item.start_time} - ${item.end_time}</span></td>
+            <td><strong style="color: var(--primary-color);">${item.course_code}</strong></td>
+            <td>${item.course_title}</td>
+            <td>${item.lecturer || 'Departmental Faculty'}</td>
+            <td><span class="badge badge-primary">${item.venue || 'Lecture Hall'}</span></td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--danger-color); padding: 30px;">Failed to load timetable: ${err.message}</td></tr>`;
+      }
+    }
+
+    document.querySelectorAll('#timetableLevelGroup .filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#timetableLevelGroup .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeLevel = parseInt(btn.getAttribute('data-level'), 10);
+        loadTimetable();
+      });
+    });
+
+    document.querySelectorAll('#timetableSemesterGroup .filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#timetableSemesterGroup .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeSemester = parseInt(btn.getAttribute('data-semester'), 10);
+        loadTimetable();
+      });
+    });
+
+    window.loadTimetable = loadTimetable;
+    document.addEventListener('DOMContentLoaded', loadTimetable);
+  </script>
+</body>
+</html>

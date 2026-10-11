@@ -1,0 +1,385 @@
+Signature-Version: 1.0
+Created-By: 1.0 (Android APKSig Universal)
+SHA-256-Digest-Manifest: kwcZ+wIXOwLABVbsRrYdFBovmU2Zt3T+Lb4nO6Mn4/Q=
+
+Name: AndroidManifest.xml
+SHA-256-Digest: eZdARuouwKWk4URYgKH8ydeLOAUI5BqV4O+4/razhKc=
+
+Name: classes.dex
+SHA-256-Digest: wtBKBF8SNp1iNH0eAoito9fs1kbzT7neZwfKu80gi1E=
+
+Name: res/drawable/nass_logo.jpg
+SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
+
+Name: res/mipmap-mdpi/ic_launcher.png
+SHA-256-Digest: SHDbrWL/Nh1AGsaKThIp3HojyC/1dhxoQhi9XQWsAcU=
+
+Name: res/mipmap-hdpi/ic_launcher.png
+SHA-256-Digest: SHDbrWL/Nh1AGsaKThIp3HojyC/1dhxoQhi9XQWsAcU=
+
+Name: res/mipmap-xhdpi/ic_launcher.png
+SHA-256-Digest: SHDbrWL/Nh1AGsaKThIp3HojyC/1dhxoQhi9XQWsAcU=
+
+Name: res/mipmap-xxhdpi/ic_launcher.png
+SHA-256-Digest: kUMTUueagEx4mZlBB1LesrO4YjoG6aURdfAXIz5yZiQ=
+
+Name: res/mipmap-xxxhdpi/ic_launcher.png
+SHA-256-Digest: kUMTUueagEx4mZlBB1LesrO4YjoG6aURdfAXIz5yZiQ=
+
+Name: Info.plist
+SHA-256-Digest: oJKaXYLuAT0xHS8sLEUaJy1vglB+gbRYoJcsLL3MMjM=
+
+Name: Payload/NASS.app/Info.plist
+SHA-256-Digest: oJKaXYLuAT0xHS8sLEUaJy1vglB+gbRYoJcsLL3MMjM=
+
+Name: Payload/NASS.app/AppIcon60x60@2x.png
+SHA-256-Digest: SHDbrWL/Nh1AGsaKThIp3HojyC/1dhxoQhi9XQWsAcU=
+
+Name: assets/app_config.json
+SHA-256-Digest: dG8i0lsYetKx8xsllglD4MvLDW+T4a/vEtwO/It8fmI=
+
+Name: assets/documents/COS_201_Lecture_Note_on_C_Plus_Plus.pdf
+SHA-256-Digest: qaBKGdnPRrUpgD09YpB0cH+wr/9zfJypW4AAU2VdYFQ=
+
+Name: assets/documents/CSC_202_Course_Material_and_Practice_Module.pdf
+SHA-256-Digest: 294OOM+lqcSCvUhfBvMP7ynjolkyMgy2iEkG5iH6Rrk=
+
+Name: assets/documents/ENT_312_Chapters_1_to_15_Complete_Notes.pdf
+SHA-256-Digest: YlT8RSIzAQyrwrvWMnSdkgBTQ9Gt3a5fsOx0eJDVZ8Q=
+
+Name: assets/documents/GST_312_Complete_12_Chapters_Master_Summary.pdf
+SHA-256-Digest: lffkYCksrCzFf5NiaQjx+zi6g9ZvaAus1ldbDGAoTUU=
+
+Name: assets/documents/GST_312_Peace_and_Conflict_CBT_Study_Material.pdf
+SHA-256-Digest: NflvIcnxwJwaPCdqaj1uRLL2QxE4H8oXhROXBvglNXA=
+
+Name: assets/documents/STA_312_Bivariate_Distributions_Theory.pdf
+SHA-256-Digest: 0hjbudiHgU5VVUklfpmqQHrxh8ESLQy9Xk8/EJpZwbU=
+
+Name: assets/documents/STA_312_Lecture_Module_3G.pdf
+SHA-256-Digest: CH70J0yOowIPKUAvO/ia0K4AtgFrLuh0r+PdeVu5ybw=
+
+Name: assets/documents/STA_312_New_Module_Mathematical_Proofs.pdf
+SHA-256-Digest: Nr5//jswJEotuKMYIn+RxGqOUGrypbbd0ZC5Jg/YWsM=
+
+Name: assets/documents/STA_312_Order_Statistics_Part_1.pdf
+SHA-256-Digest: xWCj18Cgq3v5chQlCM586LGTO+/YaYN41zHpfjlZgRs=
+
+Name: assets/documents/STA_312_Order_Statistics_Part_2.pdf
+SHA-256-Digest: 8ClysZCL09CHKmoloCj8P+6LawX1HUDjvfbxFi1RbMo=
+
+Name: assets/documents/STA_312_Order_Statistics_Part_3.pdf
+SHA-256-Digest: RnKmVVAiExg1OnzT0+r+GopIGDBbjjeEKWNrSSqJ1KA=
+
+Name: assets/documents/STA_322_Course_Material.pdf
+SHA-256-Digest: SLmBzYwPal9ogKjj9TXFW59pTOmvBBAkhuWyBPjzMJI=
+
+Name: assets/documents/STA_331_Lecture_02_Simple_Linear_Regression.pdf
+SHA-256-Digest: rbpP+TW9SmJcNx1jI3imzmOAQ3q3ZQ/Z+LE5DRRQ/+U=
+
+Name: assets/documents/STA_331_Lecture_03_Multiple_Regression_Model.pdf
+SHA-256-Digest: opB728ZIUDSrxhnho0d/HPu8VwQQZa+bb9DQjmViEIA=
+
+Name: assets/documents/STA_331_Lecture_04_Model_Diagnostics_and_ANOVA.pdf
+SHA-256-Digest: iBHHhAwhSkI5RpwH+Np1uXpkpVIBJY99JWcHGs6VXbg=
+
+Name: assets/documents/STA_331_Lecture_04_Supplementary_Proofs.pdf
+SHA-256-Digest: C199HEO6T9YB8GDx8gT1d1ykUvrul50jh9Fm0R4580Q=
+
+Name: assets/documents/STA_331_Lecture_05_Hypothesis_Testing_in_Regression.pdf
+SHA-256-Digest: uqXeiK+wgnWHTinLL3cLf/QiXXstKJKjPDiMvm0QT7M=
+
+Name: assets/documents/STA_331_Lecture_06_Multicollinearity_and_Remedies.pdf
+SHA-256-Digest: oySyIk5j8Ah/D6pth9QEtQbAVy1TpNwM2/7WurU0DVk=
+
+Name: assets/documents/STA_331_Lecture_07_Autocorrelation_and_Transformations.pdf
+SHA-256-Digest: mk6IPJHTNDAX2YrnmaZCzOz/C6C8qF6+fdkpLthcDEc=
+
+Name: assets/documents/STA_331_Regression_Analysis_Course_Compendium.pdf
+SHA-256-Digest: +BuYxUvU333FkIe8NgvqfpFLRp3n6fEKX5uGKS4dF2U=
+
+Name: assets/documents/Statistical_Tables.pdf
+SHA-256-Digest: l1UBdo4qHpfFj5oAweCh14yUvgZuB4sNVlhVaJ6DDrs=
+
+Name: assets/documents/Statistical_Tables_Dougherty.pdf
+SHA-256-Digest: l1UBdo4qHpfFj5oAweCh14yUvgZuB4sNVlhVaJ6DDrs=
+
+Name: assets/documents/siwes/siwes_placement_acceptance_letter_form.jpg
+SHA-256-Digest: 1+HSuO446ifimndzksP0m8GSYPdphenLVfacBZ+x+rM=
+
+Name: assets/documents/siwes/siwes_technical_report_guide.pdf
+SHA-256-Digest: NgXCatN+Y5MwRJlKtaKEhXJWTDQJo1+DhnTwtQjxCfk=
+
+Name: assets/images/announcement_default.jpg
+SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
+
+Name: assets/images/event_default.jpg
+SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
+
+Name: assets/images/exco_president.jpg
+SHA-256-Digest: gqqG6movZx1v8kIfcid1cw5+W6dSUTUAbF/D0ukfXzE=
+
+Name: assets/images/exec_academics.jpg
+SHA-256-Digest: na9yxjCX0QV0p+GxiOBmnowHTSA2UEBn6O5OHCn9Fic=
+
+Name: assets/images/exec_default.jpg
+SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
+
+Name: assets/images/exec_finsec.jpg
+SHA-256-Digest: wdFsYrISitCYZJHtqqiVlhPoQPlSppMvG/kIt6mbJS4=
+
+Name: assets/images/exec_president.jpg
+SHA-256-Digest: gqqG6movZx1v8kIfcid1cw5+W6dSUTUAbF/D0ukfXzE=
+
+Name: assets/images/exec_president.png
+SHA-256-Digest: gqqG6movZx1v8kIfcid1cw5+W6dSUTUAbF/D0ukfXzE=
+
+Name: assets/images/exec_secgen.jpg
+SHA-256-Digest: OGWulLef5jJxpKs7SuR5XHiG1tW+l+P0M8wIoiTO38o=
+
+Name: assets/images/exec_socials.jpg
+SHA-256-Digest: 9vTykGIt50D2GhGJwnu7UCu8cfwsBqWjXvl9HYUTK9k=
+
+Name: assets/images/exec_sports.jpg
+SHA-256-Digest: 7j6tq9NeKLbzBMYgcwcP9eLRfwk5Xw8CfPiLBzLKxN4=
+
+Name: assets/images/exec_tech.jpg
+SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
+
+Name: assets/images/exec_treasurer.jpg
+SHA-256-Digest: wgT7zuVxmtpmN0dNqOGo6fKOnZIg/7aPKGBC7dNu7kQ=
+
+Name: assets/images/exec_vp.jpg
+SHA-256-Digest: VG2upSFT7URTLeirece0UxnWnFqf8Ro78e/WhaNczhA=
+
+Name: assets/images/executives/director_academics_mmesoma_ejefonye.jpg
+SHA-256-Digest: na9yxjCX0QV0p+GxiOBmnowHTSA2UEBn6O5OHCn9Fic=
+
+Name: assets/images/executives/director_of_academics.jpg
+SHA-256-Digest: na9yxjCX0QV0p+GxiOBmnowHTSA2UEBn6O5OHCn9Fic=
+
+Name: assets/images/executives/director_of_socials.jpg
+SHA-256-Digest: 9vTykGIt50D2GhGJwnu7UCu8cfwsBqWjXvl9HYUTK9k=
+
+Name: assets/images/executives/director_of_sports.jpg
+SHA-256-Digest: 7j6tq9NeKLbzBMYgcwcP9eLRfwk5Xw8CfPiLBzLKxN4=
+
+Name: assets/images/executives/director_socials_offorkee_chidera_elvis.jpg
+SHA-256-Digest: 9vTykGIt50D2GhGJwnu7UCu8cfwsBqWjXvl9HYUTK9k=
+
+Name: assets/images/executives/director_sports_franklin_ugochukwu.jpg
+SHA-256-Digest: 7j6tq9NeKLbzBMYgcwcP9eLRfwk5Xw8CfPiLBzLKxN4=
+
+Name: assets/images/executives/financial_secretary.jpg
+SHA-256-Digest: wdFsYrISitCYZJHtqqiVlhPoQPlSppMvG/kIt6mbJS4=
+
+Name: assets/images/executives/financial_secretary_chinedu_chidinma_veronica.jpg
+SHA-256-Digest: wdFsYrISitCYZJHtqqiVlhPoQPlSppMvG/kIt6mbJS4=
+
+Name: assets/images/executives/president.jpg
+SHA-256-Digest: gqqG6movZx1v8kIfcid1cw5+W6dSUTUAbF/D0ukfXzE=
+
+Name: assets/images/executives/president.png
+SHA-256-Digest: gqqG6movZx1v8kIfcid1cw5+W6dSUTUAbF/D0ukfXzE=
+
+Name: assets/images/executives/president_chidera_anajekwu.jpg
+SHA-256-Digest: gqqG6movZx1v8kIfcid1cw5+W6dSUTUAbF/D0ukfXzE=
+
+Name: assets/images/executives/secretary_general.jpg
+SHA-256-Digest: OGWulLef5jJxpKs7SuR5XHiG1tW+l+P0M8wIoiTO38o=
+
+Name: assets/images/executives/secretary_general_rejoice_chidozie.jpg
+SHA-256-Digest: OGWulLef5jJxpKs7SuR5XHiG1tW+l+P0M8wIoiTO38o=
+
+Name: assets/images/executives/treasurer.jpg
+SHA-256-Digest: wgT7zuVxmtpmN0dNqOGo6fKOnZIg/7aPKGBC7dNu7kQ=
+
+Name: assets/images/executives/treasurer_chiamaka_ezenwelu.jpg
+SHA-256-Digest: wgT7zuVxmtpmN0dNqOGo6fKOnZIg/7aPKGBC7dNu7kQ=
+
+Name: assets/images/executives/vice_president.jpg
+SHA-256-Digest: VG2upSFT7URTLeirece0UxnWnFqf8Ro78e/WhaNczhA=
+
+Name: assets/images/executives/vice_president_vivian_obunadike.jpg
+SHA-256-Digest: VG2upSFT7URTLeirece0UxnWnFqf8Ro78e/WhaNczhA=
+
+Name: assets/images/gallery/hod_cup_runner_up_2025_2026.jpg
+SHA-256-Digest: zbrPxgNDtDy2GN+1QtGobQQfbhrHf5hJ38DpV8U2Yg0=
+
+Name: assets/images/gallery/probix_class_2026.jpg
+SHA-256-Digest: Mt8C0oBR79r6QEs6yungeVqNoPLEFq6xIGgPK7D724g=
+
+Name: assets/images/gallery/prof_osuji_vantora27_siwes_defense_2026.jpg
+SHA-256-Digest: lJtpBMogiV+kSUv2UslwRL9yQbBborP8zrM16vkS660=
+
+Name: assets/images/gallery/vantora_class_2027.jpg
+SHA-256-Digest: eJ/UP7B9ZVFS4rT1oD37ag5uivg7m/wVRpP6nFdYC04=
+
+Name: assets/images/nass-logo.jpg
+SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
+
+Name: assets/images/news_default.jpg
+SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
+
+Name: assets/images/staff/NAU1238.jpg
+SHA-256-Digest: wuhgnP7NkUvBKZeaGC3p1cvvxmY5e8eDpZuwHRZAUJw=
+
+Name: assets/images/staff/NAU1652.png
+SHA-256-Digest: tT/N0x35NzAJ76sTQnMJUmZwaVdpk6pdo1X5BeoAERU=
+
+Name: assets/images/staff/NAU2320.jpg
+SHA-256-Digest: sJZDQlv3Q1r1owfyl/kmlJYHBFKdQUNiMbxlfNa/rXI=
+
+Name: assets/images/staff/NAU2352.jpg
+SHA-256-Digest: dWy/vc/BeNeaV3oF4yXSQwIUqi2eFVSrX5Zr1K4iyp4=
+
+Name: assets/images/staff/NAU2436.jpg
+SHA-256-Digest: Y0rjDdOQMRWrjNgfyVgg3ipZVXlCdIjxPBgq02ujN4A=
+
+Name: assets/images/staff/NAU2462.jpg
+SHA-256-Digest: IFniOUBtWc31yhd4ydalYTC+VG5e8Y7sIkr1voW/gDc=
+
+Name: assets/images/staff/NAU2482.jpg
+SHA-256-Digest: 6HplbZ/XdUyNwyMXQr3apbn5vucpHIZocU8TD7kFg+o=
+
+Name: assets/images/staff/NAU2530.jpg
+SHA-256-Digest: 8nQGKZw8NCVcO8Kn2YC5JHn48k25k4+76BVZr6GNlXE=
+
+Name: assets/images/staff/NAU2547.jpg
+SHA-256-Digest: oQzyxOlkia8FVu/vqI0iRTrHnLwhxwBbzDTumx3+VAc=
+
+Name: assets/images/staff/NAU2723.jpg
+SHA-256-Digest: 2fjvnxfQCra9xEYjfgGT9K1RxadiBXJ9cSBh33dLmTc=
+
+Name: assets/images/staff/NAU2841.jpg
+SHA-256-Digest: aB/5OnprUQFaNpTLuvWJhLlhhuo+2rK06xyzmxGEw2A=
+
+Name: assets/images/staff/NAU297.jpeg
+SHA-256-Digest: x6qZXah7okG+FiujH2JsdhWRxNxmLJ5JFDmZxkW1Xr8=
+
+Name: assets/images/staff/NAU3271.jpg
+SHA-256-Digest: ET9zYBZb+xgrLhbIDDX/HC1I2zD/QJZwLfAUkpMEdvg=
+
+Name: assets/images/staff/NAU3481.jpg
+SHA-256-Digest: 48NGdX2sHTBo8SviALe4IqLMu5m3v0uDC7yRxFbpGNI=
+
+Name: assets/images/staff/NAU3657.jpg
+SHA-256-Digest: EWDLna0ocMjyzTejcEWzRzmnplIbpFVM09ZYpBMMhKk=
+
+Name: assets/images/staff/NAU3661.jpg
+SHA-256-Digest: b709PmteIH67GCDfaHnSTQz1a1Jcng2Cu+PK6FBhxLc=
+
+Name: assets/images/staff/NAU4123.jpg
+SHA-256-Digest: jpr17ZHrR0uuRs9FJVjixD167W41A+6c3zi95zesZUA=
+
+Name: assets/images/staff/NAU4219.jpg
+SHA-256-Digest: nGOS65GAUkboI4D4OxQipOLZJi2enb3SZ+PeRJOJc/4=
+
+Name: assets/images/staff/NAU4221.jpg
+SHA-256-Digest: n47v4jRh3psPB9gVWUxQlZm958QIr87xlMLNevj7rFE=
+
+Name: assets/images/staff/NAU4253.jpg
+SHA-256-Digest: ZUb769Wla5+oJWfe8ZgpTre7corC1gMI9NYDcWJD6t4=
+
+Name: assets/images/staff/NAU4323.jpeg
+SHA-256-Digest: uaxNRH99ycCiwIkic/AO3GXeLnZJHjvMugaanftHvE8=
+
+Name: assets/images/staff/NAU4503.jpeg
+SHA-256-Digest: ZQBLjUFs4+Z0W2NfBO0dUC6aUToL9IwW2JjkZgYnhD8=
+
+Name: assets/images/staff/NAU4626.jpg
+SHA-256-Digest: B58QrrOygEy2y6blYyvnvE4kG6HPsDzaePYiPCroyig=
+
+Name: assets/images/staff/NAU4645.jpg
+SHA-256-Digest: EWw8KiIXcN6MhzS9wkw2Q4pwVXMwCKFN1QzesrbIKMA=
+
+Name: assets/images/staff/NAU4821.png
+SHA-256-Digest: PiPIDzXzQLn/9eFKkGCnonKRt9ufURRBPQjKzoR5gWM=
+
+Name: assets/images/staff/NAU4949.jpeg
+SHA-256-Digest: ZSBUG0XZtzB81CN2/Ts+tjXqdgN8MLa2K4XqvFUBJ60=
+
+Name: assets/images/staff/NAU4957.jpg
+SHA-256-Digest: bvJ4RVUdAP9Ux1xdu9guyAmh7eVbq6lzPOD0e2Y2sqM=
+
+Name: assets/images/staff/NAU5019.jpg
+SHA-256-Digest: 7u1nxQUYXjQsIHWNuMjGq8HFpilfK/Yu35mlSqnO4oA=
+
+Name: assets/images/staff/NAU5130.jpeg
+SHA-256-Digest: Pei8isMfNIlplhXmkuwAIZIM9oF91awC/5jvUDNnzH4=
+
+Name: assets/images/staff/NAU5180.png
+SHA-256-Digest: bSo2i3A6oeUKZxTTNSRguzy1ohGqV3Z8szHuixbEZmk=
+
+Name: assets/images/staff/NAU5826.jpg
+SHA-256-Digest: HV2oUNHByTT94xtmZwU8Tq5+Z0ETlqrtuhIy9RgC8rg=
+
+Name: assets/images/staff/NAU6342.jpg
+SHA-256-Digest: jHgobkAK8XdKNHlgTDghnijdyMCk15BiB7dh69Fp0GQ=
+
+Name: assets/images/staff/NAU6837.jpg
+SHA-256-Digest: VRcF/scFW0bwWID6e6Q4W9BOHgwLCpyuys1CfDU/Gg4=
+
+Name: assets/images/staff/NAU6906.jpg
+SHA-256-Digest: UI56ByvFxkweN4R1ByDtOfL4Tk0XxqkOyMJrlLIH/84=
+
+Name: assets/images/staff/NAU7493.jpg
+SHA-256-Digest: jeAGo+vCPjew22Wd/0JDdWbLWmHQAbbFJnQwRpw8RT4=
+
+Name: assets/images/staff/NAU7546.jpg
+SHA-256-Digest: S+r1dEhv4iOUM6VGsZGoYHQxWoVR8e5IJjxiFGzz6X0=
+
+Name: assets/images/staff/NAU7954.jpg
+SHA-256-Digest: qXFJV5aSNtR9WbfPHs1yT34gv+Bct9/dDgG5Aid61h0=
+
+Name: assets/images/staff/NAU8798.jpg
+SHA-256-Digest: +IeBo9HAA54STOANyGFQrbqvJlBDGkT0qbzJHN5dpN8=
+
+Name: assets/images/staff_adviser.jpg
+SHA-256-Digest: uaxNRH99ycCiwIkic/AO3GXeLnZJHjvMugaanftHvE8=
+
+Name: assets/images/staff_default.jpg
+SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
+
+Name: assets/images/staff_hod.jpg
+SHA-256-Digest: Y0rjDdOQMRWrjNgfyVgg3ipZVXlCdIjxPBgq02ujN4A=
+
+Name: assets/images/staff_lecturer1.jpg
+SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
+
+Name: assets/images/staff_lecturer2.jpg
+SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
+
+Name: assets/images/staff_lecturer3.jpg
+SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
+
+Name: assets/images/staff_lecturer4.jpg
+SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
+
+Name: assets/images/unizik-logo.jpg
+SHA-256-Digest: UfnyzXooyjVwEXfqxUaug1H5jd2Nam10UkLXisQU01A=
+
+Name: assets/data/career_pathways.json
+SHA-256-Digest: 2AgAvTmt+fuY0E1bXxf/SVnizt7p/R83o7fV6rLOloc=
+
+Name: assets/data/course_resources_seed.json
+SHA-256-Digest: eeBcgsS/1G/QqDopuFObwwbEZOP1nJRJp8TJ60BxTm0=
+
+Name: assets/data/nass_portal.db
+SHA-256-Digest: Ieildwcbe67qLlU/LmpJVGQZWJvmw2VMXZe8CD737J0=
+
+Name: assets/data/official_cirs_details.json
+SHA-256-Digest: Vhlff/opjKJaieYlZs91q3P03/H49PDnsm9AB1epnKI=
+
+Name: assets/data/official_cirs_staff.json
+SHA-256-Digest: 47U+7QB5aCVkGjhWNmVPtky1NaCLJmE7ecNcP4koGnM=
+
+Name: assets/data/portal_state_backup.json
+SHA-256-Digest: hAFgIExuX4eHOB/N8IM2vSyXaL8EE9ViXM24u9eJJeo=
+
+Name: assets/database/cirs_statistics_staff.json
+SHA-256-Digest: 5W9vUpdkuHjcNd4nUXLytGTN6C6UqBlHctvdDCoqfew=
+
+Name: assets/www/index.html
+SHA-256-Digest: GX0YlkpoSWMqYZ1Y8j+/e7ZSpZ5CdHaanHLXwH39oQk=
+

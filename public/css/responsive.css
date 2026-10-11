@@ -1,0 +1,509 @@
+/* ==========================================================================
+   NASS PORTAL - RESPONSIVE STYLESHEET
+   100% Viewport Mobile Optimization, Breakpoints, and Touch-Friendly Rules
+   ========================================================================== */
+
+/* Universal Layout & Box Sizing Reset for Mobile Fluidity */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+main, section, header, footer, .hero-section {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Mobile Navigation Drawer - Left Docked */
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 998;
+  display: none;
+}
+
+.mobile-nav-backdrop.open {
+  display: block;
+}
+
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  right: auto;
+  width: 300px;
+  max-width: 85vw;
+  height: 100vh;
+  background-color: var(--surface-color);
+  box-shadow: 5px 0 25px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+
+.mobile-nav-drawer.open {
+  left: 0;
+  right: auto;
+}
+
+.mobile-drawer-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--surface-color);
+}
+
+.mobile-drawer-brand {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--secondary-color);
+  letter-spacing: -0.01em;
+}
+
+.mobile-drawer-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-nav-list {
+  list-style: none;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  min-height: 44px; /* Touch target accessibility */
+  transition: all var(--transition-fast);
+}
+
+.mobile-nav-link:hover {
+  background-color: #f5f5f5;
+  color: var(--primary-color);
+}
+
+.mobile-nav-link.active {
+  background-color: #f5f5f5;
+  color: var(--primary-color);
+  border-left: 3px solid var(--primary-color);
+}
+
+.mobile-nav-footer {
+  margin-top: auto;
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  background-color: #f9f9f9;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   BREAKPOINT: Desktop to Tablet (max-width: 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-grid,
+  .hod-grid,
+  .news-events-grid,
+  .two-col-grid,
+  div[style*="grid-template-columns: 1fr 1.6fr"],
+  div[style*="grid-template-columns: 1.2fr 0.8fr"],
+  div[style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+
+  .hero-grid > *,
+  .hod-grid > *,
+  .news-events-grid > *,
+  .two-col-grid > * {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .main-nav {
+    display: none; /* Switch to hamburger on tablet & mobile */
+  }
+
+  .hamburger-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* ==========================================================================
+   BREAKPOINT: Tablet & Mobile Devices (max-width: 768px)
+   Occupies 100% Viewport, Zero Half-Width Constraints
+   ========================================================================== */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 68px;
+  }
+
+  /* Full Viewport Container Scaling */
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  .institutional-topbar {
+    display: none; /* Conceal micro-topbar on small phones to save vertical space */
+  }
+
+  /* Header Optimization */
+  .header-container {
+    gap: 8px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .header-actions {
+    gap: 6px !important;
+  }
+
+  .theme-toggle-btn .theme-toggle-label {
+    display: none !important;
+  }
+
+  .theme-toggle-btn {
+    padding: 8px 10px !important;
+    min-height: 40px !important;
+  }
+
+  .search-trigger-btn span.search-placeholder,
+  .search-shortcut {
+    display: none !important;
+  }
+
+  .search-trigger-btn {
+    padding: 8px 12px !important;
+    min-height: 40px !important;
+  }
+
+  /* Hero Section: 100% Full-Width Mobile Sizing */
+  .hero-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 36px 0 44px !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    width: 100% !important;
+  }
+
+  .hero-content {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .hero-title {
+    font-size: 2.1rem !important;
+    line-height: 1.18 !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    margin-bottom: 14px !important;
+  }
+
+  .hero-lead {
+    font-size: 0.95rem !important;
+    max-width: 100% !important;
+    line-height: 1.6 !important;
+    margin-bottom: 22px !important;
+  }
+
+  /* Hero CTA Group - Stacks 100% Full-Width Buttons */
+  .hero-cta-group {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .hero-cta-group .btn,
+  .hero-cta-group .btn-hero-primary,
+  .hero-cta-group .btn-hero-secondary {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Hero Card Noticeboard - Full Mobile Width */
+  .hero-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin-top: 8px !important;
+    padding: 20px 16px !important;
+  }
+
+  /* Section Spacing & Titles */
+  .section {
+    padding: 36px 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .section-title {
+    font-size: 1.65rem !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .page-title {
+    font-size: 1.85rem !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Quick Access Bento Grid - Collapses 12-col Desktop into 100% Full-Width Mobile Cards */
+  .bento-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    width: 100% !important;
+  }
+
+  .col-span-12,
+  .col-span-8,
+  .col-span-6,
+  .col-span-4,
+  .col-span-3,
+  .bento-tile,
+  .bento-card {
+    grid-column: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Statistics Banner Grid */
+  .stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .stat-card {
+    padding: 16px 12px !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .stat-value {
+    font-size: 2rem !important;
+    word-break: break-word !important;
+  }
+
+  .stat-label {
+    font-size: 0.75rem !important;
+    line-height: 1.4 !important;
+  }
+
+  /* HOD & News / Events Grids - 100% 1-Column Mobile Layout */
+  .hod-grid,
+  .news-events-grid,
+  .two-col-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    width: 100% !important;
+  }
+
+  .card,
+  .event-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .event-card {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  .event-date-badge {
+    align-self: flex-start !important;
+  }
+
+  /* Any Desktop Multi-column Grids across Courses, Staff, News, Archive */
+  div[style*="grid-template-columns: repeat(auto-fill, minmax(360px"],
+  div[style*="grid-template-columns: repeat(auto-fill, minmax(340px"],
+  div[style*="grid-template-columns: repeat(auto-fill, minmax(320px"],
+  div[style*="grid-template-columns: repeat(auto-fill, minmax(300px"],
+  div[style*="grid-template-columns: repeat(auto-fill, minmax(280px"],
+  div[style*="grid-template-columns: repeat(auto-fill, minmax(260px"],
+  div[style*="grid-template-columns: repeat(auto-fit, minmax(300px"],
+  div[style*="grid-template-columns: repeat(auto-fit, minmax(280px"],
+  div[style*="grid-template-columns: repeat(auto-fit, minmax(260px"],
+  div[style*="grid-template-columns: repeat(auto-fit, minmax(240px"],
+  div[style*="grid-template-columns: repeat(auto-fit, minmax(220px"] {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+
+  /* Footer: 1 Column Full Width */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    width: 100% !important;
+  }
+
+  .footer-bottom-container {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  /* General Button Mobile Touch Target */
+  .btn {
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+
+  .search-modal-container {
+    margin-top: 10px;
+    width: 95vw !important;
+    max-width: 95vw !important;
+  }
+}
+
+/* ==========================================================================
+   BREAKPOINT: Compact Mobile Devices (max-width: 480px)
+   ========================================================================== */
+@media (max-width: 480px) {
+  .brand-title {
+    font-size: 1rem !important;
+  }
+  
+  .brand-subtitle {
+    display: none !important; /* Hide tiny subtitle on narrow phones to prevent header stretching */
+  }
+
+  .brand-logo {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .hero-title {
+    font-size: 1.75rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .hero-lead {
+    font-size: 0.875rem !important;
+  }
+
+  .section-title {
+    font-size: 1.45rem !important;
+  }
+
+  .filter-bar {
+    padding: 10px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
+  .filter-btn {
+    font-size: 0.75rem !important;
+    padding: 6px 10px !important;
+  }
+
+  .card-body {
+    padding: 14px 16px !important;
+  }
+}
+
+/* ==========================================================================
+   BREAKPOINT: Ultra-Compact Mobile Screens (max-width: 360px)
+   e.g. 320px - 360px phones (Galaxy Fold cover, small Androids)
+   ========================================================================== */
+@media (max-width: 360px) {
+  .container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .hero-title {
+    font-size: 1.55rem !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .brand-title {
+    font-size: 0.95rem !important;
+  }
+
+  .search-trigger-btn,
+  .theme-toggle-btn {
+    padding: 6px 8px !important;
+  }
+}

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Statistics - Physical Sciences - UNIZIK - UNIZIK</title>
+
+  <meta name="description" content="Transforming data into decisions — the quantitative backbone of modern science and policy.">
+  <link rel="canonical" href="https://physicalsciences.unizik.edu.ng/statistics">
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="Statistics - Physical Sciences - UNIZIK - Nnamdi Azikiwe University">
+  <meta property="og:description" content="Transforming data into decisions — the quantitative backbone of modern science and policy.">
+  <meta property="og:image"       content="">
+  <meta property="og:url"         content="https://physicalsciences.unizik.edu.ng/statistics">
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="Nnamdi Azikiwe University">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Statistics - Physical Sciences - UNIZIK - Nnamdi Azikiwe University">
+  <meta name="twitter:description" content="Transforming data into decisions — the quantitative backbone of modern science and policy.">
+  <meta name="twitter:image"       content="">
+
+  <!-- Base path for JS (empty in prod; '/nau' on XAMPP local dev) -->
+  <meta name="app-base" content="">
+
+  
+  
+  <!-- Google Fonts - curated body/heading font choice (theme_font_body/theme_font_head,
+       Prompt 13's Theme::fontLinkHref()) - defaults to Playfair Display + Manrope,
+       today's hardcoded pair, until an admin picks something else. -->
+  
+  
+    <style type="text/css">@font-face {font-family:'Playfair Display';font-style:normal;font-weight:400;src:url(/cf-fonts/v/playfair-display/5.2.8/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:normal;font-weight:400;src:url(/cf-fonts/v/playfair-display/5.2.8/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:normal;font-weight:400;src:url(/cf-fonts/v/playfair-display/5.2.8/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:normal;font-weight:400;src:url(/cf-fonts/v/playfair-display/5.2.8/latin-ext/wght/normal.woff2);unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:normal;font-weight:700;src:url(/cf-fonts/v/playfair-display/5.2.8/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:normal;font-weight:700;src:url(/cf-fonts/v/playfair-display/5.2.8/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:normal;font-weight:700;src:url(/cf-fonts/v/playfair-display/5.2.8/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:normal;font-weight:700;src:url(/cf-fonts/v/playfair-display/5.2.8/latin-ext/wght/normal.woff2);unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:normal;font-weight:900;src:url(/cf-fonts/v/playfair-display/5.2.8/vietnamese/wght/normal.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:normal;font-weight:900;src:url(/cf-fonts/v/playfair-display/5.2.8/latin/wght/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:normal;font-weight:900;src:url(/cf-fonts/v/playfair-display/5.2.8/latin-ext/wght/normal.woff2);unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:normal;font-weight:900;src:url(/cf-fonts/v/playfair-display/5.2.8/cyrillic/wght/normal.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:italic;font-weight:400;src:url(/cf-fonts/v/playfair-display/5.2.8/cyrillic/wght/italic.woff2);unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:italic;font-weight:400;src:url(/cf-fonts/v/playfair-display/5.2.8/vietnamese/wght/italic.woff2);unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:italic;font-weight:400;src:url(/cf-fonts/v/playfair-display/5.2.8/latin-ext/wght/italic.woff2);unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}@font-face {font-family:'Playfair Display';font-style:italic;font-weight:400;src:url(/cf-fonts/v/playfair-display/5.2.8/latin/wght/italic.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}</style>
+
+  <!-- Core CSS (always loaded) - served from the jsDelivr asset CDN, see app/config/constants.php -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/unizik/website-assets@main/v1/assets/css/variables.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/unizik/website-assets@main/v1/assets/css/global.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/unizik/website-assets@main/v1/assets/css/components.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/unizik/website-assets@main/v1/assets/css/department.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/unizik/website-assets@main/v1/assets/css/cirs-staff.min.css">
+  
+  <!-- DB-driven theme overrides - injected AFTER the CDN CSS links above so these win
+       the cascade (docs/EASY_WP_ADMINS.md §4.2). Folds in theme_* site_settings
+       overrides plus today's --dept-accent/--faculty-accent mechanism into one
+       validated block (Theme::inlineOverrides(), Prompt 13) - id="admin-theme" is
+       required, the appearance editor's live-preview script (Prompt 15) rewrites this
+       exact element instead of reloading the page. -->
+    <style id="admin-theme">:root{--dept-accent:#2AC48A;--dept-accent-light:#2AC48A;--dept-glow:rgba(240,88,24, 0.12);--dept-hero:linear-gradient(135deg,#001A10 0%,#002A18 50%,#001C12 100%);--faculty-accent:#C9922A;}</style>
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/unizik/website-assets@main/v1/assets/images/logo.webp">
+
+    <!-- Structured Data (JSON-LD set by page template - output verbatim, not escaped) -->
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Statistics",
+    "url": "https://physicalsciences.unizik.edu.ng/",
+    "parentOrganization": {
+        "@type": "CollegeOrUniversity",
+        "name": "Nnamdi Azikiwe University",
+        "url": "https://unizik.edu.ng"
+    }
+}
+</script>  
+  <link rel="manifest" href="/manifest.json">
+</head>
+<!-- Body carries theme + tenant classes for CSS targeting throughout -->
+<body class="theme-dark tenant-faculty">
+
+
+<style>
+/* nav dropdowns — served inline so menu edits never need a website-assets push */
+.navbar .has-dropdown{position:relative}
+.navbar .nav-dropdown{position:absolute;top:100%;left:0;min-width:200px;display:none;
+  flex-direction:column;background:var(--bg-2);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:6px 0;z-index:60}
+.navbar .has-dropdown:hover .nav-dropdown,
+.navbar .has-dropdown:focus-within .nav-dropdown{display:flex}
+.navbar .nav-dropdown a{padding:8px 16px;white-space:nowrap}
+.mobile-menu details>summary{list-style:none;cursor:pointer}
+.mobile-menu details[open]>summary{font-weight:700}
+</style>
+<script>
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.has-dropdown'))
+    document.querySelectorAll('.nav-dropdown').forEach(d=>d.dataset.open='');
+});
+</script>
+
+
+<nav id="navbar" class="navbar navbar--dark" role="navigation" aria-label="Main navigation">
+  <a href="https://physicalsciences.unizik.edu.ng/" class="nav-brand">
+    <img
+      src="https://cdn.jsdelivr.net/gh/unizik/website-assets@main/v1/assets/images/logo.webp"
+      alt="Nnamdi Azikiwe University crest"
+      class="nav-logo"
+      width="38"
+      height="38"
+    >
+    <div class="nav-brand-text">
+      <span class="nav-brand-name">Physical Sciences</span>
+      <span class="nav-brand-tag">Nnamdi Azikiwe University</span>
+    </div>
+  </a>
+
+  <ul class="nav-links" role="list"><li><a href="/">Home</a></li><li><a href="/#departments">Departments</a></li><li><a href="/#programmes">Programmes</a></li><li><a href="/#research">Research</a></li><li><a href="/news">News</a></li><li><a href="/events">Events</a></li><li><a href="/contact" class="nav-cta">Contact</a></li></ul>
+  <button
+    class="nav-burger"
+    id="nav-burger"
+    aria-label="Open navigation menu"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div
+  id="mobile-menu"
+  class="mobile-menu mobile-menu--dark"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Navigation menu"
+>
+  <button
+    class="mobile-menu-close"
+    id="mobile-menu-close"
+    aria-label="Close navigation menu"
+  >✕</button>
+
+  <nav aria-label="Mobile navigation">
+    <a href="/">Home</a><a href="/#departments">Departments</a><a href="/#programmes">Programmes</a><a href="/#research">Research</a><a href="/news">News</a><a href="/events">Events</a><a href="/contact" class="mobile-menu-cta">Contact →</a>        <a href="https://unizik.edu.ng/" class="mobile-menu-back">← Back to UNIZIK</a>
+      </nav>
+</div>
+
+<nav aria-label="Breadcrumb" class="breadcrumb">
+  <div class="breadcrumb-inner">
+
+    
+                  <a href="https://physicalsciences.unizik.edu.ng/">Home</a>
+                <span class="breadcrumb-sep" aria-hidden="true">›</span>
+                                <a href="https://physicalsciences.unizik.edu.ng/">Physical Sciences</a>
+                <span class="breadcrumb-sep" aria-hidden="true">›</span>
+                                <span class="breadcrumb-current" aria-current="page">Statistics</span>
+          
+  </div>
+</nav>
+
+<!-- BreadcrumbList JSON-LD (co-located with the visible breadcrumb per SEO best practice) -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://physicalsciences.unizik.edu.ng/"},{"@type":"ListItem","position":2,"name":"Physical Sciences","item":"https://physicalsciences.unizik.edu.ng/"},{"@type":"ListItem","position":3,"name":"Statistics","item":"https://physicalsciences.unizik.edu.ng/statistics"}]}</script>
+
+
+
+<section id="dept-hero" class="dept-hero" aria-label="Statistics">
+
+      <div
+    class="dept-hero-bg"
+    aria-hidden="true"
+    style="background: linear-gradient(135deg,#001A10 0%,#002A18 50%,#001C12 100%);"
+  ></div>
+  <div class="hero-grid"  aria-hidden="true"></div>
+  <div class="hero-glow"  aria-hidden="true"></div>
+
+  <div class="hero-inner section-inner">
+
+        <div class="hero-text reveal">
+
+      <div class="hero-supertag" aria-label="Parent faculty">
+        Physical Sciences &middot;
+        PHYSICAL-SCIENCES UNIZIK
+      </div>
+
+              <div class="hero-icon" aria-hidden="true">📊</div>
+      
+            <h1 class="hero-name">
+        <em>Statistics</em>
+      </h1>
+
+      <div class="hero-accent-line" aria-hidden="true"></div>
+
+              <p class="hero-tagline">Transforming data into decisions — the quantitative backbone of modern science and policy.</p>
+      
+      <div class="hero-actions">
+        <a href="#programmes" class="btn btn-primary">View Programmes</a>
+        <a href="#staff"      class="btn btn-outline">Meet Our Staff</a>
+      </div>
+
+    </div>
+
+        <aside class="hero-stats reveal reveal-delay-2" aria-label="Department statistics">
+
+      <div class="hs-stat">
+        <span class="hs-num"
+          data-target="1"
+          data-suffix=""
+        >1</span>
+        <span class="hs-label">Programmes</span>
+      </div>
+
+      <div class="hs-stat">
+        <span class="hs-num"
+          data-target="0"
+          data-suffix="+"
+        >0+</span>
+        <span class="hs-label">Academic Staff</span>
+      </div>
+
+      <div class="hs-stat">
+        <span class="hs-num"
+          data-target="8"
+          data-suffix=""
+        >8</span>
+        <span class="hs-label">Courses</span>
+      </div>
+
+      <div class="hs-stat">
+        <span class="hs-num"
+          data-target="0"
+          data-suffix=""
+        >0</span>
+        <span class="hs-label">Research Areas</span>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <div class="hero-tab" aria-hidden="true"></div>
+</section>
+
+
+
+<div class="section-wrap dark" aria-label="Other departments">
+  <div class="section-inner">
+
+    <p class="section-mini-heading" style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--text-faint);margin-bottom:16px">
+      Other Departments in Physical Sciences    </p>
+
+        <div class="sibling-grid" role="list" aria-label="Department navigation">
+              <a
+          href="https://physicalsciences.unizik.edu.ng/computer-science"
+          class="faculty-pill"
+          role="listitem"
+          aria-current="false"
+        >
+          <span class="faculty-pill-icon" aria-hidden="true">💻</span>
+          <span class="faculty-pill-name">Computer Science</span>
+          <span class="faculty-pill-count">3 Progs</span>
+        </a>
+              <a
+          href="https://physicalsciences.unizik.edu.ng/mathematics"
+          class="faculty-pill"
+          role="listitem"
+          aria-current="false"
+        >
+          <span class="faculty-pill-icon" aria-hidden="true">📐</span>
+          <span class="faculty-pill-name">Mathematics</span>
+          <span class="faculty-pill-count">1 Progs</span>
+        </a>
+              <a
+          href="https://physicalsciences.unizik.edu.ng/physics"
+          class="faculty-pill"
+          role="listitem"
+          aria-current="false"
+        >
+          <span class="faculty-pill-icon" aria-hidden="true">⚛️</span>
+          <span class="faculty-pill-name">Physics</span>
+          <span class="faculty-pill-count">1 Progs</span>
+        </a>
+              <a
+          href="https://physicalsciences.unizik.edu.ng/statistics"
+          class="faculty-pill active"
+          role="listitem"
+          aria-current="page"
+        >
+          <span class="faculty-pill-icon" aria-hidden="true">📊</span>
+          <span class="faculty-pill-name">Statistics</span>
+          <span class="faculty-pill-count">1 Progs</span>
+        </a>
+              <a
+          href="https://physicalsciences.unizik.edu.ng/information-technology"
+          class="faculty-pill"
+          role="listitem"
+          aria-current="false"
+        >
+          <span class="faculty-pill-icon" aria-hidden="true">🌐</span>
+          <span class="faculty-pill-name">Information Technology</span>
+          <span class="faculty-pill-count">1 Progs</span>
+        </a>
+              <a
+          href="https://physicalsciences.unizik.edu.ng/industrial-physics"
+          class="faculty-pill"
+          role="listitem"
+          aria-current="false"
+        >
+          <span class="faculty-pill-icon" aria-hidden="true">🔭</span>
+          <span class="faculty-pill-name">Industrial Physics</span>
+          <span class="faculty-pill-count">1 Progs</span>
+        </a>
+          </div>
+
+  </div>
+</div>
+
+
+
+<div class="section-wrap" id="about-dept" aria-label="About the department">
+  <div class="section-inner">
+
+    <div class="section-header reveal">
+      <div class="stag">About</div>
+      <h2 class="section-title">Statistics</h2>
+    </div>
+
+    <div class="dept-description reveal reveal-delay-1">
+              <p class="body">Statistical inference, econometrics, data science, actuarial science and biometrics.</p>
+          </div>
+
+  </div>
+</div>
+
+
+
+<div class="section-wrap dark" id="hod" aria-label="Message from the Head of Department">
+  <div class="section-inner">
+
+    <div class="section-header reveal">
+      <div class="stag">Leadership</div>
+      <h2 class="section-title">Head of Department</h2>
+    </div>
+
+    <div class="hod-grid reveal reveal-delay-1">
+
+            <div class="hod-card">
+        <div class="hod-photo">
+                      <img
+              src="https://cirs.unizik.edu.ng/uploads/profiles/2026/07/73996/NAU2436.jpg"
+              alt="Dr. Eze Chukwuemeka Francis"
+              loading="lazy"
+              data-image-fallback
+            >
+            <div class="hod-initials" aria-hidden="true" hidden>
+              EC            </div>
+                    <div class="hod-bar" aria-hidden="true"></div>
+        </div>
+
+        <div class="hod-card-body">
+          <p class="hod-role">Head of Department</p>
+          <h3 class="hod-name">
+            Dr. Eze Chukwuemeka Francis          </h3>
+
+                  </div>
+      </div>
+
+            <div class="hod-msg">
+                            <p class="hod-contact">
+                          <a href="/cdn-cgi/l/email-protection#9dfbfeb3f8e7f8dde8f3f4e7f4f6b3f8f9e8b3f3fa"><span class="__cf_email__" data-cfemail="dcbabff2b9a6b99ca9b2b5a6b5b7f2b9b8a9f2b2bb">[email&#160;protected]</span></a>
+                                      <span>+2348107175597</span>
+                      </p>
+              </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="section-wrap" id="programmes" aria-label="Programmes offered">
+  <div class="section-inner">
+
+    <div class="section-header reveal">
+      <div class="stag">Programmes</div>
+      <h2 class="section-title">What We Offer</h2>
+    </div>
+
+        <div class="tab-row" role="tablist" aria-label="Programme levels">
+                            <button
+          class="tab active"
+          data-tab="undergraduate"
+          role="tab"
+          aria-selected="true"
+        >Undergraduate</button>
+                                          </div>
+
+                        <div
+        class="panel active"
+        data-panel="undergraduate"
+        role="tabpanel"
+      >
+        <div class="course-grid">
+                      <div class="prog-card reveal">
+              <span class="prog-degree">Undergraduate</span>
+              <h4 class="prog-name">Statistics</h4>
+                              <p class="prog-duration">4 Years</p>
+                                        </div>
+                  </div>
+      </div>
+                            
+  </div>
+</div>
+
+
+
+<div class="section-wrap dark" id="courses" aria-label="Course list">
+  <div class="section-inner">
+
+    <div class="section-header reveal">
+      <div class="stag">Curriculum</div>
+      <h2 class="section-title">Course List</h2>
+    </div>
+
+    <div class="tab-row" role="tablist" aria-label="Course levels">
+                            <button
+          class="tab active"
+          data-tab="courses-undergraduate"
+          role="tab"
+          aria-selected="true"
+        >Undergraduate</button>
+                                          </div>
+
+                    
+      <div
+        class="panel active"
+        data-panel="courses-undergraduate"
+        role="tabpanel"
+      >
+        <div class="course-grid">
+                                  <div class="course-card">
+                              <span class="course-code">STA 211</span>
+                            <span class="course-title">Probability Theory I</span>
+                              <span class="course-units">3 Units</span>
+                          </div>
+                                  <div class="course-card">
+                              <span class="course-code">STA 221</span>
+                            <span class="course-title">Statistical Inference I</span>
+                              <span class="course-units">3 Units</span>
+                          </div>
+                                  <div class="course-card">
+                              <span class="course-code">STA 311</span>
+                            <span class="course-title">Regression &amp; ANOVA</span>
+                              <span class="course-units">3 Units</span>
+                          </div>
+                                  <div class="course-card">
+                              <span class="course-code">STA 321</span>
+                            <span class="course-title">Design of Experiments</span>
+                              <span class="course-units">3 Units</span>
+                          </div>
+                                  <div class="course-card">
+                              <span class="course-code">STA 411</span>
+                            <span class="course-title">Multivariate Analysis</span>
+                              <span class="course-units">3 Units</span>
+                          </div>
+                                  <div class="course-card">
+                              <span class="course-code">STA 421</span>
+                            <span class="course-title">Time Series &amp; Forecasting</span>
+                              <span class="course-units">3 Units</span>
+                          </div>
+                                  <div class="course-card">
+                              <span class="course-code">STA 431</span>
+                            <span class="course-title">Data Science &amp; Python</span>
+                              <span class="course-units">3 Units</span>
+                          </div>
+                                  <div class="course-card">
+                              <span class="course-code">STA 491</span>
+                            <span class="course-title">Project</span>
+                              <span class="course-units">6 Units</span>
+                          </div>
+                  </div>
+      </div>
+
+                                              
+  </div>
+</div>
+
+
+
+<section class="section-dept-staff section--dark section" id="staff" aria-label="Departmental staff">
+  <div class="container">
+    <h2 class="section-title" style="color:#fff;margin-bottom:2rem">Academic Staff</h2>
+
+    
+      <div class="cirs-staff-wrap"
+           data-cirs-staff="faculty"
+           data-code="F013">
+        <!-- Populated by cirs-staff.js -->
+      </div>
+
+    
+  </div>
+</section>
+
+
+
+
+
+<footer class="footer-faculty" role="contentinfo">
+  <div class="footer-faculty-inner">
+
+    <!-- ── Top: Back to UNIZIK ───────────────────────────────────────────── -->
+    <div class="footer-faculty-back-row">
+      <a href="https://unizik.edu.ng/" class="footer-back-link" aria-label="Return to Nnamdi Azikiwe University main site">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15,18 9,12 15,6"/>
+        </svg>
+        Back to Nnamdi Azikiwe University
+      </a>
+    </div>
+
+    <!-- ── 3-column grid ─────────────────────────────────────────────────── -->
+    <div class="footer-faculty-grid">
+
+      <!-- Col 1: Faculty brand -->
+      <div class="footer-col footer-col--brand">
+        <a href="/" class="footer-brand" aria-label="Faculty of Physical Sciences home">
+          <img
+            src="https://cdn.jsdelivr.net/gh/unizik/website-assets@main/v1/assets/images/logo.webp"
+            alt="Nnamdi Azikiwe University crest"
+            class="footer-logo"
+            width="44"
+            height="44"
+            loading="lazy"
+          >
+          <span class="footer-brand-name">
+            Physical Sciences          </span>
+        </a>
+                <p class="footer-tagline">Pushing the boundaries of computation, mathematics, and the physical world — building the brains of tomorrow.</p>
+                <p class="footer-description footer-description--sm">
+          Part of <a href="https://unizik.edu.ng/">Nnamdi Azikiwe University</a>, Awka, Nigeria.
+        </p>
+      </div>
+
+      <!-- Col 2: Quick links -->
+      <div class="footer-col footer-col--nav">
+        <h3 class="footer-col-heading">Quick Links</h3>
+        <ul class="footer-nav-list" role="list">
+          <li><a href="/">Home</a></li>
+                    <li><a href="/#departments">Departments</a></li>
+          <li><a href="/#programmes">Programmes</a></li>
+          <li><a href="/research">Research</a></li>
+          <li><a href="/news">News</a></li>
+          <li><a href="/events">Events</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/report-issue">Report a Problem</a></li>
+                  </ul>
+      </div>
+
+      <!-- Col 3: Contact details -->
+      <div class="footer-col footer-col--contact">
+        <h3 class="footer-col-heading">Contact</h3>
+        <address class="footer-address">
+          
+          
+          
+                    <p class="footer-contact-item footer-contact-item--fallback">
+            Nnamdi Azikiwe University<br>
+            PMB 5025, Awka,<br>
+            Anambra State, Nigeria
+          </p>
+                  </address>
+      </div>
+
+    </div><!-- /.footer-faculty-grid -->
+  </div><!-- /.footer-faculty-inner -->
+
+  <!-- ── Footer bottom bar ─────────────────────────────────────────────── -->
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <p class="footer-copyright">
+        &copy; 2026 Faculty of Physical Sciences,
+        Nnamdi Azikiwe University. All rights reserved.
+      </p>
+      <p class="footer-motto" aria-hidden="true">
+        <span class="footer-motto-dot">●</span>
+        Discipline
+        <span class="footer-motto-dot">●</span>
+        Self Reliance
+        <span class="footer-motto-dot">●</span>
+        Excellence
+      </p>
+    </div>
+  </div>
+</footer>
+
+  <!-- Served from the jsDelivr asset CDN, see app/config/constants.php -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/gh/unizik/website-assets@main/v1/assets/js/global.js" defer></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/unizik/website-assets@main/v1/assets/js/department.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/unizik/website-assets@main/v1/assets/js/cirs-staff.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/unizik/website-assets@main/v1/assets/js/cirs-profile.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/unizik/website-assets@main/v1/assets/js/image-fallback.js" defer></script>
+  
+  
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a401a1262f99c4e4',t:'MTc5MDI1MTIzNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

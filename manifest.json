@@ -1,0 +1,70 @@
+{
+  "id": "/app",
+  "name": "NASS UNIZIK Departmental Mobile Application",
+  "short_name": "NASS UNIZIK",
+  "description": "Official student mobile software application for the National Association of Students of Statistics (NASS), Department of Statistics, Nnamdi Azikiwe University (UNIZIK).",
+  "start_url": "/app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#0c2340",
+  "background_color": "#0c2340",
+  "lang": "en-NG",
+  "categories": ["education", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/resources/images/nass-logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Academia & Courses",
+      "short_name": "Academia",
+      "description": "Access statistical course curriculum and course materials",
+      "url": "/academia",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Lecture Timetable",
+      "short_name": "Timetable",
+      "description": "View lecture schedules and classroom allocations",
+      "url": "/timetable",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "SIWES Training",
+      "short_name": "SIWES",
+      "description": "SIWES industrial attachment logbook and guidelines",
+      "url": "/siwes",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Past Questions Archive",
+      "short_name": "Past Questions",
+      "description": "Search past examination questions and course packs",
+      "url": "/archive",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}

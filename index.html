@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NASS UNIZIK | Department of Statistics Portal</title>
+  <meta name="description" content="Official departmental portal of the National Association of Students of Statistics (NASS), Nnamdi Azikiwe University, Awka. Facts from Figures.">
+  <meta property="og:title" content="NASS UNIZIK | Department of Statistics Portal">
+  <meta property="og:description" content="Official departmental portal of the National Association of Students of Statistics (NASS), Nnamdi Azikiwe University, Awka. Facts from Figures.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/animations.css">
+
+  <!-- Progressive Web App (PWA) Manifest & Meta -->
+  <meta name="theme-color" content="#0c2340">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="NASS UNIZIK">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png">
+  <link rel="icon" type="image/jpeg" href="/resources/images/nass-logo.jpg">
+
+  <script src="/js/theme.js"></script>
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+
+  <!-- Top Institutional Bar -->
+  <div class="institutional-topbar" id="topbar">
+    <div class="container topbar-content">
+      <div class="topbar-left">
+        <span class="topbar-motto">Facts from Figures</span>
+        <span class="topbar-divider">|</span>
+        <span>Department of Statistics, Nnamdi Azikiwe University (UNIZIK)</span>
+      </div>
+      <div class="topbar-right">
+        <a href="/contacts.html" class="topbar-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          Student Helpdesk & Inquiries
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      <a href="/" class="header-brand" id="headerBrand">
+        <img src="/resources/images/nass-logo.jpg" alt="NASS Logo" class="brand-logo">
+        <div class="brand-info">
+          <span class="brand-title">NASS UNIZIK</span>
+          <span class="brand-subtitle">Department of Statistics</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="main-nav" id="mainNav" aria-label="Primary Navigation">
+        <a href="/" class="nav-link active">Home</a>
+        <a href="/academia.html" class="nav-link">Academia</a>
+        <a href="/past-questions.html" class="nav-link">Past Questions</a>
+        <a href="/timetable.html" class="nav-link">Timetable</a>
+        <a href="/siwes.html" class="nav-link">SIWES</a>
+        <a href="/administration.html" class="nav-link">Staff</a>
+        <a href="/nass.html" class="nav-link">NASS Exco</a>
+        <a href="/archive.html" class="nav-link">Gallery</a>
+        <a href="/news.html" class="nav-link">News</a>
+        <a href="/events.html" class="nav-link">Events</a>
+        <a href="#install-app" class="nav-link nav-install-btn" title="Install NASS UNIZIK Mobile App (Android & iOS)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+            <line x1="12" y1="18" x2="12.01" y2="18"/>
+          </svg>
+          <span>Install App</span>
+        </a>
+      </nav>
+
+      <!-- Search & Mobile Toggle -->
+      <div class="header-actions">
+        <button type="button" class="search-trigger-btn" id="searchTriggerBtn" aria-label="Open Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="search-placeholder">Search portal...</span>
+          <kbd class="search-shortcut">Ctrl K</kbd>
+        </button>
+
+        <button type="button" class="theme-toggle-btn header-theme-toggle" id="headerThemeToggle" aria-label="Switch Light/Dark Theme" title="Switch Light/Dark Theme">
+          <span class="theme-toggle-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+          <span class="theme-toggle-label">Theme</span>
+        </button>
+
+        <button type="button" class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="mobile-drawer-header">
+      <div class="mobile-drawer-brand">NASS UNIZIK</div>
+      <button type="button" class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close menu">&times;</button>
+    </div>
+    <ul class="mobile-nav-list">
+      <li><a href="/" class="mobile-nav-link active">Home</a></li>
+      <li><a href="/academia.html" class="mobile-nav-link">Academia & Courses</a></li>
+      <li><a href="/about.html#where-statistics-can-take-you" class="mobile-nav-link">Where Statistics Can Take You</a></li>
+      <li><a href="/past-questions.html" class="mobile-nav-link">Past Questions Repository</a></li>
+      <li><a href="/timetable.html" class="mobile-nav-link">Lecture Timetable</a></li>
+      <li><a href="/siwes.html" class="mobile-nav-link">SIWES Industrial Training</a></li>
+      <li><a href="/administration.html" class="mobile-nav-link">Administration & Staff</a></li>
+      <li><a href="/nass.html" class="mobile-nav-link">NASS Executive Council</a></li>
+      <li><a href="/archive.html" class="mobile-nav-link">Gallery & Photos</a></li>
+      <li><a href="/news.html" class="mobile-nav-link">Departmental News</a></li>
+      <li><a href="/events.html" class="mobile-nav-link">Events & Workshops</a></li>
+      <li><a href="/about.html" class="mobile-nav-link">About Department</a></li>
+      <li>
+        <a href="#install-app" class="mobile-nav-link mobile-install-btn">
+          <span class="mobile-nav-icon" style="display:inline-flex; align-items:center; color:#fbbf24;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+              <path d="M12 6v6m-3-3 3 3 3-3"/>
+            </svg>
+          </span>
+          <span>Install App (Android & iOS)</span>
+        </a>
+      </li>
+    </ul>
+    <div class="mobile-nav-footer">
+      <div>National Association of Students of Statistics</div>
+      <div style="font-size: 0.75rem; margin-top: 4px;">UNIZIK, Awka · "Facts from Figures"</div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="heroSection">
+      <div class="hero-pattern"></div>
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-badges-wrapper" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 16px;">
+            <div class="hero-badge" style="margin-bottom: 0;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Department of Statistics · UNIZIK
+            </div>
+            <div class="hero-academic-tag" id="heroAcademicPill" style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(255, 255, 255, 0.14); border: 1.5px solid rgba(254, 240, 138, 0.55); border-radius: 9999px; color: #ffffff; font-size: 0.8125rem; font-weight: 600; backdrop-filter: blur(8px); box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fde047" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span>Session: <strong id="heroCurrentSession" style="color: #fef08a; font-weight: 700;">2026/2027</strong></span>
+              <span style="opacity: 0.5;">|</span>
+              <span id="heroCurrentSemester" style="color: #67e8f9; font-weight: 700;">First Semester</span>
+            </div>
+          </div>
+          <h1 class="hero-title">
+            National Association of Statistics Students
+          </h1>
+          <p class="hero-lead">
+            Department of Statistics, Faculty of Physical Sciences, Nnamdi Azikiwe University, Awka. Empowering future statisticians, quantitative analysts, and data leaders through academic excellence and statistical innovation.
+          </p>
+          <div class="hero-cta-group">
+            <a href="/academia.html" class="btn-hero-primary">
+              <span>Explore Resources</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a href="/timetable.html" class="btn-hero-secondary">
+              Lecture Timetable
+            </a>
+            <a href="/siwes.html" class="btn-hero-secondary">
+              SIWES Guides
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Card: Noticeboard Bulletin -->
+        <div class="hero-card" id="heroAnnouncementCard">
+          <div class="hero-card-header">
+            <h2 class="hero-card-title">
+              <span class="bulletin-chime-icon" title="Active departmental dispatch">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d9483b" stroke-width="2.3">
+                  <path d="m3 11 18-5v12L3 14v-3z"></path>
+                  <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+                </svg>
+              </span>
+              <span>Noticeboard Bulletin</span>
+            </h2>
+            <span class="badge badge-urgent" style="display: inline-flex; align-items: center; gap: 4px;">
+              <span class="live-pulse-beacon" aria-hidden="true">
+                <span class="beacon-ping"></span>
+                <span class="beacon-dot"></span>
+              </span>
+              <span>LIVE UPDATES</span>
+            </span>
+          </div>
+
+          <!-- Breaking Dispatch Ticker Bar -->
+          <div class="bulletin-ticker-strip">
+            <span class="bulletin-ticker-tag">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              DISPATCH
+            </span>
+            <span class="bulletin-ticker-text" id="bulletinTickerMsg">Harmattan Semester 2026/2027 Registration Active · Timetables Published</span>
+          </div>
+
+          <div id="heroAnnouncementsList">
+            <div class="bulletin-item">
+              <strong class="bulletin-title">First Semester 2026/2027 Resumption (Oct 12 & 14)</strong>
+              <p class="bulletin-content">
+                Per official Senate memorandum (Ref: NAU/R/E/032/97), new students resume Oct 12; returning students resume Oct 14 for tuition payments, departmental clearance, and lecture commencement.
+              </p>
+              <div class="bulletin-meta">
+                <span class="badge badge-urgent">SENATE APPROVED</span>
+                <span>Office of the Registrar</span>
+              </div>
+            </div>
+            <div class="bulletin-item">
+              <strong class="bulletin-title">Matriculation & Examination Dates Fixed</strong>
+              <p class="bulletin-content">
+                Matriculation holds on Friday, January 29, 2027. First Semester degree examinations (CBE & PBE) commence Monday, February 22 through Friday, March 19, 2027.
+              </p>
+              <div class="bulletin-meta">
+                <span class="badge badge-general">ACADEMIC</span>
+                <span>Registrar / Senate Committee</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Academic Calendar Session & Semester Banner -->
+    <section class="academic-calendar-bar" id="academicCalendarBar" style="background: linear-gradient(90deg, #0c2340 0%, #172e54 50%, #0c2340 100%); color: #ffffff; border-bottom: 2px solid #eab308; padding: 12px 0; position: relative; z-index: 10;">
+      <div class="container" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <div style="display: inline-flex; align-items: center; gap: 6px; background: #eab308; color: #0c2340; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase;">
+            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #0c2340;"></span>
+            Active Academic Term
+          </div>
+          <div style="font-size: 0.9375rem; font-weight: 500;">
+            Academic Session: <strong id="barCurrentSession" style="color: #fef08a; font-weight: 700; font-size: 1rem;">2026/2027</strong>
+            <span style="margin: 0 8px; opacity: 0.6;">·</span>
+            Semester: <strong id="barCurrentSemester" style="color: #67e8f9; font-weight: 700; font-size: 1rem;">First Semester</strong>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; font-size: 0.8125rem; flex-wrap: wrap;">
+          <a href="/timetable.html" style="color: #fef08a; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; background: rgba(255, 255, 255, 0.08); border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.15); transition: background 0.2s;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Lecture Timetable
+          </a>
+          <a href="/academia.html" style="color: #ffffff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; background: rgba(255, 255, 255, 0.08); border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.15); transition: background 0.2s;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/></svg>
+            Courses & Syllabi
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Signature Educational Feature: WHERE CAN STATISTICS TAKE YOU? -->
+    <section class="section" style="padding: 44px 0 36px; background: linear-gradient(135deg, #071526 0%, #0c2340 50%, #163660 100%); color: #ffffff; position: relative; overflow: hidden; border-bottom: 2px solid #eab308;">
+      <div class="container" style="position: relative; z-index: 2;">
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 36px; align-items: center;" class="hero-grid">
+          <div>
+            <span class="badge" style="background: rgba(234, 179, 8, 0.2); color: #fef08a; border: 1px solid rgba(234, 179, 8, 0.4); text-transform: uppercase; font-weight: 800; font-size: 0.75rem; margin-bottom: 12px; display: inline-block;">
+              Signature Educational Feature · Career Encyclopedia
+            </span>
+            <h2 style="font-family: var(--font-serif); font-size: 2rem; line-height: 1.25; color: #ffffff; margin-bottom: 12px;">
+              WHERE CAN STATISTICS TAKE YOU?
+            </h2>
+            <p style="font-size: 1rem; color: #cbd5e1; line-height: 1.7; margin-bottom: 16px;">
+              More places than you probably think. From <strong>Data Analytics</strong> and <strong>Machine Learning</strong> to <strong>Actuarial Science</strong>, <strong>Biostatistics</strong>, <strong>Econometrics</strong>, and <strong>Genomics</strong> — discover 14 modern career pathways mapped directly to your UNIZIK courses.
+            </p>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <a href="/about.html#where-statistics-can-take-you" class="btn btn-secondary" style="font-weight: 700;">Explore in About Department</a>
+              <a href="/about.html#where-statistics-can-take-you" class="btn btn-outline" style="border-color: #cbd5e1; color: #ffffff;">Build Your Pathway</a>
+            </div>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); border-radius: 8px; padding: 22px;">
+            <div style="font-size: 0.8125rem; font-weight: 800; color: #fef08a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">
+              The Intellectual Reality
+            </div>
+            <p style="font-size: 0.875rem; color: #e2e8f0; line-height: 1.6; margin: 0; font-style: italic;">
+              "Statistics gives you a powerful quantitative foundation. Your career direction depends on the statistical concepts you master, the technical skills you add, your domain knowledge, your experience, and the problems you learn to solve."
+            </p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.75rem; color: #94a3b8;">
+              <span>14 Specialized Pathways</span>
+              <span style="color: #67e8f9;">73 UNIZIK Courses Mapped</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Access Bento Grid -->
+    <section class="section reveal-on-scroll" id="quickAccessSection">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="section-eyebrow">Academic Portals & Digital Resources</div>
+            <h2 class="section-title">Essential Student Resources</h2>
+          </div>
+          <p class="section-desc">
+            Direct access to departmental curricula, industrial training kits, research documents, and student government.
+          </p>
+        </div>
+
+        <div class="bento-grid">
+          <!-- Featured Tile 1: Courses & Syllabi (Col Span 4) -->
+          <a href="/academia.html" class="bento-tile col-span-4" id="cardAcademia">
+            <div>
+              <div class="quick-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+                  <path d="M6 2v20"></path>
+                  <path d="M10 7h6"></path>
+                  <path d="M10 11h6"></path>
+                </svg>
+              </div>
+              <h3 class="quick-title">Courses & Outlines</h3>
+              <p class="quick-text">100L through 400L syllabus, credit ratings, prerequisite trees, and past examination papers.</p>
+            </div>
+            <div style="margin-top: 18px; font-size: 0.75rem; font-weight: 700; color: var(--brand); display: flex; align-items: center; gap: 4px;">
+              <span>View Curriculum</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+          </a>
+
+          <!-- Featured Tile 2: Lecture Timetable (Col Span 4) -->
+          <a href="/timetable.html" class="bento-tile col-span-4" id="cardTimetable">
+            <div>
+              <div class="quick-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                  <line x1="16" x2="16" y1="2" y2="6"></line>
+                  <line x1="8" x2="8" y1="2" y2="6"></line>
+                  <line x1="3" x2="21" y1="10" y2="10"></line>
+                </svg>
+              </div>
+              <h3 class="quick-title">Lecture Timetable</h3>
+              <p class="quick-text">Real-time schedule for lectures, computer lab sessions, assigned lecture halls, and lecturers.</p>
+            </div>
+            <div style="margin-top: 18px; font-size: 0.75rem; font-weight: 700; color: var(--brand); display: flex; align-items: center; gap: 4px;">
+              <span>Check Schedule</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+          </a>
+
+          <!-- Featured Tile 3: SIWES Industrial Training (Col Span 4) -->
+          <a href="/siwes.html" class="bento-tile col-span-4" id="cardSiwes">
+            <div>
+              <div class="quick-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+              </div>
+              <h3 class="quick-title">SIWES Training</h3>
+              <p class="quick-text">Comprehensive preparation guides, logbook entries, acceptance letter templates, and defense protocols.</p>
+            </div>
+            <div style="margin-top: 18px; font-size: 0.75rem; font-weight: 700; color: var(--brand); display: flex; align-items: center; gap: 4px;">
+              <span>SIWES Portal</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+          </a>
+
+          <!-- Featured Tile 4: Final Year Projects (Col Span 6) -->
+          <a href="/projects.html" class="bento-tile col-span-6" id="cardProjects">
+            <div>
+              <div class="quick-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" x2="18" y1="20" y2="10"></line>
+                  <line x1="12" x2="12" y1="20" y2="4"></line>
+                  <line x1="6" x2="6" y1="20" y2="14"></line>
+                </svg>
+              </div>
+              <h3 class="quick-title">Final Year Projects & Statistical Research</h3>
+              <p class="quick-text">Statistical research guidelines, data analysis software workflows (R, SPSS, Python), project topics repository, and departmental formatting standards.</p>
+            </div>
+            <div style="margin-top: 18px; font-size: 0.75rem; font-weight: 700; color: var(--brand); display: flex; align-items: center; gap: 4px;">
+              <span>Browse Research Archive</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+          </a>
+
+          <!-- Featured Tile 5: Departmental Staff & Faculty (Col Span 3) -->
+          <a href="/administration.html" class="bento-tile col-span-3" id="cardAdministration">
+            <div>
+              <div class="quick-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="2" x2="22" y1="22" y2="22"></line>
+                  <line x1="12" x2="12" y1="2" y2="8"></line>
+                  <path d="m2 8 10-6 10 6v2H2Z"></path>
+                  <path d="M4 10v12"></path>
+                  <path d="M8 10v12"></path>
+                  <path d="M16 10v12"></path>
+                  <path d="M20 10v12"></path>
+                </svg>
+              </div>
+              <h3 class="quick-title">Staff Directory</h3>
+              <p class="quick-text">Profiles of the Head of Department, professors, academic advisers, and administrative staff.</p>
+            </div>
+            <div style="margin-top: 18px; font-size: 0.75rem; font-weight: 700; color: var(--brand); display: flex; align-items: center; gap: 4px;">
+              <span>Faculty List</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+          </a>
+
+          <!-- Featured Tile 6: NASS Executive Council (Col Span 3) -->
+          <a href="/nass.html" class="bento-tile col-span-3" id="cardNass">
+            <div>
+              <div class="quick-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="8" r="6"></circle>
+                  <path d="m15.477 12.89 2.128 7.643-4.605-2.424-4.605 2.424 2.128-7.643"></path>
+                </svg>
+              </div>
+              <h3 class="quick-title">NASS Exco</h3>
+              <p class="quick-text">Student leadership, office portfolios, student welfare initiatives, and the association constitution.</p>
+            </div>
+            <div style="margin-top: 18px; font-size: 0.75rem; font-weight: 700; color: var(--brand); display: flex; align-items: center; gap: 4px;">
+              <span>Meet Executives</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Departmental Statistics Strip (Lovable Style) -->
+    <section class="stats-strip reveal-on-scroll" id="statisticsBannerSection">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value" data-setting="stat_students">300+</div>
+            <div class="stat-label">Enrolled Undergraduates</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">100L through 400L</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" data-setting="accreditation">100%</div>
+            <div class="stat-label">NUC Accredited</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">National Universities Commission</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" data-setting="stat_faculty">28</div>
+            <div class="stat-label">Academic Faculty</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Distinguished Lecturers & Fellows</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" data-setting="stat_graduates">1000+</div>
+            <div class="stat-label">Alumni Worldwide</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Nnamdi Azikiwe University</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOD Welcome & Departmental Philosophy Section -->
+    <section class="section section-muted reveal-on-scroll" id="hodWelcomeSection">
+      <div class="container">
+        <div style="display: grid; grid-template-columns: 1fr 1.6fr; gap: 40px; align-items: center;" class="hero-grid">
+          
+          <div class="card" style="overflow: hidden; border: 2px solid var(--border-color); box-shadow: var(--shadow-md); border-radius: 12px; background: #ffffff;">
+            <div style="background-color: #0c2340; height: 380px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+              <img src="/resources/images/staff/NAU2436.jpg" id="hodImageDisplay" data-setting="hod_image" alt="Prof Francis Chukwuemeka Eze - Head of Department" loading="eager" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='/resources/images/staff_hod.jpg';" style="width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;">
+              <div style="position: absolute; top: 14px; left: 14px; background: rgba(12, 35, 64, 0.88); color: #fde047; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; backdrop-filter: blur(6px); border: 1px solid rgba(253, 224, 71, 0.3); display: flex; align-items: center; gap: 5px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>CIRS: NAU2436</span>
+              </div>
+              <div style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, rgba(12, 35, 64, 0.95) 0%, rgba(12, 35, 64, 0.6) 60%, transparent 100%); padding: 24px 18px 14px; color: #ffffff;">
+                <div style="font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; line-height: 1.3;" id="hodNameDisplay" data-setting="hod_name">Prof. Francis Chukwuemeka Eze</div>
+                <div style="font-size: 0.8125rem; color: #fca5a5; font-weight: 600; margin-top: 3px;" id="hodTitleDisplay" data-setting="hod_title">Head of Department (HOD), Statistics</div>
+              </div>
+            </div>
+            <div class="card-body" style="padding: 16px 20px; font-size: 0.875rem; color: var(--text-secondary);">
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <div><strong style="color: var(--text-primary);">Office:</strong> <span data-setting="office_location">Statistics Admintrative Office, Ground floor, New Physical Sciences Building, science village, Unizik, Awka</span></div>
+                <div><strong style="color: var(--text-primary);">Email:</strong> <a href="mailto:hod.statistics@unizik.edu.ng" style="color: var(--primary-color); text-decoration: none;" data-setting="email">hod.statistics@unizik.edu.ng</a></div>
+                <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;">Doctor of Philosophy (PhD Statistics) · 39+ Publications</div>
+              </div>
+              <a href="/staff-profile.html?cirs=NAU2436" class="btn btn-primary" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 14px; text-decoration: none; padding: 10px 16px; font-weight: 600; font-size: 0.875rem;">
+                <span>Read Full Profile & CIRS Research</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-eyebrow">Message from the Head of Department</div>
+            <h2 class="section-title" style="margin-bottom: 18px;">Advancing Statistical Science for National Development</h2>
+            <div style="font-size: 1rem; color: var(--text-secondary); line-height: 1.7; display: flex; flex-direction: column; gap: 14px;">
+              <p data-setting="hod_welcome">
+                On behalf of the academic and technical staff of the Department of Statistics, Nnamdi Azikiwe University (UNIZIK), I warmly welcome all new and returning students, researchers, and visitors to our departmental portal.
+              </p>
+              <p>
+                Statistics is the cornerstone of modern scientific discovery, data-driven policymaking, artificial intelligence, and economic planning. Guided by our motto, <em>"Facts from Figures"</em>, our curriculum is rigorously crafted to equip students with mathematical mastery, probabilistic depth, and cutting-edge computational skills in R, Python, and industrial analytical tools.
+              </p>
+              <p>
+                This portal serves as an authoritative central repository for syllabi, past questions, lecture timetables, and SIWES manuals. We encourage every student to utilize these resources diligently as you pursue academic excellence.
+              </p>
+            </div>
+            <div style="margin-top: 24px; display: flex; gap: 14px; flex-wrap: wrap;">
+              <a href="/staff-profile.html?cirs=NAU2436" class="btn btn-primary">
+                Read HOD Full Profile & Publications
+              </a>
+              <a href="/administration.html" class="btn btn-outline">
+                View All Academic Staff (49)
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Latest News & Upcoming Events Grid -->
+    <section class="section reveal-on-scroll" id="newsEventsSection">
+      <div class="container">
+        
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px;" class="hero-grid">
+          
+          <!-- News Column -->
+          <div>
+            <div class="section-header" style="margin-bottom: 24px;">
+              <div>
+                <div class="section-eyebrow">Announcements & Press</div>
+                <h2 class="section-title" style="font-size: 1.75rem;">Departmental News</h2>
+              </div>
+              <a href="/news.html" class="btn btn-sm btn-outline">View All News</a>
+            </div>
+
+            <div id="homeNewsList" style="display: flex; flex-direction: column; gap: 18px;">
+              <!-- Dynamic News Cards rendered here -->
+              <div class="card" style="padding: 20px;">
+                <div class="news-category-badge">Resumption</div>
+                <h3 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 6px;">
+                  <a href="/news.html">Official Resumption Schedule: Freshmen Oct 12, Returning Oct 14, 2026</a>
+                </h3>
+                <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+                  In accordance with Senate memo Ref: NAU/R/E/032/97, new students resume October 12 and returning students resume October 14, 2026.
+                </p>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">
+                  Published by NASS Secretariat · 2026-10-02
+                </div>
+              </div>
+
+              <div class="card" style="padding: 20px;">
+                <div class="news-category-badge">Examinations</div>
+                <h3 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 6px;">
+                  <a href="/news.html">First Semester Degree Examinations: Feb 22 – Mar 19, 2027</a>
+                </h3>
+                <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+                  First semester degree examinations (both CBE and PBE) run February 22 to March 19, 2027, preceded by Revision Week starting February 15.
+                </p>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">
+                  Published by Academic Directorate · 2026-10-03
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Events Column -->
+          <div>
+            <div class="section-header" style="margin-bottom: 24px;">
+              <div>
+                <div class="section-eyebrow">Academic Calendar</div>
+                <h2 class="section-title" style="font-size: 1.75rem;">Key Semester Dates</h2>
+              </div>
+              <a href="/events.html" class="btn btn-sm btn-outline">All Events</a>
+            </div>
+
+            <div id="homeEventsList" style="display: flex; flex-direction: column; gap: 16px;">
+              
+              <div class="event-card">
+                <div class="event-date-badge">
+                  <div class="event-date-day">12</div>
+                  <div class="event-date-month">Oct</div>
+                </div>
+                <div class="event-body">
+                  <h3 class="event-title">New Students Resumption & Lectures</h3>
+                  <div class="event-meta">
+                    <span style="display:inline-flex; align-items:center; gap:4px;">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      08:00 AM
+                    </span>
+                    <span style="display:inline-flex; align-items:center; gap:4px;">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                      Department of Statistics
+                    </span>
+                  </div>
+                  <p class="event-desc">Continuation of clearance documentation and commencement of introductory lectures.</p>
+                </div>
+              </div>
+
+              <div class="event-card">
+                <div class="event-date-badge">
+                  <div class="event-date-day">29</div>
+                  <div class="event-date-month">Jan</div>
+                </div>
+                <div class="event-body">
+                  <h3 class="event-title">2026/2027 Matriculation Ceremony</h3>
+                  <div class="event-meta">
+                    <span style="display:inline-flex; align-items:center; gap:4px;">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      09:00 AM
+                    </span>
+                    <span style="display:inline-flex; align-items:center; gap:4px;">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                      Faculty Grounds
+                    </span>
+                  </div>
+                  <p class="event-desc">Official matriculation oath ceremony for all newly admitted undergraduates.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Institutional Footer -->
+  <footer class="site-footer" id="siteFooter">
+    <div class="container footer-top">
+      <div class="footer-grid">
+        
+        <!-- Column 1: Brand & Motto -->
+        <div>
+          <div class="footer-brand-title">NASS UNIZIK</div>
+          <div class="footer-motto">Facts from Figures</div>
+          <p class="footer-text">
+            The National Association of Students of Statistics (NASS), Department of Statistics, Faculty of Physical Sciences, Nnamdi Azikiwe University, Awka, Anambra State, Nigeria.
+          </p>
+          <div style="font-size: 0.8125rem; color: #94a3b8;">
+            Dedicated to promoting statistical literacy, academic rigour, and professional excellence.
+          </div>
+        </div>
+
+        <!-- Column 2: Academic Links -->
+        <div>
+          <h4 class="footer-col-title">Academia</h4>
+          <ul class="footer-links">
+            <li><a href="/academia.html">Course Catalog</a></li>
+            <li><a href="/past-questions.html">Past Questions</a></li>
+            <li><a href="/timetable.html">Lecture Timetable</a></li>
+            <li><a href="/siwes.html">SIWES Manual</a></li>
+            <li><a href="/projects.html">Project Guidelines</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Quick Links & Media -->
+        <div>
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="/archive.html">Gallery</a></li>
+            <li><a href="/news.html">Departmental News</a></li>
+            <li><a href="/events.html">Events & Workshops</a></li>
+            <li><a href="/about.html">Departmental Profile</a></li>
+            <li><a href="/contacts.html">Key Contacts & Helpdesk</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Contact Information -->
+        <div>
+          <h4 class="footer-col-title">Departmental Office</h4>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span data-setting="office_location">Statistics Admintrative Office, Ground floor, New Physical Sciences Building, science village, Unizik, Awka</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span data-setting="email">statistics@unizik.edu.ng</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <a href="/contacts.html" style="color: #cbd5e1;">Student Helpdesk & Advisory</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mandatory Footer Bottom Bar with EXACT Attribution -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <div>
+          &copy; <span id="currentYear">2026</span> Department of Statistics, Nnamdi Azikiwe University. All Rights Reserved.
+        </div>
+        <div class="footer-credit">
+          Created by PhanCore
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/icons.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings-sync.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/js/homepage-animations.js" defer></script>
+  <script>
+    // Live update dynamic announcements, news, events & academic session on homepage
+    async function loadHomeData() {
+      const yearEl = document.getElementById('currentYear');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Fetch and update live Academic Session & Semester
+      try {
+        const settings = await NassAPI.getSettings();
+        if (settings) {
+          const sessionVal = settings.session || '2026/2027';
+          const semesterVal = settings.semester || 'First Semester';
+
+          const heroSess = document.getElementById('heroCurrentSession');
+          if (heroSess) heroSess.textContent = sessionVal;
+
+          const heroSem = document.getElementById('heroCurrentSemester');
+          if (heroSem) heroSem.textContent = semesterVal;
+
+          const barSess = document.getElementById('barCurrentSession');
+          if (barSess) barSess.textContent = sessionVal;
+
+          const barSem = document.getElementById('barCurrentSemester');
+          if (barSem) barSem.textContent = semesterVal;
+        }
+      } catch (err) {
+        console.warn('Could not fetch academic session settings:', err);
+      }
+
+      // Populate Noticeboard Bulletin exclusively from Featured News and Featured Events
+      try {
+        const [featuredNews, featuredEvents] = await Promise.all([
+          NassAPI.getNews({ featured: 'true' }).catch(() => []),
+          NassAPI.getEvents({ featured: 'true' }).catch(() => [])
+        ]);
+
+        const bulletinItems = [];
+
+        if (Array.isArray(featuredNews)) {
+          featuredNews.forEach(n => {
+            bulletinItems.push({
+              id: n.id,
+              type: 'NEWS',
+              badge: 'FEATURED NEWS',
+              badgeClass: 'badge-general',
+              title: n.title,
+              content: n.summary || n.content || '',
+              meta: (n.published_at ? n.published_at.slice(0, 10) : 'Featured Update') + ' · ' + (n.author || 'NASS Editorial Board'),
+              image: n.featured_image,
+              link: `/news.html?id=${n.id}`,
+              dateNum: new Date(n.published_at || n.created_at || Date.now()).getTime()
+            });
+          });
+        }
+
+        if (Array.isArray(featuredEvents)) {
+          featuredEvents.forEach(e => {
+            bulletinItems.push({
+              id: e.id,
+              type: 'EVENT',
+              badge: 'FEATURED EVENT',
+              badgeClass: 'badge-urgent',
+              title: e.title,
+              content: e.description || `Departmental Event scheduled at ${e.venue}`,
+              meta: `${e.event_date || 'Upcoming'}${e.event_time ? ' · ' + e.event_time : ''} · ${e.venue || 'UNIZIK Awka'}`,
+              image: e.banner_image,
+              link: `/events.html?id=${e.id}`,
+              dateNum: new Date(e.event_date || Date.now()).getTime()
+            });
+          });
+        }
+
+        // Fallback: If no news or events are specifically marked as featured, show latest news and upcoming events
+        if (bulletinItems.length === 0) {
+          const [allNews, allEvents] = await Promise.all([
+            NassAPI.getNews({ limit: 2 }).catch(() => []),
+            NassAPI.getEvents({ status: 'UPCOMING' }).catch(() => [])
+          ]);
+          (allNews || []).slice(0, 2).forEach(n => {
+            bulletinItems.push({
+              id: n.id,
+              type: 'NEWS',
+              badge: 'NEWS',
+              badgeClass: 'badge-general',
+              title: n.title,
+              content: n.summary || n.content || '',
+              meta: (n.published_at ? n.published_at.slice(0, 10) : 'Recent News') + ' · ' + (n.author || 'Secretariat'),
+              image: n.featured_image,
+              link: `/news.html?id=${n.id}`,
+              dateNum: 0
+            });
+          });
+          (allEvents || []).slice(0, 1).forEach(e => {
+            bulletinItems.push({
+              id: e.id,
+              type: 'EVENT',
+              badge: 'EVENT',
+              badgeClass: 'badge-urgent',
+              title: e.title,
+              content: e.description || '',
+              meta: `${e.event_date} · ${e.venue}`,
+              image: e.banner_image,
+              link: `/events.html?id=${e.id}`,
+              dateNum: 0
+            });
+          });
+        }
+
+        const list = document.getElementById('heroAnnouncementsList');
+        if (list && bulletinItems.length > 0) {
+          list.innerHTML = bulletinItems.slice(0, 3).map(item => `
+            <div class="bulletin-item">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; gap:8px;">
+                <strong class="bulletin-title">
+                  <a href="${item.link}" style="color:inherit; text-decoration:none;">${item.title}</a>
+                </strong>
+                <span class="badge ${item.badgeClass}">${item.badge}</span>
+              </div>
+              ${item.image ? `
+                <div style="margin: 8px 0; max-height: 130px; overflow: hidden; border-radius: var(--radius-sm);">
+                  <img src="${item.image}" alt="${item.title}" style="width: 100%; height: auto; max-height: 130px; object-fit: cover; display: block;" onerror="this.parentElement.style.display='none'">
+                </div>
+              ` : ''}
+              <p class="bulletin-content">${item.content ? (item.content.length > 180 ? item.content.slice(0, 180) + '...' : item.content) : ''}</p>
+              <div class="bulletin-meta" style="display:flex; justify-content:space-between; align-items:center;">
+                <span>${item.meta}</span>
+                <a href="${item.link}" style="color:var(--primary-color); font-weight:600; text-decoration:none; font-size:0.78125rem;">Read Details &rarr;</a>
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        console.error('Noticeboard Bulletin loader error:', e);
+      }
+
+      try {
+        const news = await NassAPI.getNews({ limit: 2 });
+        const newsContainer = document.getElementById('homeNewsList');
+        if (newsContainer && news && news.length > 0) {
+          newsContainer.innerHTML = news.map(n => `
+            <div class="card" style="padding: 20px;">
+              ${n.featured_image ? `
+                <div style="margin: -20px -20px 14px -20px; height: 140px; overflow: hidden; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
+                  <img src="${n.featured_image}" alt="${n.title}" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.parentElement.style.display='none'">
+                </div>
+              ` : ''}
+              <div class="news-category-badge">${n.category}</div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 6px;">
+                <a href="/news.html?id=${n.id}">${n.title}</a>
+              </h3>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+                ${n.summary || (n.content ? n.content.substring(0, 140) + '...' : '')}
+              </p>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">
+                Published by ${n.author} · ${n.published_at ? n.published_at.slice(0, 10) : ''}
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        console.log('Using default news preview');
+      }
+
+      try {
+        const events = await NassAPI.getEvents({ status: 'UPCOMING' });
+        const eventsContainer = document.getElementById('homeEventsList');
+        if (eventsContainer && events && events.length > 0) {
+          eventsContainer.innerHTML = events.slice(0, 3).map(ev => {
+            const dateObj = new Date(ev.event_date);
+            const day = dateObj.getDate() || '15';
+            const month = dateObj.toLocaleString('en-US', { month: 'short' }) || 'Mar';
+            return `
+              <div class="event-card">
+                <div class="event-date-badge">
+                  <div class="event-date-day">${day}</div>
+                  <div class="event-date-month">${month}</div>
+                </div>
+                <div class="event-body">
+                  <h3 class="event-title"><a href="/events.html">${ev.title}</a></h3>
+                  <div class="event-meta">
+                    <span style="display:inline-flex; align-items:center; gap:4px;">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      ${ev.event_time || '10:00 AM'}
+                    </span>
+                    <span style="display:inline-flex; align-items:center; gap:4px;">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                      ${ev.venue}
+                    </span>
+                  </div>
+                  ${ev.banner_image ? `
+                    <div style="margin: 8px 0; max-height: 100px; overflow: hidden; border-radius: var(--radius-sm);">
+                      <img src="${ev.banner_image}" alt="${ev.title}" style="width: 100%; height: auto; max-height: 100px; object-fit: cover; display: block;" onerror="this.parentElement.style.display='none'">
+                    </div>
+                  ` : ''}
+                  <p class="event-desc">${ev.description || ''}</p>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (e) {
+        console.log('Using default events preview');
+      }
+    }
+
+    window.loadHomeData = loadHomeData;
+    document.addEventListener('DOMContentLoaded', loadHomeData);
+    window.addEventListener('nass:data_updated', loadHomeData);
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'nass_data_updated' || e.key === 'nass_settings_updated') {
+        loadHomeData();
+      }
+    });
+    if ('BroadcastChannel' in window) {
+      const bc = new BroadcastChannel('nass_portal_channel');
+      bc.onmessage = () => {
+        loadHomeData();
+      };
+    }
+  </script>
+</body>
+</html>

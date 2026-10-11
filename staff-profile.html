@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Profile | Department of Statistics - UNIZIK</title>
+  <meta name="description" content="Official academic profile, research output, publications, qualifications, and career background for faculty members of the Department of Statistics, Nnamdi Azikiwe University (UNIZIK).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <meta name="theme-color" content="#0c2340">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="icon" type="image/jpeg" href="/resources/images/nass-logo.jpg">
+
+  <script src="/js/theme.js"></script>
+  <style>
+    /* Profile Specific Editorial Styling */
+    .profile-hero {
+      background: linear-gradient(135deg, #071526 0%, #0c2340 60%, #1e3a5f 100%);
+      color: #ffffff;
+      padding: 48px 0 40px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .profile-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 85% 20%, rgba(217, 72, 59, 0.15), transparent 45%),
+                  radial-gradient(circle at 10% 80%, rgba(253, 224, 71, 0.08), transparent 40%);
+      pointer-events: none;
+    }
+    .profile-hero-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 36px;
+      align-items: start;
+      position: relative;
+      z-index: 2;
+    }
+    @media (max-width: 860px) {
+      .profile-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        text-align: center;
+      }
+    }
+    .profile-photo-container {
+      position: relative;
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      background: #0c2340;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+    }
+    .profile-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+    .profile-cirs-pill {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(12, 35, 64, 0.9);
+      color: #fde047;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(253, 224, 71, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .profile-name {
+      font-family: var(--font-serif);
+      font-size: 2.15rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+    @media (max-width: 600px) {
+      .profile-name { font-size: 1.65rem; }
+    }
+    .profile-rank {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fca5a5;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 860px) {
+      .profile-rank { justify-content: center; }
+    }
+    .profile-dept-info {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .profile-stats-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 14px 18px;
+    }
+    .profile-stat-box {
+      text-align: center;
+    }
+    .profile-stat-number {
+      font-size: 1.6rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: #fde047;
+      line-height: 1.1;
+    }
+    .profile-stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+    .profile-actions-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    @media (max-width: 860px) {
+      .profile-actions-bar { justify-content: center; }
+    }
+    .btn-profile-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      background: #ffffff;
+      color: #0c2340;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .btn-profile-contact:hover {
+      background: #f1f5f9;
+      transform: translateY(-1px);
+    }
+    .btn-profile-cirs {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .btn-profile-cirs:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Tabs Architecture */
+    .profile-nav-tabs {
+      background: var(--surface-color);
+      border-bottom: 2px solid var(--border-color);
+      position: sticky;
+      top: 60px;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+    .profile-tabs-scroll {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      padding: 6px 0;
+    }
+    .profile-tab-btn {
+      padding: 10px 18px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+    .profile-tab-btn:hover {
+      background: var(--surface-muted);
+      color: var(--primary-color);
+    }
+    .profile-tab-btn.active {
+      color: var(--primary-color);
+      background: var(--surface-muted);
+      box-shadow: inset 0 -2px 0 var(--brand-color);
+    }
+    .profile-tab-badge {
+      font-size: 0.725rem;
+      padding: 2px 6px;
+      border-radius: 10px;
+      background: var(--border-color);
+      color: var(--text-primary);
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+    .profile-tab-btn.active .profile-tab-badge {
+      background: var(--primary-color);
+      color: #ffffff;
+    }
+
+    /* Tab Content Area */
+    .tab-content-panel {
+      display: none;
+      padding: 36px 0 60px;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+    .tab-content-panel.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Section Cards */
+    .profile-card {
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .profile-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+    .profile-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .profile-item-row {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px dashed var(--border-color);
+    }
+    .profile-item-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .profile-item-index {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--surface-muted);
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .profile-item-content {
+      flex: 1;
+    }
+    .profile-item-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+    .profile-item-meta {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .publication-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-right: 6px;
+      margin-bottom: 4px;
+    }
+    .publication-tag.books { background: #fef3c7; color: #92400e; }
+    .publication-tag.journal { background: #dcfce7; color: #166534; }
+    .publication-tag.conference { background: #f3e8ff; color: #6b21a8; }
+  </style>
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="institutional-topbar">
+    <div class="container topbar-content">
+      <div class="topbar-left">
+        <span class="topbar-motto">Facts from Figures</span>
+        <span class="topbar-divider">|</span>
+        <span>Department of Statistics, Nnamdi Azikiwe University</span>
+      </div>
+      <div class="topbar-right">
+        <a href="/administration.html" class="topbar-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+          Back to Faculty Directory
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <div class="header-left">
+        <button type="button" class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="/" class="header-brand">
+          <img src="/resources/images/nass-logo.jpg" alt="Logo" class="brand-logo">
+          <div class="brand-info">
+            <span class="brand-title">NASS UNIZIK</span>
+            <span class="brand-subtitle">Department of Statistics</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="main-nav" id="mainNav" aria-label="Primary Navigation">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/academia.html" class="nav-link">Academia</a>
+        <a href="/past-questions.html" class="nav-link">Past Questions</a>
+        <a href="/timetable.html" class="nav-link">Timetable</a>
+        <a href="/siwes.html" class="nav-link">SIWES</a>
+        <a href="/administration.html" class="nav-link active">Staff</a>
+        <a href="/nass.html" class="nav-link">NASS Exco</a>
+        <a href="/archive.html" class="nav-link">Gallery</a>
+        <a href="/news.html" class="nav-link">News</a>
+        <a href="/events.html" class="nav-link">Events</a>
+        <a href="#install-app" class="nav-link nav-install-btn" title="Install NASS UNIZIK Mobile App (Android & iOS)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+            <line x1="12" y1="18" x2="12.01" y2="18"/>
+          </svg>
+          <span>Install App</span>
+        </a>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="search-trigger-btn" aria-label="Open Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="search-placeholder">Search faculty...</span>
+          <kbd class="search-shortcut">Ctrl K</kbd>
+        </button>
+        <button type="button" class="theme-toggle-btn header-theme-toggle" aria-label="Switch Theme">
+          <span class="theme-toggle-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="mobile-drawer-header">
+      <div class="mobile-drawer-brand">NASS UNIZIK</div>
+      <button type="button" class="mobile-drawer-close" id="mobileDrawerClose">&times;</button>
+    </div>
+    <ul class="mobile-nav-list">
+      <li><a href="/" class="mobile-nav-link">Home</a></li>
+      <li><a href="/academia.html" class="mobile-nav-link">Academia & Courses</a></li>
+      <li><a href="/past-questions.html" class="mobile-nav-link">Past Questions Repository</a></li>
+      <li><a href="/timetable.html" class="mobile-nav-link">Lecture Timetable</a></li>
+      <li><a href="/siwes.html" class="mobile-nav-link">SIWES Industrial Training</a></li>
+      <li><a href="/administration.html" class="mobile-nav-link active">Administration & Staff</a></li>
+      <li><a href="/nass.html" class="mobile-nav-link">NASS Executive Council</a></li>
+      <li><a href="/archive.html" class="mobile-nav-link">Gallery & Photos</a></li>
+      <li><a href="/news.html" class="mobile-nav-link">Departmental News</a></li>
+      <li><a href="/events.html" class="mobile-nav-link">Events & Workshops</a></li>
+      <li><a href="/about.html" class="mobile-nav-link">About Department</a></li>
+      <li>
+        <a href="#install-app" class="mobile-nav-link mobile-install-btn">
+          <span class="mobile-nav-icon" style="display:inline-flex; align-items:center; color:#fbbf24;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+              <path d="M12 6v6m-3-3 3 3 3-3"/>
+            </svg>
+          </span>
+          <span>Install App (Android & iOS)</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Breadcrumb Bar -->
+  <div style="background: var(--surface-muted); border-bottom: 1px solid var(--border-color); padding: 10px 0; font-size: 0.8125rem;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+      <div style="display: flex; align-items: center; gap: 6px; color: var(--text-muted);">
+        <a href="/" style="color: inherit; text-decoration: none;">Home</a>
+        <span>/</span>
+        <a href="/administration.html" style="color: inherit; text-decoration: none;">Administration & Faculty</a>
+        <span>/</span>
+        <span style="color: var(--text-primary); font-weight: 600;" id="breadcrumbStaffName">Staff Profile</span>
+      </div>
+      <a href="/administration.html" style="color: var(--primary-color); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        <span>All 49 Faculty Members</span>
+      </a>
+    </div>
+  </div>
+
+  <main>
+    <!-- Staff Hero Showcase -->
+    <section class="profile-hero">
+      <div class="container">
+        <div class="profile-hero-grid">
+          
+          <!-- Portrait & CIRS Seal -->
+          <div class="profile-photo-container">
+            <img 
+              id="profilePhoto" 
+              src="/resources/images/staff_default.jpg" 
+              alt="Faculty Profile Portrait" 
+              class="profile-photo"
+              onerror="this.src='/resources/images/staff_default.jpg'"
+            >
+            <div class="profile-cirs-pill" id="profileCirsBadge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span id="profileCirsIdText">CIRS ID</span>
+            </div>
+          </div>
+
+          <!-- Bio & Title Header -->
+          <div>
+            <div class="profile-rank" id="profileRankBadge">
+              <span id="profileRoleCategory">Academic Faculty</span>
+              <span style="opacity: 0.4;">·</span>
+              <span id="profileRankTitle">Staff Title</span>
+            </div>
+
+            <h1 class="profile-name" id="profileName">Loading Staff Member...</h1>
+
+            <div class="profile-dept-info">
+              <strong>Department of Statistics</strong> · Faculty of Physical Sciences<br>
+              Nnamdi Azikiwe University (UNIZIK), Awka, Anambra State, Nigeria.
+              <div id="profileQualSummary" style="color: #fef08a; font-weight: 600; margin-top: 4px;"></div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="profile-stats-strip">
+              <div class="profile-stat-box">
+                <div class="profile-stat-number" id="statPubCount">0</div>
+                <div class="profile-stat-label">Publications</div>
+              </div>
+              <div class="profile-stat-box">
+                <div class="profile-stat-number" id="statQualCount">0</div>
+                <div class="profile-stat-label">Qualifications</div>
+              </div>
+              <div class="profile-stat-box">
+                <div class="profile-stat-number" id="statExpCount">0</div>
+                <div class="profile-stat-label">Experience</div>
+              </div>
+              <div class="profile-stat-box">
+                <div class="profile-stat-number" id="statLeadCount">0</div>
+                <div class="profile-stat-label">Leadership/Supervisions</div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="profile-actions-bar">
+              <a href="#" id="btnProfileEmail" class="btn-profile-contact" style="display: none;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                <span>Send Email</span>
+              </a>
+              <a href="#" id="btnProfilePhone" class="btn-profile-contact" style="display: none;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span>Call Office</span>
+              </a>
+              <a href="#" id="btnOfficialCirs" target="_blank" rel="noopener noreferrer" class="btn-profile-cirs">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <span>View Official UNIZIK CIRS Profile</span>
+              </a>
+              <button type="button" id="btnShareProfile" class="btn-profile-cirs" style="cursor: pointer;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span>Share Profile</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs ("Don't show all content at once") -->
+    <nav class="profile-nav-tabs" aria-label="Staff Profile Sections">
+      <div class="container">
+        <div class="profile-tabs-scroll" role="tablist">
+          <button type="button" class="profile-tab-btn active" role="tab" aria-selected="true" aria-controls="panel-overview" data-target="overview" id="tab-overview">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <span>Overview & Bio</span>
+          </button>
+          <button type="button" class="profile-tab-btn" role="tab" aria-selected="false" aria-controls="panel-qualifications" data-target="qualifications" id="tab-qualifications">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            <span>Academic Qualifications</span>
+            <span class="profile-tab-badge" id="badgeQualCount">0</span>
+          </button>
+          <button type="button" class="profile-tab-btn" role="tab" aria-selected="false" aria-controls="panel-publications" data-target="publications" id="tab-publications">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span>Publications & Research</span>
+            <span class="profile-tab-badge" id="badgePubCount">0</span>
+          </button>
+          <button type="button" class="profile-tab-btn" role="tab" aria-selected="false" aria-controls="panel-experience" data-target="experience" id="tab-experience">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            <span>Experience & Career</span>
+            <span class="profile-tab-badge" id="badgeExpCount">0</span>
+          </button>
+          <button type="button" class="profile-tab-btn" role="tab" aria-selected="false" aria-controls="panel-leadership" data-target="leadership" id="tab-leadership">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <span>Supervisions & Leadership</span>
+            <span class="profile-tab-badge" id="badgeLeadCount">0</span>
+          </button>
+          <button type="button" class="profile-tab-btn" role="tab" aria-selected="false" aria-controls="panel-memberships" data-target="memberships" id="tab-memberships">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+            <span>Professional Bodies</span>
+            <span class="profile-tab-badge" id="badgeMemCount">0</span>
+          </button>
+          <button type="button" class="profile-tab-btn" role="tab" aria-selected="false" aria-controls="panel-events" data-target="events" id="tab-events">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>Events & Workshops</span>
+            <span class="profile-tab-badge" id="badgeEventCount">0</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Tab Panels Container -->
+    <div class="container">
+
+      <!-- TAB 1: OVERVIEW & BIOGRAPHY -->
+      <section class="tab-content-panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 28px; align-items: start;" class="overview-grid">
+          
+          <div>
+            <div class="profile-card">
+              <div class="profile-card-header">
+                <h2 class="profile-card-title">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  <span>Academic Biography & Background</span>
+                </h2>
+              </div>
+              <div id="profileBioText" style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7;">
+                Loading academic background...
+              </div>
+            </div>
+
+            <div class="profile-card" id="cardInterestAreas">
+              <div class="profile-card-header">
+                <h2 class="profile-card-title">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                  <span>Research Interest Areas & Specializations</span>
+                </h2>
+              </div>
+              <div id="profileInterestText" style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65;">
+                Statistical inference, mathematical modeling, and empirical data analysis.
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar Contacts & Verification -->
+          <div>
+            <div class="profile-card">
+              <div class="profile-card-header">
+                <h3 class="profile-card-title" style="font-size: 1.1rem;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>Office & Communication</span>
+                </h3>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 14px; font-size: 0.875rem;">
+                <div>
+                  <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Departmental Office</div>
+                  <div style="font-weight: 600; color: var(--text-primary); margin-top: 2px;" id="profileOfficeLocation">Statistics Building, UNIZIK Main Campus</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Official Email</div>
+                  <div style="margin-top: 2px;"><a href="#" id="linkProfileEmail" style="color: var(--primary-color); word-break: break-all;">Not listed</a></div>
+                </div>
+                <div>
+                  <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Telephone</div>
+                  <div style="margin-top: 2px;"><a href="#" id="linkProfilePhone" style="color: var(--text-primary); text-decoration: none;">Not listed</a></div>
+                </div>
+                <div>
+                  <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">UNIZIK CIRS Identifier</div>
+                  <div style="margin-top: 2px; font-family: var(--font-mono); font-weight: 700; color: #166534;" id="textProfileCirsId">NAU...</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-card" style="background: #f8fafc; border-left: 4px solid var(--primary-color);">
+              <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; color: var(--primary-color);">Institutional Verification</h4>
+              <p style="font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">
+                This profile is verified through the UNIZIK Comprehensive Institutional Registry System (CIRS). Academic credentials, publications, and career records are synchronised with departmental archives.
+              </p>
+              <a href="#" id="linkVerifyCirs" target="_blank" rel="noopener noreferrer" style="font-size: 0.8125rem; font-weight: 600; color: var(--primary-color); display: inline-flex; align-items: center; gap: 4px;">
+                <span>View on UNIZIK CIRS Portal</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TAB 2: QUALIFICATIONS -->
+      <section class="tab-content-panel" id="panel-qualifications" role="tabpanel" aria-labelledby="tab-qualifications">
+        <div class="profile-card">
+          <div class="profile-card-header">
+            <h2 class="profile-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+              <span>Academic Qualifications & Degrees</span>
+            </h2>
+          </div>
+          <div id="listQualifications">
+            <div style="text-align: center; padding: 30px; color: var(--text-muted);">No qualifications data available.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: PUBLICATIONS -->
+      <section class="tab-content-panel" id="panel-publications" role="tabpanel" aria-labelledby="tab-publications">
+        <div class="profile-card">
+          <div class="profile-card-header" style="flex-wrap: wrap; gap: 12px;">
+            <h2 class="profile-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span>Publications, Books & Research Output</span>
+            </h2>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <input type="text" id="pubSearchInput" placeholder="Filter publications..." style="padding: 6px 12px; font-size: 0.8125rem; border: 1px solid var(--border-color); border-radius: 6px; width: 200px;">
+            </div>
+          </div>
+          <div id="listPublications">
+            <div style="text-align: center; padding: 30px; color: var(--text-muted);">No publications recorded yet on CIRS.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: EXPERIENCE -->
+      <section class="tab-content-panel" id="panel-experience" role="tabpanel" aria-labelledby="tab-experience">
+        <div class="profile-card">
+          <div class="profile-card-header">
+            <h2 class="profile-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              <span>Relevant Working Experience & Professional Appointments</span>
+            </h2>
+          </div>
+          <div id="listExperience">
+            <div style="text-align: center; padding: 30px; color: var(--text-muted);">No working experience recorded yet on CIRS.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: LEADERSHIP -->
+      <section class="tab-content-panel" id="panel-leadership" role="tabpanel" aria-labelledby="tab-leadership">
+        <div class="profile-card">
+          <div class="profile-card-header">
+            <h2 class="profile-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <span>Supervisions & Academic Leadership Qualities</span>
+            </h2>
+          </div>
+          <div id="listLeadership">
+            <div style="text-align: center; padding: 30px; color: var(--text-muted);">No supervisions or leadership items recorded yet on CIRS.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: MEMBERSHIPS -->
+      <section class="tab-content-panel" id="panel-memberships" role="tabpanel" aria-labelledby="tab-memberships">
+        <div class="profile-card">
+          <div class="profile-card-header">
+            <h2 class="profile-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+              <span>Membership of Professional Bodies & Learned Societies</span>
+            </h2>
+          </div>
+          <div id="listMemberships">
+            <div style="text-align: center; padding: 30px; color: var(--text-muted);">No professional memberships recorded yet on CIRS.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 7: EVENTS ATTENDED -->
+      <section class="tab-content-panel" id="panel-events" role="tabpanel" aria-labelledby="tab-events">
+        <div class="profile-card">
+          <div class="profile-card-header">
+            <h2 class="profile-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              <span>Relevant Academic Conferences & Workshops Attended</span>
+            </h2>
+          </div>
+          <div id="listEvents">
+            <div style="text-align: center; padding: 30px; color: var(--text-muted);">No conferences or workshops recorded yet on CIRS.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Other Faculty Quick Navigation -->
+      <section style="margin: 40px 0 60px; padding-top: 30px; border-top: 1px solid var(--border-color);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin: 0; color: var(--text-primary);">Other Faculty Members</h3>
+            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 4px;">Department of Statistics, Nnamdi Azikiwe University</p>
+          </div>
+          <a href="/administration.html" class="btn btn-outline" style="font-size: 0.8125rem; padding: 6px 14px;">View All (49 Personnel)</a>
+        </div>
+        <div id="otherFacultyList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-col">
+        <div class="footer-brand">
+          <img src="/resources/images/nass-logo.jpg" alt="Logo" class="footer-logo">
+          <span class="footer-title">NASS UNIZIK</span>
+        </div>
+        <p class="footer-desc">
+          Official departmental portal for the Department of Statistics, Nnamdi Azikiwe University, Awka.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Academic Portal</h4>
+        <ul class="footer-links">
+          <li><a href="/administration.html">Staff & Faculty Directory</a></li>
+          <li><a href="/academia.html">Curriculum & Syllabi</a></li>
+          <li><a href="/timetable.html">Lecture Timetable</a></li>
+          <li><a href="/past-questions.html">Past Questions Repository</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Inquiries</h4>
+        <p class="footer-desc" style="font-size: 0.8125rem;">
+          Department of Statistics, Faculty of Physical Sciences, UNIZIK, Awka, Anambra State.<br>
+          Email: info.statistics@unizik.edu.ng
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-content">
+        <p>&copy; 2026 Department of Statistics, Nnamdi Azikiwe University. All Rights Reserved.</p>
+        <p><a href="/admin.html" style="color: var(--text-muted); text-decoration: none;">Admin Access</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Search Modal -->
+  <div class="search-modal-backdrop" id="searchModalBackdrop">
+    <div class="search-modal">
+      <div class="search-modal-header">
+        <input type="text" class="search-modal-input" id="searchModalInput" placeholder="Search faculty, courses, past questions...">
+        <button type="button" class="search-modal-close" id="searchModalClose">&times;</button>
+      </div>
+      <div class="search-modal-results" id="searchModalResults"></div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/settings-sync.js"></script>
+  <script>
+    // State
+    let currentStaff = null;
+    let allStaffList = [];
+    let activePublications = [];
+
+    // Parse URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const staffIdParam = urlParams.get('id');
+    const cirsParam = urlParams.get('cirs');
+
+    // Tab switcher logic
+    function switchTab(targetTabId) {
+      document.querySelectorAll('.profile-tab-btn').forEach(btn => {
+        const isTarget = btn.getAttribute('data-target') === targetTabId;
+        btn.classList.toggle('active', isTarget);
+        btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+      });
+
+      document.querySelectorAll('.tab-content-panel').forEach(panel => {
+        panel.classList.toggle('active', panel.id === `panel-${targetTabId}`);
+      });
+
+      // Update URL hash without scroll
+      if (history.replaceState) {
+        history.replaceState(null, null, `#${targetTabId}`);
+      }
+    }
+
+    document.querySelectorAll('.profile-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-target');
+        switchTab(target);
+      });
+    });
+
+    // Handle initial tab from URL hash
+    if (window.location.hash) {
+      const hash = window.location.hash.replace('#', '');
+      const availableTabs = ['overview', 'qualifications', 'publications', 'experience', 'leadership', 'memberships', 'events'];
+      if (availableTabs.includes(hash)) {
+        switchTab(hash);
+      }
+    }
+
+    // Share button
+    const shareBtn = document.getElementById('btnShareProfile');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', async () => {
+        const shareData = {
+          title: document.title,
+          text: `View the official academic profile of ${currentStaff ? currentStaff.name : 'Faculty Member'} at UNIZIK Department of Statistics`,
+          url: window.location.href
+        };
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+          } catch (_) {}
+        } else {
+          navigator.clipboard.writeText(window.location.href);
+          const original = shareBtn.innerHTML;
+          shareBtn.innerHTML = `<span>Link Copied!</span>`;
+          setTimeout(() => { shareBtn.innerHTML = original; }, 2000);
+        }
+      });
+    }
+
+    // Render staff profile
+    function renderProfile(staff) {
+      currentStaff = staff;
+      const cirs = staff.cirs_data || {};
+
+      // 1. Title & Meta
+      document.title = `${staff.name} - Academic Staff Profile | Department of Statistics UNIZIK`;
+      document.getElementById('breadcrumbStaffName').textContent = staff.name;
+      document.getElementById('profileName').textContent = staff.name;
+
+      // 2. Photo
+      const photoEl = document.getElementById('profilePhoto');
+      photoEl.src = staff.photo_url || '/resources/images/staff_default.jpg';
+      photoEl.alt = staff.name;
+
+      // 3. Rank & Category
+      let roleLabel = 'Academic Staff';
+      if (staff.role_category === 'HOD') roleLabel = 'Head of Department (HOD)';
+      else if (staff.role_category === 'ADVISER') roleLabel = 'Departmental Staff Adviser';
+      else if (staff.role_category === 'NON_ACADEMIC') roleLabel = 'Administrative & Technical Staff';
+      else if (staff.title && staff.title.includes('Professor')) roleLabel = 'Professor of Statistics';
+
+      document.getElementById('profileRoleCategory').textContent = roleLabel;
+      document.getElementById('profileRankTitle').textContent = staff.title || 'Faculty Member';
+
+      // 4. CIRS Badge
+      const cirsId = staff.cirs_id || 'UNIZIK';
+      document.getElementById('profileCirsIdText').textContent = `CIRS: ${cirsId}`;
+      document.getElementById('textProfileCirsId').textContent = cirsId;
+
+      const cirsUrl = staff.cirs_url || (staff.cirs_id ? `https://profile.unizik.edu.ng/${staff.cirs_id.toLowerCase()}` : '');
+      if (cirsUrl) {
+        document.getElementById('btnOfficialCirs').href = cirsUrl;
+        document.getElementById('linkVerifyCirs').href = cirsUrl;
+      } else {
+        document.getElementById('btnOfficialCirs').style.display = 'none';
+        document.getElementById('linkVerifyCirs').style.display = 'none';
+      }
+
+      // 5. Qualifications summary in hero
+      const qualSumEl = document.getElementById('profileQualSummary');
+      if (staff.qualifications) {
+        qualSumEl.textContent = staff.qualifications;
+      } else if (cirs.qualifications && cirs.qualifications.length > 0) {
+        qualSumEl.textContent = cirs.qualifications[0];
+      } else {
+        qualSumEl.textContent = '';
+      }
+
+      // 6. Contact Actions
+      const email = staff.email || cirs.cirsEmail;
+      const phone = staff.phone || cirs.cirsPhone;
+      const office = staff.office || cirs.cirsAddress || 'Department of Statistics Building, UNIZIK Main Campus';
+
+      if (email) {
+        const mailBtn = document.getElementById('btnProfileEmail');
+        mailBtn.href = `mailto:${email}`;
+        mailBtn.style.display = 'inline-flex';
+        
+        const mailLink = document.getElementById('linkProfileEmail');
+        mailLink.href = `mailto:${email}`;
+        mailLink.textContent = email;
+      }
+      if (phone) {
+        const phoneBtn = document.getElementById('btnProfilePhone');
+        phoneBtn.href = `tel:${phone.replace(/[^+\d]/g, '')}`;
+        phoneBtn.style.display = 'inline-flex';
+
+        const phoneLink = document.getElementById('linkProfilePhone');
+        phoneLink.href = `tel:${phone.replace(/[^+\d]/g, '')}`;
+        phoneLink.textContent = phone;
+      }
+      document.getElementById('profileOfficeLocation').textContent = office;
+
+      // 7. Stat Counters
+      const pubList = cirs.publications || [];
+      activePublications = pubList;
+      const qualList = cirs.qualifications || (staff.qualifications ? [staff.qualifications] : []);
+      const expList = cirs.experience || [];
+      const leadList = cirs.leadership || [];
+      const memList = cirs.memberships || [];
+      const eventList = cirs.eventsAttended || [];
+
+      document.getElementById('statPubCount').textContent = pubList.length;
+      document.getElementById('statQualCount').textContent = qualList.length;
+      document.getElementById('statExpCount').textContent = expList.length;
+      document.getElementById('statLeadCount').textContent = leadList.length;
+
+      document.getElementById('badgePubCount').textContent = pubList.length;
+      document.getElementById('badgeQualCount').textContent = qualList.length;
+      document.getElementById('badgeExpCount').textContent = expList.length;
+      document.getElementById('badgeLeadCount').textContent = leadList.length;
+      document.getElementById('badgeMemCount').textContent = memList.length;
+      document.getElementById('badgeEventCount').textContent = eventList.length;
+
+      // 8. Overview Bio
+      const bioContainer = document.getElementById('profileBioText');
+      if (staff.bio) {
+        bioContainer.innerHTML = `<p>${staff.bio.replace(/\n\n+/g, '</p><p>').replace(/\n/g, '<br>')}</p>`;
+      } else {
+        bioContainer.innerHTML = `
+          <p>
+            ${staff.name} is an esteemed member of the academic faculty in the Department of Statistics, Faculty of Physical Sciences at Nnamdi Azikiwe University (UNIZIK), Awka. 
+          </p>
+          <p>
+            Actively engaged in empirical statistical research, data modeling, pedagogical instruction, and mentoring undergraduate and postgraduate students. Contributing to UNIZIK's core mission of fostering quantitative excellence and scientific advancement under the motto <em>"Facts from Figures"</em>.
+          </p>
+        `;
+      }
+
+      // Interest Areas
+      const interestContainer = document.getElementById('profileInterestText');
+      if (cirs.interestAreas && cirs.interestAreas.length > 2) {
+        interestContainer.textContent = cirs.interestAreas;
+      } else if (staff.specialization) {
+        interestContainer.textContent = staff.specialization;
+      } else {
+        interestContainer.textContent = 'Statistical inference, applied probability, predictive analytics, and scientific research methodologies.';
+      }
+
+      // 9. Qualifications Tab
+      const qualContainer = document.getElementById('listQualifications');
+      if (qualList.length > 0) {
+        qualContainer.innerHTML = qualList.map((q, idx) => `
+          <div class="profile-item-row">
+            <div class="profile-item-index">${idx + 1}</div>
+            <div class="profile-item-content">
+              <div class="profile-item-title">${q}</div>
+              <div class="profile-item-meta">Verified through official UNIZIK CIRS Academic Records</div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        qualContainer.innerHTML = `<div style="text-align: center; padding: 30px; color: var(--text-muted);">No degree records currently listed on UNIZIK CIRS.</div>`;
+      }
+
+      // 10. Publications Tab
+      renderPublicationsList(pubList);
+
+      // 11. Experience Tab
+      const expContainer = document.getElementById('listExperience');
+      if (expList.length > 0) {
+        expContainer.innerHTML = expList.map((item, idx) => `
+          <div class="profile-item-row">
+            <div class="profile-item-index">${idx + 1}</div>
+            <div class="profile-item-content">
+              <div class="profile-item-title">${item}</div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        expContainer.innerHTML = `<div style="text-align: center; padding: 30px; color: var(--text-muted);">No professional appointments recorded yet on CIRS.</div>`;
+      }
+
+      // 12. Leadership Tab
+      const leadContainer = document.getElementById('listLeadership');
+      if (leadList.length > 0) {
+        leadContainer.innerHTML = leadList.map((item, idx) => `
+          <div class="profile-item-row">
+            <div class="profile-item-index">${idx + 1}</div>
+            <div class="profile-item-content">
+              <span class="publication-tag" style="background: #fef08a; color: #854d0e;">${item.category || 'Supervision'}</span>
+              <div class="profile-item-title" style="margin-top: 4px;">${item.title || item}</div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        leadContainer.innerHTML = `<div style="text-align: center; padding: 30px; color: var(--text-muted);">No postgraduate supervisions or administrative appointments recorded on CIRS.</div>`;
+      }
+
+      // 13. Memberships Tab
+      const memContainer = document.getElementById('listMemberships');
+      if (memList.length > 0) {
+        memContainer.innerHTML = memList.map((item, idx) => `
+          <div class="profile-item-row">
+            <div class="profile-item-index">${idx + 1}</div>
+            <div class="profile-item-content">
+              <div class="profile-item-title">${item}</div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        memContainer.innerHTML = `<div style="text-align: center; padding: 30px; color: var(--text-muted);">No professional statistical body memberships registered yet on CIRS.</div>`;
+      }
+
+      // 14. Events Tab
+      const eventContainer = document.getElementById('listEvents');
+      if (eventList.length > 0) {
+        eventContainer.innerHTML = eventList.map((item, idx) => `
+          <div class="profile-item-row">
+            <div class="profile-item-index">${idx + 1}</div>
+            <div class="profile-item-content">
+              <div class="profile-item-title">${item}</div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        eventContainer.innerHTML = `<div style="text-align: center; padding: 30px; color: var(--text-muted);">No conferences or workshops recorded yet on CIRS.</div>`;
+      }
+    }
+
+    function renderPublicationsList(list) {
+      const container = document.getElementById('listPublications');
+      if (!list || list.length === 0) {
+        container.innerHTML = `<div style="text-align: center; padding: 30px; color: var(--text-muted);">No publications recorded yet on UNIZIK CIRS.</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map((pub, idx) => {
+        const cat = pub.category || 'Journal Articles';
+        let catClass = 'journal';
+        if (cat.toLowerCase().includes('book')) catClass = 'books';
+        else if (cat.toLowerCase().includes('conference')) catClass = 'conference';
+
+        return `
+          <div class="profile-item-row">
+            <div class="profile-item-index">${idx + 1}</div>
+            <div class="profile-item-content">
+              <span class="publication-tag ${catClass}">${cat}</span>
+              <div class="profile-item-title" style="font-family: var(--font-serif); font-size: 0.95rem;">${pub.citation || pub}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Publication search filter
+    const pubSearch = document.getElementById('pubSearchInput');
+    if (pubSearch) {
+      pubSearch.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase().trim();
+        if (!term) {
+          renderPublicationsList(activePublications);
+        } else {
+          const filtered = activePublications.filter(p => {
+            const text = (typeof p === 'string' ? p : `${p.category || ''} ${p.citation || ''}`).toLowerCase();
+            return text.includes(term);
+          });
+          renderPublicationsList(filtered);
+        }
+      });
+    }
+
+    // Load Profile Data
+    async function loadProfile() {
+      try {
+        // First determine target ID or CIRS identifier
+        let target = staffIdParam || cirsParam;
+        if (!target) {
+          // Default to HOD (NAU2436)
+          target = 'NAU2436';
+        }
+
+        const res = await fetch(`/api/staff/${target}`);
+        if (!res.ok) {
+          throw new Error('Staff member not found');
+        }
+        const staff = await res.json();
+        renderProfile(staff);
+
+        // Load other faculty members for quick navigation strip
+        loadOtherFaculty(staff.id);
+      } catch (err) {
+        document.getElementById('profileName').textContent = 'Staff Member Not Found';
+        document.getElementById('profileBioText').innerHTML = `
+          <div style="text-align: center; padding: 40px; color: var(--danger-color);">
+            <p>Could not retrieve staff profile details: ${err.message}</p>
+            <a href="/administration.html" class="btn btn-primary" style="margin-top: 14px;">Return to Staff Directory</a>
+          </div>
+        `;
+      }
+    }
+
+    // Load other faculty members
+    async function loadOtherFaculty(currentId) {
+      try {
+        const res = await fetch('/api/staff');
+        if (!res.ok) return;
+        const all = await res.json();
+        allStaffList = all;
+
+        const others = all.filter(s => s.id !== currentId).slice(0, 4);
+        const container = document.getElementById('otherFacultyList');
+        if (!container) return;
+
+        container.innerHTML = others.map(s => `
+          <a href="/staff-profile.html?id=${s.id}" class="card" style="display: flex; gap: 12px; align-items: center; padding: 12px; text-decoration: none; color: inherit; transition: transform 0.15s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+            <img 
+              src="${s.photo_url || '/resources/images/staff_default.jpg'}" 
+              alt="${s.name}" 
+              style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--border-color);"
+              onerror="this.src='/resources/images/staff_default.jpg'"
+            >
+            <div style="overflow: hidden;">
+              <div style="font-weight: 700; font-size: 0.875rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-primary);">${s.name}</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${s.title}</div>
+              ${s.cirs_pub_count > 0 ? `<div style="font-size: 0.7rem; color: var(--primary-color); font-weight: 600;">${s.cirs_pub_count} Publications</div>` : ''}
+            </div>
+          </a>
+        `).join('');
+      } catch (_) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', loadProfile);
+  </script>
+</body>
+</html>

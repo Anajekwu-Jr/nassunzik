@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Departmental Photo Gallery | NASS UNIZIK</title>
+  <meta name="description" content="Official photographic gallery and visual media archive of the Department of Statistics, Nnamdi Azikiwe University (UNIZIK), Awka.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <!-- Progressive Web App (PWA) Manifest & Meta -->
+  <meta name="theme-color" content="#0c2340">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="NASS UNIZIK">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png">
+  <link rel="icon" type="image/jpeg" href="/resources/images/nass-logo.jpg">
+
+  <script src="/js/theme.js"></script>
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="institutional-topbar">
+    <div class="container topbar-content">
+      <div class="topbar-left">
+        <span class="topbar-motto">Facts from Figures</span>
+        <span class="topbar-divider">|</span>
+        <span>Department of Statistics, Nnamdi Azikiwe University</span>
+      </div>
+      <div class="topbar-right">
+        <a href="/contacts.html" class="topbar-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Student Helpdesk</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <div class="header-left">
+        <button type="button" class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="/" class="header-brand">
+          <img src="/resources/images/nass-logo.jpg" alt="Logo" class="brand-logo">
+          <div class="brand-info">
+            <span class="brand-title">NASS UNIZIK</span>
+            <span class="brand-subtitle">Department of Statistics</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="main-nav" id="mainNav" aria-label="Primary Navigation">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/academia.html" class="nav-link">Academia</a>
+        <a href="/past-questions.html" class="nav-link">Past Questions</a>
+        <a href="/timetable.html" class="nav-link">Timetable</a>
+        <a href="/siwes.html" class="nav-link">SIWES</a>
+        <a href="/administration.html" class="nav-link">Staff</a>
+        <a href="/nass.html" class="nav-link">NASS Exco</a>
+        <a href="/archive.html" class="nav-link active">Gallery</a>
+        <a href="/news.html" class="nav-link">News</a>
+        <a href="/events.html" class="nav-link">Events</a>
+        <a href="#install-app" class="nav-link nav-install-btn" title="Install NASS UNIZIK Mobile App (Android & iOS)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+            <line x1="12" y1="18" x2="12.01" y2="18"/>
+          </svg>
+          <span>Install App</span>
+        </a>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="search-trigger-btn" aria-label="Open Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="search-placeholder">Search archives...</span>
+          <kbd class="search-shortcut">Ctrl K</kbd>
+        </button>
+        <button type="button" class="theme-toggle-btn header-theme-toggle" aria-label="Switch Light/Dark Theme" title="Switch Light/Dark Theme">
+          <span class="theme-toggle-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+          <span class="theme-toggle-label">Theme</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="mobile-drawer-header">
+      <div class="mobile-drawer-brand">NASS UNIZIK</div>
+      <button type="button" class="mobile-drawer-close" id="mobileDrawerClose">&times;</button>
+    </div>
+    <ul class="mobile-nav-list">
+      <li><a href="/" class="mobile-nav-link">Home</a></li>
+      <li><a href="/academia.html" class="mobile-nav-link">Academia & Courses</a></li>
+      <li><a href="/past-questions.html" class="mobile-nav-link">Past Questions Repository</a></li>
+      <li><a href="/timetable.html" class="mobile-nav-link">Lecture Timetable</a></li>
+      <li><a href="/siwes.html" class="mobile-nav-link">SIWES Industrial Training</a></li>
+      <li><a href="/administration.html" class="mobile-nav-link">Administration & Staff</a></li>
+      <li><a href="/nass.html" class="mobile-nav-link">NASS Executive Council</a></li>
+      <li><a href="/archive.html" class="mobile-nav-link active">Gallery & Photos</a></li>
+      <li><a href="/news.html" class="mobile-nav-link">Departmental News</a></li>
+      <li><a href="/events.html" class="mobile-nav-link">Events & Workshops</a></li>
+      <li><a href="/about.html" class="mobile-nav-link">About Department</a></li>
+      <li>
+        <a href="#install-app" class="mobile-nav-link mobile-install-btn">
+          <span class="mobile-nav-icon" style="display:inline-flex; align-items:center; color:#fbbf24;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+              <path d="M12 6v6m-3-3 3 3 3-3"/>
+            </svg>
+          </span>
+          <span>Install App (Android & iOS)</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <main>
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="container page-header-container">
+        <div class="breadcrumbs">
+          <a href="/">Home</a> <span>/</span> <span>Gallery</span>
+        </div>
+        <h1 class="page-title">Departmental Photo Gallery</h1>
+        <p class="page-lead">
+          Visual documentation of departmental lectures, computer laboratory sessions, academic conferences, annual induction ceremonies, and student community events.
+        </p>
+      </div>
+    </div>
+
+    <!-- Gallery Section -->
+    <section class="section">
+      <div class="container">
+        
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <div class="section-eyebrow">Departmental Media Archive</div>
+            <h2 class="section-title">Photographic Gallery</h2>
+          </div>
+          
+          <!-- Year Filter Group -->
+          <div class="filter-group" id="galleryFilterGroup" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="filter-btn active" data-year="ALL">All Photos</button>
+            <button type="button" class="filter-btn" data-year="2026">2026</button>
+            <button type="button" class="filter-btn" data-year="2025">2025</button>
+            <button type="button" class="filter-btn" data-year="2024">2024</button>
+          </div>
+        </div>
+
+        <div id="galleryGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-bottom: 50px;">
+          <!-- Authentic NASS Gallery Pictures from Departmental Archive -->
+          <div class="card gallery-card" style="overflow: hidden; cursor: pointer;" onclick="openLightbox(0)">
+            <div style="height: 230px; overflow: hidden; background: #000; position: relative;">
+              <img src="/resources/images/gallery/probix_class_2026.jpg" alt="NASS — Probix Class of 2026" style="width: 100%; height: 100%; object-fit: cover;">
+              <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.65); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.6875rem;">View Photo</div>
+            </div>
+            <div style="padding: 16px;">
+              <div style="font-size: 0.75rem; color: var(--primary-color); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Class Sets & Graduands · 2026</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.05rem; margin-top: 5px; color: var(--text-primary); font-weight: 700;">NASS — Probix Class of 2026</h4>
+              <p style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 6px; line-height: 1.5;">Official cohort portrait of the graduating Probix Class of 2026, Department of Statistics, Nnamdi Azikiwe University, Awka.</p>
+            </div>
+          </div>
+
+          <div class="card gallery-card" style="overflow: hidden; cursor: pointer;" onclick="openLightbox(1)">
+            <div style="height: 230px; overflow: hidden; background: #000; position: relative;">
+              <img src="/resources/images/gallery/vantora_class_2027.jpg" alt="NASS — Vantora Class of 2027" style="width: 100%; height: 100%; object-fit: cover;">
+              <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.65); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.6875rem;">View Photo</div>
+            </div>
+            <div style="padding: 16px;">
+              <div style="font-size: 0.75rem; color: var(--primary-color); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Class Sets & Cohorts · 2026</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.05rem; margin-top: 5px; color: var(--text-primary); font-weight: 700;">NASS — Vantora Class of 2027</h4>
+              <p style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 6px; line-height: 1.5;">The energetic Vantora Class of 2027 during departmental assembly and academic orientation at the Faculty of Physical Sciences.</p>
+            </div>
+          </div>
+
+          <div class="card gallery-card" style="overflow: hidden; cursor: pointer;" onclick="openLightbox(2)">
+            <div style="height: 230px; overflow: hidden; background: #000; position: relative;">
+              <img src="/resources/images/gallery/hod_cup_runner_up_2025_2026.jpg" alt="NASS HOD Cup Runner Up 2025/2026" style="width: 100%; height: 100%; object-fit: cover;">
+              <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.65); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.6875rem;">View Photo</div>
+            </div>
+            <div style="padding: 16px;">
+              <div style="font-size: 0.75rem; color: var(--primary-color); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Sports & Competitions · 2026</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.05rem; margin-top: 5px; color: var(--text-primary); font-weight: 700;">NASS HOD Cup Runner Up 2025/2026</h4>
+              <p style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 6px; line-height: 1.5;">Statistics departmental football team celebrating their runner-up triumph at the annual HOD Cup championship tournament.</p>
+            </div>
+          </div>
+
+          <div class="card gallery-card" style="overflow: hidden; cursor: pointer;" onclick="openLightbox(3)">
+            <div style="height: 230px; overflow: hidden; background: #000; position: relative;">
+              <img src="/resources/images/gallery/prof_osuji_vantora27_siwes_defense_2026.jpg" alt="Prof Osuji with Vantora'27 after First SIWES Defense" style="width: 100%; height: 100%; object-fit: cover;">
+              <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.65); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.6875rem;">View Photo</div>
+            </div>
+            <div style="padding: 16px;">
+              <div style="font-size: 0.75rem; color: var(--primary-color); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Academic Defense & Milestones · 2026</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.05rem; margin-top: 5px; color: var(--text-primary); font-weight: 700;">Prof Osuji with Vantora'27 after First SIWES Defense</h4>
+              <p style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 6px; line-height: 1.5;">Prof. George A. Osuji alongside 300L Vantora Class of 2027 students following the successful conclusion of their 1st SIWES departmental oral defense on January 22, 2026.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Past Question Repository Banner -->
+        <div class="card" style="padding: 28px; background: #fafbfc; border-left: 4px solid var(--primary-color);">
+          <div class="section-eyebrow">Academic Repository</div>
+          <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--text-primary); margin-bottom: 12px;">
+            Departmental Past Examination Paper Repository
+          </h3>
+          <p style="color: var(--text-secondary); line-height: 1.6; font-size: 0.9375rem; margin-bottom: 20px;">
+            Comprehensive collection of past examination question PDFs from 100 Level through 400 Level courses. Search by course code or title, preview solutions, and download examination papers.
+          </p>
+          <a href="/past-questions.html" class="btn btn-primary">Browse Past Questions Repository</a>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Photo Lightbox Modal -->
+  <div id="imageLightboxModal" style="display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0, 0, 0, 0.9); align-items: center; justify-content: center; padding: 20px;">
+    <button type="button" id="closeLightboxBtn" style="position: absolute; top: 20px; right: 24px; background: transparent; border: none; color: #fff; font-size: 32px; cursor: pointer; line-height: 1; padding: 4px 10px;" aria-label="Close Lightbox">&times;</button>
+    <div style="max-width: 900px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+      <img id="lightboxImg" src="" alt="" style="max-width: 100%; max-height: 70vh; object-fit: contain; border-radius: var(--radius-sm); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+      <div style="text-align: center; color: #fff; width: 100%;">
+        <div id="lightboxBadge" style="display: inline-block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--brand); letter-spacing: 0.08em; margin-bottom: 6px;"></div>
+        <h3 id="lightboxTitle" style="font-family: var(--font-serif); font-size: 1.3rem; margin: 0 0 6px;"></h3>
+        <p id="lightboxCaption" style="font-size: 0.875rem; color: #cbd5e1; max-width: 650px; margin: 0 auto; line-height: 1.5;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Institutional Footer -->
+  <footer class="site-footer" id="siteFooter">
+    <div class="container footer-top">
+      <div class="footer-grid">
+        
+        <!-- Column 1: Brand & Motto -->
+        <div>
+          <div class="footer-brand-title">NASS UNIZIK</div>
+          <div class="footer-motto">Facts from Figures</div>
+          <p class="footer-text">
+            The National Association of Students of Statistics (NASS), Department of Statistics, Faculty of Physical Sciences, Nnamdi Azikiwe University, Awka, Anambra State, Nigeria.
+          </p>
+          <div style="font-size: 0.8125rem; color: #94a3b8;">
+            Dedicated to promoting statistical literacy, academic rigour, and professional excellence.
+          </div>
+        </div>
+
+        <!-- Column 2: Academic Links -->
+        <div>
+          <h4 class="footer-col-title">Academia</h4>
+          <ul class="footer-links">
+            <li><a href="/academia.html">Course Catalog</a></li>
+            <li><a href="/past-questions.html">Past Questions</a></li>
+            <li><a href="/timetable.html">Lecture Timetable</a></li>
+            <li><a href="/siwes.html">SIWES Manual</a></li>
+            <li><a href="/projects.html">Project Guidelines</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Quick Links & Media -->
+        <div>
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="/archive.html">Gallery</a></li>
+            <li><a href="/news.html">Departmental News</a></li>
+            <li><a href="/events.html">Events & Workshops</a></li>
+            <li><a href="/about.html">Departmental Profile</a></li>
+            <li><a href="/contacts.html">Key Contacts & Helpdesk</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Contact Information -->
+        <div>
+          <h4 class="footer-col-title">Departmental Office</h4>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span data-setting="office_location">Statistics Admintrative Office, Ground floor, New Physical Sciences Building, science village, Unizik, Awka</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span data-setting="email">statistics@unizik.edu.ng</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <a href="/contacts.html" style="color: #cbd5e1;">Student Helpdesk & Advisory</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mandatory Footer Bottom Bar with EXACT Attribution -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <div>
+          &copy; <span id="currentYear">2026</span> Department of Statistics, Nnamdi Azikiwe University. All Rights Reserved.
+        </div>
+        <div class="footer-credit">
+          Created by PhanCore
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/settings-sync.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/nav.js"></script>
+  <script>
+    let allGalleryItems = [];
+    let currentYearFilter = 'ALL';
+
+    async function loadGallery() {
+      const container = document.getElementById('galleryGrid');
+      if (!container) return;
+      container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Loading gallery photographs...</div>`;
+
+      try {
+        const res = await NassAPI.getGallery();
+        allGalleryItems = res.items || [];
+        renderGallery();
+      } catch (err) {
+        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--danger-color); padding: 40px;">Failed to load gallery: ${err.message}</div>`;
+      }
+    }
+
+    function renderGallery() {
+      const container = document.getElementById('galleryGrid');
+      if (!container) return;
+
+      const filtered = currentYearFilter === 'ALL'
+        ? allGalleryItems
+        : allGalleryItems.filter(item => String(item.year) === currentYearFilter);
+
+      if (!filtered || filtered.length === 0) {
+        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: var(--text-muted); background: var(--surface-muted); border-radius: var(--radius-md);">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin: 0 auto 12px; color: var(--text-muted);">
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+            <circle cx="9" cy="9" r="2"/>
+            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+          </svg>
+          <div style="font-weight: 600; font-size: 1rem; color: var(--text-primary);">No photos found for ${currentYearFilter === 'ALL' ? 'the archive' : currentYearFilter}</div>
+          <div style="font-size: 0.8125rem; margin-top: 4px;">Photographs uploaded via the admin portal will appear here automatically.</div>
+        </div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map((g, idx) => `
+        <div class="card gallery-card" style="overflow: hidden; cursor: pointer; transition: transform var(--transition-fast), box-shadow var(--transition-fast);" onclick="openLightbox(${idx})">
+          <div style="height: 230px; overflow: hidden; background: #000; position: relative;">
+            <img src="${g.image_url}" alt="${g.title}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 300ms ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.65); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.6875rem; display: flex; align-items: center; gap: 4px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              View
+            </div>
+          </div>
+          <div style="padding: 16px;">
+            <div style="font-size: 0.75rem; color: var(--primary-color); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">${g.event_name || 'Academic Event'} · ${g.year}</div>
+            <h4 style="font-family: var(--font-serif); font-size: 1.05rem; margin-top: 5px; color: var(--text-primary); font-weight: 700;">${g.title}</h4>
+            <p style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 6px; line-height: 1.5;">${g.description || g.caption || ''}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openLightbox(index) {
+      const filtered = currentYearFilter === 'ALL'
+        ? allGalleryItems
+        : allGalleryItems.filter(item => String(item.year) === currentYearFilter);
+      const photo = filtered[index];
+      if (!photo) return;
+
+      const modal = document.getElementById('imageLightboxModal');
+      const img = document.getElementById('lightboxImg');
+      const title = document.getElementById('lightboxTitle');
+      const caption = document.getElementById('lightboxCaption');
+      const badge = document.getElementById('lightboxBadge');
+
+      img.src = photo.image_url;
+      img.alt = photo.title;
+      title.textContent = photo.title;
+      caption.textContent = photo.description || photo.caption || '';
+      badge.textContent = `${photo.event_name || 'Department Event'} • ${photo.year}`;
+
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('imageLightboxModal');
+      if (modal) modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadGallery();
+
+      // Year filter buttons
+      document.querySelectorAll('#galleryFilterGroup .filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#galleryFilterGroup .filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentYearFilter = btn.getAttribute('data-year');
+          renderGallery();
+        });
+      });
+
+      // Lightbox close listeners
+      const closeBtn = document.getElementById('closeLightboxBtn');
+      if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+
+      const modal = document.getElementById('imageLightboxModal');
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeLightbox();
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+      });
+
+      window.addEventListener('nass:data_updated', loadGallery);
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'nass_data_updated') loadGallery();
+      });
+      if ('BroadcastChannel' in window) {
+        const bc = new BroadcastChannel('nass_portal_channel');
+        bc.onmessage = () => loadGallery();
+      }
+    });
+
+    window.loadGallery = loadGallery;
+    window.openLightbox = openLightbox;
+    window.closeLightbox = closeLightbox;
+  </script>
+</body>
+</html>

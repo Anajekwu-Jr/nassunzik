@@ -1,0 +1,3517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NASS Portal Administration & Content Editor | UNIZIK Statistics</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <!-- Progressive Web App (PWA) Manifest & Meta -->
+  <meta name="theme-color" content="#0c2340">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="NASS UNIZIK">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png">
+  <link rel="icon" type="image/jpeg" href="/resources/images/nass-logo.jpg">
+
+  <script src="/js/theme.js"></script>
+  <style>
+    :root {
+      --admin-sidebar-w: 260px;
+    }
+    body {
+      background-color: var(--bg-body, #f8fafc);
+      color: var(--text-primary, #0f172a);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .admin-layout {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+    .admin-sidebar {
+      width: var(--admin-sidebar-w);
+      background-color: #0f172a;
+      color: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      border-right: 1px solid #1e293b;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 40;
+    }
+    .admin-brand {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .admin-brand-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #991b1b, #b91c1c);
+      color: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .admin-nav {
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .admin-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      color: #94a3b8;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
+    }
+    .admin-nav-item:hover {
+      color: #ffffff;
+      background-color: #1e293b;
+    }
+    .admin-nav-item.active {
+      color: #ffffff;
+      background-color: #991b1b;
+      font-weight: 600;
+    }
+    .admin-main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-body, #f8fafc);
+    }
+    .admin-topbar {
+      height: 64px;
+      background-color: var(--bg-surface, #ffffff);
+      border-bottom: 1px solid var(--border-color, #e2e8f0);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+    .admin-content {
+      padding: 28px;
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      flex: 1;
+    }
+    .admin-section {
+      display: none;
+    }
+    .admin-section.active {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .admin-panel {
+      background-color: var(--bg-surface, #ffffff);
+      border: 1px solid var(--border-color, #e2e8f0);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .admin-panel-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+    .admin-panel-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary, #64748b);
+      margin-bottom: 20px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+    .form-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-primary, #1e293b);
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 9px 13px;
+      border: 1px solid var(--border-color, #cbd5e1);
+      border-radius: 6px;
+      font-size: 0.875rem;
+      background-color: var(--bg-surface, #ffffff);
+      color: var(--text-primary, #0f172a);
+      font-family: inherit;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: #991b1b;
+      box-shadow: 0 0 0 3px rgba(153, 27, 27, 0.15);
+    }
+    .form-textarea {
+      min-height: 110px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+    .btn-admin {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s ease;
+    }
+    .btn-admin-primary {
+      background-color: #991b1b;
+      color: white;
+    }
+    .btn-admin-primary:hover {
+      background-color: #7f1d1d;
+    }
+    .btn-admin-secondary {
+      background-color: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+    .btn-admin-secondary:hover {
+      background-color: #e2e8f0;
+      color: #0f172a;
+    }
+    .btn-admin-danger {
+      background-color: #ef4444;
+      color: white;
+    }
+    .btn-admin-danger:hover {
+      background-color: #dc2626;
+    }
+    .btn-admin-sm {
+      padding: 5px 10px;
+      font-size: 0.8125rem;
+      border-radius: 4px;
+    }
+
+    /* Modal styles */
+    .admin-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+    .admin-modal-backdrop.active {
+      display: flex;
+    }
+    .admin-modal {
+      background-color: var(--bg-surface, #ffffff);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border-color, #cbd5e1);
+      display: flex;
+      flex-direction: column;
+    }
+    .admin-modal-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border-color, #e2e8f0);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .admin-modal-body {
+      padding: 24px;
+      overflow-y: auto;
+    }
+    .admin-modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border-color, #e2e8f0);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      background-color: var(--bg-subtle, #f8fafc);
+    }
+
+    /* Table styles */
+    .admin-table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border-color, #e2e8f0);
+      border-radius: 8px;
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      text-align: left;
+    }
+    .admin-table th {
+      background-color: var(--bg-subtle, #f1f5f9);
+      color: var(--text-secondary, #475569);
+      font-weight: 600;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color, #e2e8f0);
+    }
+    .admin-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color, #e2e8f0);
+      color: var(--text-primary, #1e293b);
+    }
+    .admin-table tr:last-child td {
+      border-bottom: none;
+    }
+    .admin-table tr:hover td {
+      background-color: rgba(153, 27, 27, 0.02);
+    }
+
+    /* File dropzone */
+    .dropzone {
+      border: 2px dashed var(--border-color, #cbd5e1);
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background-color: var(--bg-subtle, #f8fafc);
+    }
+    .dropzone:hover, .dropzone.dragover {
+      border-color: #991b1b;
+      background-color: rgba(153, 27, 27, 0.04);
+    }
+
+    /* Toast alert */
+    #adminToast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background-color: #0f172a;
+      color: #ffffff;
+      padding: 14px 20px;
+      border-radius: 8px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      z-index: 150;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #adminToast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    #adminToast.success {
+      background-color: #166534;
+    }
+    #adminToast.error {
+      background-color: #991b1b;
+    }
+
+    /* Login Screen */
+    #loginScreen {
+      position: fixed;
+      inset: 0;
+      background-color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 200;
+    }
+    .login-card {
+      background-color: #ffffff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 440px;
+      padding: 36px 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      .admin-layout {
+        flex-direction: column;
+      }
+      .admin-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      .admin-topbar {
+        padding: 0 16px;
+      }
+      .admin-content {
+        padding: 16px;
+      }
+    }
+  </style>
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen">
+    <div class="login-card">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="width: 52px; height: 52px; background: #991b1b; color: white; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 12px;">
+          N
+        </div>
+        <h2 style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">
+          NASS Portal Editor
+        </h2>
+        <p style="font-size: 0.875rem; color: #64748b;">
+          National Association of Students of Statistics · UNIZIK
+        </p>
+      </div>
+
+      <div id="loginAlert" style="display: none; padding: 10px 14px; border-radius: 6px; font-size: 0.8125rem; margin-bottom: 16px; background-color: #fef2f2; color: #991b1b; border: 1px solid #fecaca;">
+      </div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off">
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" for="username">Administrator Username</label>
+          <input type="text" id="username" class="form-input" placeholder="Enter username" autocomplete="username" required value="">
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label class="form-label" for="password">Password</label>
+          <input type="password" id="password" class="form-input" placeholder="Enter password" autocomplete="current-password" required value="">
+        </div>
+        <button type="submit" id="loginBtn" class="btn-admin btn-admin-primary" style="width: 100%; padding: 12px; font-size: 0.9375rem;">
+          Sign In to Portal Editor
+        </button>
+      </form>
+
+      <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #e2e8f0; text-align: center;">
+        <a href="/" style="font-size: 0.8125rem; color: #64748b; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+          &larr; Return to Public Departmental Portal
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN ADMIN DASHBOARD -->
+  <div class="admin-layout" id="adminDashboard" style="display: none;">
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="admin-brand">
+        <div class="admin-brand-icon">N</div>
+        <div>
+          <div style="font-weight: 700; font-size: 0.9375rem; color: #ffffff;">NASS UNIZIK</div>
+          <div style="font-size: 0.75rem; color: #94a3b8;">Portal Editor</div>
+        </div>
+      </div>
+
+      <nav class="admin-nav">
+        <a class="admin-nav-item active" onclick="switchSection('general')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          General & Write-ups
+        </a>
+        <a class="admin-nav-item" onclick="switchSection('staff')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Staff & Lecturers
+        </a>
+        <a class="admin-nav-item" onclick="switchSection('courses')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Courses & Syllabi
+        </a>
+        <a class="admin-nav-item" onclick="switchSection('materials')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Past Questions & PDFs
+        </a>
+        <a class="admin-nav-item" onclick="switchSection('timetable')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Timetable Schedules
+        </a>
+        <a class="admin-nav-item" onclick="switchSection('executives')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          NASS Executives
+        </a>
+        <a class="admin-nav-item" onclick="switchSection('news')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+          News & Announcements
+        </a>
+        <a class="admin-nav-item" onclick="switchSection('events')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+          Events & Workshops
+        </a>
+        <a class="admin-nav-item" onclick="switchSection('siwes')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          SIWES Training
+        </a>
+        <a class="admin-nav-item" onclick="switchSection('projects')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Final Year Projects
+        </a>
+        <a class="admin-nav-item" onclick="switchSection('gallery')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Gallery & Photos
+        </a>
+      </nav>
+
+      <div style="padding: 16px; border-top: 1px solid #1e293b;">
+        <div style="font-size: 0.8125rem; color: #94a3b8; margin-bottom: 8px;">Logged in as:</div>
+        <div style="font-size: 0.875rem; font-weight: 600; color: #ffffff;" id="adminUserName">NASS Chief Administrator</div>
+        <button onclick="handleLogout()" class="btn-admin btn-admin-secondary btn-admin-sm" style="width: 100%; margin-top: 12px; background-color: #1e293b; color: #f8fafc; border-color: #334155;">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <h1 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);" id="pageHeading">
+            General & Write-ups
+          </h1>
+          <div id="adminTopTermBadge" style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.25); border-radius: 9999px; font-size: 0.75rem; color: #1d4ed8; font-weight: 600;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Live Session: <strong id="adminTopSession">2026/2027</strong> · <span id="adminTopSemester">First Semester</span></span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <a href="/" target="_blank" class="btn-admin btn-admin-secondary btn-admin-sm">
+            <span>View Live Portal</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <button onclick="themeToggle()" class="theme-toggle-btn" title="Toggle theme">
+            <span class="theme-icon">◐</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="admin-content">
+
+        <!-- ==================== 1. GENERAL SETTINGS & WRITE-UPS ==================== -->
+        <section id="section-general" class="admin-section active">
+          <form onsubmit="saveGeneralSettings(event)">
+
+            <!-- DEDICATED ACADEMIC CALENDAR & TERM SETTINGS PANEL -->
+            <div class="admin-panel" style="border: 2px solid #2563eb; background: #eff6ff; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+                <div>
+                  <div class="admin-panel-title" style="color: #1e3a8a; display: flex; align-items: center; gap: 8px; font-size: 1.1rem; margin-bottom: 4px;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>Current Academic Session & Semester Control</span>
+                  </div>
+                  <div class="admin-panel-desc" style="color: #475569; margin-bottom: 0;">
+                    Changes the official academic session and active semester displayed prominently across the homepage, noticeboards, and lecture schedules.
+                  </div>
+                </div>
+                <button type="button" onclick="saveAcademicTermQuickly()" class="btn-admin btn-admin-primary btn-admin-sm" style="background: #1d4ed8; color: #ffffff; white-space: nowrap; font-weight: 600;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                  <span>Quick Save Academic Term</span>
+                </button>
+              </div>
+
+              <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" style="font-weight: 700; color: #1e293b;">Active Academic Session *</label>
+                  <input type="text" id="set_session" class="form-input" placeholder="e.g. 2025/2026 or 2026/2027" style="background: #ffffff; font-weight: 700; font-size: 1rem; color: #0f172a;" required>
+                  <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">Standard academic year format: e.g. 2025/2026, 2026/2027</div>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" style="font-weight: 700; color: #1e293b;">Active Semester *</label>
+                  <select id="set_semester" class="form-select" style="background: #ffffff; font-weight: 700; font-size: 1rem; color: #0f172a;">
+                    <option value="First Semester">First Semester</option>
+                    <option value="Second Semester">Second Semester</option>
+                  </select>
+                  <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">Current teaching, lecture timetable, and examination term</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-panel">
+              <div class="admin-panel-title">Portal Identity & Basic Information</div>
+              <div class="admin-panel-desc">Configure the association name, department title, motto, and institutional information.</div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Association Name</label>
+                  <input type="text" id="set_association_name" class="form-input" value="National Association Of Statistics Students">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Department Title</label>
+                  <input type="text" id="set_department_name" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">University</label>
+                  <input type="text" id="set_university" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Faculty</label>
+                  <input type="text" id="set_faculty" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Motto</label>
+                  <input type="text" id="set_motto" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">NUC Accreditation Status</label>
+                  <input type="text" id="set_stat_accreditation" class="form-input" placeholder="e.g. Full NUC Accreditation">
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-panel">
+              <div class="admin-panel-title">Head of Department (HOD) Profile & Welcome Address</div>
+              <div class="admin-panel-desc">Edit the HOD welcome text, name, title, and official portrait image displayed on the homepage.</div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">HOD Full Name</label>
+                  <input type="text" id="set_hod_name" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">HOD Designation / Title</label>
+                  <input type="text" id="set_hod_title" class="form-input">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">HOD Photo URL / Upload</label>
+                  <div style="display: flex; gap: 12px; align-items: center;">
+                    <input type="text" id="set_hod_image" class="form-input" style="flex: 1;">
+                    <label class="btn-admin btn-admin-secondary btn-admin-sm" style="cursor: pointer; white-space: nowrap;">
+                      Upload New Image
+                      <input type="file" accept="image/*" style="display: none;" onchange="uploadFileDirectly(this, 'set_hod_image')">
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">HOD Welcome Message / Speech</label>
+                  <textarea id="set_hod_welcome" class="form-textarea" style="min-height: 140px;"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-panel">
+              <div class="admin-panel-title">Departmental History, Vision, Mission & Facilities</div>
+              <div class="admin-panel-desc">Edit the narrative write-ups displayed on the About Department page and homepage.</div>
+
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label class="form-label">Departmental History & Background</label>
+                  <textarea id="set_about_history" class="form-textarea"></textarea>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">Departmental Vision</label>
+                  <textarea id="set_about_vision" class="form-textarea"></textarea>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">Departmental Mission</label>
+                  <textarea id="set_about_mission" class="form-textarea"></textarea>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">Academic Philosophy</label>
+                  <textarea id="set_about_philosophy" class="form-textarea"></textarea>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">Facilities & Computing Laboratories</label>
+                  <textarea id="set_about_facilities" class="form-textarea"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-panel">
+              <div class="admin-panel-title">Official Contact Information & Secretariats</div>
+              <div class="admin-panel-desc">Manage the departmental contact address, phone, email, and social community links.</div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Official Email</label>
+                  <input type="email" id="set_email" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Official Phone</label>
+                  <input type="text" id="set_phone" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Office Hours</label>
+                  <input type="text" id="set_office_hours" class="form-input">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">Physical Office Location</label>
+                  <input type="text" id="set_office_location" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">WhatsApp Community Link</label>
+                  <input type="text" id="set_social_whatsapp" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Telegram Channel Link</label>
+                  <input type="text" id="set_social_telegram" class="form-input">
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+              <button type="submit" class="btn-admin btn-admin-primary" style="padding: 12px 28px; font-size: 0.9375rem;">
+                Save All Write-ups & Settings
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- ==================== 2. STAFF & LECTURERS ==================== -->
+        <section id="section-staff" class="admin-section">
+          <div class="admin-panel">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+              <div>
+                <div class="admin-panel-title">Lecturers & Staff Directory</div>
+                <div class="admin-panel-desc">Manage the Head of Department, Staff Advisor, Professors, Senior Lecturers, and departmental personnel.</div>
+              </div>
+              <button onclick="openStaffModal()" class="btn-admin btn-admin-primary">
+                <span>+ Add New Lecturer</span>
+              </button>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+              <input type="text" id="staffSearchInput" oninput="renderStaffTable()" placeholder="Search staff by name or qualification..." class="form-input" style="max-width: 320px;">
+              <select id="staffCategoryFilter" onchange="renderStaffTable()" class="form-select" style="max-width: 200px;">
+                <option value="">All Staff Roles</option>
+                <option value="HOD">Head of Department</option>
+                <option value="ADVISER">Staff Adviser</option>
+                <option value="ACADEMIC">Academic Staff</option>
+                <option value="NON_ACADEMIC">Technical & Administrative</option>
+              </select>
+            </div>
+
+            <div class="admin-table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Designation / Role</th>
+                    <th>Qualifications</th>
+                    <th>Specialization</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="staffTableBody">
+                  <tr><td colspan="6" style="text-align: center; padding: 24px;">Loading staff directory...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 3. COURSES & SYLLABI ==================== -->
+        <section id="section-courses" class="admin-section">
+          <div class="admin-panel">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+              <div>
+                <div class="admin-panel-title">Curriculum & Course Outlines</div>
+                <div class="admin-panel-desc">Add, edit, or update undergraduate courses from 100L to 400L, credit units, syllabi, and semester allocations.</div>
+              </div>
+              <button onclick="openCourseModal()" class="btn-admin btn-admin-primary">
+                <span>+ Add New Course</span>
+              </button>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+              <select id="courseLevelFilter" onchange="renderCoursesTable()" class="form-select" style="max-width: 160px;">
+                <option value="">All Levels</option>
+                <option value="100">100 Level</option>
+                <option value="200">200 Level</option>
+                <option value="300">300 Level</option>
+                <option value="400">400 Level</option>
+              </select>
+              <select id="courseSemesterFilter" onchange="renderCoursesTable()" class="form-select" style="max-width: 160px;">
+                <option value="">All Semesters</option>
+                <option value="1">First Semester</option>
+                <option value="2">Second Semester</option>
+              </select>
+              <input type="text" id="courseSearchInput" oninput="renderCoursesTable()" placeholder="Search by course code or title..." class="form-input" style="max-width: 280px;">
+            </div>
+
+            <div class="admin-table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Course Code</th>
+                    <th>Course Title</th>
+                    <th>Level</th>
+                    <th>Semester</th>
+                    <th>Units</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="coursesTableBody">
+                  <tr><td colspan="6" style="text-align: center; padding: 24px;">Loading courses...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 4. PAST QUESTIONS & PDF MATERIALS ==================== -->
+        <section id="section-materials" class="admin-section">
+          <div class="admin-panel">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+              <div>
+                <div class="admin-panel-title">Past Examination Papers & Downloadable PDFs</div>
+                <div class="admin-panel-desc">Upload past question PDF papers, revision notes, lecture slides, and course outlines for students.</div>
+              </div>
+              <button onclick="openMaterialModal()" class="btn-admin btn-admin-primary">
+                <span>+ Upload PDF / Material</span>
+              </button>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+              <select id="materialLevelFilter" onchange="renderMaterialsTable()" class="form-select" style="max-width: 160px;">
+                <option value="">All Levels</option>
+                <option value="100">100 Level</option>
+                <option value="200">200 Level</option>
+                <option value="300">300 Level</option>
+                <option value="400">400 Level</option>
+              </select>
+              <select id="materialTypeFilter" onchange="renderMaterialsTable()" class="form-select" style="max-width: 180px;">
+                <option value="">All Document Types</option>
+                <option value="past_question">Past Questions</option>
+                <option value="lecture_note">Lecture Notes</option>
+                <option value="course_outline">Course Outlines</option>
+                <option value="practice_problem">Practice Problems</option>
+              </select>
+              <input type="text" id="materialSearchInput" oninput="renderMaterialsTable()" placeholder="Search materials..." class="form-input" style="max-width: 280px;">
+            </div>
+
+            <div class="admin-table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Document Title</th>
+                    <th>Course</th>
+                    <th>Session / Year</th>
+                    <th>Type</th>
+                    <th>File</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="materialsTableBody">
+                  <tr><td colspan="6" style="text-align: center; padding: 24px;">Loading materials...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 5. TIMETABLE SCHEDULES ==================== -->
+        <section id="section-timetable" class="admin-section">
+          <div class="admin-panel">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+              <div>
+                <div class="admin-panel-title">Lecture Timetable Schedules</div>
+                <div class="admin-panel-desc">Manage weekly class schedules, lecture halls, allocated times, and assigned lecturers across all levels.</div>
+              </div>
+              <button onclick="openTimetableModal()" class="btn-admin btn-admin-primary">
+                <span>+ Add Timetable Entry</span>
+              </button>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+              <select id="timetableLevelFilter" onchange="renderTimetableTable()" class="form-select" style="max-width: 160px;">
+                <option value="100">100 Level</option>
+                <option value="200">200 Level</option>
+                <option value="300">300 Level</option>
+                <option value="400" selected>400 Level</option>
+              </select>
+              <select id="timetableSemesterFilter" onchange="renderTimetableTable()" class="form-select" style="max-width: 160px;">
+                <option value="1" selected>First Semester</option>
+                <option value="2">Second Semester</option>
+              </select>
+            </div>
+
+            <div class="admin-table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Day</th>
+                    <th>Time</th>
+                    <th>Course Code & Title</th>
+                    <th>Lecturer</th>
+                    <th>Venue</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="timetableTableBody">
+                  <tr><td colspan="6" style="text-align: center; padding: 24px;">Loading timetable...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 6. NASS EXECUTIVES ==================== -->
+        <section id="section-executives" class="admin-section">
+          <div class="admin-panel">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+              <div>
+                <div class="admin-panel-title">NASS Student Executive Council</div>
+                <div class="admin-panel-desc">Manage democratically elected student officials, portfolios, phone contacts, and portraits.</div>
+              </div>
+              <button onclick="openExecutiveModal()" class="btn-admin btn-admin-primary">
+                <span>+ Add Executive</span>
+              </button>
+            </div>
+
+            <div class="admin-table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Portrait</th>
+                    <th>Name</th>
+                    <th>Portfolio / Office</th>
+                    <th>Level</th>
+                    <th>Contact Phone</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="executivesTableBody">
+                  <tr><td colspan="6" style="text-align: center; padding: 24px;">Loading executives...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 7. NEWS & ANNOUNCEMENTS ==================== -->
+        <section id="section-news" class="admin-section">
+          <div class="admin-panel">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+              <div>
+                <div class="admin-panel-title">Departmental News & Notices</div>
+                <div class="admin-panel-desc">Publish announcements, research colloquium notices, and official departmental news articles.</div>
+              </div>
+              <button onclick="openNewsModal()" class="btn-admin btn-admin-primary">
+                <span>+ Post News Article</span>
+              </button>
+            </div>
+
+            <div class="admin-table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Published Date</th>
+                    <th>Featured</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="newsTableBody">
+                  <tr><td colspan="5" style="text-align: center; padding: 24px;">Loading news...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 8. GALLERY & PHOTOS ==================== -->
+        <section id="section-gallery" class="admin-section">
+          <div class="admin-panel">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+              <div>
+                <div class="admin-panel-title">Photo Gallery & Archive</div>
+                <div class="admin-panel-desc">Upload photos of departmental lectures, computer lab sessions, sports tournaments, and induction galas.</div>
+              </div>
+              <button onclick="openGalleryModal()" class="btn-admin btn-admin-primary">
+                <span>+ Upload Photo</span>
+              </button>
+            </div>
+
+            <div id="galleryGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;">
+              <div style="text-align: center; padding: 24px; grid-column: 1 / -1;">Loading gallery photos...</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 9. EVENTS & WORKSHOPS ==================== -->
+        <section id="section-events" class="admin-section">
+          <div class="admin-panel">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <div class="admin-panel-title">Events & Workshops Management</div>
+                <div class="admin-panel-desc">Publish departmental seminars, conferences, and bootcamps. Featured events appear on the home page Noticeboard Bulletin.</div>
+              </div>
+              <button onclick="openEventModal()" class="btn-admin btn-admin-primary">
+                <span>+ Add Event</span>
+              </button>
+            </div>
+
+            <div class="admin-table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Title & Venue</th>
+                    <th>Date & Time</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Bulletin Featured</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="eventsTableBody">
+                  <tr><td colspan="6" style="text-align: center; padding: 24px;">Loading events...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 10. SIWES TRAINING ==================== -->
+        <section id="section-siwes" class="admin-section">
+          <div class="admin-panel">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <div class="admin-panel-title">SIWES & Industrial Training Page Content</div>
+                <div class="admin-panel-desc">Manage all downloadable manuals, logbook templates, ITF guidelines, and student forms displayed on the SIWES page. Supports any file format (PDF, DOCX, ZIP, PPTX, etc.).</div>
+              </div>
+              <button onclick="openSiwesModal()" class="btn-admin btn-admin-primary">
+                <span>+ Add SIWES Document</span>
+              </button>
+            </div>
+
+            <div class="admin-table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Document Title</th>
+                    <th>Category</th>
+                    <th>File Resource</th>
+                    <th>Date Added</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="siwesTableBody">
+                  <tr><td colspan="5" style="text-align: center; padding: 24px;">Loading SIWES documents...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 11. FINAL YEAR PROJECTS ==================== -->
+        <section id="section-projects" class="admin-section">
+          <div class="admin-panel">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <div class="admin-panel-title">Final Year Projects Page Content</div>
+                <div class="admin-panel-desc">Manage research blueprints, thesis templates, defense guidelines, and statistical analysis materials displayed on the Projects page. Supports any file format.</div>
+              </div>
+              <button onclick="openProjectModal()" class="btn-admin btn-admin-primary">
+                <span>+ Add Project Resource</span>
+              </button>
+            </div>
+
+            <div class="admin-table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Resource Title</th>
+                    <th>Category</th>
+                    <th>File Resource</th>
+                    <th>Date Added</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="projectsTableBody">
+                  <tr><td colspan="5" style="text-align: center; padding: 24px;">Loading project guidelines...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- STAFF MODAL -->
+  <div class="admin-modal-backdrop" id="staffModal">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);" id="staffModalTitle">Add Lecturer</h3>
+        <button onclick="closeModal('staffModal')" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="handleSaveStaff(event)">
+        <div class="admin-modal-body">
+          <input type="hidden" id="staff_id">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label">Full Name *</label>
+              <input type="text" id="staff_name" class="form-input" placeholder="e.g. Prof Francis Chukwuemeka Eze" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Title / Academic Rank *</label>
+              <input type="text" id="staff_title" class="form-input" placeholder="e.g. Professor of Statistics" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Role Category *</label>
+              <select id="staff_role_category" class="form-select" required>
+                <option value="HOD">Head of Department (HOD)</option>
+                <option value="ADVISER">Staff Adviser</option>
+                <option value="ACADEMIC" selected>Academic Staff / Lecturer</option>
+                <option value="NON_ACADEMIC">Technical & Administrative Staff</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Qualifications *</label>
+              <input type="text" id="staff_qualifications" class="form-input" placeholder="e.g. B.Sc, M.Sc, Ph.D (Statistics), FNStat" required>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Specialization / Research Domain</label>
+              <input type="text" id="staff_specialization" class="form-input" placeholder="e.g. Time Series Analysis, Econometrics, Probability">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" id="staff_email" class="form-input" placeholder="e.g. fc.eze@unizik.edu.ng">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="text" id="staff_phone" class="form-input" placeholder="e.g. +234 810 717 5597">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Office Room</label>
+              <input type="text" id="staff_office" class="form-input" placeholder="e.g. Room 204, Statistics Block">
+            </div>
+            <div class="form-group">
+              <label class="form-label">UNIZIK CIRS Profile URL</label>
+              <input type="text" id="staff_cirs_url" class="form-input" placeholder="e.g. https://profile.unizik.edu.ng/nau2436">
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Profile Portrait Photo</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="staff_photo_url" class="form-input" value="/resources/images/staff_default.jpg">
+                <label class="btn-admin btn-admin-secondary btn-admin-sm" style="cursor: pointer; white-space: nowrap;">
+                  Upload Photo
+                  <input type="file" accept="image/*" style="display: none;" onchange="uploadFileDirectly(this, 'staff_photo_url')">
+                </label>
+              </div>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Short Biography / Institutional Profile</label>
+              <textarea id="staff_bio" class="form-textarea" rows="2" placeholder="Brief biographical statement, academic background or duties..."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Display Priority Order</label>
+              <input type="number" id="staff_display_order" class="form-input" value="10" min="1">
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" onclick="closeModal('staffModal')" class="btn-admin btn-admin-secondary">Cancel</button>
+          <button type="submit" class="btn-admin btn-admin-primary">Save Lecturer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- COURSE MODAL -->
+  <div class="admin-modal-backdrop" id="courseModal">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);" id="courseModalTitle">Add Course</h3>
+        <button onclick="closeModal('courseModal')" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="handleSaveCourse(event)">
+        <div class="admin-modal-body">
+          <input type="hidden" id="course_id">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Course Code *</label>
+              <input type="text" id="course_code" class="form-input" placeholder="e.g. STA 401" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Credit Units *</label>
+              <input type="number" id="course_credit_units" class="form-input" value="3" min="1" max="6" required>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Course Title *</label>
+              <input type="text" id="course_title" class="form-input" placeholder="e.g. Statistical Inference II" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Level *</label>
+              <select id="course_level" class="form-select" required>
+                <option value="100">100 Level</option>
+                <option value="200">200 Level</option>
+                <option value="300">300 Level</option>
+                <option value="400">400 Level</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Semester *</label>
+              <select id="course_semester" class="form-select" required>
+                <option value="1">First Semester</option>
+                <option value="2">Second Semester</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Course Description</label>
+              <textarea id="course_description" class="form-textarea" placeholder="Brief summary of syllabus coverage..."></textarea>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Detailed Course Outline / Topics</label>
+              <textarea id="course_outline" class="form-textarea" placeholder="Week 1: ..., Week 2: ..."></textarea>
+            </div>
+
+            <!-- COURSE MATERIAL ATTACHMENT SECTION -->
+            <div class="form-group full-width" style="margin-top: 6px; padding: 16px; background: #f8fafc; border: 1.5px dashed #cbd5e1; border-radius: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label class="form-label" style="margin: 0; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 6px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary-color);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                  Include Course Material (PDF, DOCX, PPTX, Image, any file)
+                </label>
+                <span style="font-size: 0.75rem; color: #64748b;">Optional attachment</span>
+              </div>
+              <p style="font-size: 0.8125rem; color: #64748b; margin-bottom: 12px; line-height: 1.4;">
+                Attach syllabus documents, lecture slides, datasets, textbooks, or past examination questions directly to this course.
+              </p>
+
+              <div class="form-grid" style="gap: 10px;">
+                <div class="form-group full-width">
+                  <div style="display: flex; gap: 8px; align-items: center;">
+                    <input type="text" id="course_material_path" class="form-input" placeholder="File URL or upload a file from your device" style="font-size: 0.8125rem;">
+                    <label class="btn-admin btn-admin-secondary btn-admin-sm" style="cursor: pointer; white-space: nowrap; height: 38px; display: inline-flex; align-items: center; gap: 6px;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                      <span>Upload File</span>
+                      <input type="file" style="display: none;" onchange="uploadCourseMaterialDirectly(this)">
+                    </label>
+                  </div>
+                  <div id="course_material_status" style="font-size: 0.75rem; color: #059669; font-weight: 600; margin-top: 4px; display: none;"></div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" style="font-size: 0.75rem;">Material Title</label>
+                  <input type="text" id="course_material_title" class="form-input" placeholder="e.g. Lecture Notes & Handouts">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" style="font-size: 0.75rem;">Resource Type</label>
+                  <select id="course_material_type" class="form-select">
+                    <option value="lecture_note">Lecture Notes & Handout</option>
+                    <option value="outline">Syllabus & Course Outline</option>
+                    <option value="past_question">Past Examination Paper</option>
+                    <option value="textbook">Textbook & Reference</option>
+                    <option value="guide">Lab Manual & Guide</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- List of currently attached resources for this course -->
+              <div id="course_existing_resources_container" style="margin-top: 14px; border-top: 1px dashed #cbd5e1; padding-top: 10px; display: none;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: #475569; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Attached Course Materials:</div>
+                <div id="course_existing_resources_list" style="display: flex; flex-direction: column; gap: 6px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" onclick="closeModal('courseModal')" class="btn-admin btn-admin-secondary">Cancel</button>
+          <button type="submit" class="btn-admin btn-admin-primary">Save Course</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MATERIAL / PDF MODAL -->
+  <div class="admin-modal-backdrop" id="materialModal">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);" id="materialModalTitle">Upload Past Question / Material</h3>
+        <button onclick="closeModal('materialModal')" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="handleSaveMaterial(event)">
+        <div class="admin-modal-body">
+          <input type="hidden" id="material_id">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label">Associated Course *</label>
+              <select id="material_course_id" class="form-select" required>
+                <option value="">Select Course...</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Material Title *</label>
+              <input type="text" id="material_title" class="form-input" placeholder="e.g. STA 401 2023/2024 First Semester Examination" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Resource Type *</label>
+              <select id="material_resource_type" class="form-select" required>
+                <option value="past_question">Past Question Paper</option>
+                <option value="lecture_note">Lecture Notes & Handout</option>
+                <option value="course_outline">Course Outline / Syllabus</option>
+                <option value="practice_problem">Practice Problems & Solutions</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Academic Session / Year</label>
+              <input type="text" id="material_academic_year" class="form-input" placeholder="e.g. 2023/2024">
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Upload PDF Document *</label>
+              <div class="dropzone" id="materialDropzone" onclick="document.getElementById('materialFileInput').click()">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#991b1b" stroke-width="2" style="margin: 0 auto 8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <div style="font-weight: 600; font-size: 0.875rem; color: var(--text-primary);">Click or drag & drop PDF file here</div>
+                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">PDF, DOCX, PPTX up to 20MB</div>
+                <input type="file" id="materialFileInput" accept=".pdf,.doc,.docx,.pptx" style="display: none;" onchange="uploadMaterialFile(this)">
+              </div>
+              <div style="margin-top: 8px;">
+                <input type="text" id="material_file_path" class="form-input" placeholder="File URL (auto-filled on upload)" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" onclick="closeModal('materialModal')" class="btn-admin btn-admin-secondary">Cancel</button>
+          <button type="submit" class="btn-admin btn-admin-primary">Save Document</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TIMETABLE MODAL -->
+  <div class="admin-modal-backdrop" id="timetableModal">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);" id="timetableModalTitle">Add Timetable Slot</h3>
+        <button onclick="closeModal('timetableModal')" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="handleSaveTimetable(event)">
+        <div class="admin-modal-body">
+          <input type="hidden" id="tt_id">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Level *</label>
+              <select id="tt_level" class="form-select" required>
+                <option value="100">100 Level</option>
+                <option value="200">200 Level</option>
+                <option value="300">300 Level</option>
+                <option value="400">400 Level</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Semester *</label>
+              <select id="tt_semester" class="form-select" required>
+                <option value="1">First Semester</option>
+                <option value="2">Second Semester</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Day of Week *</label>
+              <select id="tt_day" class="form-select" required>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Start Time *</label>
+              <input type="text" id="tt_start_time" class="form-input" placeholder="e.g. 08:00 AM" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">End Time *</label>
+              <input type="text" id="tt_end_time" class="form-input" placeholder="e.g. 10:00 AM" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Course Code *</label>
+              <input type="text" id="tt_course_code" class="form-input" placeholder="e.g. STA 401" required>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Course Title *</label>
+              <input type="text" id="tt_course_title" class="form-input" placeholder="e.g. Statistical Inference II" required>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Lecturer(s) *</label>
+              <input type="text" id="tt_lecturer" class="form-input" placeholder="e.g. Prof Francis Chukwuemeka Eze" required>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Lecture Venue *</label>
+              <input type="text" id="tt_venue" class="form-input" placeholder="e.g. Stats Lecture Theatre 1" required>
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" onclick="closeModal('timetableModal')" class="btn-admin btn-admin-secondary">Cancel</button>
+          <button type="submit" class="btn-admin btn-admin-primary">Save Schedule</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- EXECUTIVE MODAL -->
+  <div class="admin-modal-backdrop" id="executiveModal">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);" id="executiveModalTitle">Add NASS Executive</h3>
+        <button onclick="closeModal('executiveModal')" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="handleSaveExecutive(event)">
+        <div class="admin-modal-body">
+          <input type="hidden" id="exco_id">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label">Full Name *</label>
+              <input type="text" id="exco_name" class="form-input" placeholder="e.g. Comr. Chinaza Okonkwo" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Executive Portfolio / Office *</label>
+              <input type="text" id="exco_portfolio" class="form-input" placeholder="e.g. President / Director of Academics" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Academic Level</label>
+              <input type="number" id="exco_level" class="form-input" value="400" placeholder="e.g. 400">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="text" id="exco_phone" class="form-input" placeholder="e.g. +234 801 234 5678">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Official Email Address</label>
+              <input type="email" id="exco_email" class="form-input" placeholder="e.g. president@nass-unizik.org">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tenure / Session</label>
+              <input type="text" id="exco_tenure" class="form-input" value="2026/2027" placeholder="e.g. 2026/2027">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Display Order</label>
+              <input type="number" id="exco_display_order" class="form-input" value="1" min="1">
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Portrait Image URL / Upload</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="exco_photo_url" class="form-input" value="/resources/images/exco_president.jpg">
+                <label class="btn-admin btn-admin-secondary btn-admin-sm" style="cursor: pointer; white-space: nowrap;">
+                  Upload Photo
+                  <input type="file" accept="image/*" style="display: none;" onchange="uploadFileDirectly(this, 'exco_photo_url')">
+                </label>
+              </div>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Short Bio / Vision Statement</label>
+              <textarea id="exco_bio" class="form-textarea" placeholder="Brief statement from the executive..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" onclick="closeModal('executiveModal')" class="btn-admin btn-admin-secondary">Cancel</button>
+          <button type="submit" class="btn-admin btn-admin-primary">Save Executive</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- NEWS MODAL -->
+  <div class="admin-modal-backdrop" id="newsModal">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);" id="newsModalTitle">Post News Article</h3>
+        <button onclick="closeModal('newsModal')" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="handleSaveNews(event)">
+        <div class="admin-modal-body">
+          <input type="hidden" id="news_id">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label">Article Title *</label>
+              <input type="text" id="news_title" class="form-input" placeholder="e.g. Faculty Board Releases 2025/2026 Examination Guidelines" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select id="news_category" class="form-select">
+                <option value="Academic">Academic</option>
+                <option value="Events">Events</option>
+                <option value="Announcement">Announcement</option>
+                <option value="SIWES">SIWES</option>
+                <option value="NASS">NASS</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Author</label>
+              <input type="text" id="news_author" class="form-input" value="NASS Editorial Board">
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Featured Image URL / Upload</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="news_featured_image" class="form-input" value="/resources/images/news_colloquium.jpg">
+                <label class="btn-admin btn-admin-secondary btn-admin-sm" style="cursor: pointer; white-space: nowrap;">
+                  Upload Image
+                  <input type="file" accept="image/*" style="display: none;" onchange="uploadFileDirectly(this, 'news_featured_image')">
+                </label>
+              </div>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Summary Lead</label>
+              <textarea id="news_summary" class="form-textarea" style="min-height: 70px;" placeholder="Short preview paragraph..."></textarea>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Full Article Content</label>
+              <textarea id="news_content" class="form-textarea" style="min-height: 140px;" placeholder="Full text of the news release..."></textarea>
+            </div>
+            <div class="form-group full-width" style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1.5px solid #e2e8f0; margin-top: 4px;">
+              <label style="display: flex; align-items: center; gap: 10px; font-weight: 700; cursor: pointer; margin: 0; color: #0f172a; font-size: 0.9375rem;">
+                <input type="checkbox" id="news_is_featured" style="width: 20px; height: 20px; cursor: pointer; accent-color: #991b1b;">
+                <span>Feature on Home Page Noticeboard Bulletin ⭐</span>
+              </label>
+              <div style="font-size: 0.8125rem; color: #64748b; margin-top: 6px; padding-left: 30px; line-height: 1.4;">
+                When checked, this article will immediately appear on the universal homepage "Noticeboard Bulletin" in real-time.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" onclick="closeModal('newsModal')" class="btn-admin btn-admin-secondary">Cancel</button>
+          <button type="submit" class="btn-admin btn-admin-primary">Publish News</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- EVENT MODAL -->
+  <div class="admin-modal-backdrop" id="eventModal">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);" id="eventModalTitle">Schedule Event</h3>
+        <button onclick="closeModal('eventModal')" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="handleSaveEvent(event)">
+        <div class="admin-modal-body">
+          <input type="hidden" id="event_id">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label">Event Title *</label>
+              <input type="text" id="event_title" class="form-input" placeholder="e.g. Annual Departmental Colloquium & Statistical Software Bootcamp" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Event Date (YYYY-MM-DD) *</label>
+              <input type="date" id="event_date" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Event Time</label>
+              <input type="text" id="event_time" class="form-input" placeholder="e.g. 10:00 AM">
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Venue / Location *</label>
+              <input type="text" id="event_venue" class="form-input" placeholder="e.g. Statistics Computer Laboratory & Multipurpose Hall" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select id="event_category" class="form-select">
+                <option value="Academic">Academic</option>
+                <option value="Workshop">Workshop</option>
+                <option value="Conference">Conference</option>
+                <option value="Seminar">Seminar</option>
+                <option value="Orientation">Orientation</option>
+                <option value="Social">Social</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select id="event_status" class="form-select">
+                <option value="UPCOMING">UPCOMING</option>
+                <option value="ONGOING">ONGOING</option>
+                <option value="PAST">PAST</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Banner Image URL / Upload</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="event_banner_image" class="form-input" value="/resources/images/event_default.jpg">
+                <label class="btn-admin btn-admin-secondary btn-admin-sm" style="cursor: pointer; white-space: nowrap;">
+                  Upload Image
+                  <input type="file" accept="image/*" style="display: none;" onchange="uploadFileDirectly(this, 'event_banner_image')">
+                </label>
+              </div>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Registration / External Link (optional)</label>
+              <input type="text" id="event_registration_url" class="form-input" placeholder="e.g. https://forms.gle/xyz or leave empty">
+            </div>
+            <div class="form-group full-width" style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1.5px solid #e2e8f0;">
+              <label style="display: flex; align-items: center; gap: 10px; font-weight: 700; cursor: pointer; margin: 0; color: #0f172a; font-size: 0.9375rem;">
+                <input type="checkbox" id="event_is_featured" style="width: 20px; height: 20px; cursor: pointer; accent-color: #991b1b;">
+                <span>Feature on Home Page Noticeboard Bulletin ⭐</span>
+              </label>
+              <div style="font-size: 0.8125rem; color: #64748b; margin-top: 6px; padding-left: 30px; line-height: 1.4;">
+                When checked, this event will be highlighted on the live universal Noticeboard Bulletin on the homepage.
+              </div>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Event Description & Program Details</label>
+              <textarea id="event_description" class="form-textarea" style="min-height: 120px;" placeholder="Full event summary, schedule, and attendance requirements..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" onclick="closeModal('eventModal')" class="btn-admin btn-admin-secondary">Cancel</button>
+          <button type="submit" class="btn-admin btn-admin-primary">Save Event</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SIWES MODAL -->
+  <div class="admin-modal-backdrop" id="siwesModal">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);" id="siwesModalTitle">Add SIWES Document / Guide</h3>
+        <button onclick="closeModal('siwesModal')" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="handleSaveSiwes(event)">
+        <div class="admin-modal-body">
+          <input type="hidden" id="siwes_id">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label">Document Title *</label>
+              <input type="text" id="siwes_title" class="form-input" placeholder="e.g. Official SIWES Technical Report Format & Sample Logbook" required>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Category *</label>
+              <select id="siwes_category" class="form-select" required>
+                <option value="Guide">SIWES Policy & Procedural Guide</option>
+                <option value="Logbook Sample">Logbook Sample & Daily Entry Format</option>
+                <option value="Technical Report">Technical Report Template & Standard</option>
+                <option value="Forms">ITF Form 8 & Acceptance Clearance Forms</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Attach File (PDF, DOCX, PPTX, XLSX, Images, ZIP, any file) *</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="siwes_file_path" class="form-input" placeholder="File URL or upload a file below" required>
+                <label class="btn-admin btn-admin-secondary btn-admin-sm" style="cursor: pointer; white-space: nowrap; height: 38px; display: inline-flex; align-items: center; gap: 6px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  <span>Upload File</span>
+                  <input type="file" style="display: none;" onchange="uploadDirectFileHelper(this, 'siwes_file_path', 'siwes_title')">
+                </label>
+              </div>
+              <div id="siwes_upload_status" style="font-size: 0.75rem; color: #059669; font-weight: 600; margin-top: 4px; display: none;"></div>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Document Description / Instructions</label>
+              <textarea id="siwes_description" class="form-textarea" placeholder="Instructions for students on how to use this document..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" onclick="closeModal('siwesModal')" class="btn-admin btn-admin-secondary">Cancel</button>
+          <button type="submit" class="btn-admin btn-admin-primary">Save Document</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PROJECT MODAL -->
+  <div class="admin-modal-backdrop" id="projectModal">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);" id="projectModalTitle">Add Project Resource / Guide</h3>
+        <button onclick="closeModal('projectModal')" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="handleSaveProject(event)">
+        <div class="admin-modal-body">
+          <input type="hidden" id="project_id">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label">Resource Title *</label>
+              <input type="text" id="project_title" class="form-input" placeholder="e.g. Final Year Thesis Formatting Template 2026" required>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Category *</label>
+              <select id="project_category" class="form-select" required>
+                <option value="Topic Guidelines">Topic Selection & Approval Guidelines</option>
+                <option value="Proposal Template">Research Proposal Template (Chapter 1-3)</option>
+                <option value="Data Analysis">Statistical Analysis Blueprints (R, Python, SPSS)</option>
+                <option value="Defense Guide">Oral Defense & Presentation Rubric</option>
+                <option value="Sample Thesis">Sample High-Scoring Departmental Thesis</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Attach File (PDF, DOCX, PPTX, XLSX, Images, ZIP, any file) *</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="project_file_path" class="form-input" placeholder="File URL or upload a file below" required>
+                <label class="btn-admin btn-admin-secondary btn-admin-sm" style="cursor: pointer; white-space: nowrap; height: 38px; display: inline-flex; align-items: center; gap: 6px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  <span>Upload File</span>
+                  <input type="file" style="display: none;" onchange="uploadDirectFileHelper(this, 'project_file_path', 'project_title')">
+                </label>
+              </div>
+              <div id="project_upload_status" style="font-size: 0.75rem; color: #059669; font-weight: 600; margin-top: 4px; display: none;"></div>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Description / Guidance</label>
+              <textarea id="project_description" class="form-textarea" placeholder="Instructions and notes for graduating students..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" onclick="closeModal('projectModal')" class="btn-admin btn-admin-secondary">Cancel</button>
+          <button type="submit" class="btn-admin btn-admin-primary">Save Resource</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- GALLERY MODAL -->
+  <div class="admin-modal-backdrop" id="galleryModal">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);" id="galleryModalTitle">Upload Photo to Archive</h3>
+        <button onclick="closeModal('galleryModal')" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="handleSaveGallery(event)">
+        <div class="admin-modal-body">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label">Photo Title *</label>
+              <input type="text" id="gallery_title" class="form-input" placeholder="e.g. Statistical Computing Laboratory Session" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select id="gallery_category" class="form-select">
+                <option value="Academic">Academic & Lab</option>
+                <option value="Events" selected>Events & Conferences</option>
+                <option value="Sports">Sports & Socials</option>
+                <option value="Induction">Induction & Gala</option>
+                <option value="Orientation">Orientation</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Archive Year</label>
+              <select id="gallery_year" class="form-select">
+                <option value="2026" selected>2026</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Select Photo *</label>
+              <div class="dropzone" onclick="document.getElementById('galleryFileInput').click()">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#991b1b" stroke-width="2" style="margin: 0 auto 8px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <div style="font-weight: 600; font-size: 0.875rem; color: var(--text-primary);">Click or drag & drop image here</div>
+                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">JPG, PNG, WEBP up to 20MB</div>
+                <input type="file" id="galleryFileInput" accept="image/*" style="display: none;" onchange="uploadGalleryPhoto(this)">
+              </div>
+              <div id="gallery_preview_container" style="display: none; margin-top: 10px; border-radius: 6px; overflow: hidden; max-height: 180px; background: #0f172a; text-align: center;">
+                <img id="gallery_preview_img" src="" alt="Preview" style="max-height: 180px; max-width: 100%; object-fit: contain;">
+              </div>
+              <div style="margin-top: 8px;">
+                <input type="text" id="gallery_image_url" class="form-input" placeholder="Image URL (auto-filled on upload)" required oninput="updateGalleryPreview(this.value)">
+              </div>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Description / Caption</label>
+              <textarea id="gallery_description" class="form-textarea" placeholder="Optional details about this event..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" onclick="closeModal('galleryModal')" class="btn-admin btn-admin-secondary">Cancel</button>
+          <button type="submit" class="btn-admin btn-admin-primary">Save to Gallery</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="adminToast">Action completed</div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    const API_BASE = '/api';
+    let AUTH_TOKEN = '';
+    let currentStaff = [];
+    let currentCourses = [];
+    let currentMaterials = [];
+    let currentTimetable = [];
+    let currentExecutives = [];
+    let currentNews = [];
+    let currentGallery = [];
+    let currentEvents = [];
+    let currentSiwes = [];
+    let currentProjects = [];
+
+    // Check for stored credentials upon entry so admin session persists
+    document.addEventListener('DOMContentLoaded', async () => {
+      let savedToken = null;
+      try {
+        savedToken = localStorage.getItem('nass_admin_token');
+      } catch (_) {}
+
+      if (savedToken) {
+        AUTH_TOKEN = savedToken;
+        const valid = await verifyAuthToken();
+        if (valid) {
+          showDashboard();
+          return;
+        }
+      }
+      showLogin();
+    });
+
+    function showLogin() {
+      AUTH_TOKEN = '';
+      const u = document.getElementById('username');
+      const p = document.getElementById('password');
+      if (u) u.value = '';
+      if (p) p.value = '';
+
+      const alertBox = document.getElementById('loginAlert');
+      if (alertBox) {
+        alertBox.style.display = 'none';
+        alertBox.textContent = '';
+      }
+
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('adminDashboard').style.display = 'none';
+    }
+
+    function showDashboard() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminDashboard').style.display = 'flex';
+      loadAllAdminData();
+    }
+
+    // AUTH FUNCTIONS
+    async function handleLogin(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const alertBox = document.getElementById('loginAlert');
+      const btn = document.getElementById('loginBtn');
+
+      alertBox.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Authenticating...';
+
+      try {
+        const res = await fetch(`${API_BASE}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || 'Invalid credentials');
+        }
+
+        AUTH_TOKEN = data.token;
+        try {
+          localStorage.setItem('nass_admin_token', data.token);
+          if (data.user) localStorage.setItem('nass_admin_user', JSON.stringify(data.user));
+        } catch (_) {}
+
+        if (data.user && data.user.full_name) {
+          document.getElementById('adminUserName').textContent = data.user.full_name;
+        }
+        showToast('Login successful! Welcome back.', 'success');
+        showDashboard();
+      } catch (err) {
+        alertBox.textContent = err.message;
+        alertBox.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Sign In to Portal Editor';
+      }
+    }
+
+    async function verifyAuthToken() {
+      if (!AUTH_TOKEN) return false;
+      try {
+        const res = await fetch(`${API_BASE}/auth/me`, {
+          headers: { 'Authorization': `Bearer ${AUTH_TOKEN}` }
+        });
+        if (!res.ok) return false;
+        const data = await res.json();
+        if (data.user && data.user.full_name) {
+          document.getElementById('adminUserName').textContent = data.user.full_name;
+        }
+        return true;
+      } catch {
+        return false;
+      }
+    }
+
+    function handleLogout() {
+      try {
+        localStorage.removeItem('nass_admin_token');
+        localStorage.removeItem('nass_admin_user');
+      } catch (_) {}
+      showLogin();
+      showToast('Logged out successfully.');
+    }
+
+    function authHeaders() {
+      return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${AUTH_TOKEN}`
+      };
+    }
+
+    // SECTION NAVIGATION
+    function switchSection(secId) {
+      document.querySelectorAll('.admin-nav-item').forEach(item => item.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      document.querySelectorAll('.admin-section').forEach(sec => sec.classList.remove('active'));
+      const activeSec = document.getElementById(`section-${secId}`);
+      if (activeSec) activeSec.classList.add('active');
+
+      const titles = {
+        'general': 'General & Write-ups',
+        'staff': 'Staff & Lecturers',
+        'courses': 'Courses & Syllabi',
+        'materials': 'Past Questions & PDFs',
+        'timetable': 'Timetable Schedules',
+        'executives': 'NASS Executives',
+        'news': 'News & Announcements',
+        'events': 'Events & Workshops',
+        'siwes': 'SIWES Industrial Training',
+        'projects': 'Final Year Projects',
+        'gallery': 'Gallery & Photos'
+      };
+      document.getElementById('pageHeading').textContent = titles[secId] || 'Portal Editor';
+    }
+
+    // NOTIFY PUBLIC SITE OF LIVE DATA UPDATES
+    function notifyPublicSite(module) {
+      try {
+        const payload = JSON.stringify({ module, timestamp: Date.now() });
+        localStorage.setItem('nass_data_updated', payload);
+        localStorage.setItem('nass_settings_updated', payload);
+        window.dispatchEvent(new CustomEvent('nass:data_updated', { detail: { module } }));
+
+        if ('BroadcastChannel' in window) {
+          const channel = new BroadcastChannel('nass_portal_channel');
+          channel.postMessage({ module, timestamp: Date.now() });
+          channel.close();
+        }
+
+        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage({ action: 'invalidate_cache', module, timestamp: Date.now() });
+        }
+      } catch (_) {}
+    }
+
+    // TOAST
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('adminToast');
+      toast.textContent = msg;
+      toast.className = `show ${type}`;
+      setTimeout(() => {
+        toast.className = '';
+      }, 3500);
+    }
+
+    // LOAD ALL DATA
+    async function loadAllAdminData() {
+      loadGeneralSettings();
+      loadStaff();
+      loadCourses();
+      loadMaterials();
+      loadTimetable();
+      loadExecutives();
+      loadNews();
+      loadEvents();
+      loadSiwes();
+      loadProjects();
+      loadGallery();
+    }
+
+    // ==================== 1. GENERAL SETTINGS ====================
+    function updateAdminTopTerm(session, semester) {
+      const topSess = document.getElementById('adminTopSession');
+      const topSem = document.getElementById('adminTopSemester');
+      if (topSess && session) topSess.textContent = session;
+      if (topSem && semester) topSem.textContent = semester;
+    }
+
+    async function saveAcademicTermQuickly() {
+      const sessionInput = document.getElementById('set_session');
+      const semesterInput = document.getElementById('set_semester');
+      const session = sessionInput ? sessionInput.value.trim() : '';
+      const semester = semesterInput ? semesterInput.value : '';
+
+      if (!session) {
+        showToast('Please enter an academic session (e.g. 2025/2026)', 'error');
+        if (sessionInput) sessionInput.focus();
+        return;
+      }
+
+      try {
+        showToast('Saving academic session & semester...', 'info');
+        const res = await fetch(`${API_BASE}/settings`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify({ session, semester })
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          if (res.status === 401) {
+            showToast('Session expired. Please log in again to continue.', 'error');
+            showLogin();
+            return;
+          }
+          throw new Error(errData.error || 'Failed to update academic term settings');
+        }
+        updateAdminTopTerm(session, semester);
+        showToast(`Live portal updated to ${session} (${semester})!`, 'success');
+        notifyPublicSite('settings');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function loadGeneralSettings() {
+      try {
+        const res = await fetch(`${API_BASE}/settings?_t=${Date.now()}`);
+        const data = await res.json();
+        for (const [key, val] of Object.entries(data)) {
+          const el = document.getElementById(`set_${key}`);
+          if (el) el.value = val;
+        }
+        if (data.session || data.semester) {
+          updateAdminTopTerm(data.session, data.semester);
+        }
+      } catch (err) {
+        console.error('Error loading settings:', err);
+      }
+    }
+
+    async function saveGeneralSettings(e) {
+      e.preventDefault();
+      const settings = {};
+      document.querySelectorAll('[id^="set_"]').forEach(input => {
+        const key = input.id.replace('set_', '');
+        settings[key] = input.value;
+      });
+
+      try {
+        const res = await fetch(`${API_BASE}/settings`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify(settings)
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          if (res.status === 401) {
+            showToast('Session expired. Please log in again to continue.', 'error');
+            showLogin();
+            return;
+          }
+          throw new Error(errData.error || 'Failed to update settings');
+        }
+        if (settings.session || settings.semester) {
+          updateAdminTopTerm(settings.session, settings.semester);
+        }
+        showToast('All general write-ups and portal settings saved live!', 'success');
+        notifyPublicSite('settings');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // ==================== 2. STAFF & LECTURERS ====================
+    async function loadStaff() {
+      try {
+        const res = await fetch(`${API_BASE}/staff?_t=${Date.now()}`);
+        currentStaff = await res.json();
+        renderStaffTable();
+      } catch (err) {
+        console.error('Error loading staff:', err);
+      }
+    }
+
+    function renderStaffTable() {
+      const search = (document.getElementById('staffSearchInput').value || '').toLowerCase();
+      const cat = document.getElementById('staffCategoryFilter').value;
+
+      const filtered = currentStaff.filter(s => {
+        const matchSearch = !search || 
+          (s.name || '').toLowerCase().includes(search) || 
+          (s.qualifications || '').toLowerCase().includes(search) ||
+          (s.title || '').toLowerCase().includes(search) ||
+          (s.specialization || '').toLowerCase().includes(search) ||
+          (s.email || '').toLowerCase().includes(search);
+        const matchCat = !cat || 
+          s.role_category === cat || 
+          (cat === 'ADVISER' && (s.role_category === 'ADVISER' || s.role_category === 'STAFF_ADVISOR'));
+        return matchSearch && matchCat;
+      });
+
+      const tbody = document.getElementById('staffTableBody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 24px; color: #64748b;">No lecturers found matching filter.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(s => {
+        let badgeBg = '#f1f5f9';
+        let badgeColor = '#475569';
+        let badgeText = s.title || 'Staff';
+        if (s.role_category === 'HOD') {
+          badgeBg = '#fee2e2';
+          badgeColor = '#991b1b';
+          badgeText = 'Head of Department';
+        } else if (s.role_category === 'ADVISER' || s.role_category === 'STAFF_ADVISOR') {
+          badgeBg = '#dbeafe';
+          badgeColor = '#1e40af';
+          badgeText = 'Staff Adviser';
+        } else if (s.role_category === 'NON_ACADEMIC') {
+          badgeBg = '#fef3c7';
+          badgeColor = '#92400e';
+          badgeText = s.title.includes('Technologist') ? s.title : 'Admin / Technical';
+        } else if (s.title && s.title.includes('Prof')) {
+          badgeBg = '#ede9fe';
+          badgeColor = '#5b21b6';
+          badgeText = 'Professor';
+        }
+
+        return `
+          <tr>
+            <td>
+              <img src="${s.photo_url || '/resources/images/staff_default.jpg'}" alt="${s.name}" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 1px solid #cbd5e1;">
+            </td>
+            <td>
+              <div style="font-weight: 600;">${s.name}</div>
+              <div style="font-size: 0.75rem; color: #64748b;">${s.email || 'No email provided'}</div>
+              ${s.cirs_id ? `<div style="font-size: 0.7rem; color: #94a3b8; font-family: monospace;">ID: ${s.cirs_id}</div>` : ''}
+            </td>
+            <td>
+              <span style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; background: ${badgeBg}; color: ${badgeColor};">
+                ${badgeText}
+              </span>
+            </td>
+            <td style="font-size: 0.8125rem;">${s.qualifications || '—'}</td>
+            <td style="font-size: 0.8125rem; color: #64748b;">${s.specialization || '—'}</td>
+            <td>
+              <div style="display: flex; gap: 8px;">
+                <button onclick="editStaff(${s.id})" class="btn-admin btn-admin-secondary btn-admin-sm">Edit</button>
+                <button onclick="deleteStaff(${s.id})" class="btn-admin btn-admin-danger btn-admin-sm">Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openStaffModal(staff = null) {
+      document.getElementById('staffModalTitle').textContent = staff ? 'Edit Lecturer / Staff' : 'Add New Lecturer / Staff';
+      document.getElementById('staff_id').value = staff ? staff.id : '';
+      document.getElementById('staff_name').value = staff ? staff.name : '';
+      document.getElementById('staff_title').value = staff ? staff.title : '';
+      document.getElementById('staff_role_category').value = staff ? (staff.role_category === 'STAFF_ADVISOR' ? 'ADVISER' : staff.role_category) : 'ACADEMIC';
+      document.getElementById('staff_qualifications').value = staff ? staff.qualifications : '';
+      document.getElementById('staff_specialization').value = staff ? staff.specialization || '' : '';
+      document.getElementById('staff_email').value = staff ? staff.email || '' : '';
+      document.getElementById('staff_phone').value = staff ? staff.phone || '' : '';
+      document.getElementById('staff_office').value = staff ? staff.office || '' : '';
+      document.getElementById('staff_cirs_url').value = staff ? (staff.cirs_url || '') : '';
+      document.getElementById('staff_photo_url').value = staff ? staff.photo_url || '/resources/images/staff_default.jpg' : '/resources/images/staff_default.jpg';
+      document.getElementById('staff_bio').value = staff ? (staff.bio || '') : '';
+      document.getElementById('staff_display_order').value = staff ? staff.display_order : 10;
+      openModal('staffModal');
+    }
+
+    function editStaff(id) {
+      const s = currentStaff.find(item => item.id === id);
+      if (s) openStaffModal(s);
+    }
+
+    async function handleSaveStaff(e) {
+      e.preventDefault();
+      const id = document.getElementById('staff_id').value;
+      const payload = {
+        name: document.getElementById('staff_name').value,
+        title: document.getElementById('staff_title').value,
+        role_category: document.getElementById('staff_role_category').value,
+        qualifications: document.getElementById('staff_qualifications').value,
+        specialization: document.getElementById('staff_specialization').value,
+        email: document.getElementById('staff_email').value,
+        phone: document.getElementById('staff_phone').value,
+        office: document.getElementById('staff_office').value,
+        cirs_url: document.getElementById('staff_cirs_url').value,
+        photo_url: document.getElementById('staff_photo_url').value,
+        bio: document.getElementById('staff_bio').value,
+        display_order: parseInt(document.getElementById('staff_display_order').value || 10, 10)
+      };
+
+      try {
+        const url = id ? `${API_BASE}/staff/${id}` : `${API_BASE}/staff`;
+        const method = id ? 'PUT' : 'POST';
+        const res = await fetch(url, {
+          method,
+          headers: authHeaders(),
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          if (res.status === 401) {
+            showToast('Session expired. Please log in again to continue.', 'error');
+            showLogin();
+            return;
+          }
+          throw new Error(errData.error || 'Failed to save staff record');
+        }
+        closeModal('staffModal');
+        showToast('Lecturer profile updated successfully!', 'success');
+        await loadStaff();
+        notifyPublicSite('staff');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteStaff(id) {
+      if (!confirm('Are you sure you want to remove this lecturer from the departmental directory?')) return;
+      try {
+        const res = await fetch(`${API_BASE}/staff/${id}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to delete staff record');
+        showToast('Lecturer removed from directory.', 'success');
+        await loadStaff();
+        notifyPublicSite('staff');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // ==================== 3. COURSES ====================
+    async function loadCourses() {
+      try {
+        const res = await fetch(`${API_BASE}/courses?_t=${Date.now()}`);
+        currentCourses = await res.json();
+        renderCoursesTable();
+        populateCourseSelects();
+      } catch (err) {
+        console.error('Error loading courses:', err);
+      }
+    }
+
+    function populateCourseSelects() {
+      const select = document.getElementById('material_course_id');
+      if (!select) return;
+      select.innerHTML = '<option value="">Select Course...</option>' + currentCourses.map(c => `
+        <option value="${c.id}">${c.code} - ${c.title} (${c.level}L, Sem ${c.semester})</option>
+      `).join('');
+    }
+
+    function renderCoursesTable() {
+      const lvl = document.getElementById('courseLevelFilter').value;
+      const sem = document.getElementById('courseSemesterFilter').value;
+      const search = (document.getElementById('courseSearchInput').value || '').toLowerCase();
+
+      const filtered = currentCourses.filter(c => {
+        const matchLvl = !lvl || String(c.level) === lvl;
+        const matchSem = !sem || String(c.semester) === sem;
+        const matchSearch = !search || c.code.toLowerCase().includes(search) || c.title.toLowerCase().includes(search);
+        return matchLvl && matchSem && matchSearch;
+      });
+
+      const tbody = document.getElementById('coursesTableBody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 24px; color: #64748b;">No courses found matching filter.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(c => `
+        <tr>
+          <td><span style="font-weight: 700; font-family: var(--font-mono); color: #991b1b;">${c.code}</span></td>
+          <td>
+            <div style="font-weight: 600;">${c.title}</div>
+            <div style="font-size: 0.75rem; color: #64748b;">${c.description ? c.description.slice(0, 80) + '...' : ''}</div>
+          </td>
+          <td>${c.level} Level</td>
+          <td>${c.semester === 1 ? '1st Semester' : '2nd Semester'}</td>
+          <td>${c.credit_units} Units</td>
+          <td>
+            <div style="display: flex; gap: 8px;">
+              <button onclick="editCourse(${c.id})" class="btn-admin btn-admin-secondary btn-admin-sm">Edit</button>
+              <button onclick="deleteCourse(${c.id})" class="btn-admin btn-admin-danger btn-admin-sm">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function openCourseModal(course = null) {
+      document.getElementById('courseModalTitle').textContent = course ? 'Edit Course' : 'Add New Course';
+      document.getElementById('course_id').value = course ? course.id : '';
+      document.getElementById('course_code').value = course ? course.code : '';
+      document.getElementById('course_title').value = course ? course.title : '';
+      document.getElementById('course_level').value = course ? course.level : '100';
+      document.getElementById('course_semester').value = course ? course.semester : '1';
+      document.getElementById('course_credit_units').value = course ? course.credit_units : 3;
+      document.getElementById('course_description').value = course ? course.description || '' : '';
+      document.getElementById('course_outline').value = course ? course.outline || '' : '';
+
+      // Reset course material attachment inputs
+      document.getElementById('course_material_path').value = '';
+      document.getElementById('course_material_title').value = '';
+      document.getElementById('course_material_type').value = 'lecture_note';
+      const statusEl = document.getElementById('course_material_status');
+      if (statusEl) {
+        statusEl.textContent = '';
+        statusEl.style.display = 'none';
+      }
+
+      const existingCont = document.getElementById('course_existing_resources_container');
+      const existingList = document.getElementById('course_existing_resources_list');
+      if (existingCont && existingList) {
+        existingList.innerHTML = '';
+        existingCont.style.display = 'none';
+
+        if (course && course.id) {
+          try {
+            const res = await fetch(`${API_BASE}/courses/${course.id}`);
+            if (res.ok) {
+              const fullCourse = await res.json();
+              if (fullCourse.resources && fullCourse.resources.length > 0) {
+                existingCont.style.display = 'block';
+                existingList.innerHTML = fullCourse.resources.map(r => `
+                  <div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid #e2e8f0; padding:6px 10px; border-radius:6px; font-size:0.8125rem;">
+                    <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary-color); flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      <a href="${r.file_path}" target="_blank" download style="color:#0f172a; text-decoration:none; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:260px;">${r.title}</a>
+                      <span style="font-size:0.7rem; color:#64748b; background:#f1f5f9; padding:2px 6px; border-radius:4px;">${r.resource_type || 'material'}</span>
+                    </div>
+                    <button type="button" onclick="deleteCourseResourceItem(${r.id}, ${course.id})" style="background:none; border:none; color:#ef4444; font-size:0.75rem; font-weight:600; cursor:pointer; padding:2px 6px;">Remove</button>
+                  </div>
+                `).join('');
+              }
+            }
+          } catch (_) {}
+        }
+      }
+
+      openModal('courseModal');
+    }
+
+    async function deleteCourseResourceItem(resourceId, courseId) {
+      if (!confirm('Remove this material attachment?')) return;
+      try {
+        const res = await fetch(`${API_BASE}/materials/${resourceId}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to delete material');
+        showToast('Material removed from course.', 'success');
+        const c = currentCourses.find(item => item.id === courseId);
+        if (c) openCourseModal(c);
+        notifyPublicSite('courses');
+        loadMaterials();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function uploadCourseMaterialDirectly(fileInput) {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        showToast('Uploading course material...', 'info');
+        const res = await fetch(`${API_BASE}/upload`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${AUTH_TOKEN}` },
+          body: formData
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Upload failed');
+
+        document.getElementById('course_material_path').value = data.file_path;
+        if (!document.getElementById('course_material_title').value.trim()) {
+          document.getElementById('course_material_title').value = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+        }
+        const statusEl = document.getElementById('course_material_status');
+        if (statusEl) {
+          statusEl.textContent = `Attached: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+          statusEl.style.display = 'block';
+        }
+        showToast('Course file attached!', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    function editCourse(id) {
+      const c = currentCourses.find(item => item.id === id);
+      if (c) openCourseModal(c);
+    }
+
+    async function handleSaveCourse(e) {
+      e.preventDefault();
+      const id = document.getElementById('course_id').value;
+      const code = document.getElementById('course_code').value.trim().toUpperCase();
+      const title = document.getElementById('course_title').value.trim();
+      const level = parseInt(document.getElementById('course_level').value, 10);
+      const semester = parseInt(document.getElementById('course_semester').value, 10);
+      const credit_units = parseInt(document.getElementById('course_credit_units').value, 10);
+      const description = document.getElementById('course_description').value.trim();
+      const outline = document.getElementById('course_outline').value.trim();
+
+      if (!code || !title) {
+        showToast('Course code and course title are required.', 'error');
+        return;
+      }
+
+      const payload = {
+        code,
+        title,
+        level,
+        semester,
+        credit_units,
+        description,
+        outline
+      };
+
+      const matPath = document.getElementById('course_material_path').value.trim();
+      const matTitle = document.getElementById('course_material_title').value.trim();
+      const matType = document.getElementById('course_material_type').value;
+
+      if (matPath) {
+        payload.material_file_path = matPath;
+        payload.material_title = matTitle || (`${code} Course Material`);
+        payload.material_type = matType || 'lecture_note';
+        payload.course_resources = [{
+          title: matTitle || (`${code} Course Material`),
+          file_path: matPath,
+          resource_type: matType || 'lecture_note'
+        }];
+      }
+
+      try {
+        const url = id ? `${API_BASE}/courses/${id}` : `${API_BASE}/courses`;
+        const method = id ? 'PUT' : 'POST';
+        const res = await fetch(url, {
+          method,
+          headers: authHeaders(),
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          if (res.status === 401) {
+            showToast('Session expired. Please log in again to continue.', 'error');
+            showLogin();
+            return;
+          }
+          throw new Error(errData.error || 'Failed to save course. Please check all required fields.');
+        }
+        closeModal('courseModal');
+        showToast(id ? 'Course updated successfully!' : 'New course added successfully!', 'success');
+        await loadCourses();
+        loadMaterials();
+        notifyPublicSite('courses');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteCourse(id) {
+      if (!confirm('Are you sure you want to delete this course and its associated outlines?')) return;
+      try {
+        const res = await fetch(`${API_BASE}/courses/${id}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to delete course');
+        showToast('Course deleted successfully.', 'success');
+        await loadCourses();
+        notifyPublicSite('courses');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // ==================== 4. MATERIALS & PAST QUESTIONS ====================
+    async function loadMaterials() {
+      try {
+        const res = await fetch(`${API_BASE}/materials?_t=${Date.now()}`);
+        currentMaterials = await res.json();
+        renderMaterialsTable();
+      } catch (err) {
+        console.error('Error loading materials:', err);
+      }
+    }
+
+    function renderMaterialsTable() {
+      const lvl = document.getElementById('materialLevelFilter').value;
+      const type = document.getElementById('materialTypeFilter').value;
+      const search = (document.getElementById('materialSearchInput').value || '').toLowerCase();
+
+      const filtered = currentMaterials.filter(m => {
+        const matchLvl = !lvl || String(m.course_level) === lvl;
+        const matchType = !type || m.resource_type === type;
+        const matchSearch = !search || m.title.toLowerCase().includes(search) || (m.course_code && m.course_code.toLowerCase().includes(search));
+        return matchLvl && matchType && matchSearch;
+      });
+
+      const tbody = document.getElementById('materialsTableBody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 24px; color: #64748b;">No past questions or materials found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(m => `
+        <tr>
+          <td>
+            <div style="font-weight: 600;">${m.title}</div>
+            <div style="font-size: 0.75rem; color: #64748b;">${m.file_name || m.file_path}</div>
+          </td>
+          <td><span style="font-weight: 700; font-family: var(--font-mono);">${m.course_code || '—'}</span> (${m.course_level || ''}L)</td>
+          <td>${m.academic_year || '—'}</td>
+          <td>
+            <span style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; background: #e0f2fe; color: #0369a1;">
+              ${m.resource_type ? m.resource_type.replace('_', ' ').toUpperCase() : 'PDF'}
+            </span>
+          </td>
+          <td>
+            <a href="${m.file_path}" target="_blank" class="btn-admin btn-admin-secondary btn-admin-sm" style="text-decoration: none;">
+              <span>View / Download</span>
+            </a>
+          </td>
+          <td>
+            <div style="display: flex; gap: 8px;">
+              <button onclick="editMaterial(${m.id})" class="btn-admin btn-admin-secondary btn-admin-sm">Edit</button>
+              <button onclick="deleteMaterial(${m.id})" class="btn-admin btn-admin-danger btn-admin-sm">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openMaterialModal(material = null) {
+      document.getElementById('materialModalTitle').textContent = material ? 'Edit Material' : 'Upload Past Question / Material';
+      document.getElementById('material_id').value = material ? material.id : '';
+      document.getElementById('material_course_id').value = material ? material.course_id : '';
+      document.getElementById('material_title').value = material ? material.title : '';
+      document.getElementById('material_resource_type').value = material ? material.resource_type : 'past_question';
+      document.getElementById('material_academic_year').value = material ? material.academic_year || '' : '2023/2024';
+      document.getElementById('material_file_path').value = material ? material.file_path : '';
+      openModal('materialModal');
+    }
+
+    function editMaterial(id) {
+      const m = currentMaterials.find(item => item.id === id);
+      if (m) openMaterialModal(m);
+    }
+
+    async function handleSaveMaterial(e) {
+      e.preventDefault();
+      const id = document.getElementById('material_id').value;
+      const payload = {
+        course_id: parseInt(document.getElementById('material_course_id').value, 10),
+        title: document.getElementById('material_title').value.trim(),
+        resource_type: document.getElementById('material_resource_type').value,
+        academic_year: document.getElementById('material_academic_year').value.trim(),
+        file_path: document.getElementById('material_file_path').value.trim(),
+        file_name: document.getElementById('material_title').value.trim() + '.pdf'
+      };
+
+      try {
+        const url = id ? `${API_BASE}/materials/${id}` : `${API_BASE}/materials`;
+        const method = id ? 'PUT' : 'POST';
+        const res = await fetch(url, {
+          method,
+          headers: authHeaders(),
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('Failed to save material');
+        closeModal('materialModal');
+        showToast('Past question / study document published live!', 'success');
+        await loadMaterials();
+        notifyPublicSite('materials');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteMaterial(id) {
+      if (!confirm('Are you sure you want to remove this PDF past question from the portal?')) return;
+      try {
+        const res = await fetch(`${API_BASE}/materials/${id}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to delete material');
+        showToast('Document removed successfully.', 'success');
+        await loadMaterials();
+        notifyPublicSite('materials');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // ==================== 5. TIMETABLE ====================
+    async function loadTimetable() {
+      try {
+        const lvl = document.getElementById('timetableLevelFilter').value || 400;
+        const sem = document.getElementById('timetableSemesterFilter').value || 1;
+        const res = await fetch(`${API_BASE}/timetable?level=${lvl}&semester=${sem}&_t=${Date.now()}`);
+        currentTimetable = await res.json();
+        renderTimetableTable();
+      } catch (err) {
+        console.error('Error loading timetable:', err);
+      }
+    }
+
+    function renderTimetableTable() {
+      const tbody = document.getElementById('timetableTableBody');
+      if (currentTimetable.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 24px; color: #64748b;">No schedule entries configured for this level and semester.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = currentTimetable.map(t => `
+        <tr>
+          <td><span style="font-weight: 600;">${t.day}</span></td>
+          <td style="font-family: var(--font-mono); font-size: 0.8125rem;">${t.start_time} - ${t.end_time}</td>
+          <td>
+            <span style="font-weight: 700; font-family: var(--font-mono); color: #991b1b;">${t.course_code}</span>
+            <div style="font-size: 0.8125rem;">${t.course_title}</div>
+          </td>
+          <td>${t.lecturer}</td>
+          <td><span style="display: inline-block; background: #f1f5f9; padding: 3px 8px; border-radius: 4px; font-size: 0.8125rem;">${t.venue}</span></td>
+          <td>
+            <div style="display: flex; gap: 8px;">
+              <button onclick="editTimetable(${t.id})" class="btn-admin btn-admin-secondary btn-admin-sm">Edit</button>
+              <button onclick="deleteTimetable(${t.id})" class="btn-admin btn-admin-danger btn-admin-sm">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openTimetableModal(t = null) {
+      document.getElementById('timetableModalTitle').textContent = t ? 'Edit Schedule' : 'Add Timetable Slot';
+      document.getElementById('tt_id').value = t ? t.id : '';
+      document.getElementById('tt_level').value = t ? t.level : document.getElementById('timetableLevelFilter').value;
+      document.getElementById('tt_semester').value = t ? t.semester : document.getElementById('timetableSemesterFilter').value;
+      document.getElementById('tt_day').value = t ? t.day : 'Monday';
+      document.getElementById('tt_start_time').value = t ? t.start_time : '08:00 AM';
+      document.getElementById('tt_end_time').value = t ? t.end_time : '10:00 AM';
+      document.getElementById('tt_course_code').value = t ? t.course_code : '';
+      document.getElementById('tt_course_title').value = t ? t.course_title : '';
+      document.getElementById('tt_lecturer').value = t ? t.lecturer : '';
+      document.getElementById('tt_venue').value = t ? t.venue : 'Stats Lecture Theatre 1';
+      openModal('timetableModal');
+    }
+
+    function editTimetable(id) {
+      const t = currentTimetable.find(item => item.id === id);
+      if (t) openTimetableModal(t);
+    }
+
+    async function handleSaveTimetable(e) {
+      e.preventDefault();
+      const id = document.getElementById('tt_id').value;
+      const payload = {
+        level: parseInt(document.getElementById('tt_level').value, 10),
+        semester: parseInt(document.getElementById('tt_semester').value, 10),
+        day: document.getElementById('tt_day').value,
+        start_time: document.getElementById('tt_start_time').value.trim(),
+        end_time: document.getElementById('tt_end_time').value.trim(),
+        course_code: document.getElementById('tt_course_code').value.trim().toUpperCase(),
+        course_title: document.getElementById('tt_course_title').value.trim(),
+        lecturer: document.getElementById('tt_lecturer').value.trim(),
+        venue: document.getElementById('tt_venue').value.trim()
+      };
+
+      try {
+        const url = id ? `${API_BASE}/timetable/${id}` : `${API_BASE}/timetable`;
+        const method = id ? 'PUT' : 'POST';
+        const res = await fetch(url, {
+          method,
+          headers: authHeaders(),
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          if (res.status === 401) {
+            showToast('Session expired. Please log in again to continue.', 'error');
+            showLogin();
+            return;
+          }
+          throw new Error(errData.error || 'Failed to save timetable slot');
+        }
+        closeModal('timetableModal');
+        showToast('Lecture schedule saved live!', 'success');
+        await loadTimetable();
+        notifyPublicSite('timetable');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteTimetable(id) {
+      if (!confirm('Are you sure you want to remove this timetable slot?')) return;
+      try {
+        const res = await fetch(`${API_BASE}/timetable/${id}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to delete timetable entry');
+        showToast('Schedule slot removed.', 'success');
+        await loadTimetable();
+        notifyPublicSite('timetable');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // ==================== 6. EXECUTIVES ====================
+    async function loadExecutives() {
+      try {
+        const res = await fetch(`${API_BASE}/executives?_t=${Date.now()}`);
+        currentExecutives = await res.json();
+        renderExecutivesTable();
+      } catch (err) {
+        console.error('Error loading executives:', err);
+      }
+    }
+
+    function renderExecutivesTable() {
+      const tbody = document.getElementById('executivesTableBody');
+      if (currentExecutives.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 24px; color: #64748b;">No executives registered.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = currentExecutives.map(ex => `
+        <tr>
+          <td>
+            <img src="${ex.photo_url || '/resources/images/exco_president.jpg'}" alt="${ex.name}" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 1px solid #cbd5e1;">
+          </td>
+          <td>
+            <div style="font-weight: 600;">${ex.name}</div>
+            <div style="font-size: 0.75rem; color: #64748b;">${ex.bio ? ex.bio.slice(0, 60) + '...' : (ex.email || '')}</div>
+          </td>
+          <td><span style="font-weight: 600; color: #991b1b;">${ex.office || ex.portfolio || ex.role || 'Executive'}</span></td>
+          <td>${ex.level ? ex.level + ' Level' : '—'}</td>
+          <td>${ex.phone || '—'}</td>
+          <td>
+            <div style="display: flex; gap: 8px;">
+              <button onclick="editExecutive(${ex.id})" class="btn-admin btn-admin-secondary btn-admin-sm">Edit</button>
+              <button onclick="deleteExecutive(${ex.id})" class="btn-admin btn-admin-danger btn-admin-sm">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openExecutiveModal(ex = null) {
+      document.getElementById('executiveModalTitle').textContent = ex ? 'Edit Executive' : 'Add NASS Executive';
+      document.getElementById('exco_id').value = ex ? ex.id : '';
+      document.getElementById('exco_name').value = ex ? ex.name : '';
+      document.getElementById('exco_portfolio').value = ex ? (ex.office || ex.portfolio || ex.role || '') : '';
+      document.getElementById('exco_level').value = ex ? ex.level || 400 : 400;
+      document.getElementById('exco_phone').value = ex ? ex.phone || '' : '';
+      document.getElementById('exco_email').value = ex ? ex.email || '' : '';
+      document.getElementById('exco_tenure').value = ex ? ex.tenure || '2025/2026' : '2025/2026';
+      document.getElementById('exco_display_order').value = ex ? ex.display_order || 1 : 1;
+      document.getElementById('exco_photo_url').value = ex ? ex.photo_url || '/resources/images/exco_president.jpg' : '/resources/images/exco_president.jpg';
+      document.getElementById('exco_bio').value = ex ? ex.bio || '' : '';
+      openModal('executiveModal');
+    }
+
+    function editExecutive(id) {
+      const ex = currentExecutives.find(item => String(item.id) === String(id));
+      if (ex) openExecutiveModal(ex);
+    }
+
+    async function handleSaveExecutive(e) {
+      e.preventDefault();
+      const id = (document.getElementById('exco_id').value || '').trim();
+      const portfolioVal = document.getElementById('exco_portfolio').value.trim();
+      const payload = {
+        name: document.getElementById('exco_name').value.trim(),
+        office: portfolioVal,
+        portfolio: portfolioVal,
+        role: portfolioVal,
+        level: parseInt(document.getElementById('exco_level').value, 10) || 400,
+        phone: document.getElementById('exco_phone').value.trim(),
+        email: document.getElementById('exco_email') ? document.getElementById('exco_email').value.trim() : '',
+        tenure: document.getElementById('exco_tenure') ? document.getElementById('exco_tenure').value.trim() : '2025/2026',
+        display_order: parseInt(document.getElementById('exco_display_order').value, 10) || 1,
+        photo_url: document.getElementById('exco_photo_url').value.trim() || '/resources/images/exco_president.jpg',
+        bio: document.getElementById('exco_bio').value.trim()
+      };
+
+      try {
+        const url = id ? `${API_BASE}/executives/${encodeURIComponent(id)}` : `${API_BASE}/executives`;
+        const method = id ? 'PUT' : 'POST';
+        const res = await fetch(url, {
+          method,
+          headers: authHeaders(),
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || `Failed to save executive profile (${res.status})`);
+        }
+        closeModal('executiveModal');
+        showToast('NASS executive council updated live!', 'success');
+        await loadExecutives();
+        notifyPublicSite('executives');
+      } catch (err) {
+        console.error('Error saving executive:', err);
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteExecutive(id) {
+      if (!confirm('Are you sure you want to remove this executive from the leadership council?')) return;
+      try {
+        const res = await fetch(`${API_BASE}/executives/${id}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to delete executive');
+        showToast('Executive removed.', 'success');
+        await loadExecutives();
+        notifyPublicSite('executives');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // ==================== 7. NEWS ====================
+    async function loadNews() {
+      try {
+        const res = await fetch(`${API_BASE}/news?_t=${Date.now()}`);
+        currentNews = await res.json();
+        renderNewsTable();
+      } catch (err) {
+        console.error('Error loading news:', err);
+      }
+    }
+
+    function renderNewsTable() {
+      const tbody = document.getElementById('newsTableBody');
+      if (currentNews.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 24px; color: #64748b;">No news articles published.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = currentNews.map(n => `
+        <tr>
+          <td>
+            <div style="font-weight: 600;">${n.title}</div>
+            <div style="font-size: 0.75rem; color: #64748b;">${n.summary ? n.summary.slice(0, 80) + '...' : ''}</div>
+          </td>
+          <td><span style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; background: #e0e7ff; color: #3730a3;">${n.category || 'General'}</span></td>
+          <td style="font-size: 0.8125rem;">${n.published_at ? n.published_at.slice(0, 10) : '—'}</td>
+          <td>${(n.is_featured === 1 || n.is_featured === true || n.is_featured === '1') ? '<span style="background:#fef3c7; color:#92400e; font-weight:700; padding:2px 6px; border-radius:4px; font-size:0.75rem;">⭐ FEATURED</span>' : '<span style="color:#94a3b8; font-size:0.75rem;">Standard</span>'}</td>
+          <td>
+            <div style="display: flex; gap: 8px;">
+              <button onclick="editNews(${n.id})" class="btn-admin btn-admin-secondary btn-admin-sm">Edit</button>
+              <button onclick="deleteNews(${n.id})" class="btn-admin btn-admin-danger btn-admin-sm">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openNewsModal(news = null) {
+      document.getElementById('newsModalTitle').textContent = news ? 'Edit News Article' : 'Post News Article';
+      document.getElementById('news_id').value = news ? news.id : '';
+      document.getElementById('news_title').value = news ? news.title : '';
+      document.getElementById('news_category').value = news ? news.category : 'Academic';
+      document.getElementById('news_author').value = news ? news.author || 'NASS Editorial Board' : 'NASS Editorial Board';
+      document.getElementById('news_featured_image').value = news ? news.featured_image || '/resources/images/news_colloquium.jpg' : '/resources/images/news_colloquium.jpg';
+      document.getElementById('news_summary').value = news ? news.summary || '' : '';
+      document.getElementById('news_content').value = news ? news.content || '' : '';
+      document.getElementById('news_is_featured').checked = Boolean(news && (news.is_featured === 1 || news.is_featured === true || news.is_featured === '1'));
+      openModal('newsModal');
+    }
+
+    function editNews(id) {
+      const n = currentNews.find(item => item.id === id);
+      if (n) openNewsModal(n);
+    }
+
+    async function handleSaveNews(e) {
+      e.preventDefault();
+      const id = document.getElementById('news_id').value;
+      const payload = {
+        title: document.getElementById('news_title').value.trim(),
+        category: document.getElementById('news_category').value,
+        author: document.getElementById('news_author').value.trim(),
+        featured_image: document.getElementById('news_featured_image').value.trim(),
+        summary: document.getElementById('news_summary').value.trim(),
+        content: document.getElementById('news_content').value.trim(),
+        is_featured: document.getElementById('news_is_featured').checked ? 1 : 0
+      };
+
+      try {
+        const url = id ? `${API_BASE}/news/${id}` : `${API_BASE}/news`;
+        const method = id ? 'PUT' : 'POST';
+        const res = await fetch(url, {
+          method,
+          headers: authHeaders(),
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('Failed to save news article');
+        closeModal('newsModal');
+        showToast('News article published live!', 'success');
+        await loadNews();
+        notifyPublicSite('news');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteNews(id) {
+      if (!confirm('Are you sure you want to delete this news article?')) return;
+      try {
+        const res = await fetch(`${API_BASE}/news/${id}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to delete news');
+        showToast('Article deleted.', 'success');
+        await loadNews();
+        notifyPublicSite('news');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // ==================== 8. GALLERY ====================
+    function updateGalleryPreview(url) {
+      const container = document.getElementById('gallery_preview_container');
+      const img = document.getElementById('gallery_preview_img');
+      if (container && img) {
+        if (url && url.trim()) {
+          img.src = url.trim();
+          container.style.display = 'block';
+        } else {
+          container.style.display = 'none';
+          img.src = '';
+        }
+      }
+    }
+
+    async function loadGallery() {
+      try {
+        const res = await fetch(`${API_BASE}/gallery?_t=${Date.now()}`);
+        const data = await res.json();
+        currentGallery = Array.isArray(data) ? data : (data.items || []);
+        renderGalleryGrid();
+      } catch (err) {
+        console.error('Error loading gallery:', err);
+      }
+    }
+
+    function renderGalleryGrid() {
+      const container = document.getElementById('galleryGrid');
+      if (!currentGallery || currentGallery.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 24px; color: #64748b; grid-column: 1 / -1;">No gallery photos uploaded yet. Click "+ Upload Photo" above to add photos.</div>';
+        return;
+      }
+
+      container.innerHTML = currentGallery.map(g => `
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
+          <div style="height: 160px; overflow: hidden; background: #0f172a; position: relative;">
+            <img src="${g.image_url}" alt="${g.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='/resources/images/gallery_orientation_2026.jpg'">
+            <span style="position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.75); color: #fff; font-size: 0.7rem; font-weight: 700; padding: 2px 6px; border-radius: 4px;">${g.year || 2026}</span>
+          </div>
+          <div style="padding: 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="font-weight: 600; font-size: 0.875rem; color: var(--text-primary); line-height: 1.3; margin-bottom: 4px;">${g.title}</div>
+              <div style="font-size: 0.75rem; color: #64748b; margin-bottom: 8px;">${g.event_name || g.category || 'Departmental Event'}</div>
+              ${g.description ? `<div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 10px; max-height: 40px; overflow: hidden;">${g.description}</div>` : ''}
+            </div>
+            <button onclick="deleteGalleryPhoto(${g.id})" class="btn-admin btn-admin-danger btn-admin-sm" style="width: 100%; margin-top: 8px;">Delete Photo</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openGalleryModal() {
+      document.getElementById('gallery_title').value = '';
+      document.getElementById('gallery_category').value = 'Events';
+      if (document.getElementById('gallery_year')) {
+        document.getElementById('gallery_year').value = '2026';
+      }
+      document.getElementById('gallery_image_url').value = '';
+      document.getElementById('gallery_description').value = '';
+      updateGalleryPreview('');
+      openModal('galleryModal');
+    }
+
+    async function handleSaveGallery(e) {
+      e.preventDefault();
+      const title = document.getElementById('gallery_title').value.trim();
+      const imageUrl = document.getElementById('gallery_image_url').value.trim();
+      if (!title) {
+        showToast('Please enter a photo title', 'error');
+        return;
+      }
+      if (!imageUrl) {
+        showToast('Please select or upload a photo', 'error');
+        return;
+      }
+
+      const payload = {
+        title: title,
+        category: document.getElementById('gallery_category').value,
+        event_name: document.getElementById('gallery_category').value,
+        year: parseInt(document.getElementById('gallery_year')?.value || new Date().getFullYear(), 10),
+        image_url: imageUrl,
+        description: document.getElementById('gallery_description').value.trim()
+      };
+
+      try {
+        const res = await fetch(`${API_BASE}/gallery`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to upload photo to gallery');
+        closeModal('galleryModal');
+        showToast('Photo uploaded and published to gallery successfully!', 'success');
+        await loadGallery();
+        notifyPublicSite('gallery');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteGalleryPhoto(id) {
+      if (!confirm('Are you sure you want to delete this photo from the archive?')) return;
+      try {
+        const res = await fetch(`${API_BASE}/gallery/${id}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to delete photo');
+        showToast('Photo removed from archive.', 'success');
+        await loadGallery();
+        notifyPublicSite('gallery');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // ==================== DIRECT FILE UPLOAD HELPERS ====================
+    async function uploadFileDirectly(fileInput, targetInputId) {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        showToast('Uploading file...', 'info');
+        const res = await fetch(`${API_BASE}/upload`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${AUTH_TOKEN}`
+          },
+          body: formData
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Upload failed');
+
+        document.getElementById(targetInputId).value = data.file_path;
+        showToast('File uploaded successfully!', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function uploadMaterialFile(fileInput) {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        showToast('Uploading document...', 'info');
+        const res = await fetch(`${API_BASE}/upload`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${AUTH_TOKEN}`
+          },
+          body: formData
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Upload failed');
+
+        document.getElementById('material_file_path').value = data.file_path;
+        if (!document.getElementById('material_title').value) {
+          document.getElementById('material_title').value = file.name.replace(/\.[^/.]+$/, '');
+        }
+        showToast('PDF Document uploaded and linked!', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function uploadGalleryPhoto(fileInput) {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        showToast('Uploading photo...', 'info');
+        const res = await fetch(`${API_BASE}/upload`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${AUTH_TOKEN}`
+          },
+          body: formData
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Upload failed');
+
+        document.getElementById('gallery_image_url').value = data.file_path;
+        updateGalleryPreview(data.file_path);
+        if (!document.getElementById('gallery_title').value) {
+          document.getElementById('gallery_title').value = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+        }
+        showToast('Photo uploaded! Now click "Save to Gallery"', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function uploadDirectFileHelper(fileInput, targetPathId, targetTitleId) {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        showToast('Uploading file...', 'info');
+        const res = await fetch(`${API_BASE}/upload`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${AUTH_TOKEN}` },
+          body: formData
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Upload failed');
+
+        document.getElementById(targetPathId).value = data.file_path;
+        if (targetTitleId && !document.getElementById(targetTitleId).value.trim()) {
+          document.getElementById(targetTitleId).value = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+        }
+        showToast('File attached successfully!', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // ==================== 9. EVENTS ====================
+    async function loadEvents() {
+      try {
+        const res = await fetch(`${API_BASE}/events?_t=${Date.now()}`);
+        currentEvents = await res.json();
+        renderEventsTable();
+      } catch (err) {
+        console.error('Error loading events:', err);
+      }
+    }
+
+    function renderEventsTable() {
+      const tbody = document.getElementById('eventsTableBody');
+      if (!tbody) return;
+      if (!currentEvents || currentEvents.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 24px; color: #64748b;">No events scheduled. Click "+ Add Event" above to create one.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = currentEvents.map(e => `
+        <tr>
+          <td>
+            <div style="font-weight: 600;">${e.title}</div>
+            <div style="font-size: 0.75rem; color: #64748b;">📍 ${e.venue || 'UNIZIK Awka'}</div>
+          </td>
+          <td style="font-size: 0.8125rem;">
+            <div>📅 ${e.event_date || '—'}</div>
+            <div style="color: #64748b; font-size: 0.75rem;">⏰ ${e.event_time || '10:00 AM'}</div>
+          </td>
+          <td><span style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; background: #fef3c7; color: #92400e;">${e.category || 'Academic'}</span></td>
+          <td><span style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; background: #ecfdf5; color: #065f46;">${e.status || 'UPCOMING'}</span></td>
+          <td>${(e.is_featured === 1 || e.is_featured === true || e.is_featured === '1') ? '<span style="background:#fef3c7; color:#92400e; font-weight:700; padding:2px 6px; border-radius:4px; font-size:0.75rem;">⭐ FEATURED</span>' : '<span style="color:#94a3b8; font-size:0.75rem;">Standard</span>'}</td>
+          <td>
+            <div style="display: flex; gap: 8px;">
+              <button onclick="editEvent(${e.id})" class="btn-admin btn-admin-secondary btn-admin-sm">Edit</button>
+              <button onclick="deleteEvent(${e.id})" class="btn-admin btn-admin-danger btn-admin-sm">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openEventModal(event = null) {
+      document.getElementById('eventModalTitle').textContent = event ? 'Edit Event' : 'Schedule Event';
+      document.getElementById('event_id').value = event ? event.id : '';
+      document.getElementById('event_title').value = event ? event.title : '';
+      document.getElementById('event_date').value = event ? event.event_date : new Date().toISOString().slice(0, 10);
+      document.getElementById('event_time').value = event ? event.event_time || '10:00 AM' : '10:00 AM';
+      document.getElementById('event_venue').value = event ? event.venue : 'Statistics Computer Laboratory & Multipurpose Hall';
+      document.getElementById('event_category').value = event ? event.category || 'Academic' : 'Academic';
+      document.getElementById('event_status').value = event ? event.status || 'UPCOMING' : 'UPCOMING';
+      document.getElementById('event_banner_image').value = event ? event.banner_image || '/resources/images/event_default.jpg' : '/resources/images/event_default.jpg';
+      document.getElementById('event_registration_url').value = event ? event.registration_url || '' : '';
+      document.getElementById('event_is_featured').checked = Boolean(event && (event.is_featured === 1 || event.is_featured === true || event.is_featured === '1'));
+      document.getElementById('event_description').value = event ? event.description || '' : '';
+      openModal('eventModal');
+    }
+
+    function editEvent(id) {
+      const e = currentEvents.find(item => item.id === id);
+      if (e) openEventModal(e);
+    }
+
+    async function handleSaveEvent(e) {
+      e.preventDefault();
+      const id = document.getElementById('event_id').value;
+      const payload = {
+        title: document.getElementById('event_title').value.trim(),
+        event_date: document.getElementById('event_date').value,
+        event_time: document.getElementById('event_time').value.trim(),
+        venue: document.getElementById('event_venue').value.trim(),
+        category: document.getElementById('event_category').value,
+        status: document.getElementById('event_status').value,
+        banner_image: document.getElementById('event_banner_image').value.trim(),
+        registration_url: document.getElementById('event_registration_url').value.trim(),
+        is_featured: document.getElementById('event_is_featured').checked ? 1 : 0,
+        description: document.getElementById('event_description').value.trim()
+      };
+
+      try {
+        const url = id ? `${API_BASE}/events/${id}` : `${API_BASE}/events`;
+        const method = id ? 'PUT' : 'POST';
+        const res = await fetch(url, {
+          method,
+          headers: authHeaders(),
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || 'Failed to save event');
+        }
+        closeModal('eventModal');
+        showToast('Event saved and published live!', 'success');
+        await loadEvents();
+        notifyPublicSite('events');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteEvent(id) {
+      if (!confirm('Are you sure you want to delete this event?')) return;
+      try {
+        const res = await fetch(`${API_BASE}/events/${id}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to delete event');
+        showToast('Event removed.', 'success');
+        await loadEvents();
+        notifyPublicSite('events');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // ==================== 10. SIWES ====================
+    async function loadSiwes() {
+      try {
+        const res = await fetch(`${API_BASE}/siwes?_t=${Date.now()}`);
+        currentSiwes = await res.json();
+        renderSiwesTable();
+      } catch (err) {
+        console.error('Error loading SIWES resources:', err);
+      }
+    }
+
+    function renderSiwesTable() {
+      const tbody = document.getElementById('siwesTableBody');
+      if (!tbody) return;
+      if (!currentSiwes || currentSiwes.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 24px; color: #64748b;">No SIWES resources added. Click "+ Add SIWES Document" above to upload manuals and templates.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = currentSiwes.map(s => `
+        <tr>
+          <td>
+            <div style="font-weight: 600;">${s.title}</div>
+            <div style="font-size: 0.75rem; color: #64748b;">${s.description ? s.description.slice(0, 80) + '...' : ''}</div>
+          </td>
+          <td><span style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; background: #e0f2fe; color: #0369a1;">${s.category || 'Guide'}</span></td>
+          <td>
+            <a href="${s.file_path}" target="_blank" download style="color: var(--primary-color); font-weight: 600; font-size: 0.8125rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Download
+            </a>
+          </td>
+          <td style="font-size: 0.8125rem;">${s.created_at ? s.created_at.slice(0, 10) : '—'}</td>
+          <td>
+            <div style="display: flex; gap: 8px;">
+              <button onclick="editSiwes(${s.id})" class="btn-admin btn-admin-secondary btn-admin-sm">Edit</button>
+              <button onclick="deleteSiwes(${s.id})" class="btn-admin btn-admin-danger btn-admin-sm">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openSiwesModal(siwes = null) {
+      document.getElementById('siwesModalTitle').textContent = siwes ? 'Edit SIWES Document' : 'Add SIWES Document / Guide';
+      document.getElementById('siwes_id').value = siwes ? siwes.id : '';
+      document.getElementById('siwes_title').value = siwes ? siwes.title : '';
+      document.getElementById('siwes_category').value = siwes ? siwes.category || 'Guide' : 'Guide';
+      document.getElementById('siwes_file_path').value = siwes ? siwes.file_path : '';
+      document.getElementById('siwes_description').value = siwes ? siwes.description || '' : '';
+      openModal('siwesModal');
+    }
+
+    function editSiwes(id) {
+      const s = currentSiwes.find(item => item.id === id);
+      if (s) openSiwesModal(s);
+    }
+
+    async function handleSaveSiwes(e) {
+      e.preventDefault();
+      const id = document.getElementById('siwes_id').value;
+      const payload = {
+        title: document.getElementById('siwes_title').value.trim(),
+        category: document.getElementById('siwes_category').value,
+        file_path: document.getElementById('siwes_file_path').value.trim(),
+        description: document.getElementById('siwes_description').value.trim()
+      };
+
+      try {
+        const url = id ? `${API_BASE}/siwes/${id}` : `${API_BASE}/siwes`;
+        const method = id ? 'PUT' : 'POST';
+        const res = await fetch(url, {
+          method,
+          headers: authHeaders(),
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || 'Failed to save SIWES document');
+        }
+        closeModal('siwesModal');
+        showToast('SIWES document published live!', 'success');
+        await loadSiwes();
+        notifyPublicSite('siwes');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteSiwes(id) {
+      if (!confirm('Are you sure you want to delete this SIWES document?')) return;
+      try {
+        const res = await fetch(`${API_BASE}/siwes/${id}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to delete SIWES resource');
+        showToast('SIWES document removed.', 'success');
+        await loadSiwes();
+        notifyPublicSite('siwes');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // ==================== 11. PROJECTS ====================
+    async function loadProjects() {
+      try {
+        const res = await fetch(`${API_BASE}/projects?_t=${Date.now()}`);
+        currentProjects = await res.json();
+        renderProjectsTable();
+      } catch (err) {
+        console.error('Error loading projects:', err);
+      }
+    }
+
+    function renderProjectsTable() {
+      const tbody = document.getElementById('projectsTableBody');
+      if (!tbody) return;
+      if (!currentProjects || currentProjects.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 24px; color: #64748b;">No project guidelines added. Click "+ Add Project Resource" above to add research templates and materials.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = currentProjects.map(p => `
+        <tr>
+          <td>
+            <div style="font-weight: 600;">${p.title}</div>
+            <div style="font-size: 0.75rem; color: #64748b;">${p.description ? p.description.slice(0, 80) + '...' : ''}</div>
+          </td>
+          <td><span style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; background: #ede9fe; color: #6d28d9;">${p.category || 'Topic Guidelines'}</span></td>
+          <td>
+            <a href="${p.file_path}" target="_blank" download style="color: var(--primary-color); font-weight: 600; font-size: 0.8125rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Download
+            </a>
+          </td>
+          <td style="font-size: 0.8125rem;">${p.created_at ? p.created_at.slice(0, 10) : '—'}</td>
+          <td>
+            <div style="display: flex; gap: 8px;">
+              <button onclick="editProject(${p.id})" class="btn-admin btn-admin-secondary btn-admin-sm">Edit</button>
+              <button onclick="deleteProject(${p.id})" class="btn-admin btn-admin-danger btn-admin-sm">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openProjectModal(project = null) {
+      document.getElementById('projectModalTitle').textContent = project ? 'Edit Project Resource' : 'Add Project Resource / Guide';
+      document.getElementById('project_id').value = project ? project.id : '';
+      document.getElementById('project_title').value = project ? project.title : '';
+      document.getElementById('project_category').value = project ? project.category || 'Topic Guidelines' : 'Topic Guidelines';
+      document.getElementById('project_file_path').value = project ? project.file_path : '';
+      document.getElementById('project_description').value = project ? project.description || '' : '';
+      openModal('projectModal');
+    }
+
+    function editProject(id) {
+      const p = currentProjects.find(item => item.id === id);
+      if (p) openProjectModal(p);
+    }
+
+    async function handleSaveProject(e) {
+      e.preventDefault();
+      const id = document.getElementById('project_id').value;
+      const payload = {
+        title: document.getElementById('project_title').value.trim(),
+        category: document.getElementById('project_category').value,
+        file_path: document.getElementById('project_file_path').value.trim(),
+        description: document.getElementById('project_description').value.trim()
+      };
+
+      try {
+        const url = id ? `${API_BASE}/projects/${id}` : `${API_BASE}/projects`;
+        const method = id ? 'PUT' : 'POST';
+        const res = await fetch(url, {
+          method,
+          headers: authHeaders(),
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || 'Failed to save project resource');
+        }
+        closeModal('projectModal');
+        showToast('Project guideline published live!', 'success');
+        await loadProjects();
+        notifyPublicSite('projects');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteProject(id) {
+      if (!confirm('Are you sure you want to delete this project resource?')) return;
+      try {
+        const res = await fetch(`${API_BASE}/projects/${id}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to delete project resource');
+        showToast('Project resource removed.', 'success');
+        await loadProjects();
+        notifyPublicSite('projects');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // MODAL HELPERS
+    function openModal(modalId) {
+      document.getElementById(modalId).classList.add('active');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    window.onclick = function(event) {
+      if (event.target.classList.contains('admin-modal-backdrop')) {
+        event.target.classList.remove('active');
+      }
+    };
+  </script>
+</body>
+</html>

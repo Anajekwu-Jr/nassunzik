@@ -1,0 +1,6 @@
+{
+  "name": "NASS Departmental Portal",
+  "description": "Official departmental portal and information system for the National Association Of Statistics Students (NASS), Department of Statistics, Nnamdi Azikiwe University (UNIZIK).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

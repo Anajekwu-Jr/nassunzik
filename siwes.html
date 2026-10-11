@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIWES Industrial Training | NASS UNIZIK Department of Statistics</title>
+  <meta name="description" content="Comprehensive Student Industrial Work Experience Scheme (SIWES) guide, relevant statistics industries, logbook templates, and defense protocols.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <!-- Progressive Web App (PWA) Manifest & Meta -->
+  <meta name="theme-color" content="#0c2340">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="NASS UNIZIK">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png">
+  <link rel="icon" type="image/jpeg" href="/resources/images/nass-logo.jpg">
+
+  <script src="/js/theme.js"></script>
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="institutional-topbar">
+    <div class="container topbar-content">
+      <div class="topbar-left">
+        <span class="topbar-motto">Facts from Figures</span>
+        <span class="topbar-divider">|</span>
+        <span>Department of Statistics, Nnamdi Azikiwe University</span>
+      </div>
+      <div class="topbar-right">
+        <a href="/contacts.html" class="topbar-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Student Helpdesk</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <div class="header-left">
+        <button type="button" class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="/" class="header-brand">
+          <img src="/resources/images/nass-logo.jpg" alt="Logo" class="brand-logo">
+          <div class="brand-info">
+            <span class="brand-title">NASS UNIZIK</span>
+            <span class="brand-subtitle">Department of Statistics</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="main-nav" id="mainNav" aria-label="Primary Navigation">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/academia.html" class="nav-link">Academia</a>
+        <a href="/past-questions.html" class="nav-link">Past Questions</a>
+        <a href="/timetable.html" class="nav-link">Timetable</a>
+        <a href="/siwes.html" class="nav-link active">SIWES</a>
+        <a href="/administration.html" class="nav-link">Staff</a>
+        <a href="/nass.html" class="nav-link">NASS Exco</a>
+        <a href="/archive.html" class="nav-link">Gallery</a>
+        <a href="/news.html" class="nav-link">News</a>
+        <a href="/events.html" class="nav-link">Events</a>
+        <a href="#install-app" class="nav-link nav-install-btn" title="Install NASS UNIZIK Mobile App (Android & iOS)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+            <line x1="12" y1="18" x2="12.01" y2="18"/>
+          </svg>
+          <span>Install App</span>
+        </a>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="search-trigger-btn" aria-label="Open Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="search-placeholder">Search SIWES...</span>
+          <kbd class="search-shortcut">Ctrl K</kbd>
+        </button>
+        <button type="button" class="theme-toggle-btn header-theme-toggle" aria-label="Switch Light/Dark Theme" title="Switch Light/Dark Theme">
+          <span class="theme-toggle-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+          <span class="theme-toggle-label">Theme</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="mobile-drawer-header">
+      <div class="mobile-drawer-brand">NASS UNIZIK</div>
+      <button type="button" class="mobile-drawer-close" id="mobileDrawerClose">&times;</button>
+    </div>
+    <ul class="mobile-nav-list">
+      <li><a href="/" class="mobile-nav-link">Home</a></li>
+      <li><a href="/academia.html" class="mobile-nav-link">Academia & Courses</a></li>
+      <li><a href="/past-questions.html" class="mobile-nav-link">Past Questions Repository</a></li>
+      <li><a href="/timetable.html" class="mobile-nav-link">Lecture Timetable</a></li>
+      <li><a href="/siwes.html" class="mobile-nav-link active">SIWES Industrial Training</a></li>
+      <li><a href="/administration.html" class="mobile-nav-link">Administration & Staff</a></li>
+      <li><a href="/nass.html" class="mobile-nav-link">NASS Executive Council</a></li>
+      <li><a href="/archive.html" class="mobile-nav-link">Gallery & Photos</a></li>
+      <li><a href="/news.html" class="mobile-nav-link">Departmental News</a></li>
+      <li><a href="/events.html" class="mobile-nav-link">Events & Workshops</a></li>
+      <li><a href="/about.html" class="mobile-nav-link">About Department</a></li>
+      <li>
+        <a href="#install-app" class="mobile-nav-link mobile-install-btn">
+          <span class="mobile-nav-icon" style="display:inline-flex; align-items:center; color:#fbbf24;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+              <path d="M12 6v6m-3-3 3 3 3-3"/>
+            </svg>
+          </span>
+          <span>Install App (Android & iOS)</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <main>
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="container page-header-container">
+        <div class="breadcrumbs">
+          <a href="/">Home</a> <span>/</span> <span>SIWES</span>
+        </div>
+        <h1 class="page-title">SIWES Industrial Training Manual</h1>
+        <p class="page-lead">
+          The definitive operational guide for Students Industrial Work Experience Scheme (SIWES) in Statistics: industry placement, logbook maintenance, technical report writing, and departmental defense.
+        </p>
+      </div>
+    </div>
+
+    <!-- Overview Section -->
+    <section class="section">
+      <div class="container">
+        
+        <div class="section-header">
+          <div>
+            <div class="section-eyebrow">Program Overview</div>
+            <h2 class="section-title">Bridging Theory with Industrial Practice</h2>
+          </div>
+        </div>
+
+        <div style="font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 900px; margin-bottom: 40px;">
+          <p style="margin-bottom: 14px;">
+            The <strong>Students Industrial Work Experience Scheme (SIWES)</strong> is a compulsory skill-training program established by the Industrial Training Fund (ITF) and the National Universities Commission (NUC). For undergraduate students of Statistics at Nnamdi Azikiwe University (undertaken at the 300 Level), SIWES bridges classroom theoretical mathematical statistics with practical industry analytical workflows.
+          </p>
+          <p>
+            During your internship, you will participate in real-world data pipelines: data acquisition, exploratory data analysis, statistical modeling, database querying, data validation, and managerial dashboard reporting.
+          </p>
+        </div>
+
+        <!-- Target Industries Grid -->
+        <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--text-primary); margin-bottom: 20px;">
+          Key Industries for Statistics Placement
+        </h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 50px;">
+          <div class="card" style="padding: 22px;">
+            <div style="margin-bottom: 12px; color: var(--primary-color);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="2" y1="22" x2="22" y2="22"></line><line x1="12" y1="2" x2="12" y2="8"></line><path d="m2 8 10-6 10 6v2H2Z"></path><path d="M4 10v12"></path><path d="M8 10v12"></path><path d="M16 10v12"></path><path d="M20 10v12"></path></svg></div>
+            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin-bottom: 8px;">Government & Public Agencies</h4>
+            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5;">
+              National Bureau of Statistics (NBS), National Population Commission (NPC), Central Bank of Nigeria (CBN), State Statistical Bureaus, and Planning Commissions.
+            </p>
+          </div>
+
+          <div class="card" style="padding: 22px;">
+            <div style="margin-bottom: 12px; color: var(--primary-color);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg></div>
+            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin-bottom: 8px;">Banking, FinTech & Insurance</h4>
+            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5;">
+              Commercial banks (First Bank, Zenith, Access, GTBank), microfinance institutions, insurance actuaries, credit risk assessment units, and quantitative trading desks.
+            </p>
+          </div>
+
+          <div class="card" style="padding: 22px;">
+            <div style="margin-bottom: 12px; color: var(--primary-color);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6v12"></path><path d="M6 12h12"></path><rect width="20" height="20" x="2" y="2" rx="4"></rect></svg></div>
+            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin-bottom: 8px;">Health & Epidemiology Centers</h4>
+            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5;">
+              Teaching hospitals (NAUTH), medical research institutes (NIMR), World Health Organization (WHO) field stations, and clinical trial research centers.
+            </p>
+          </div>
+
+          <div class="card" style="padding: 22px;">
+            <div style="margin-bottom: 12px; color: var(--primary-color);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
+            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin-bottom: 8px;">Technology & Market Research</h4>
+            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5;">
+              Consumer research firms (Kantar, Nielsen), business intelligence software startups, telecommunications providers (MTN, Airtel), and e-commerce platforms.
+            </p>
+          </div>
+        </div>
+
+        <!-- Departmental SIWES Coordinator Profile Card -->
+        <div class="card" style="padding: 26px 30px; margin-bottom: 40px; border-left: 5px solid var(--primary-color); background: linear-gradient(135deg, rgba(12, 35, 64, 0.04) 0%, rgba(2, 132, 199, 0.05) 100%); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+          <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
+            <div style="position: relative; flex-shrink: 0;">
+              <img src="/resources/images/staff/NAU6906.jpg" alt="Mr Charles Anabike - SIWES Coordinator" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #ffffff; box-shadow: 0 4px 12px rgba(12, 35, 64, 0.15);">
+              <span class="badge" style="position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); background: #0c2340; color: #ffffff; font-size: 0.6875rem; font-weight: 700; white-space: nowrap; padding: 2px 8px;">COORDINATOR</span>
+            </div>
+            <div style="flex-grow: 1; min-width: 260px;">
+              <div style="font-size: 0.75rem; font-weight: 800; color: var(--primary-color); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">
+                Departmental Leadership & Advisory
+              </div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--text-primary); margin: 0 0 6px;">
+                Mr. Charles Anabike (Dr. Anabike Ifeanyi Charles)
+              </h3>
+              <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; font-weight: 500;">
+                Departmental SIWES Coordinator & Assistant Lecturer, Department of Statistics
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.8125rem; color: var(--text-secondary);">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  <a href="mailto:ci.anabike@unizik.edu.ng" style="color: var(--primary-color); font-weight: 600;">ci.anabike@unizik.edu.ng</a>
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>Statistics Admintrative Office, Ground floor, New Physical Sciences Building</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span>Advisory Hours: Mon – Thu (10:00 AM – 2:00 PM)</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <a href="/staff-profile.html?id=31" class="btn btn-sm btn-outline" style="gap: 6px; font-weight: 600;">
+                <span>View Staff Profile</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-Step Preparation Flow -->
+        <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--text-primary); margin-bottom: 24px;">
+          The Complete 4-Step SIWES Protocol
+        </h3>
+
+        <div class="guide-step-card">
+          <div class="guide-step-header">
+            <div class="guide-step-num">1</div>
+            <h4 class="guide-step-title">Phase 1: Pre-Placement & Acceptance</h4>
+          </div>
+          <div class="guide-step-content">
+            <p>
+              Begin seeking internship placement at least 3 months before the conclusion of 300 Level first semester. Collect your official introductory letter from the Departmental SIWES Coordinator, <strong>Mr. Charles Anabike</strong>.
+            </p>
+            <ul class="guide-checklist">
+              <li>Obtain the Departmental SIWES Introductory Letter signed by the HOD and Coordinator.</li>
+              <li>Submit applications with tailored resumes emphasizing R, Python, SPSS, and Excel capabilities.</li>
+              <li>Once accepted, secure your signed & stamped Acceptance Letter and submit a copy directly to the coordinator, <strong>Mr. Charles Anabike</strong>.</li>
+              <li>Register your SIWES orientation biodata with the Directorate of SIWES, UNIZIK.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="guide-step-card">
+          <div class="guide-step-header">
+            <div class="guide-step-num">2</div>
+            <h4 class="guide-step-title">Phase 2: On-Site Training & Daily Logbook Maintenance</h4>
+          </div>
+          <div class="guide-step-content">
+            <p>
+              Your official ITF Logbook is a legal record of technical competence. Every day of your 6-month or 3-month attachment must be documented accurately with real statistical methodologies.
+            </p>
+            <ul class="guide-checklist">
+              <li>Record daily activities immediately after completion — never leave entries to memory.</li>
+              <li>Describe statistical procedures: data screening, normality tests, outlier treatment, hypothesis testing, survey weighting, ANOVA modeling.</li>
+              <li>Include sketches, formulas, R script snippets, or flowcharts in the diagram space provided.</li>
+              <li>Obtain the weekly signature and official rubber stamp of your industry supervisor.</li>
+            </ul>
+            <div class="guide-callout">
+              <strong>Crucial Warning:</strong> Backdating entries or forging supervisor signatures is a serious academic infraction leading to immediate repetition of the SIWES unit.
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-step-card">
+          <div class="guide-step-header">
+            <div class="guide-step-num">3</div>
+            <h4 class="guide-step-title">Phase 3: Technical Report Writing</h4>
+          </div>
+          <div class="guide-step-content">
+            <p>
+              Upon completion of industrial training, each student must compile an exhaustive Technical Report following standard UNIZIK departmental formatting.
+            </p>
+            <ul class="guide-checklist">
+              <li><strong>Chapter 1:</strong> Introduction, history, and organizational organogram of your establishment.</li>
+              <li><strong>Chapter 2:</strong> Departmental units worked in and safety/security protocols.</li>
+              <li><strong>Chapter 3:</strong> Technical projects, statistical tools deployed, datasets analyzed, and mathematical formulations.</li>
+              <li><strong>Chapter 4:</strong> Problems encountered, skills gained, and practical recommendations for the establishment and university.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="guide-step-card">
+          <div class="guide-step-header">
+            <div class="guide-step-num">4</div>
+            <h4 class="guide-step-title">Phase 4: Departmental Oral Defense</h4>
+          </div>
+          <div class="guide-step-content">
+            <p>
+              Students appear before the departmental panel of academic assessors to defend their industrial experience.
+            </p>
+            <ul class="guide-checklist">
+              <li>Present a fully completed, stamped, and signed logbook alongside 3 spiral-bound copies of your report.</li>
+              <li>Prepare a concise 10-slide PowerPoint presentation highlighting your statistical contributions.</li>
+              <li>Be prepared to explain R/Python codes, formulas used, and statistical inferences drawn during your placement.</li>
+              <li>Dress formally in corporate business attire adhering to UNIZIK student dress codes.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Downloadable Forms and Resources -->
+        <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--text-primary); margin: 40px 0 20px;">
+          Downloadable SIWES Documents & Templates
+        </h3>
+
+        <div id="siwesDownloadsList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
+          <!-- Loaded dynamically from database, with direct fallbacks -->
+          <div class="card" style="padding: 22px;">
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary-color); flex-shrink: 0;"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+              <div style="flex: 1;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                  <h4 style="font-family: var(--font-serif); font-size: 1.05rem; margin-bottom: 4px;">SIWES Placement Acceptance Letter Form</h4>
+                  <span class="badge" style="background: #e0f2fe; color: #0284c7; font-size: 0.7rem; font-weight: 700;">Official Form</span>
+                </div>
+                <p style="font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.5;">
+                  Official confirmation form to be signed and stamped by your host establishment upon assumption and returned to SIWES coordinator Mr. Charles Anabike.
+                </p>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                  <a href="/resources/documents/siwes/siwes_placement_acceptance_letter_form.jpg" download="SIWES_Placement_Acceptance_Letter_Form.jpg" class="btn btn-sm btn-primary" style="gap: 6px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Download Form (JPG)</span>
+                  </a>
+                  <a href="/resources/documents/siwes/siwes_placement_acceptance_letter_form.jpg" target="_blank" class="btn btn-sm btn-outline">Preview</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 22px;">
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary-color); flex-shrink: 0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              <div style="flex: 1;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                  <h4 style="font-family: var(--font-serif); font-size: 1.05rem; margin-bottom: 4px;">SIWES Technical Report Guide & Formatting</h4>
+                  <span class="badge" style="background: #fef3c7; color: #92400e; font-size: 0.7rem; font-weight: 700;">PDF · 3.1 MB</span>
+                </div>
+                <p style="font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.5;">
+                  Comprehensive official technical report compilation guide: preliminary layout, executive summary, industrial logging, statistical analysis chapters, and oral defense structure.
+                </p>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                  <a href="/resources/documents/siwes/siwes_technical_report_guide.pdf" download="SIWES_Technical_Report_Guide.pdf" class="btn btn-sm btn-primary" style="gap: 6px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Download Report Guide (PDF)</span>
+                  </a>
+                  <a href="/resources/documents/siwes/siwes_technical_report_guide.pdf" target="_blank" class="btn btn-sm btn-outline">Open PDF</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Institutional Footer -->
+  <footer class="site-footer" id="siteFooter">
+    <div class="container footer-top">
+      <div class="footer-grid">
+        
+        <!-- Column 1: Brand & Motto -->
+        <div>
+          <div class="footer-brand-title">NASS UNIZIK</div>
+          <div class="footer-motto">Facts from Figures</div>
+          <p class="footer-text">
+            The National Association of Students of Statistics (NASS), Department of Statistics, Faculty of Physical Sciences, Nnamdi Azikiwe University, Awka, Anambra State, Nigeria.
+          </p>
+          <div style="font-size: 0.8125rem; color: #94a3b8;">
+            Dedicated to promoting statistical literacy, academic rigour, and professional excellence.
+          </div>
+        </div>
+
+        <!-- Column 2: Academic Links -->
+        <div>
+          <h4 class="footer-col-title">Academia</h4>
+          <ul class="footer-links">
+            <li><a href="/academia.html">Course Catalog</a></li>
+            <li><a href="/past-questions.html">Past Questions</a></li>
+            <li><a href="/timetable.html">Lecture Timetable</a></li>
+            <li><a href="/siwes.html">SIWES Manual</a></li>
+            <li><a href="/projects.html">Project Guidelines</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Quick Links & Media -->
+        <div>
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="/archive.html">Gallery</a></li>
+            <li><a href="/news.html">Departmental News</a></li>
+            <li><a href="/events.html">Events & Workshops</a></li>
+            <li><a href="/about.html">Departmental Profile</a></li>
+            <li><a href="/contacts.html">Key Contacts & Helpdesk</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Contact Information -->
+        <div>
+          <h4 class="footer-col-title">Departmental Office</h4>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span data-setting="office_location">Statistics Admintrative Office, Ground floor, New Physical Sciences Building, science village, Unizik, Awka</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span data-setting="email">statistics@unizik.edu.ng</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <a href="/contacts.html" style="color: #cbd5e1;">Student Helpdesk & Advisory</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mandatory Footer Bottom Bar with EXACT Attribution -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <div>
+          &copy; <span id="currentYear">2026</span> Department of Statistics, Nnamdi Azikiwe University. All Rights Reserved.
+        </div>
+        <div class="footer-credit">
+          Created by PhanCore
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/icons.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings-sync.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/nav.js"></script>
+  <script>
+    async function loadSiwesDownloads() {
+      try {
+        const resources = await NassAPI.getSiwes();
+        if (resources && resources.length > 0) {
+          const list = document.getElementById('siwesDownloadsList');
+          list.innerHTML = resources.map(r => `
+            <div class="card" style="padding: 20px;">
+              <div style="display: flex; gap: 14px; align-items: flex-start;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary-color);"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                <div style="flex: 1;">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                    <h4 style="font-family: var(--font-serif); font-size: 1.05rem; margin-bottom: 4px;">${r.title}</h4>
+                    <span class="badge badge-general" style="font-size: 0.7rem;">${r.category || 'SIWES Guide'}</span>
+                  </div>
+                  <p style="font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.5;">${r.description || 'Official departmental industrial training document.'}</p>
+                  <a href="${r.file_path}" target="_blank" download class="btn btn-sm btn-outline">Download Resource</a>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        console.log('Using static SIWES downloads list');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadSiwesDownloads);
+    window.addEventListener('nass:data_updated', (e) => {
+      if (!e.detail || e.detail.module === 'siwes' || e.detail.module === 'all') loadSiwesDownloads();
+    });
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'nass_data_updated') loadSiwesDownloads();
+    });
+    if ('BroadcastChannel' in window) {
+      const bc = new BroadcastChannel('nass_portal_channel');
+      bc.onmessage = () => loadSiwesDownloads();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Past Examination Questions & Solutions Repository - Department of Statistics | UNIZIK</title>
+  <meta name="description" content="Official repository of past examination papers for 100 Level, 200 Level, 300 Level, and 400 Level courses in the Department of Statistics, Nnamdi Azikiwe University. Search, view, and download past question PDFs.">
+  <meta property="og:title" content="Past Examination Questions & Solutions Repository - Department of Statistics | UNIZIK">
+  <meta property="og:description" content="Official repository of past examination papers for 100L to 400L courses in Statistics at Nnamdi Azikiwe University.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <!-- Progressive Web App (PWA) Manifest & Meta -->
+  <meta name="theme-color" content="#0c2340">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="NASS UNIZIK">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png">
+  <link rel="icon" type="image/jpeg" href="/resources/images/nass-logo.jpg">
+
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+
+  <!-- Search Modal -->
+  <div class="search-modal-backdrop" id="searchModal">
+    <div class="search-modal-dialog">
+      <div class="search-modal-header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" class="search-modal-input" id="searchModalInput" placeholder="Search courses, past questions, news, events, staff..." autocomplete="off">
+        <button type="button" class="search-modal-close" id="searchModalClose" aria-label="Close search">&times;</button>
+      </div>
+      <div class="search-modal-results" id="searchModalResults">
+        <div class="search-hint">Type a course code (e.g. STA 111), past question, or keyword to search...</div>
+      </div>
+      <div class="search-modal-footer">
+        <span>Press <kbd>ESC</kbd> to close</span>
+        <span>Search Departmental Repository</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Institutional Topbar -->
+  <div class="institutional-topbar">
+    <div class="container topbar-content">
+      <div class="topbar-left">
+        <span class="topbar-motto">Facts from Figures</span>
+        <span class="topbar-divider">|</span>
+        <span>Department of Statistics, Nnamdi Azikiwe University</span>
+      </div>
+      <div class="topbar-right">
+        <a href="/contacts.html" class="topbar-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          Student Helpdesk & Advisory
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <div class="header-left">
+        <button type="button" class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="/" class="header-brand">
+          <img src="/resources/images/nass-logo.jpg" alt="Logo" class="brand-logo">
+          <div class="brand-info">
+            <span class="brand-title">NASS UNIZIK</span>
+            <span class="brand-subtitle">Department of Statistics</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="main-nav" id="mainNav" aria-label="Primary Navigation">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/academia.html" class="nav-link">Academia</a>
+        <a href="/past-questions.html" class="nav-link active">Past Questions</a>
+        <a href="/timetable.html" class="nav-link">Timetable</a>
+        <a href="/siwes.html" class="nav-link">SIWES</a>
+        <a href="/administration.html" class="nav-link">Staff</a>
+        <a href="/nass.html" class="nav-link">NASS Exco</a>
+        <a href="/archive.html" class="nav-link">Gallery</a>
+        <a href="/news.html" class="nav-link">News</a>
+        <a href="/events.html" class="nav-link">Events</a>
+        <a href="#install-app" class="nav-link nav-install-btn" title="Install NASS UNIZIK Mobile App (Android & iOS)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+            <line x1="12" y1="18" x2="12.01" y2="18"/>
+          </svg>
+          <span>Install App</span>
+        </a>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="search-trigger-btn" aria-label="Open Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="search-placeholder">Search past questions...</span>
+          <kbd class="search-shortcut">Ctrl K</kbd>
+        </button>
+        <button type="button" class="theme-toggle-btn header-theme-toggle" aria-label="Switch Light/Dark Theme" title="Switch Light/Dark Theme">
+          <span class="theme-toggle-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </span>
+          <span class="theme-toggle-label">Theme</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="mobile-drawer-header">
+      <div class="mobile-drawer-brand">NASS UNIZIK</div>
+      <button type="button" class="mobile-drawer-close" id="mobileDrawerClose">&times;</button>
+    </div>
+    <ul class="mobile-nav-list">
+      <li><a href="/" class="mobile-nav-link">Home</a></li>
+      <li><a href="/academia.html" class="mobile-nav-link">Academia & Courses</a></li>
+      <li><a href="/about.html#where-statistics-can-take-you" class="mobile-nav-link">Where Statistics Can Take You</a></li>
+      <li><a href="/past-questions.html" class="mobile-nav-link active">Past Questions Repository</a></li>
+      <li><a href="/timetable.html" class="mobile-nav-link">Lecture Timetable</a></li>
+      <li><a href="/siwes.html" class="mobile-nav-link">SIWES Industrial Training</a></li>
+      <li><a href="/administration.html" class="mobile-nav-link">Administration & Staff</a></li>
+      <li><a href="/nass.html" class="mobile-nav-link">NASS Executive Council</a></li>
+      <li><a href="/archive.html" class="mobile-nav-link">Gallery & Photos</a></li>
+      <li><a href="/news.html" class="mobile-nav-link">Departmental News</a></li>
+      <li><a href="/events.html" class="mobile-nav-link">Events & Workshops</a></li>
+      <li><a href="/about.html" class="mobile-nav-link">About Department</a></li>
+      <li>
+        <a href="#install-app" class="mobile-nav-link mobile-install-btn">
+          <span class="mobile-nav-icon" style="display:inline-flex; align-items:center; color:#fbbf24;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+              <path d="M12 6v6m-3-3 3 3 3-3"/>
+            </svg>
+          </span>
+          <span>Install App (Android & iOS)</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <main>
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="container page-header-container">
+        <div class="breadcrumbs">
+          <a href="/">Home</a> <span>/</span> <a href="/academia.html">Academia</a> <span>/</span> <span>Past Examination Questions</span>
+        </div>
+        <h1 class="page-title">Past Examination Questions Repository</h1>
+        <p class="page-lead">
+          Comprehensive, verified past question archive spanning 100 Level through 400 Level courses in the Department of Statistics, Nnamdi Azikiwe University. Search by course code or topic, preview question papers online, and download complete PDF compendiums.
+        </p>
+      </div>
+    </div>
+
+    <div class="container" style="padding-top: 36px; padding-bottom: 60px;">
+
+      <!-- Repository Quick Stats -->
+      <div class="pq-stats-grid">
+        <div class="pq-stat-card">
+          <div class="pq-stat-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <div>
+            <div class="pq-stat-value" id="statTotalPapers">29</div>
+            <div class="pq-stat-label">Archived Question Papers</div>
+          </div>
+        </div>
+
+        <div class="pq-stat-card">
+          <div class="pq-stat-icon" style="background-color: rgba(16, 185, 129, 0.1); color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="pq-stat-value" id="statTotalCourses">14</div>
+            <div class="pq-stat-label">Statistics Courses Covered</div>
+          </div>
+        </div>
+
+        <div class="pq-stat-card">
+          <div class="pq-stat-icon" style="background-color: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <div>
+            <div class="pq-stat-value">100L - 400L</div>
+            <div class="pq-stat-label">All Academic Levels</div>
+          </div>
+        </div>
+
+        <div class="pq-stat-card">
+          <div class="pq-stat-icon" style="background-color: rgba(99, 102, 241, 0.1); color: #6366f1;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </div>
+          <div>
+            <div class="pq-stat-value">100% Free</div>
+            <div class="pq-stat-label">Direct PDF Downloads</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Official Notice: Course Materials vs Past Questions -->
+      <div style="background: linear-gradient(135deg, rgba(2, 132, 199, 0.08) 0%, rgba(12, 35, 64, 0.04) 100%); border: 1px solid rgba(2, 132, 199, 0.25); border-radius: var(--radius-md); padding: 16px 20px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: #0284c7; color: #ffffff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+          </div>
+          <div>
+            <div style="font-weight: 700; color: var(--text-primary); font-size: 0.9375rem;">Looking for Lecture Notes & Course Materials?</div>
+            <div style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5;">
+              This repository contains <strong>past examination papers only</strong>. For official lecture slides, handouts, and study compendiums, visit the Academia page.
+            </div>
+          </div>
+        </div>
+        <a href="/academia.html" class="btn btn-sm btn-outline" style="border-color: #0284c7; color: #0284c7; font-weight: 700; gap: 6px; white-space: nowrap;">
+          <span>View Course Materials</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="pq-filter-container">
+        <!-- Search Input -->
+        <div class="pq-search-row">
+          <div class="pq-search-input-wrapper">
+            <svg class="pq-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="courseSearchInput" class="pq-search-input" placeholder="Search by course code (e.g. STA 111, STA 211, STA 311, STA 401), title, or session..." autocomplete="off">
+            <button type="button" id="searchClearBtn" class="pq-search-clear" title="Clear search" aria-label="Clear search">&times;</button>
+          </div>
+        </div>
+
+        <!-- Academic Level Tabs (100L - 400L) -->
+        <div class="pq-level-tabs" id="levelTabs">
+          <button type="button" class="pq-level-tab active" data-level="all">
+            All Levels <span class="pq-level-count" id="countAll">29</span>
+          </button>
+          <button type="button" class="pq-level-tab" data-level="100">
+            100 Level <span class="pq-level-count" id="count100">7</span>
+          </button>
+          <button type="button" class="pq-level-tab" data-level="200">
+            200 Level <span class="pq-level-count" id="count200">6</span>
+          </button>
+          <button type="button" class="pq-level-tab" data-level="300">
+            300 Level <span class="pq-level-count" id="count300">6</span>
+          </button>
+          <button type="button" class="pq-level-tab" data-level="400">
+            400 Level <span class="pq-level-count" id="count400">10</span>
+          </button>
+        </div>
+
+        <!-- Filter Subrow (Semester, Academic Year, Sort, Reset) -->
+        <div class="pq-filter-subrow">
+          <div class="pq-filter-group">
+            <label for="semesterSelect">Semester</label>
+            <select id="semesterSelect" class="pq-select">
+              <option value="all">All Semesters</option>
+              <option value="1">First Semester</option>
+              <option value="2">Second Semester</option>
+            </select>
+          </div>
+
+          <div class="pq-filter-group">
+            <label for="yearSelect">Academic Session</label>
+            <select id="yearSelect" class="pq-select">
+              <option value="all">All Sessions</option>
+              <option value="2023/2024">2023/2024 Session</option>
+              <option value="2022/2023">2022/2023 Session</option>
+              <option value="2021/2022">2021/2022 Session</option>
+            </select>
+          </div>
+
+          <div class="pq-filter-group">
+            <label for="sortSelect">Sort By</label>
+            <select id="sortSelect" class="pq-select">
+              <option value="level-asc">Level & Course Code (Ascending)</option>
+              <option value="year-desc">Newest Academic Session First</option>
+              <option value="title-asc">Paper Title (A - Z)</option>
+            </select>
+          </div>
+
+          <div class="pq-filter-group">
+            <button type="button" id="resetFiltersBtn" class="pq-reset-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              </svg>
+              Reset Filters
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Summary Bar -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+        <div style="font-size: 0.9375rem; color: var(--text-muted); font-weight: 500;" id="resultStatusText">
+          Showing <strong>29</strong> past examination papers
+        </div>
+        <div id="activeFilterTags" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+      </div>
+
+      <!-- Main Question Papers Container -->
+      <div id="papersContainer">
+        <!-- Rendered dynamically via JavaScript -->
+        <div style="text-align: center; padding: 60px 20px;">
+          <div class="spinner" style="margin: 0 auto 16px;"></div>
+          <p style="color: var(--text-muted);">Loading past examination papers from departmental repository...</p>
+        </div>
+      </div>
+
+      <!-- Departmental Examination Preparation Guidelines -->
+      <div style="margin-top: 60px; background-color: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-sm);" data-bright-bg="true">
+        <div style="display: flex; align-items: flex-start; gap: 16px;">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background-color: rgba(245, 158, 11, 0.12); color: #d97706; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </div>
+          <div>
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; color: #0f172a; margin-bottom: 8px;">
+              Departmental Examination Revision & Past Question Best Practices
+            </h3>
+            <p style="font-size: 0.875rem; color: #334155; line-height: 1.6; margin-bottom: 16px;">
+              Past examination question papers provided by the National Association Of Statistics Students (NASS) are designed to supplement your coursework and lecture notes. Follow these guidelines for maximum preparation efficacy:
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+              <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-md); padding: 16px;">
+                <div style="font-weight: 700; font-size: 0.875rem; color: #0f172a; margin-bottom: 4px;">1. Timed Simulation</div>
+                <div style="font-size: 0.8125rem; color: #475569; line-height: 1.5;">Attempt past papers under strict examination conditions without checking solutions until the standard 2 to 3-hour period elapses.</div>
+              </div>
+              <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-md); padding: 16px;">
+                <div style="font-weight: 700; font-size: 0.875rem; color: #0f172a; margin-bottom: 4px;">2. Distribution Tables</div>
+                <div style="font-size: 0.8125rem; color: #475569; line-height: 1.5; margin-bottom: 8px;">Practice reading Normal, Student's t, Chi-Square, and F distribution tables manually to ensure speed and accuracy during the actual paper.</div>
+                <a href="/resources/documents/Statistical_Tables.pdf" download="Statistical_Tables_UNIZIK.pdf" class="btn btn-sm btn-outline" style="border-color: #0284c7; color: #0284c7; font-weight: 700; font-size: 0.75rem; padding: 3px 8px; gap: 4px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  <span>Download Statistical Tables (PDF)</span>
+                </a>
+              </div>
+              <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-md); padding: 16px;">
+                <div style="font-weight: 700; font-size: 0.875rem; color: #0f172a; margin-bottom: 4px;">3. Course Outline Cross-Check</div>
+                <div style="font-size: 0.8125rem; color: #475569; line-height: 1.5;">Cross-reference past questions against current course outlines in the <a href="/academia.html" style="color: #0284c7; text-decoration: underline;">Course Catalog</a> to account for syllabus updates.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- PDF Preview Modal -->
+  <div class="pq-modal-backdrop" id="pdfPreviewModal" role="dialog" aria-modal="true" aria-labelledby="modalPaperTitle">
+    <div class="pq-modal-dialog">
+      <div class="pq-modal-header">
+        <div class="pq-modal-title-wrap">
+          <div class="pq-modal-title" id="modalPaperTitle">Past Question Document</div>
+          <div class="pq-modal-subtitle" id="modalPaperSubtitle">Course & Session Info</div>
+        </div>
+        <div class="pq-modal-actions">
+          <a href="#" id="modalNewTabBtn" target="_blank" rel="noopener noreferrer" class="pq-btn-preview" title="Open in full screen or print">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            <span>Open in Tab</span>
+          </a>
+          <a href="#" id="modalDownloadBtn" download class="pq-btn-download" title="Download PDF File">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>Download</span>
+          </a>
+          <button type="button" id="modalCloseBtn" class="search-modal-close" style="position: static; font-size: 24px; color: var(--text-muted); cursor: pointer; border: none; background: none;" aria-label="Close modal">&times;</button>
+        </div>
+      </div>
+      <div class="pq-modal-body">
+        <iframe id="modalPdfIframe" class="pq-modal-iframe" title="PDF Document Viewer" src="about:blank"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <!-- Institutional Footer -->
+  <footer class="site-footer" id="siteFooter">
+    <div class="container footer-top">
+      <div class="footer-grid">
+        
+        <!-- Column 1: Brand & Motto -->
+        <div>
+          <div class="footer-brand-title">NASS UNIZIK</div>
+          <div class="footer-motto">Facts from Figures</div>
+          <p class="footer-text">
+            The National Association of Students of Statistics (NASS), Department of Statistics, Faculty of Physical Sciences, Nnamdi Azikiwe University, Awka, Anambra State, Nigeria.
+          </p>
+          <div style="font-size: 0.8125rem; color: #94a3b8;">
+            Dedicated to promoting statistical literacy, academic rigour, and professional excellence.
+          </div>
+        </div>
+
+        <!-- Column 2: Academic Links -->
+        <div>
+          <h4 class="footer-col-title">Academia</h4>
+          <ul class="footer-links">
+            <li><a href="/academia.html">Course Catalog</a></li>
+            <li><a href="/past-questions.html">Past Questions</a></li>
+            <li><a href="/timetable.html">Lecture Timetable</a></li>
+            <li><a href="/siwes.html">SIWES Manual</a></li>
+            <li><a href="/projects.html">Project Guidelines</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Quick Links & Media -->
+        <div>
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="/archive.html">Gallery</a></li>
+            <li><a href="/news.html">Departmental News</a></li>
+            <li><a href="/events.html">Events & Workshops</a></li>
+            <li><a href="/about.html">Departmental Profile</a></li>
+            <li><a href="/contacts.html">Key Contacts & Helpdesk</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Contact Information -->
+        <div>
+          <h4 class="footer-col-title">Departmental Office</h4>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span data-setting="office_location">Statistics Admintrative Office, Ground floor, New Physical Sciences Building, science village, Unizik, Awka</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span data-setting="email">statistics@unizik.edu.ng</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <a href="/contacts.html" style="color: #cbd5e1;">Student Helpdesk & Advisory</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mandatory Footer Bottom Bar with EXACT Attribution -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <div>
+          &copy; <span id="currentYear">2026</span> Department of Statistics, Nnamdi Azikiwe University. All Rights Reserved.
+        </div>
+        <div class="footer-credit">
+          Created by PhanCore
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/js/search-modal.js"></script>
+
+  <script>
+    (function() {
+      // DOM Elements
+      const papersContainer = document.getElementById('papersContainer');
+      const searchInput = document.getElementById('courseSearchInput');
+      const searchClearBtn = document.getElementById('searchClearBtn');
+      const levelTabs = document.querySelectorAll('.pq-level-tab');
+      const semesterSelect = document.getElementById('semesterSelect');
+      const yearSelect = document.getElementById('yearSelect');
+      const sortSelect = document.getElementById('sortSelect');
+      const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+      const resultStatusText = document.getElementById('resultStatusText');
+      const activeFilterTags = document.getElementById('activeFilterTags');
+
+      // Modal Elements
+      const modal = document.getElementById('pdfPreviewModal');
+      const modalTitle = document.getElementById('modalPaperTitle');
+      const modalSubtitle = document.getElementById('modalPaperSubtitle');
+      const modalIframe = document.getElementById('modalPdfIframe');
+      const modalDownloadBtn = document.getElementById('modalDownloadBtn');
+      const modalNewTabBtn = document.getElementById('modalNewTabBtn');
+      const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+      // State
+      let allPapers = [];
+      let activeLevel = 'all';
+      let activeSearch = '';
+      let activeSemester = 'all';
+      let activeYear = 'all';
+      let activeSort = 'level-asc';
+
+      // Set copyright year
+      const yearSpan = document.getElementById('currentYear');
+      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+      // Format file size
+      function formatFileSize(bytes) {
+        if (!bytes) return '1.2 MB';
+        if (bytes >= 1048576) return (bytes / 1048576).toFixed(1) + ' MB';
+        return Math.round(bytes / 1024) + ' KB';
+      }
+
+      // Fetch Past Questions
+      async function loadPastQuestions() {
+        try {
+          const papers = await NassAPI.getMaterials({ resource_type: 'past_question' });
+          allPapers = Array.isArray(papers) ? papers : [];
+          updateCounts();
+          renderPapers();
+        } catch (err) {
+          console.error('Failed to load past questions:', err);
+          papersContainer.innerHTML = `
+            <div style="text-align: center; padding: 48px 20px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+              <div style="color: #ef4444; font-size: 1.5rem; margin-bottom: 8px;">⚠️</div>
+              <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Failed to Load Past Questions</h3>
+              <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 16px;">There was a network or server issue fetching the past examination catalog.</p>
+              <button type="button" class="pq-reset-btn" onclick="location.reload()" style="display: inline-flex;">Retry</button>
+            </div>
+          `;
+        }
+      }
+
+      // Update badge counts
+      function updateCounts() {
+        const cAll = allPapers.length;
+        const c100 = allPapers.filter(p => p.course_level === 100).length;
+        const c200 = allPapers.filter(p => p.course_level === 200).length;
+        const c300 = allPapers.filter(p => p.course_level === 300).length;
+        const c400 = allPapers.filter(p => p.course_level === 400).length;
+
+        document.getElementById('countAll').textContent = cAll;
+        document.getElementById('count100').textContent = c100;
+        document.getElementById('count200').textContent = c200;
+        document.getElementById('count300').textContent = c300;
+        document.getElementById('count400').textContent = c400;
+
+        document.getElementById('statTotalPapers').textContent = cAll;
+
+        // Unique courses count
+        const uniqueCourses = new Set(allPapers.map(p => p.course_code)).size;
+        document.getElementById('statTotalCourses').textContent = uniqueCourses;
+      }
+
+      // Filter and Sort papers
+      function getFilteredPapers() {
+        let result = allPapers.filter(paper => {
+          // Level filter
+          if (activeLevel !== 'all' && paper.course_level !== parseInt(activeLevel, 10)) {
+            return false;
+          }
+
+          // Semester filter
+          if (activeSemester !== 'all' && paper.course_semester !== parseInt(activeSemester, 10)) {
+            return false;
+          }
+
+          // Academic Year filter
+          if (activeYear !== 'all' && paper.academic_year !== activeYear) {
+            return false;
+          }
+
+          // Search filter (Course code, course title, paper title, academic year)
+          if (activeSearch) {
+            const query = activeSearch.toLowerCase().trim();
+            const code = (paper.course_code || '').toLowerCase();
+            const courseTitle = (paper.course_title || '').toLowerCase();
+            const paperTitle = (paper.title || '').toLowerCase();
+            const year = (paper.academic_year || '').toLowerCase();
+            const levelStr = `${paper.course_level} level`.toLowerCase();
+
+            if (!code.includes(query) && !courseTitle.includes(query) && !paperTitle.includes(query) && !year.includes(query) && !levelStr.includes(query)) {
+              return false;
+            }
+          }
+
+          return true;
+        });
+
+        // Sorting
+        if (activeSort === 'level-asc') {
+          result.sort((a, b) => {
+            if (a.course_level !== b.course_level) return a.course_level - b.course_level;
+            if (a.course_code < b.course_code) return -1;
+            if (a.course_code > b.course_code) return 1;
+            return (b.academic_year || '').localeCompare(a.academic_year || '');
+          });
+        } else if (activeSort === 'year-desc') {
+          result.sort((a, b) => (b.academic_year || '').localeCompare(a.academic_year || ''));
+        } else if (activeSort === 'title-asc') {
+          result.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+        }
+
+        return result;
+      }
+
+      // Render cards
+      function renderPapers() {
+        const papers = getFilteredPapers();
+
+        // Update result status text
+        resultStatusText.innerHTML = `Showing <strong>${papers.length}</strong> of <strong>${allPapers.length}</strong> past examination papers`;
+
+        // Update active filter tags
+        renderActiveFilterTags();
+
+        if (allPapers.length === 0) {
+          papersContainer.innerHTML = `
+            <div style="text-align: center; padding: 60px 24px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-sm);">
+              <div style="width: 56px; height: 56px; line-height: 56px; border-radius: 50%; background: rgba(12, 35, 64, 0.08); color: var(--primary-color); font-size: 1.5rem; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.35rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Official Question Papers Being Linked</h3>
+              <p style="color: var(--text-muted); font-size: 0.9375rem; max-width: 560px; margin: 0 auto 16px; line-height: 1.6;">
+                All sample and demo documents have been cleared. The verified UNIZIK Department of Statistics examination question bank is ready to be populated from the official academic repository.
+              </p>
+              <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.8125rem; font-weight: 600; color: var(--primary-color); background: rgba(12, 35, 64, 0.05); padding: 8px 16px; border-radius: 9999px;">
+                <span>Academic Direction: Comr. Ejefonye Mmesoma Stephanie (Director of Academics)</span>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        if (papers.length === 0) {
+          papersContainer.innerHTML = `
+            <div style="text-align: center; padding: 60px 20px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+              <div style="font-size: 2.5rem; margin-bottom: 12px; color: var(--text-muted);">🔍</div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">No Past Questions Found</h3>
+              <p style="color: var(--text-muted); font-size: 0.9375rem; max-width: 500px; margin: 0 auto 20px;">
+                No past examination papers match your current query${activeSearch ? ` "<strong>${escapeHtml(activeSearch)}</strong>"` : ''}. Try broadening your search or resetting filters.
+              </p>
+              <button type="button" class="pq-reset-btn" id="emptyStateResetBtn" style="display: inline-flex;">
+                Clear All Filters
+              </button>
+            </div>
+          `;
+          document.getElementById('emptyStateResetBtn')?.addEventListener('click', resetAllFilters);
+          return;
+        }
+
+        // If 'all' levels is selected and no specific search is narrowing, group by level for elegant hierarchy
+        if (activeLevel === 'all' && !activeSearch && activeSemester === 'all' && activeYear === 'all') {
+          renderGroupedByLevel(papers);
+        } else {
+          renderFlatGrid(papers);
+        }
+
+        // Attach modal triggers
+        attachCardListeners();
+      }
+
+      // Grouped rendering by level
+      function renderGroupedByLevel(papers) {
+        const levels = [
+          { num: 100, name: '100 Level — Foundation Courses', desc: 'Descriptive statistics, basic probability axioms, and elementary statistical computing.' },
+          { num: 200, name: '200 Level — Intermediate Methodology', desc: 'Discrete & continuous probability distributions, statistical inference principles, and sampling designs.' },
+          { num: 300, name: '300 Level — Advanced Statistics & Models', desc: 'Mathematical statistics, regression analysis, experimental designs, and SIWES.' },
+          { num: 400, name: '400 Level — Final Honors & Advanced Theory', desc: 'Time series forecasting, multivariate techniques, stochastic processes, and advanced inference.' }
+        ];
+
+        let html = '';
+
+        levels.forEach(lvl => {
+          const levelPapers = papers.filter(p => p.course_level === lvl.num);
+          if (levelPapers.length === 0) return;
+
+          html += `
+            <div class="pq-level-section" id="section-level-${lvl.num}" style="margin-bottom: 44px;">
+              <div class="pq-level-section-header">
+                <div>
+                  <h2 class="pq-level-section-title">
+                    <span class="pq-course-code level-${lvl.num}">${lvl.num}L</span>
+                    <span>${lvl.name}</span>
+                  </h2>
+                  <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 4px;">${lvl.desc}</p>
+                </div>
+                <span class="pq-year-chip">${levelPapers.length} Papers Available</span>
+              </div>
+              <div class="pq-card-grid">
+                ${levelPapers.map(renderCardHtml).join('')}
+              </div>
+            </div>
+          `;
+        });
+
+        papersContainer.innerHTML = html;
+      }
+
+      // Flat Grid rendering
+      function renderFlatGrid(papers) {
+        papersContainer.innerHTML = `
+          <div class="pq-card-grid">
+            ${papers.map(renderCardHtml).join('')}
+          </div>
+        `;
+      }
+
+      // Single card template
+      function renderCardHtml(paper) {
+        const levelClass = `level-${paper.course_level}`;
+        const levelText = `${paper.course_level} Level`;
+        const semText = paper.course_semester === 1 ? 'First Semester' : 'Second Semester';
+        const unitsText = paper.course_credit_units ? `${paper.course_credit_units} Units` : '3 Units';
+        const fileSize = formatFileSize(paper.file_size);
+        const filePath = paper.file_path || '/resources/documents/sample_past_question.pdf';
+        const fileName = paper.file_name || `${paper.course_code}_Past_Questions.pdf`;
+
+        return `
+          <div class="pq-card" data-paper-id="${paper.id}">
+            <div class="pq-card-top">
+              <span class="pq-course-code ${levelClass}">${escapeHtml(paper.course_code)}</span>
+              <span class="pq-year-chip">${escapeHtml(paper.academic_year || '2023/2024')} Session</span>
+            </div>
+
+            <h3 class="pq-course-title">${escapeHtml(paper.course_title)}</h3>
+            <div class="pq-paper-name">${escapeHtml(paper.title)}</div>
+
+            <div class="pq-meta-row">
+              <span class="pq-meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                ${levelText} · ${semText}
+              </span>
+              <span class="pq-meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                PDF · ${fileSize}
+              </span>
+            </div>
+
+            <div class="pq-action-row">
+              <button type="button" class="pq-btn-preview js-preview-paper" 
+                data-id="${paper.id}" 
+                data-title="${escapeAttr(paper.title)}" 
+                data-code="${escapeAttr(paper.course_code)}" 
+                data-coursetitle="${escapeAttr(paper.course_title)}"
+                data-year="${escapeAttr(paper.academic_year || '2023/2024')}" 
+                data-url="${escapeAttr(filePath)}" 
+                data-filename="${escapeAttr(fileName)}">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Preview PDF
+              </button>
+              <a href="${escapeAttr(filePath)}" download="${escapeAttr(fileName)}" class="pq-btn-download" title="Download ${escapeAttr(fileName)}">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download
+              </a>
+            </div>
+          </div>
+        `;
+      }
+
+      // Attach button clicks to modal
+      function attachCardListeners() {
+        document.querySelectorAll('.js-preview-paper').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const title = btn.dataset.title;
+            const code = btn.dataset.code;
+            const courseTitle = btn.dataset.coursetitle;
+            const year = btn.dataset.year;
+            const url = btn.dataset.url;
+            const filename = btn.dataset.filename;
+
+            openPdfModal(title, code, courseTitle, year, url, filename);
+          });
+        });
+      }
+
+      // Modal open
+      function openPdfModal(title, code, courseTitle, year, url, filename) {
+        modalTitle.textContent = `${code}: ${title}`;
+        modalSubtitle.textContent = `${courseTitle} · Academic Session: ${year} · NASS UNIZIK Archive`;
+        modalIframe.src = url;
+        modalDownloadBtn.href = url;
+        modalDownloadBtn.download = filename;
+        modalNewTabBtn.href = url;
+
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      // Modal close
+      function closePdfModal() {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+          modalIframe.src = 'about:blank';
+        }, 200);
+      }
+
+      // Event listeners for modal
+      modalCloseBtn.addEventListener('click', closePdfModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closePdfModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) {
+          closePdfModal();
+        }
+      });
+
+      // Render active filter chips
+      function renderActiveFilterTags() {
+        let tagsHtml = '';
+
+        if (activeLevel !== 'all') {
+          tagsHtml += `<span class="pq-year-chip" style="background: var(--primary-color); color: #0c2340; display: inline-flex; align-items: center; gap: 4px;">
+            ${activeLevel} Level <button type="button" onclick="window.clearFilter('level')" style="border:none; background:none; cursor:pointer; font-size:12px; line-height:1; color:#0c2340;">&times;</button>
+          </span>`;
+        }
+
+        if (activeSemester !== 'all') {
+          const semLabel = activeSemester === '1' ? 'First Semester' : 'Second Semester';
+          tagsHtml += `<span class="pq-year-chip" style="display: inline-flex; align-items: center; gap: 4px;">
+            ${semLabel} <button type="button" onclick="window.clearFilter('semester')" style="border:none; background:none; cursor:pointer; font-size:12px; line-height:1;">&times;</button>
+          </span>`;
+        }
+
+        if (activeYear !== 'all') {
+          tagsHtml += `<span class="pq-year-chip" style="display: inline-flex; align-items: center; gap: 4px;">
+            ${activeYear} <button type="button" onclick="window.clearFilter('year')" style="border:none; background:none; cursor:pointer; font-size:12px; line-height:1;">&times;</button>
+          </span>`;
+        }
+
+        if (activeSearch) {
+          tagsHtml += `<span class="pq-year-chip" style="display: inline-flex; align-items: center; gap: 4px;">
+            Search: "${escapeHtml(activeSearch)}" <button type="button" onclick="window.clearFilter('search')" style="border:none; background:none; cursor:pointer; font-size:12px; line-height:1;">&times;</button>
+          </span>`;
+        }
+
+        activeFilterTags.innerHTML = tagsHtml;
+      }
+
+      window.clearFilter = function(type) {
+        if (type === 'level') {
+          activeLevel = 'all';
+          levelTabs.forEach(t => t.classList.toggle('active', t.dataset.level === 'all'));
+        } else if (type === 'semester') {
+          activeSemester = 'all';
+          semesterSelect.value = 'all';
+        } else if (type === 'year') {
+          activeYear = 'all';
+          yearSelect.value = 'all';
+        } else if (type === 'search') {
+          activeSearch = '';
+          searchInput.value = '';
+          searchClearBtn.style.display = 'none';
+        }
+        renderPapers();
+      };
+
+      function resetAllFilters() {
+        activeLevel = 'all';
+        activeSearch = '';
+        activeSemester = 'all';
+        activeYear = 'all';
+        activeSort = 'level-asc';
+
+        levelTabs.forEach(t => t.classList.toggle('active', t.dataset.level === 'all'));
+        searchInput.value = '';
+        searchClearBtn.style.display = 'none';
+        semesterSelect.value = 'all';
+        yearSelect.value = 'all';
+        sortSelect.value = 'level-asc';
+
+        renderPapers();
+      }
+
+      // Event Listeners for Filters
+      levelTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          levelTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          activeLevel = tab.dataset.level;
+          renderPapers();
+        });
+      });
+
+      // Search debounce
+      let searchTimeout = null;
+      searchInput.addEventListener('input', () => {
+        const val = searchInput.value;
+        searchClearBtn.style.display = val ? 'block' : 'none';
+
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          activeSearch = val;
+          renderPapers();
+        }, 150);
+      });
+
+      searchClearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchClearBtn.style.display = 'none';
+        activeSearch = '';
+        renderPapers();
+        searchInput.focus();
+      });
+
+      semesterSelect.addEventListener('change', () => {
+        activeSemester = semesterSelect.value;
+        renderPapers();
+      });
+
+      yearSelect.addEventListener('change', () => {
+        activeYear = yearSelect.value;
+        renderPapers();
+      });
+
+      sortSelect.addEventListener('change', () => {
+        activeSort = sortSelect.value;
+        renderPapers();
+      });
+
+      resetFiltersBtn.addEventListener('click', resetAllFilters);
+
+      // Utility helpers
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function escapeAttr(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+
+      // Check URL search parameters (e.g. ?level=100 or ?search=STA111)
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramLevel = urlParams.get('level');
+      const paramSearch = urlParams.get('q') || urlParams.get('search');
+
+      if (paramLevel && ['100', '200', '300', '400'].includes(paramLevel)) {
+        activeLevel = paramLevel;
+        levelTabs.forEach(t => t.classList.toggle('active', t.dataset.level === paramLevel));
+      }
+
+      if (paramSearch) {
+        activeSearch = paramSearch;
+        searchInput.value = paramSearch;
+        searchClearBtn.style.display = 'block';
+      }
+
+      // Initialize
+      loadPastQuestions();
+    })();
+  </script>
+</body>
+</html>
