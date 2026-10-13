@@ -683,28 +683,65 @@ function seedInitialData() {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
-    // 400 Level First Semester
-    insertTT.run(400, 1, 'Monday', '08:00 AM', '10:00 AM', 'STA 401', 'Statistical Inference II', 'Prof Francis Chukwuemeka Eze', 'Stats Lecture Theatre 1');
-    insertTT.run(400, 1, 'Monday', '11:00 AM', '01:00 PM', 'STA 411', 'Time Series Analysis', 'Dr Awopeju K. Abidemi', 'Physical Science Hall B');
-    insertTT.run(400, 1, 'Tuesday', '09:00 AM', '11:00 AM', 'STA 421', 'Multivariate Statistical Methods', 'Prof Francis Chukwuemeka Eze', 'Stats Lecture Theatre 1');
-    insertTT.run(400, 1, 'Wednesday', '10:00 AM', '12:00 PM', 'STA 431', 'Stochastic Processes', 'Dr Okechukwu Jeremiah Obulezi', 'Room 204 Stats Block');
-    insertTT.run(400, 1, 'Thursday', '02:00 PM', '04:00 PM', 'STA 411 (Lab)', 'Time Series Practical (R/Python)', 'Mr Victor C. Chukwunenye / Dr Awopeju K. Abidemi', 'Departmental Computing Lab');
-    insertTT.run(400, 1, 'Friday', '09:00 AM', '11:00 AM', 'STA 499', 'Research Project Colloquium', 'Departmental Project Committee', 'Departmental Boardroom');
+    // Official First Semester 2026/2027 Lecture Timetable (Approved by Prof F.C. Eze HOD & G.C. Okoye Timetable Officer)
+    const officialTimetable = [
+      // 100 Level (First Semester)
+      { level: 100, semester: 1, day: 'Monday', start_time: '08:00 AM', end_time: '10:00 AM', course_code: 'GST 111', course_title: 'Communication in English / General Studies', lecturer: 'General Studies Directorate', venue: 'GS Auditorium' },
+      { level: 100, semester: 1, day: 'Tuesday', start_time: '08:00 AM', end_time: '10:00 AM', course_code: 'MTH 101', course_title: 'Elementary Mathematics I', lecturer: 'Department of Mathematics', venue: 'Faculty Hall / Maths LT' },
+      { level: 100, semester: 1, day: 'Tuesday', start_time: '12:00 PM', end_time: '02:00 PM', course_code: 'PHY 101', course_title: 'General Physics I', lecturer: 'Department of Physics', venue: 'Physics Lecture Theatre' },
+      { level: 100, semester: 1, day: 'Wednesday', start_time: '08:00 AM', end_time: '10:00 AM', course_code: 'COS 101', course_title: 'Introduction to Computer Science', lecturer: 'Department of Computer Science', venue: 'Computer Science Hall' },
+      { level: 100, semester: 1, day: 'Wednesday', start_time: '10:00 AM', end_time: '12:00 PM', course_code: 'STA 121', course_title: 'Statistical Inference I', lecturer: 'Obiora-Ilouno, Ibeakuzie and Obulezi', venue: 'STAT Hall' },
+      { level: 100, semester: 1, day: 'Wednesday', start_time: '12:00 PM', end_time: '02:00 PM', course_code: 'PHY 101', course_title: 'General Physics I', lecturer: 'Department of Physics', venue: 'Physics Lecture Theatre' },
+      { level: 100, semester: 1, day: 'Thursday', start_time: '10:00 AM', end_time: '11:00 AM', course_code: 'CSC 101', course_title: 'Introduction to Computer Science', lecturer: 'Department of Computer Science', venue: 'Computer Science Lab' },
+      { level: 100, semester: 1, day: 'Friday', start_time: '09:00 AM', end_time: '10:00 AM', course_code: 'MTH 101', course_title: 'Elementary Mathematics I', lecturer: 'Department of Mathematics', venue: 'Faculty Hall' },
+      { level: 100, semester: 1, day: 'Friday', start_time: '10:00 AM', end_time: '12:00 PM', course_code: 'STA 111', course_title: 'Descriptive Statistics', lecturer: 'Uzuke, Okoye, Anabike, Eriobu, Chukwunenye', venue: 'STAT Hall' },
+      { level: 100, semester: 1, day: 'Friday', start_time: '01:00 PM', end_time: '03:00 PM', course_code: 'NAU-BIO 101', course_title: 'General Biology I', lecturer: 'Department of Biological Sciences', venue: 'Biological Sciences Lecture Hall' },
 
-    // 300 Level First Semester
-    insertTT.run(300, 1, 'Monday', '10:00 AM', '12:00 PM', 'STA 311', 'Mathematical Statistics I', 'Prof George A. Osuji', 'Lecture Room 2');
-    insertTT.run(300, 1, 'Tuesday', '08:00 AM', '10:00 AM', 'STA 321', 'Design & Analysis of Experiments I', 'Prof Chiwendu. A Uzuke', 'Stats Lecture Theatre 1');
-    insertTT.run(300, 1, 'Wednesday', '08:00 AM', '10:00 AM', 'STA 331', 'Regression Analysis', 'Mr Chukwuenyem E. Onyenekwe', 'Science Complex Hall 1');
-    insertTT.run(300, 1, 'Thursday', '11:00 AM', '01:00 PM', 'STA 321 (Lab)', 'Experimental Design ANOVA in SPSS', 'Mr Victor C. Chukwunenye', 'Departmental Computing Lab');
+      // 200 Level (First Semester)
+      { level: 200, semester: 1, day: 'Monday', start_time: '01:00 PM', end_time: '03:00 PM', course_code: 'STA 211', course_title: 'Probability II', lecturer: 'G. A. Osuji and C. I. Nnabude', venue: 'STAT Hall' },
+      { level: 200, semester: 1, day: 'Tuesday', start_time: '08:00 AM', end_time: '10:00 AM', course_code: 'STA 231', course_title: 'Statistical Computing II', lecturer: 'H. O. Etaga and Orji G. O', venue: 'STAT LAB' },
+      { level: 200, semester: 1, day: 'Tuesday', start_time: '10:00 AM', end_time: '12:00 PM', course_code: 'COS 201', course_title: 'Computer Programming I', lecturer: 'Department of Computer Science', venue: 'Computer Science Lab' },
+      { level: 200, semester: 1, day: 'Tuesday', start_time: '01:00 PM', end_time: '02:00 PM', course_code: 'MTH 201', course_title: 'Linear Algebra I', lecturer: 'Department of Mathematics', venue: 'Mathematics Lecture Hall' },
+      { level: 200, semester: 1, day: 'Tuesday', start_time: '01:00 PM', end_time: '03:00 PM', course_code: 'STA 221', course_title: 'Statistical Inference II', lecturer: 'V. C. Chukwunenye and C. E. Onyenekwe', venue: 'STAT Hall' },
+      { level: 200, semester: 1, day: 'Tuesday', start_time: '02:00 PM', end_time: '03:00 PM', course_code: 'MTH 231', course_title: 'Introduction to Mathematical Methods', lecturer: 'Department of Mathematics', venue: 'Mathematics Lecture Hall' },
+      { level: 200, semester: 1, day: 'Wednesday', start_time: '08:00 AM', end_time: '09:00 AM', course_code: 'MTH 231', course_title: 'Introduction to Mathematical Methods', lecturer: 'Department of Mathematics', venue: 'Mathematics Lecture Hall' },
+      { level: 200, semester: 1, day: 'Wednesday', start_time: '09:00 AM', end_time: '10:00 AM', course_code: 'ENT 211', course_title: 'Entrepreneurship and Innovation 2', lecturer: 'Entrepreneurship Studies Unit', venue: 'UNIZIK Entrepreneurship Centre' },
+      { level: 200, semester: 1, day: 'Wednesday', start_time: '10:00 AM', end_time: '12:00 PM', course_code: 'IFT 211', course_title: 'Digital Logic Design', lecturer: 'Department of Information Technology', venue: 'Faculty Complex Hall' },
+      { level: 200, semester: 1, day: 'Wednesday', start_time: '10:00 AM', end_time: '12:00 PM', course_code: 'MTH 231', course_title: 'Introduction to Mathematical Methods', lecturer: 'Department of Mathematics', venue: 'Old Maths Hall' },
+      { level: 200, semester: 1, day: 'Wednesday', start_time: '02:00 PM', end_time: '03:00 PM', course_code: 'STA 211', course_title: 'Probability II', lecturer: 'G. A. Osuji and C. I. Nnabude', venue: 'STAT Hall' },
+      { level: 200, semester: 1, day: 'Wednesday', start_time: '02:00 PM', end_time: '03:00 PM', course_code: 'STA 221', course_title: 'Statistical Inference II', lecturer: 'V. C. Chukwunenye and C. E. Onyenekwe', venue: 'STAT Hall' },
+      { level: 200, semester: 1, day: 'Thursday', start_time: '08:00 AM', end_time: '10:00 AM', course_code: 'CSC 201', course_title: 'Computer Programming I', lecturer: 'Department of Computer Science', venue: 'Computer Science Lab' },
+      { level: 200, semester: 1, day: 'Thursday', start_time: '08:00 AM', end_time: '10:00 AM', course_code: 'MTH 201', course_title: 'Linear Algebra I', lecturer: 'Department of Mathematics', venue: 'Mathematics Lecture Hall' },
+      { level: 200, semester: 1, day: 'Thursday', start_time: '12:00 PM', end_time: '02:00 PM', course_code: 'STA 201', course_title: 'Statistics for Agricultural & Biological Sciences', lecturer: 'Awopeju, Ikediuwa, Odum, Omoruyi, Aforka, Eriobu, Oladimeji', venue: 'STAT Hall' },
+      { level: 200, semester: 1, day: 'Friday', start_time: '12:00 PM', end_time: '01:00 PM', course_code: 'CSC 201', course_title: 'Computer Programming I', lecturer: 'Department of Computer Science', venue: 'Departmental Computing Lab' },
 
-    // 200 Level First Semester
-    insertTT.run(200, 1, 'Monday', '12:00 PM', '02:00 PM', 'STA 211', 'Probability Distributions I', 'Dr Okechukwu Jeremiah Obulezi', 'Faculty Hall 3');
-    insertTT.run(200, 1, 'Tuesday', '11:00 AM', '01:00 PM', 'STA 221', 'Statistical Inference I', 'Dr Florence K. Aforka', 'Faculty Hall 3');
-    insertTT.run(200, 1, 'Wednesday', '02:00 PM', '04:00 PM', 'STA 211 (Tutorial)', 'Probability Problem Solving Class', 'Comr. Academic Committee', 'Stats Tutorial Room');
+      // 300 Level (First Semester)
+      { level: 300, semester: 1, day: 'Monday', start_time: '08:00 AM', end_time: '10:00 AM', course_code: 'STA 311', course_title: 'Probability III', lecturer: 'J. O. Obulezi and C. C. Nnanatu', venue: 'STAT Hall' },
+      { level: 300, semester: 1, day: 'Monday', start_time: '11:00 AM', end_time: '01:00 PM', course_code: 'STA 321', course_title: 'Statistical Inference III', lecturer: 'E. U. Umeh and C. I. Nnabude', venue: 'STAT Hall' },
+      { level: 300, semester: 1, day: 'Tuesday', start_time: '10:00 AM', end_time: '12:00 PM', course_code: 'NAU-STA 341', course_title: 'Regression Analysis I', lecturer: 'H. O. Etaga and K. F. Aforka', venue: 'STAT Hall' },
+      { level: 300, semester: 1, day: 'Tuesday', start_time: '12:00 PM', end_time: '02:00 PM', course_code: 'NAU-STA 351', course_title: 'Analysis of Variance I', lecturer: 'L. O. Ngonadi and V. C. Chukwunenye', venue: 'STAT Hall' },
+      { level: 300, semester: 1, day: 'Wednesday', start_time: '09:00 AM', end_time: '11:00 AM', course_code: 'NAU-STA 361', course_title: 'Demography', lecturer: 'C. A. Uzuke and G. C. Okoye', venue: 'STAT Hall' },
+      { level: 300, semester: 1, day: 'Wednesday', start_time: '12:00 PM', end_time: '02:00 PM', course_code: 'NAU-STA 371', course_title: 'Operations Research I', lecturer: 'H. O. Obiora-Ilouno and S. Enogwe', venue: 'STAT Hall' },
+      { level: 300, semester: 1, day: 'Thursday', start_time: '10:00 AM', end_time: '12:00 PM', course_code: 'NAU-STA 381', course_title: 'Biometry', lecturer: 'P. O. Ibeakuzie and C. E. Onyenekwe', venue: 'STAT Hall' },
+      { level: 300, semester: 1, day: 'Thursday', start_time: '12:00 PM', end_time: '02:00 PM', course_code: 'STA 331', course_title: 'Statistical Computing III', lecturer: 'L. O. Ngonadi, Enogwe and I. F. Okpala', venue: 'STAT LAB' },
 
-    // 100 Level First Semester
-    insertTT.run(100, 1, 'Monday', '08:00 AM', '10:00 AM', 'STA 111', 'Descriptive Statistics', 'Dr Okechukwu Jeremiah Obulezi', 'General Studies Auditorium');
-    insertTT.run(100, 1, 'Thursday', '08:00 AM', '10:00 AM', 'STA 121', 'Introduction to Probability I', 'Mrs Nkiru', 'General Studies Auditorium');
+      // 400 Level (First Semester)
+      { level: 400, semester: 1, day: 'Monday', start_time: '09:00 AM', end_time: '11:00 AM', course_code: 'STA 411', course_title: 'Probability IV', lecturer: 'G. A Osuji and C. I. Anabike', venue: 'STAT Hall' },
+      { level: 400, semester: 1, day: 'Monday', start_time: '12:00 PM', end_time: '02:00 PM', course_code: 'NAU-STA 421', course_title: 'Times Analysis', lecturer: 'U. C. Ikediuwa and J. O. Odum', venue: 'STAT Hall' },
+      { level: 400, semester: 1, day: 'Tuesday', start_time: '08:00 AM', end_time: '10:00 AM', course_code: 'STA 413', course_title: 'Statistical Inference IV', lecturer: 'E. U. Umeh and A. K. Abidemi', venue: 'STAT Hall' },
+      { level: 400, semester: 1, day: 'Tuesday', start_time: '11:00 AM', end_time: '01:00 PM', course_code: 'NAU-STA 441', course_title: 'Regression Analysis II', lecturer: 'C. H. Nwankwo and A. K. Abidemi', venue: 'STAT Hall' },
+      { level: 400, semester: 1, day: 'Wednesday', start_time: '08:00 AM', end_time: '10:00 AM', course_code: 'NAU-STA 451', course_title: 'Design And Analysis of Experiments', lecturer: 'F. C. Eze and L. O. Ngonadi', venue: 'STAT Hall' },
+      { level: 400, semester: 1, day: 'Wednesday', start_time: '11:00 AM', end_time: '01:00 PM', course_code: 'NAU-STA 461', course_title: 'Multivariate Analysis I', lecturer: 'S. I. Onyeagu and C. I Nnabude', venue: 'STAT Hall' },
+      { level: 400, semester: 1, day: 'Wednesday', start_time: '01:00 PM', end_time: '02:00 PM', course_code: 'STA 411', course_title: 'Probability IV', lecturer: 'G. A Osuji and C. I. Anabike', venue: 'STAT Hall' },
+      { level: 400, semester: 1, day: 'Thursday', start_time: '08:00 AM', end_time: '10:00 AM', course_code: 'STA 491', course_title: 'Seminar', lecturer: 'C. E. Onyenekwe', venue: 'STAT Hall' },
+      { level: 400, semester: 1, day: 'Thursday', start_time: '11:00 AM', end_time: '01:00 PM', course_code: 'STA 471', course_title: 'Operations Research II', lecturer: 'H. O. Obiora-Ilouno and S. Enogwe', venue: 'STAT Hall' },
+      { level: 400, semester: 1, day: 'Thursday', start_time: '11:00 AM', end_time: '01:00 PM', course_code: 'STA 481', course_title: 'Statistical Quality Control I', lecturer: 'H. O. Etaga and K. F. Aforka', venue: 'STAT Hall' },
+      { level: 400, semester: 1, day: 'Thursday', start_time: '01:00 PM', end_time: '02:00 PM', course_code: 'STA 413', course_title: 'Statistical Inference IV', lecturer: 'E. U. Umeh and A. K. Abidemi', venue: 'STAT Hall' }
+    ];
+
+    for (const tt of officialTimetable) {
+      insertTT.run(tt.level, tt.semester, tt.day, tt.start_time, tt.end_time, tt.course_code, tt.course_title, tt.lecturer, tt.venue);
+    }
   }
 
   // Seed News if empty

@@ -179,19 +179,37 @@
 
           <!-- Option 2: iOS -->
           <div class="nass-install-option-card" style="padding: 16px 18px;">
-            <div class="nass-opt-top" style="margin-bottom: 12px;">
+            <div class="nass-opt-top" style="margin-bottom: 8px;">
               <span class="nass-opt-heading" style="font-size: 1.05rem; font-weight: 700;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 20.94c1.5 0 2.75-.78 3.75-.78s2.17.78 3.75.78c2.25 0 4.12-2.12 5.08-4.32-2.33-1.04-2.83-4.14-.85-5.63-1.28-1.92-3.32-2.22-4.04-2.22-1.7 0-3.1 1.05-3.94 1.05-.85 0-2.02-1.01-3.48-1.01-2.52 0-4.87 1.83-5.83 4.46-.86 2.37.1 5.86 2.06 8.78 1 1.48 2.22 2.89 3.5 2.89z"/>
                   <path d="M15.5 2c-.3 1.5-1.5 2.7-2.9 2.9.2-1.4 1.4-2.6 2.9-2.9z"/>
                 </svg>
-                <span>iOS</span>
+                <span>Apple iOS (iPhone & iPad)</span>
               </span>
             </div>
-            <a href="/downloads/NASS_UNIZIK.mobileconfig" download="NASS_UNIZIK.mobileconfig" id="nassInstallIosBtn" class="nass-opt-btn primary" style="padding: 12px 18px; font-size: 0.95rem;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              <span>Install on iOS</span>
-            </a>
+            
+            <!-- Method A: Recommended 1-Click Safari Add to Home Screen -->
+            <div style="background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(37, 99, 235, 0.25); border-radius: 8px; padding: 12px; margin-bottom: 12px; font-size: 0.8125rem;">
+              <div style="font-weight: 700; color: var(--primary-color); margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Recommended Instant Method (No warnings):</span>
+              </div>
+              <p style="margin: 0; color: var(--text-secondary); line-height: 1.45;">
+                In <strong>Safari</strong> on iPhone, tap the <strong>Share</strong> button (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline;vertical-align:-1px;"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>) at the bottom, scroll down, and tap <strong>"Add to Home Screen"</strong> (<span style="font-weight:700;">+</span>).
+              </p>
+            </div>
+
+            <!-- Method B: Download iOS Profile -->
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <a href="/downloads/NASS_UNIZIK.mobileconfig" download="NASS_UNIZIK.mobileconfig" id="nassInstallIosBtn" class="nass-opt-btn primary" style="padding: 10px 16px; font-size: 0.875rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Download iOS Profile (.mobileconfig)</span>
+              </a>
+              <div style="font-size: 0.72rem; color: var(--text-muted); line-height: 1.35;">
+                <em>Note: If iOS prompts "Unsigned Profile", tap <strong>Install</strong> to add the NASS app icon to your Home Screen.</em>
+              </div>
+            </div>
           </div>
         </div>
       </div>

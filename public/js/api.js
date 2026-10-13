@@ -31,7 +31,103 @@ const API = {
     }
   },
 
-  async request(endpoint, options = {}) {
+  getFallback(endpoint) {
+    const clean = endpoint.split('?')[0].replace(/^\/api/, '');
+    if (clean === '/events') {
+      return [
+        {
+          id: 4,
+          title: "Resumption of New Students & Lectures Begin",
+          event_date: "2026-10-12",
+          event_time: "08:00 AM - 04:00 PM",
+          venue: "Department of Statistics & Faculty Lecture Theatres",
+          description: "New students continue clearance, documentation, and introductory lectures begin for the 2026/2027 academic session.",
+          category: "Resumption",
+          status: "UPCOMING",
+          registration_url: "#",
+          banner_image: "/resources/images/event_orientation.jpg",
+          is_featured: 1
+        },
+        {
+          id: 5,
+          title: "Resumption of Returning Students & Course Enrolment",
+          event_date: "2026-10-14",
+          event_time: "08:00 AM - 05:00 PM",
+          venue: "Department of Statistics Building, UNIZIK Main Campus",
+          description: "Old students return to campus. Payment of school charges, course registration, and full lectures commence.",
+          category: "Resumption",
+          status: "UPCOMING",
+          registration_url: "#",
+          banner_image: "/resources/images/event_workshop.jpg",
+          is_featured: 1
+        },
+        {
+          id: 6,
+          title: "2024/2025 & 2025/2026 Convocation Ceremonies",
+          event_date: "2026-11-15",
+          event_time: "09:00 AM - 04:00 PM",
+          venue: "UNIZIK Convocation Arena, Awka",
+          description: "University convocation ceremonies celebrating graduating classes of the 2024/2025 and 2025/2026 academic sessions (Nov 15-20, 2026).",
+          category: "Ceremony",
+          status: "UPCOMING",
+          registration_url: "#",
+          banner_image: "/resources/images/event_siwes.jpg",
+          is_featured: 0
+        },
+        {
+          id: 7,
+          title: "University-Wide Continuous Assessment Quiz",
+          event_date: "2026-11-30",
+          event_time: "09:00 AM - 03:00 PM",
+          venue: "Classrooms & University CBT Center",
+          description: "Mid-semester assessment test for all regular undergraduate courses across all levels.",
+          category: "Examination",
+          status: "UPCOMING",
+          registration_url: "#",
+          banner_image: "/resources/images/event_workshop.jpg",
+          is_featured: 0
+        }
+      ];
+    }
+    if (clean === '/news') {
+      return [
+        {
+          id: 7,
+          title: "First Semester Examination Dates Announced: Monday, February 22 to Friday, March 19, 2027",
+          category: "Examinations",
+          author: "Department of Statistics / Examinations Committee",
+          published_at: "2026-10-12",
+          summary: "Official schedule for the First Semester Degree Examinations (both CBE and PBE) has been confirmed following academic revision week.",
+          featured_image: "/resources/images/event_siwes.jpg",
+          is_featured: 1
+        },
+        {
+          id: 6,
+          title: "Harmattan Semester 2026/2027 Lectures Officially Commence Across All Levels",
+          category: "Academic",
+          author: "HOD Office & Timetable Officer",
+          published_at: "2026-10-12",
+          summary: "Academic activities for the 2026/2027 session are in full swing at STAT Hall and STAT LAB following new student orientations.",
+          featured_image: "/resources/images/event_orientation.jpg",
+          is_featured: 1
+        }
+      ];
+    }
+    if (clean === '/settings') {
+      return {
+        department_name: "Department of Statistics",
+        university: "Nnamdi Azikiwe University (UNIZIK)",
+        faculty: "Faculty of Physical Sciences",
+        current_session: "2026/2027",
+        current_semester: "First Semester",
+        hod_name: "Dr. Okechukwu Jeremiah Obulezi",
+        staff_adviser: "Dr. Awopeju Kabiru Abidemi"
+      };
+    }
+    return null;
+  },
+
+  async request(endpoint, options = {}, retries = 2) {
     const headers = options.headers || {};
     const token = this.getToken();
 
@@ -53,17 +149,55 @@ const API = {
       headers
     };
 
-    try {
-      const res = await fetch(`${this.baseUrl}${finalEndpoint}`, config);
-      const data = await res.json().catch(() => ({}));
+    let attempt = 0;
+    while (attempt <= retries) {
+      try {
+        const res = await fetch(`${this.baseUrl}${finalEndpoint}`, config);
+        const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) {
-        throw new Error(data.error || `Request failed with status ${res.status}`);
+        if (!res.ok) {
+          throw new Error(data.error || `Request failed with status ${res.status}`);
+        }
+
+        // Cache successful GET responses in localStorage for instant offline access
+        if (isGet && data) {
+          try {
+            const cacheKey = `nass_api_cache_${endpoint.split('?')[0]}`;
+            localStorage.setItem(cacheKey, JSON.stringify(data));
+          } catch (_) {}
+        }
+
+        return data;
+      } catch (err) {
+        attempt++;
+        if (attempt <= retries && isGet) {
+          // Retry momentarily on connection / network glitch
+          await new Promise(r => setTimeout(r, attempt * 200));
+          continue;
+        }
+
+        // On failure for GET, serve cached copy if available
+        if (isGet) {
+          try {
+            const cacheKey = `nass_api_cache_${endpoint.split('?')[0]}`;
+            const cached = localStorage.getItem(cacheKey);
+            if (cached) {
+              console.warn(`[NassAPI] Serving cached data for ${endpoint}:`, err.message || err);
+              return JSON.parse(cached);
+            }
+          } catch (_) {}
+
+          // Built-in fallback
+          const fallback = this.getFallback(endpoint);
+          if (fallback !== null) {
+            console.warn(`[NassAPI] Serving offline fallback for ${endpoint}:`, err.message || err);
+            return fallback;
+          }
+        }
+
+        console.warn(`[NassAPI] Request notice [${endpoint}]:`, err.message || err);
+        throw err;
       }
-      return data;
-    } catch (err) {
-      console.error(`API Error [${endpoint}]:`, err);
-      throw err;
     }
   },
 
