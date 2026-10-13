@@ -1197,6 +1197,91 @@
             </div>
           </div>
 
+          <!-- AUTOMATED SCHEDULED NOTIFICATIONS (e.g. 3 Days @ 9am, 12pm, 7pm) -->
+          <div class="admin-panel" style="margin-top: 24px; border-left: 4px solid #f59e0b;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <div class="admin-panel-title" style="display: flex; align-items: center; gap: 8px;">
+                  <span style="display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 6px; background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  </span>
+                  <span>Automated Recurring Push Notification Scheduler</span>
+                </div>
+                <div class="admin-panel-desc">Schedule notifications to dispatch automatically multiple times daily across consecutive days (e.g. 3 days daily at 9:00 AM, 12:00 PM, and 7:00 PM).</div>
+              </div>
+              <button type="button" onclick="loadScheduledCampaigns()" class="btn-admin btn-admin-secondary btn-admin-sm">
+                <span>Refresh Schedules</span>
+              </button>
+            </div>
+
+            <!-- Schedule Configuration Form -->
+            <form id="scheduledBroadcastForm" onsubmit="handleCreateScheduledCampaign(event)" style="background: var(--surface-muted); padding: 18px 20px; border-radius: 10px; border: 1px solid var(--border-color); margin-bottom: 20px;">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                <div class="form-group">
+                  <label class="form-label">Campaign Headline / Title *</label>
+                  <input type="text" id="sched_title" class="form-input" placeholder="e.g. Clearance & Dues Deadline Reminder" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Duration in Days</label>
+                  <select id="sched_days" class="form-select">
+                    <option value="1">1 Day</option>
+                    <option value="2">2 Days</option>
+                    <option value="3" selected>3 Days Daily (Recommended)</option>
+                    <option value="5">5 Days Daily</option>
+                    <option value="7">7 Days (Full Week)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Notification Content / Instructions *</label>
+                <textarea id="sched_content" class="form-textarea" rows="3" placeholder="e.g. Friendly reminder: Ensure you complete your departmental registration and course form verification with your course adviser." required></textarea>
+              </div>
+
+              <!-- Daily Delivery Times Selector -->
+              <div class="form-group">
+                <label class="form-label">Daily Delivery Times</label>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+                  <label style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.8125rem; font-weight: 600; cursor: pointer;">
+                    <input type="checkbox" id="sched_time_9am" value="09:00" checked> 09:00 AM (Morning)
+                  </label>
+                  <label style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.8125rem; font-weight: 600; cursor: pointer;">
+                    <input type="checkbox" id="sched_time_12pm" value="12:00" checked> 12:00 PM (Midday)
+                  </label>
+                  <label style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.8125rem; font-weight: 600; cursor: pointer;">
+                    <input type="checkbox" id="sched_time_7pm" value="19:00" checked> 07:00 PM (Evening)
+                  </label>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; margin-top: 14px;">
+                <button type="submit" id="schedSubmitBtn" class="btn-admin btn-admin-primary" style="padding: 10px 20px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span>Activate 3-Day Automated Broadcast</span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Active Campaigns List -->
+            <div class="admin-table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th style="width: 80px;">Status</th>
+                    <th>Campaign Title</th>
+                    <th>Daily Times</th>
+                    <th>Date Window</th>
+                    <th style="width: 100px;">Dispatches</th>
+                    <th style="width: 170px;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="scheduledCampaignsTableBody">
+                  <tr><td colspan="6" style="text-align: center; padding: 20px;">Loading scheduled campaigns...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           <!-- RECENT PUSH BROADCASTS STREAM -->
           <div class="admin-panel">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
@@ -2083,6 +2168,10 @@
         'gallery': 'Gallery & Photos'
       };
       document.getElementById('pageHeading').textContent = titles[secId] || 'Portal Editor';
+      if (secId === 'push') {
+        loadPushBroadcasts();
+        loadScheduledCampaigns();
+      }
     }
 
     // NOTIFY PUBLIC SITE OF LIVE DATA UPDATES
@@ -2674,7 +2763,7 @@
         <tr>
           <td>
             <div style="font-weight: 600;">${m.title}</div>
-            <div style="font-size: 0.75rem; color: #64748b;">${m.file_name || m.file_path}</div>
+            <div style="font-size: 0.75rem; color: #64748b;">${m.file_size ? `${Math.round(m.file_size / 1024)} KB · Direct Document` : 'Official Departmental Material'}</div>
           </td>
           <td><span style="font-weight: 700; font-family: var(--font-mono);">${m.course_code || '—'}</span> (${m.course_level || ''}L)</td>
           <td>${m.academic_year || '—'}</td>
@@ -3834,6 +3923,164 @@
         showToast('Alert recalled and removed.', 'success');
         await loadPushBroadcasts();
         notifyPublicSite('announcements');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // ==========================================
+    // SCHEDULED & RECURRING NOTIFICATIONS
+    // ==========================================
+    async function loadScheduledCampaigns() {
+      const tbody = document.getElementById('scheduledCampaignsTableBody');
+      if (!tbody) return;
+
+      try {
+        const res = await fetch(`${API_BASE}/scheduled-notifications`);
+        if (!res.ok) throw new Error('Failed to load scheduled campaigns');
+        const list = await res.json();
+
+        if (!list || list.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 24px; color: var(--text-muted);">No automated campaigns scheduled. Use the form above to schedule daily broadcasts at 9:00 AM, 12:00 PM, and 7:00 PM for 3 days.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = list.map(c => {
+          const times = Array.isArray(c.times_of_day) ? c.times_of_day.join(', ') : c.times_of_day;
+          const statusBadge = c.is_active 
+            ? '<span style="display:inline-block; padding: 3px 8px; border-radius: 999px; background: rgba(16, 185, 129, 0.15); color: #10b981; font-size: 0.75rem; font-weight: 700;">ACTIVE</span>'
+            : '<span style="display:inline-block; padding: 3px 8px; border-radius: 999px; background: rgba(148, 163, 184, 0.2); color: #94a3b8; font-size: 0.75rem; font-weight: 700;">PAUSED</span>';
+
+          return `
+            <tr>
+              <td>${statusBadge}</td>
+              <td>
+                <strong style="color: var(--text-primary); font-size: 0.875rem;">${escapeHtml(c.title)}</strong>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">${escapeHtml(c.content.slice(0, 75))}${c.content.length > 75 ? '...' : ''}</div>
+              </td>
+              <td>
+                <span style="font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700; color: #f59e0b;">
+                  ${escapeHtml(times)}
+                </span>
+              </td>
+              <td style="font-size: 0.8125rem;">
+                ${escapeHtml(c.start_date)} to ${escapeHtml(c.end_date)}
+                <div style="font-size: 0.72rem; color: var(--text-muted);">${c.total_days} Days Daily</div>
+              </td>
+              <td>
+                <strong style="font-size: 0.875rem;">${c.dispatch_count}</strong>
+                <div style="font-size: 0.7rem; color: var(--text-muted);">dispatched</div>
+              </td>
+              <td>
+                <div style="display: flex; gap: 6px;">
+                  <button type="button" onclick="triggerScheduledCampaign(${c.id})" class="btn-admin btn-admin-secondary btn-admin-sm" title="Dispatch alert right now">
+                    Test Now
+                  </button>
+                  <button type="button" onclick="toggleScheduledCampaign(${c.id})" class="btn-admin btn-admin-sm" style="border: 1px solid var(--border-color);" title="Pause or Resume campaign">
+                    ${c.is_active ? 'Pause' : 'Resume'}
+                  </button>
+                  <button type="button" onclick="deleteScheduledCampaign(${c.id})" class="btn-admin btn-admin-danger btn-admin-sm" title="Delete campaign">
+                    &times;
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #ef4444; padding: 20px;">Failed to load campaigns: ${err.message}</td></tr>`;
+      }
+    }
+
+    async function handleCreateScheduledCampaign(e) {
+      e.preventDefault();
+      const title = document.getElementById('sched_title').value.trim();
+      const content = document.getElementById('sched_content').value.trim();
+      const total_days = parseInt(document.getElementById('sched_days').value, 10) || 3;
+
+      const selectedTimes = [];
+      if (document.getElementById('sched_time_9am')?.checked) selectedTimes.push('09:00');
+      if (document.getElementById('sched_time_12pm')?.checked) selectedTimes.push('12:00');
+      if (document.getElementById('sched_time_7pm')?.checked) selectedTimes.push('19:00');
+
+      if (selectedTimes.length === 0) {
+        showToast('Please select at least one daily delivery time.', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('schedSubmitBtn');
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${API_BASE}/scheduled-notifications`, {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify({
+            title,
+            content,
+            priority: 'IMPORTANT',
+            target_cohort: 'all',
+            times_of_day: selectedTimes,
+            total_days
+          })
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || 'Failed to schedule campaign');
+        }
+
+        showToast(`Scheduled notification activated! It will broadcast daily at ${selectedTimes.join(', ')} for ${total_days} days.`, 'success');
+        document.getElementById('scheduledBroadcastForm').reset();
+        await loadScheduledCampaigns();
+      } catch (err) {
+        showToast(err.message, 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function toggleScheduledCampaign(id) {
+      try {
+        const res = await fetch(`${API_BASE}/scheduled-notifications/${id}/toggle`, {
+          method: 'POST',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to update status');
+        showToast('Campaign status updated.', 'success');
+        await loadScheduledCampaigns();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function triggerScheduledCampaign(id) {
+      try {
+        const res = await fetch(`${API_BASE}/scheduled-notifications/${id}/trigger`, {
+          method: 'POST',
+          headers: authHeaders()
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to dispatch alert');
+        showToast(data.message || 'Notification broadcast dispatched!', 'success');
+        await loadScheduledCampaigns();
+        await loadPushBroadcasts();
+        notifyPublicSite('announcements');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteScheduledCampaign(id) {
+      if (!confirm('Cancel and delete this scheduled notification campaign?')) return;
+      try {
+        const res = await fetch(`${API_BASE}/scheduled-notifications/${id}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Failed to delete campaign');
+        showToast('Campaign deleted successfully.', 'success');
+        await loadScheduledCampaigns();
       } catch (err) {
         showToast(err.message, 'error');
       }

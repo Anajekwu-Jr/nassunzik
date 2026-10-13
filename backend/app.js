@@ -23,6 +23,8 @@ import faqRoutes from './routes/faqs.js';
 import materialRoutes from './routes/materials.js';
 import settingsRoutes from './routes/settings.js';
 import careersRoutes from './routes/careers.js';
+import scheduledNotificationRoutes from './routes/scheduled_notifications.js';
+import { startNotificationScheduler } from './scheduler.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,6 +32,9 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 
 // Initialize database schema and data
 initDatabase();
+
+// Start background notification scheduler
+startNotificationScheduler();
 
 const app = express();
 
@@ -131,6 +136,7 @@ app.use('/api/stats', statsRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/careers', careersRoutes);
+app.use('/api/scheduled-notifications', scheduledNotificationRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

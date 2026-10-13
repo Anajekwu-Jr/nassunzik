@@ -203,8 +203,8 @@ export const ResourcesScreen: React.FC = () => {
                       <h4 className="text-xs font-bold text-white line-clamp-2">
                         {res.title}
                       </h4>
-                      <p className="text-[10px] text-slate-500 font-mono truncate mt-0.5">
-                        {res.file_name}
+                      <p className="text-[11px] text-slate-400 truncate mt-0.5">
+                        {res.course_code ? `${res.course_code} · ` : ''}{res.resource_type === 'past_question' ? 'Past Examination Paper' : (res.resource_type === 'textbook' ? 'Textbook & Compendium' : 'Lecture Material')}
                       </p>
                     </div>
                   </div>

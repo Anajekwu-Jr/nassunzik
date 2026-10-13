@@ -209,7 +209,6 @@
                         <strong style="color: var(--text-primary); font-size: 0.9rem;">${escapeHtml(item.title)}</strong>
                       </div>
                       <div class="search-result-subtitle" style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px;">
-                        ${item.file_name ? `<span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">${escapeHtml(item.file_name)} · </span>` : ''}
                         ${escapeHtml(item.subtitle)}
                       </div>
                       ${item.description ? `<div class="search-result-desc" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">${escapeHtml(item.description)}</div>` : ''}

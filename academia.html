@@ -506,8 +506,8 @@
                             <div style="font-size: 0.8125rem; font-weight: 700; color: var(--text-primary); line-height: 1.35;">
                               ${escapeHtml(r.title)}
                             </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; font-family: var(--font-mono);">
-                              ${r.file_name ? escapeHtml(r.file_name) : ''} ${r.file_size ? `· ${formatFileSize(r.file_size)}` : ''}
+                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">
+                              ${r.resource_type === 'past_question' ? 'Past Examination Paper' : (r.resource_type === 'textbook' ? 'Textbook & Reference' : 'Lecture Material')} ${r.academic_year ? `· ${escapeHtml(r.academic_year)}` : ''} ${r.file_size ? `· ${formatFileSize(r.file_size)}` : ''}
                             </div>
                           </div>
                         </div>

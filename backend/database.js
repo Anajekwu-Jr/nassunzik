@@ -268,6 +268,26 @@ export function initDatabase() {
     // Column already exists
   }
 
+  // 14. Scheduled & Recurring Notifications
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS scheduled_notifications (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      content TEXT NOT NULL,
+      priority TEXT NOT NULL DEFAULT 'IMPORTANT', -- 'URGENT', 'IMPORTANT', 'NORMAL'
+      target_cohort TEXT NOT NULL DEFAULT 'all',  -- 'all', '100', '200', '300', '400'
+      times_of_day TEXT NOT NULL DEFAULT '["09:00","12:00","19:00"]', -- JSON array of HH:MM
+      start_date TEXT NOT NULL,                   -- YYYY-MM-DD
+      end_date TEXT NOT NULL,                     -- YYYY-MM-DD
+      total_days INTEGER DEFAULT 3,
+      is_active INTEGER DEFAULT 1,
+      dispatch_count INTEGER DEFAULT 0,
+      last_dispatched_at TEXT,
+      created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+
   // 14. Site Settings
   db.exec(`
     CREATE TABLE IF NOT EXISTS site_settings (
