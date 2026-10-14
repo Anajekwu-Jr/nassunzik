@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Sam AI Study Companion · Department of Statistics, UNIZIK</title>
+  <meta name="description" content="Meet Sam, the official AI Study Companion for NASS Department of Statistics, UNIZIK. Discuss lecture notes, solve past questions, analyze uploaded documents, and prepare for exams with voice and text.">
+  
+  <link rel="icon" type="image/jpeg" href="/resources/images/nass-logo.jpg">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/academia.css">
+
+  <style>
+    :root {
+      --sam-gold: #f59e0b;
+      --sam-gold-light: #fef3c7;
+      --sam-navy: #091e42;
+      --sam-blue: #1e3a8a;
+    }
+
+    .sam-workspace {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      height: calc(100vh - 130px);
+      min-height: 600px;
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    @media (max-width: 960px) {
+      .sam-workspace {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: calc(100vh - 130px);
+      }
+      .sam-sidebar {
+        display: none;
+      }
+      .sam-sidebar.mobile-active {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
+        background: var(--bg-card);
+      }
+    }
+
+    /* Left Sidebar */
+    .sam-sidebar {
+      background: var(--bg-card);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sam-sidebar-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .sam-level-tabs {
+      display: flex;
+      gap: 4px;
+      margin-top: 10px;
+      background: rgba(0, 0, 0, 0.04);
+      padding: 3px;
+      border-radius: var(--radius-sm);
+    }
+
+    [data-theme="dark"] .sam-level-tabs {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .sam-level-tab {
+      flex: 1;
+      padding: 6px 0;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: transparent;
+      border: none;
+      border-radius: 4px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .sam-level-tab.active {
+      background: var(--bg-card);
+      color: var(--sam-gold);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .sam-course-search {
+      width: 100%;
+      margin-top: 10px;
+      padding: 8px 12px;
+      font-size: 0.8125rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      outline: none;
+    }
+
+    .sam-course-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .sam-course-card {
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      margin-bottom: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .sam-course-card:hover {
+      background: rgba(245, 158, 11, 0.06);
+      border-color: rgba(245, 158, 11, 0.2);
+    }
+
+    .sam-course-card.active {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: var(--sam-gold);
+    }
+
+    .sam-course-code-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--sam-gold);
+    }
+
+    .sam-course-title-sub {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 2px 0 4px 0;
+    }
+
+    .sam-course-meta-tags {
+      display: flex;
+      gap: 6px;
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+    }
+
+    /* Selected Course Notes Drawer in Sidebar */
+    .sam-course-materials-box {
+      border-top: 1px solid var(--border-color);
+      padding: 14px;
+      background: rgba(0, 0, 0, 0.02);
+      max-height: 240px;
+      overflow-y: auto;
+    }
+
+    .sam-material-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.75rem;
+    }
+
+    .sam-material-btn {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--sam-gold);
+      font-weight: 600;
+      font-size: 0.6875rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .sam-material-btn:hover {
+      background: var(--sam-gold);
+      color: #ffffff;
+    }
+
+    /* Chat Area */
+    .sam-chat-main {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background: var(--bg-primary);
+      overflow: hidden;
+    }
+
+    .sam-chat-header {
+      padding: 12px 20px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .sam-persona {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sam-avatar-lg {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #091e42;
+      border: 2px solid var(--sam-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fbbf24;
+      position: relative;
+    }
+
+    .sam-online-dot {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #10b981;
+      border: 2px solid #091e42;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .sam-header-modes {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .sam-mode-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 9999px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .sam-mode-pill.active {
+      background: var(--sam-gold);
+      color: #ffffff;
+      border-color: var(--sam-gold);
+    }
+
+    .sam-feed {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sam-chat-row {
+      display: flex;
+      gap: 12px;
+      max-width: 820px;
+      width: 100%;
+    }
+
+    .sam-chat-row.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .sam-chat-row.model {
+      align-self: flex-start;
+    }
+
+    .sam-bubble-large {
+      padding: 16px 20px;
+      border-radius: 16px;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      max-width: 760px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .sam-chat-row.user .sam-bubble-large {
+      background: var(--sam-blue);
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .sam-chat-row.model .sam-bubble-large {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      border-bottom-left-radius: 4px;
+    }
+
+    .sam-bubble-large p { margin: 0 0 10px 0; }
+    .sam-bubble-large p:last-child { margin-bottom: 0; }
+    .sam-bubble-large h3, .sam-bubble-large h4 {
+      margin: 12px 0 6px 0;
+      font-family: var(--font-serif);
+      color: inherit;
+    }
+    .sam-bubble-large pre {
+      background: #091322;
+      color: #e2e8f0;
+      padding: 14px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      margin: 10px 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .sam-bubble-large code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: rgba(0,0,0,0.06);
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+    [data-theme="dark"] .sam-bubble-large code {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .sam-bubble-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    [data-theme="dark"] .sam-bubble-actions {
+      border-top-color: rgba(255,255,255,0.08);
+    }
+
+    .sam-act-btn {
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: color 0.15s ease;
+    }
+    .sam-act-btn:hover {
+      color: var(--sam-gold);
+    }
+
+    /* Floating / Bottom Composer */
+    .sam-composer-area {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+      padding: 14px 20px;
+      flex-shrink: 0;
+    }
+
+    .sam-composer-box {
+      max-width: 820px;
+      margin: 0 auto;
+      border: 1.5px solid var(--border-color);
+      border-radius: 16px;
+      padding: 8px 12px;
+      background: var(--bg-primary);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .sam-composer-box:focus-within {
+      border-color: var(--sam-gold);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+    }
+
+    .sam-attached-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .sam-voice-active-notice {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.78125rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    [data-theme="dark"] .sam-voice-active-notice {
+      background: #450a0a;
+      color: #fecaca;
+    }
+    .sam-voice-active-notice.active { display: flex; }
+
+    .sam-composer-input-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .sam-main-textarea {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.9375rem;
+      resize: none;
+      outline: none;
+      min-height: 40px;
+      max-height: 140px;
+      line-height: 1.5;
+    }
+
+    .sam-action-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .sam-action-btn.secondary {
+      background: rgba(0, 0, 0, 0.05);
+      color: var(--text-secondary);
+    }
+    [data-theme="dark"] .sam-action-btn.secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-secondary);
+    }
+    .sam-action-btn.secondary:hover {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--sam-gold);
+    }
+    .sam-action-btn.recording {
+      background: #ef4444 !important;
+      color: #ffffff !important;
+      animation: pulseRecord 1.2s infinite;
+    }
+
+    .sam-action-btn.primary {
+      background: var(--sam-blue);
+      color: #ffffff;
+    }
+    .sam-action-btn.primary:hover:not(:disabled) {
+      background: var(--sam-gold);
+    }
+    .sam-action-btn.primary:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Institutional Bar -->
+  <div class="institutional-topbar" id="topbar">
+    <div class="container topbar-content">
+      <div class="topbar-left">
+        <span class="topbar-motto">Facts from Figures</span>
+        <span class="topbar-divider">|</span>
+        <span>Department of Statistics, Nnamdi Azikiwe University (UNIZIK)</span>
+      </div>
+      <div class="topbar-right">
+        <a href="/downloads/Statistical_Tables.pdf" target="_blank" class="topbar-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          Statistical Tables PDF
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      <a href="/" class="header-brand">
+        <img src="/resources/images/nass-logo.jpg" alt="NASS Logo" class="brand-logo">
+        <div class="brand-info">
+          <span class="brand-title">NASS UNIZIK</span>
+          <span class="brand-subtitle">Department of Statistics</span>
+        </div>
+      </a>
+
+      <nav class="main-nav" aria-label="Primary Navigation">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/academia.html" class="nav-link">Academia</a>
+        <a href="/past-questions.html" class="nav-link">Past Questions</a>
+        <a href="/timetable.html" class="nav-link">Timetable</a>
+        <a href="/sam.html" class="nav-link active" style="color:var(--sam-gold); font-weight:700;">
+          <span style="display:inline-flex; align-items:center; gap:4px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            Sam AI
+          </span>
+        </a>
+        <a href="/administration.html" class="nav-link">Staff</a>
+        <a href="/nass.html" class="nav-link">NASS Exco</a>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="search-trigger-btn" id="searchTriggerBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="search-placeholder">Search portal...</span>
+        </button>
+
+        <button type="button" class="theme-toggle-btn header-theme-toggle" id="headerThemeToggle" title="Toggle Theme">
+          <span class="theme-toggle-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </span>
+          <span class="theme-toggle-label">Theme</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Fullscreen Sam AI Workspace -->
+  <div class="sam-workspace">
+    
+    <!-- Left Sidebar: Course Navigator & Lecture Resources -->
+    <aside class="sam-sidebar" id="samSidebar">
+      <div class="sam-sidebar-header">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h3 style="font-size:0.95rem; font-weight:700; margin:0;">Course Compendium</h3>
+          <span class="badge badge-accent" id="courseTotalBadge">70+ Courses</span>
+        </div>
+        
+        <!-- Level Tabs -->
+        <div class="sam-level-tabs" id="levelTabs">
+          <button type="button" class="sam-level-tab active" data-level="all">All</button>
+          <button type="button" class="sam-level-tab" data-level="100">100L</button>
+          <button type="button" class="sam-level-tab" data-level="200">200L</button>
+          <button type="button" class="sam-level-tab" data-level="300">300L</button>
+          <button type="button" class="sam-level-tab" data-level="400">400L</button>
+        </div>
+
+        <input type="text" class="sam-course-search" id="courseSearchInput" placeholder="Filter courses (e.g. STA 214, COS 201)...">
+      </div>
+
+      <!-- Course List -->
+      <div class="sam-course-list" id="courseList">
+        <div style="padding:20px; text-align:center; color:var(--text-muted); font-size:0.8125rem;">
+          Loading courses...
+        </div>
+      </div>
+
+      <!-- Selected Course Materials & Shortcuts -->
+      <div class="sam-course-materials-box" id="courseMaterialsBox">
+        <div style="font-weight:700; font-size:0.8125rem; margin-bottom:8px; color:var(--text-primary); display:flex; justify-content:space-between;">
+          <span>Official Portal Notes & Papers</span>
+          <span id="materialsCountBadge" style="color:var(--sam-gold);">0 items</span>
+        </div>
+        <div id="materialsList">
+          <p style="font-size:0.75rem; color:var(--text-muted);">Select a course above to see available lecture notes, textbooks, and past papers.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Chat Workspace -->
+    <main class="sam-chat-main">
+      
+      <!-- Top Bar of Main Chat -->
+      <div class="sam-chat-header">
+        <div class="sam-persona">
+          <div class="sam-avatar-lg">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+            </svg>
+            <div class="sam-online-dot"></div>
+          </div>
+          <div>
+            <h2 style="font-size:1.05rem; font-weight:700; margin:0; display:flex; align-items:center; gap:8px;">
+              Sam AI Study Terminal
+              <span id="currentCourseBadge" class="badge badge-primary" style="font-size:0.72rem;">Department General</span>
+            </h2>
+            <p style="font-size:0.75rem; color:var(--text-muted); margin:0;">
+              Powered by Google Gemini · Multimodal notes, PDF analysis & voice dictation
+            </p>
+          </div>
+        </div>
+
+        <!-- Mode Pills -->
+        <div class="sam-header-modes">
+          <button type="button" class="sam-mode-pill active" data-mode="general">General</button>
+          <button type="button" class="sam-mode-pill" data-mode="explain">Explain Concept</button>
+          <button type="button" class="sam-mode-pill" data-mode="quiz">Practice Quiz</button>
+          <button type="button" class="sam-mode-pill" data-mode="exam_prep">Exam Prep</button>
+          <button type="button" class="sam-mode-pill" data-mode="code_help">Code Helper</button>
+          <button type="button" class="sam-act-btn" id="exportChatBtn" title="Export study notes to markdown">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export
+          </button>
+          <button type="button" class="sam-act-btn" id="clearFullChatBtn" title="Clear chat history">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Feed Container -->
+      <div class="sam-feed" id="fullFeed"></div>
+
+      <!-- Composer Area -->
+      <div class="sam-composer-area">
+        <div class="sam-composer-box">
+          
+          <!-- Attachment Tag if present -->
+          <div id="fullAttachmentTag" style="display:none;" class="sam-attached-tag">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+            <span id="fullAttachmentName">document.pdf</span>
+            <span id="fullAttachmentSize" style="opacity:0.7;">(0 KB)</span>
+            <button type="button" id="removeFullAttachment" style="background:none;border:none;color:#ef4444;cursor:pointer;font-weight:bold;margin-left:4px;">&times;</button>
+          </div>
+
+          <!-- Voice recording notification -->
+          <div id="fullVoiceBanner" class="sam-voice-active-notice">
+            <div style="width:8px; height:8px; background:#ef4444; border-radius:50%; animation:pulseRecord 1s infinite;"></div>
+            <span>Listening to your speech... Speak now or click the mic to stop.</span>
+          </div>
+
+          <div class="sam-composer-input-row">
+            <input type="file" id="fullDocInput" accept=".pdf,.docx,.doc,.txt,.png,.jpg,.jpeg" style="display:none;">
+            
+            <button type="button" class="sam-action-btn secondary" id="fullAttachBtn" title="Attach external PDF, note, or homework photo">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+            </button>
+
+            <button type="button" class="sam-action-btn secondary" id="fullVoiceBtn" title="Speak your question using microphone">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="22"></line>
+              </svg>
+            </button>
+
+            <textarea class="sam-main-textarea" id="fullTextarea" rows="1" placeholder="Ask Sam about a course, theorem, exam problem, or uploaded note... (Shift+Enter for new line)"></textarea>
+
+            <button type="button" class="sam-action-btn primary" id="fullSendBtn" title="Send (Enter)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div style="max-width:820px; margin:6px auto 0 auto; display:flex; justify-content:space-between; font-size:0.71875rem; color:var(--text-muted);">
+          <span>Tip: Select a course on the left to ground Sam in that specific course's lecture notes and exam format.</span>
+          <span>Press Enter to send · Shift+Enter for new line</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/icons.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings-sync.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/nav.js"></script>
+  
+  <script>
+    (function() {
+      let currentLevel = 'all';
+      let currentCourse = null;
+      let currentMode = 'general';
+      let attachedFile = null;
+      let isRecording = false;
+      let isThinking = false;
+      let allCourses = [];
+      let messages = [
+        {
+          role: 'model',
+          content: `### Welcome to Sam AI Study Terminal! 🎓
+I am **Sam**, the official Academic AI Study Companion for **NASS, Department of Statistics, UNIZIK**.
+
+**How I can assist your academic excellence:**
+- **Lecture Notes & Theories**: Ask me to break down probability axioms, regression derivations, order statistics, sampling formulas, or biostatistics models.
+- **Computer Science & Coding**: Get help with **COS 201 C++**, **R language**, **Python for Data Science**, or **SPSS syntax**.
+- **External Document Upload**: Click 📎 to upload an assignment, past question photo, or PDF, and I will analyze and solve it with you.
+- **Voice Dictation**: Tap 🎙️ to ask your question by speaking!
+
+Select a course from the left sidebar to focus our discussion, or ask anything about the department and academics below.`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }
+      ];
+
+      // Restore messages if available
+      try {
+        const saved = localStorage.getItem('sam_workspace_messages');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) messages = parsed;
+        }
+      } catch (e) {}
+
+      // DOM Elements
+      const courseListEl = document.getElementById('courseList');
+      const courseSearchInput = document.getElementById('courseSearchInput');
+      const materialsListEl = document.getElementById('materialsList');
+      const materialsCountBadge = document.getElementById('materialsCountBadge');
+      const currentCourseBadge = document.getElementById('currentCourseBadge');
+      const fullFeed = document.getElementById('fullFeed');
+      const fullTextarea = document.getElementById('fullTextarea');
+      const fullSendBtn = document.getElementById('fullSendBtn');
+      const fullAttachBtn = document.getElementById('fullAttachBtn');
+      const fullDocInput = document.getElementById('fullDocInput');
+      const fullVoiceBtn = document.getElementById('fullVoiceBtn');
+      const fullVoiceBanner = document.getElementById('fullVoiceBanner');
+      const fullAttachmentTag = document.getElementById('fullAttachmentTag');
+      const fullAttachmentName = document.getElementById('fullAttachmentName');
+      const fullAttachmentSize = document.getElementById('fullAttachmentSize');
+      const removeFullAttachment = document.getElementById('removeFullAttachment');
+      const clearFullChatBtn = document.getElementById('clearFullChatBtn');
+      const exportChatBtn = document.getElementById('exportChatBtn');
+
+      // Markdown Formatter
+      function formatMarkdown(text) {
+        if (!text) return '';
+        let html = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        html = html.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
+          return `<pre><code class="language-${lang}">${code.trim()}</code></pre>`;
+        });
+        html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+        html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+        html = html.replace(/^### (.*$)/gim, '<h4>$1</h4>');
+        html = html.replace(/^## (.*$)/gim, '<h3>$1</h3>');
+        html = html.replace(/^# (.*$)/gim, '<h2>$1</h2>');
+        html = html.replace(/^\s*-\s+(.*$)/gim, '<li>$1</li>');
+        html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+        const paragraphs = html.split(/\n{2,}/).map(p => {
+          if (p.startsWith('<pre>') || p.startsWith('<ul>') || p.startsWith('<h')) return p;
+          return `<p>${p.replace(/\n/g, '<br>')}</p>`;
+        });
+        return paragraphs.join('');
+      }
+
+      function renderFeed() {
+        fullFeed.innerHTML = messages.map((m, idx) => {
+          const isUser = m.role === 'user';
+          return `
+            <div class="sam-chat-row ${isUser ? 'user' : 'model'}">
+              ${!isUser ? `
+                <div class="sam-avatar-lg" style="width:34px; height:34px; flex-shrink:0;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 16v-4"></path>
+                    <path d="M12 8h.01"></path>
+                  </svg>
+                </div>
+              ` : ''}
+              <div class="sam-bubble-large">
+                ${formatMarkdown(m.content)}
+                <div class="sam-bubble-actions">
+                  <span>${m.timestamp || ''}</span>
+                  ${!isUser ? `
+                    <button type="button" class="sam-act-btn" onclick="window.speakMsg(${idx})">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                      Listen
+                    </button>
+                    <button type="button" class="sam-act-btn" onclick="window.copyMsg(${idx})">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                      Copy
+                    </button>
+                  ` : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+        fullFeed.scrollTop = fullFeed.scrollHeight;
+      }
+
+      window.speakMsg = function(idx) {
+        const msg = messages[idx];
+        if (msg && 'speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const clean = msg.content.replace(/[*#`_]/g, '');
+          const ut = new SpeechSynthesisUtterance(clean);
+          window.speechSynthesis.speak(ut);
+        }
+      };
+
+      window.copyMsg = function(idx) {
+        const msg = messages[idx];
+        if (msg) {
+          navigator.clipboard.writeText(msg.content).then(() => {
+            alert('Copied to clipboard!');
+          });
+        }
+      };
+
+      // Load Courses
+      async function loadCourses() {
+        try {
+          const res = await fetch('/api/sam/courses');
+          if (res.ok) {
+            allCourses = await res.json();
+            document.getElementById('courseTotalBadge').textContent = `${allCourses.length} Courses`;
+            renderCourses();
+          }
+        } catch (e) {
+          courseListEl.innerHTML = '<div style="padding:15px;color:#ef4444;">Failed to load courses.</div>';
+        }
+      }
+
+      function renderCourses() {
+        const q = (courseSearchInput.value || '').toLowerCase().trim();
+        const filtered = allCourses.filter(c => {
+          const matchLevel = currentLevel === 'all' || c.level.toString() === currentLevel;
+          const matchSearch = !q || c.code.toLowerCase().includes(q) || c.title.toLowerCase().includes(q);
+          return matchLevel && matchSearch;
+        });
+
+        if (filtered.length === 0) {
+          courseListEl.innerHTML = '<div style="padding:15px;color:var(--text-muted);font-size:0.8125rem;">No courses match your filter.</div>';
+          return;
+        }
+
+        courseListEl.innerHTML = filtered.map(c => `
+          <div class="sam-course-card ${currentCourse && currentCourse.code === c.code ? 'active' : ''}" data-code="${c.code}">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="sam-course-code-badge">${c.code}</span>
+              <span class="badge ${c.resources_count > 0 ? 'badge-urgent' : 'badge-general'}" style="font-size:0.65rem;">
+                ${c.resources_count} materials
+              </span>
+            </div>
+            <div class="sam-course-title-sub">${c.title}</div>
+            <div class="sam-course-meta-tags">
+              <span>${c.level}L</span>
+              <span>· Sem ${c.semester}</span>
+              <span>· ${c.credit_units} Credits</span>
+            </div>
+          </div>
+        `).join('');
+
+        courseListEl.querySelectorAll('.sam-course-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const code = card.getAttribute('data-code');
+            selectCourse(code);
+          });
+        });
+      }
+
+      async function selectCourse(code) {
+        currentCourse = allCourses.find(c => c.code === code) || null;
+        renderCourses();
+
+        if (currentCourse) {
+          currentCourseBadge.textContent = `Focus: ${currentCourse.code}`;
+          materialsCountBadge.textContent = `${currentCourse.resources_count} items`;
+
+          // Fetch materials for course
+          try {
+            const res = await fetch(`/api/materials?course_id=${currentCourse.id}`);
+            const materials = await res.json();
+            if (materials && materials.length > 0) {
+              materialsListEl.innerHTML = materials.map(m => `
+                <div class="sam-material-item">
+                  <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:180px;">
+                    <div style="font-weight:600;">${m.title}</div>
+                    <div style="font-size:0.65rem; color:var(--text-muted); text-transform:capitalize;">${m.resource_type.replace('_', ' ')} · ${m.academic_year || 'Latest'}</div>
+                  </div>
+                  <button type="button" class="sam-material-btn" onclick="window.askAboutMaterial('${currentCourse.code}', '${m.title.replace(/'/g, "\\'")}')">
+                    Discuss
+                  </button>
+                </div>
+              `).join('');
+            } else {
+              materialsListEl.innerHTML = `<div style="font-size:0.75rem; color:var(--text-muted);">No materials uploaded yet for ${currentCourse.code}. Sam can still teach you the syllabus!</div>`;
+            }
+          } catch (e) {
+            materialsListEl.innerHTML = '<div style="font-size:0.75rem; color:var(--text-muted);">Could not fetch materials.</div>';
+          }
+
+          // Trigger greeting for this course
+          messages.push({
+            role: 'model',
+            content: `**Course Focus Switched to ${currentCourse.code}: ${currentCourse.title}** 📘
+Level: ${currentCourse.level}00 Level (Semester ${currentCourse.semester}, ${currentCourse.credit_units} Credit Units).
+
+What would you like to explore in **${currentCourse.code}**?
+- Ask for an explanation of a key concept or theorem
+- Request a practice exam quiz
+- Ask about the past examination paper structure
+- Paste homework exercises or questions to solve step-by-step!`,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          });
+          renderFeed();
+        } else {
+          currentCourseBadge.textContent = 'Department General';
+        }
+      }
+
+      window.askAboutMaterial = function(code, title) {
+        fullTextarea.value = `Can you explain the key concepts and formulas covered in the note "${title}" for ${code}?`;
+        sendMessage();
+      };
+
+      // Level Tabs Click
+      document.getElementById('levelTabs').querySelectorAll('.sam-level-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.getElementById('levelTabs').querySelectorAll('.sam-level-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentLevel = tab.getAttribute('data-level');
+          renderCourses();
+        });
+      });
+
+      courseSearchInput.addEventListener('input', renderCourses);
+
+      // Mode Pills
+      document.querySelectorAll('.sam-mode-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          document.querySelectorAll('.sam-mode-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          currentMode = pill.getAttribute('data-mode');
+        });
+      });
+
+      // Clear Chat
+      clearFullChatBtn.addEventListener('click', () => {
+        if (confirm('Clear chat session?')) {
+          messages = [messages[0]];
+          localStorage.removeItem('sam_workspace_messages');
+          renderFeed();
+        }
+      });
+
+      // Export Chat
+      exportChatBtn.addEventListener('click', () => {
+        const textData = messages.map(m => `### ${m.role === 'user' ? 'Student' : 'Sam AI'} (${m.timestamp || ''})\n\n${m.content}\n\n---\n`).join('\n');
+        const blob = new Blob([textData], { type: 'text/markdown;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `NASS_Sam_AI_Study_Notes_${new Date().toISOString().slice(0,10)}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // File Attachment
+      fullAttachBtn.addEventListener('click', () => fullDocInput.click());
+      fullDocInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('document', file);
+
+        fullAttachmentTag.style.display = 'inline-flex';
+        fullAttachmentName.textContent = 'Uploading ' + file.name + '...';
+        fullAttachmentSize.textContent = `(${(file.size / 1024).toFixed(0)} KB)`;
+
+        try {
+          const res = await fetch('/api/sam/upload', {
+            method: 'POST',
+            body: formData
+          });
+          const data = await res.json();
+          if (data.success) {
+            attachedFile = {
+              fileName: data.fileName,
+              fileSize: data.fileSize,
+              mimeType: data.mimeType,
+              base64: data.base64
+            };
+            fullAttachmentName.textContent = data.fileName;
+            fullAttachmentSize.textContent = `(${(data.fileSize / 1024).toFixed(0)} KB)`;
+          } else {
+            alert(data.error || 'Upload error');
+            fullAttachmentTag.style.display = 'none';
+          }
+        } catch (err) {
+          alert('Upload failed: ' + err.message);
+          fullAttachmentTag.style.display = 'none';
+        }
+        fullDocInput.value = '';
+      });
+
+      removeFullAttachment.addEventListener('click', () => {
+        attachedFile = null;
+        fullAttachmentTag.style.display = 'none';
+      });
+
+      // Voice Dictation
+      let speechRec = null;
+      const SpeechClass = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      fullVoiceBtn.addEventListener('click', () => {
+        if (isRecording) {
+          stopVoice();
+        } else {
+          startVoice();
+        }
+      });
+
+      function startVoice() {
+        if (SpeechClass) {
+          try {
+            speechRec = new SpeechClass();
+            speechRec.continuous = false;
+            speechRec.interimResults = true;
+            speechRec.lang = 'en-NG';
+
+            speechRec.onstart = () => {
+              isRecording = true;
+              fullVoiceBtn.classList.add('recording');
+              fullVoiceBanner.classList.add('active');
+            };
+
+            speechRec.onresult = (event) => {
+              let t = '';
+              for (let i = event.resultIndex; i < event.results.length; ++i) {
+                t += event.results[i][0].transcript;
+              }
+              fullTextarea.value = t;
+              fullTextarea.style.height = 'auto';
+              fullTextarea.style.height = Math.min(fullTextarea.scrollHeight, 140) + 'px';
+            };
+
+            speechRec.onerror = () => stopVoice();
+            speechRec.onend = () => stopVoice();
+            speechRec.start();
+          } catch (e) {
+            fallbackMic();
+          }
+        } else {
+          fallbackMic();
+        }
+      }
+
+      function stopVoice() {
+        isRecording = false;
+        fullVoiceBtn.classList.remove('recording');
+        fullVoiceBanner.classList.remove('active');
+        if (speechRec) {
+          try { speechRec.stop(); } catch(e) {}
+        }
+      }
+
+      let mRecorder = null;
+      let aChunks = [];
+      async function fallbackMic() {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          alert('Microphone access not available in this browser.');
+          return;
+        }
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mRecorder = new MediaRecorder(stream);
+          aChunks = [];
+
+          mRecorder.ondataavailable = e => { if (e.data.size > 0) aChunks.push(e.data); };
+          mRecorder.onstop = async () => {
+            stream.getTracks().forEach(t => t.stop());
+            const blob = new Blob(aChunks, { type: 'audio/webm' });
+            const fd = new FormData();
+            fd.append('audio', blob, 'voice.webm');
+
+            fullVoiceBanner.querySelector('span').textContent = 'Transcribing with Sam AI...';
+            try {
+              const res = await fetch('/api/sam/transcribe', { method: 'POST', body: fd });
+              const data = await res.json();
+              if (data.text) {
+                fullTextarea.value = data.text;
+                fullTextarea.style.height = 'auto';
+                fullTextarea.style.height = Math.min(fullTextarea.scrollHeight, 140) + 'px';
+              }
+            } catch (err) {
+              console.warn('Transcribe error:', err);
+            }
+            stopVoice();
+          };
+
+          isRecording = true;
+          fullVoiceBtn.classList.add('recording');
+          fullVoiceBanner.classList.add('active');
+          mRecorder.start();
+        } catch (e) {
+          alert('Microphone access denied: ' + e.message);
+          stopVoice();
+        }
+      }
+
+      // Auto-resize textarea
+      fullTextarea.addEventListener('input', () => {
+        fullTextarea.style.height = 'auto';
+        fullTextarea.style.height = Math.min(fullTextarea.scrollHeight, 140) + 'px';
+      });
+
+      fullTextarea.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+
+      fullSendBtn.addEventListener('click', sendMessage);
+
+      async function sendMessage() {
+        const text = fullTextarea.value.trim();
+        if (!text && !attachedFile) return;
+        if (isThinking) return;
+
+        if (isRecording) stopVoice();
+
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const userMsg = attachedFile
+          ? `📎 **[Attached: ${attachedFile.fileName}]**\n\n${text}`
+          : text;
+
+        messages.push({
+          role: 'user',
+          content: userMsg,
+          timestamp: time
+        });
+
+        fullTextarea.value = '';
+        fullTextarea.style.height = 'auto';
+        renderFeed();
+
+        isThinking = true;
+        fullSendBtn.disabled = true;
+
+        const thinkingRow = document.createElement('div');
+        thinkingRow.className = 'sam-chat-row model';
+        thinkingRow.innerHTML = `
+          <div class="sam-avatar-lg" style="width:34px; height:34px; flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 16v-4"></path>
+              <path d="M12 8h.01"></path>
+            </svg>
+          </div>
+          <div class="sam-bubble-large" style="display:flex; align-items:center; gap:8px;">
+            <span>Sam is thinking</span>
+            <div style="width:6px; height:6px; background:#f59e0b; border-radius:50%; animation:pulseRecord 1s infinite;"></div>
+          </div>
+        `;
+        fullFeed.appendChild(thinkingRow);
+        fullFeed.scrollTop = fullFeed.scrollHeight;
+
+        const payload = {
+          message: text,
+          courseCode: currentCourse ? currentCourse.code : undefined,
+          studyMode: currentMode,
+          conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
+          uploadedFile: attachedFile || null
+        };
+
+        attachedFile = null;
+        fullAttachmentTag.style.display = 'none';
+
+        try {
+          const res = await fetch('/api/sam/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          thinkingRow.remove();
+
+          if (data.reply) {
+            messages.push({
+              role: 'model',
+              content: data.reply,
+              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            });
+          } else {
+            messages.push({
+              role: 'model',
+              content: `⚠️ ${data.error || 'An error occurred. Please try again.'}`,
+              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            });
+          }
+        } catch (err) {
+          thinkingRow.remove();
+          messages.push({
+            role: 'model',
+            content: `⚠️ Network error: Could not reach Sam AI backend.`,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          });
+        } finally {
+          isThinking = false;
+          fullSendBtn.disabled = false;
+          renderFeed();
+
+          try {
+            localStorage.setItem('sam_workspace_messages', JSON.stringify(messages.slice(-25)));
+          } catch(e) {}
+        }
+      }
+
+      // Check URL parameters for preset course
+      const params = new URLSearchParams(window.location.search);
+      const courseParam = params.get('course');
+      const questionParam = params.get('q');
+
+      renderFeed();
+      loadCourses().then(() => {
+        if (courseParam) {
+          selectCourse(courseParam.toUpperCase());
+        }
+        if (questionParam) {
+          fullTextarea.value = questionParam;
+          sendMessage();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

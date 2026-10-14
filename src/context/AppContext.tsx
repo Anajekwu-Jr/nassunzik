@@ -38,6 +38,10 @@ interface AppContextType {
   setSettingsOpen: (open: boolean) => void;
   installModalOpen: boolean;
   setInstallModalOpen: (open: boolean) => void;
+  samOpen: boolean;
+  setSamOpen: (open: boolean) => void;
+  samInitialCourse: string | null;
+  setSamInitialCourse: (code: string | null) => void;
   
   // Selected Detail Models
   activeCourse: Course | null;
@@ -117,6 +121,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [installModalOpen, setInstallModalOpen] = useState(false);
+  const [samOpen, setSamOpen] = useState(false);
+  const [samInitialCourse, setSamInitialCourse] = useState<string | null>(null);
 
   // Detail Sheet States
   const [activeCourse, setActiveCourse] = useState<Course | null>(null);
@@ -218,6 +224,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setSettingsOpen,
         installModalOpen,
         setInstallModalOpen,
+        samOpen,
+        setSamOpen,
+        samInitialCourse,
+        setSamInitialCourse,
         activeCourse,
         setActiveCourse,
         activeStaff,

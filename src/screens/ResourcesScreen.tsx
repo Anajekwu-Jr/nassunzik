@@ -21,6 +21,8 @@ export const ResourcesScreen: React.FC = () => {
     selectedSemester,
     setSelectedSemester,
     setActiveResource,
+    setSamOpen,
+    setSamInitialCourse,
     bookmarkedResources,
     toggleBookmarkResource,
     triggerHaptic
@@ -222,26 +224,40 @@ export const ResourcesScreen: React.FC = () => {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-2 pt-1 border-t border-slate-800/80">
+                <div className="flex items-center gap-1.5 pt-1 border-t border-slate-800/80">
                   <button
                     type="button"
                     onClick={() => {
                       triggerHaptic();
                       setActiveResource(res);
                     }}
-                    className="flex-1 py-1.5 px-2.5 rounded-lg bg-slate-800 hover:bg-slate-750 text-slate-200 border border-slate-700/80 text-[11px] font-semibold flex items-center justify-center gap-1.5 active:scale-95 transition"
+                    className="flex-1 py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-750 text-slate-200 border border-slate-700/80 text-[11px] font-semibold flex items-center justify-center gap-1 active:scale-95 transition"
                   >
                     <Eye className="w-3.5 h-3.5 text-amber-400" />
-                    <span>View in App</span>
+                    <span>View</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      triggerHaptic();
+                      setSamInitialCourse(res.course_code || null);
+                      setSamOpen(true);
+                    }}
+                    className="py-1.5 px-2.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-[11px] font-semibold flex items-center justify-center gap-1 active:scale-95 transition"
+                    title="Ask Sam AI about this note"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                    <span>Ask Sam</span>
                   </button>
 
                   <a
                     href={res.file_path || res.download_url}
                     download={res.file_name}
-                    className="py-1.5 px-3 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 text-[11px] font-semibold flex items-center justify-center gap-1.5 active:scale-95 transition"
+                    className="py-1.5 px-2 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 text-[11px] font-semibold flex items-center justify-center gap-1 active:scale-95 transition"
                   >
                     <Bookmark className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Save Copy</span>
+                    <span>Save</span>
                   </a>
                 </div>
               </div>

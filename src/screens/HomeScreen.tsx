@@ -21,6 +21,7 @@ export const HomeScreen: React.FC = () => {
     setSelectedLevel,
     setActiveResource,
     setActiveEvent,
+    setSamOpen,
     triggerHaptic,
     theme
   } = useApp();
@@ -158,8 +159,44 @@ export const HomeScreen: React.FC = () => {
         </div>
       </div>
 
-      {/* Horizontal Announcements Slideshow */}
-      <AnnouncementBillboard announcements={announcements} />
+      {/* Sam AI Killer Feature Banner */}
+      <div
+        onClick={() => {
+          triggerHaptic();
+          setSamOpen(true);
+        }}
+        className={`p-3.5 rounded-2xl border cursor-pointer transition-all active:scale-98 shadow-sm ${
+          isLight
+            ? 'bg-gradient-to-r from-amber-500/10 via-blue-50 to-amber-500/5 border-amber-300/80 hover:border-amber-400'
+            : 'bg-gradient-to-r from-amber-500/15 via-[#091d3d] to-blue-900/30 border-amber-500/40 hover:border-amber-400'
+        }`}
+      >
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-2xl bg-[#091e42] border-2 border-amber-500 flex items-center justify-center text-amber-400 shrink-0 shadow-sm relative">
+              <Sparkles className="w-6 h-6 animate-pulse" />
+              <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 border-2 border-[#091e42] rounded-full"></span>
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <h3 className="text-sm font-extrabold text-amber-500">Ask Sam AI</h3>
+                <span className="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/40 px-1.5 py-0.2 rounded font-semibold uppercase">
+                  Companion
+                </span>
+              </div>
+              <p className={`text-xs ${isLight ? 'text-slate-600' : 'text-slate-300'}`}>
+                Discuss lecture notes, solve past questions & chat with voice
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            className="px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 text-xs font-bold shrink-0 shadow-sm hover:bg-amber-400 transition-colors"
+          >
+            Chat Now
+          </button>
+        </div>
+      </div>
 
       {/* Quick Access Grid */}
       <div>

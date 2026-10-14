@@ -1,6 +1,6 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
-import { Search, Bell, Settings2, WifiOff } from 'lucide-react';
+import { Search, Bell, Settings2, WifiOff, Sparkles } from 'lucide-react';
 
 export const AppHeader: React.FC = () => {
   const {
@@ -9,6 +9,7 @@ export const AppHeader: React.FC = () => {
     setSearchOpen,
     setNotificationsOpen,
     setSettingsOpen,
+    setSamOpen,
     triggerHaptic
   } = useApp();
 
@@ -67,7 +68,22 @@ export const AppHeader: React.FC = () => {
         </div>
 
         {/* Right: Action Buttons (Search, Notifications, Settings) */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
+          {/* Sam AI Study Companion */}
+          <button
+            type="button"
+            onClick={() => {
+              triggerHaptic();
+              setSamOpen(true);
+            }}
+            className="px-2.5 py-1 rounded-full flex items-center gap-1 bg-amber-500/15 border border-amber-500/40 text-amber-500 hover:bg-amber-500/25 active:scale-95 transition"
+            aria-label="Open Sam AI"
+            title="Ask Sam AI Study Companion"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
+            <span className="text-[11px] font-bold tracking-tight">Sam AI</span>
+          </button>
+
           {/* Global Search */}
           <button
             type="button"

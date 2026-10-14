@@ -24,6 +24,7 @@ import materialRoutes from './routes/materials.js';
 import settingsRoutes from './routes/settings.js';
 import careersRoutes from './routes/careers.js';
 import scheduledNotificationRoutes from './routes/scheduled_notifications.js';
+import samRoutes from './routes/sam.js';
 import { startNotificationScheduler } from './scheduler.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -137,6 +138,7 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/careers', careersRoutes);
 app.use('/api/scheduled-notifications', scheduledNotificationRoutes);
+app.use('/api/sam', samRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -202,6 +204,9 @@ const pageRoutes = [
   { path: '/contact', file: 'contacts.html' },
   { path: '/about', file: 'about.html' },
   { path: '/about.html', file: 'about.html' },
+  { path: '/sam', file: 'sam.html' },
+  { path: '/sam.html', file: 'sam.html' },
+  { path: '/ai', file: 'sam.html' },
   { path: '/admin', file: 'admin.html' },
   { path: '/admin.html', file: 'admin.html' }
 ];

@@ -398,10 +398,64 @@
     }
   }
 
+  function setupSamWidget() {
+    // 1. Inject Sam AI into main nav if not present
+    const mainNav = document.getElementById('mainNav') || document.querySelector('.main-nav');
+    if (mainNav && !mainNav.querySelector('.nav-sam-btn')) {
+      const samLink = document.createElement('a');
+      samLink.href = '/sam.html';
+      samLink.className = 'nav-link nav-sam-btn';
+      samLink.title = 'Sam AI Study Companion & Course Discussion';
+      samLink.innerHTML = `
+        <span style="display:inline-flex; align-items:center; gap:5px; color:#f59e0b; font-weight:700;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          Sam AI
+        </span>
+      `;
+      // Insert after timetable or past questions
+      const timetableLink = mainNav.querySelector('a[href*="timetable"]');
+      if (timetableLink) {
+        timetableLink.insertAdjacentElement('afterend', samLink);
+      } else {
+        mainNav.appendChild(samLink);
+      }
+    }
+
+    // 2. Inject into mobile drawer list
+    const mobileNavList = document.querySelector('.mobile-nav-list');
+    if (mobileNavList && !mobileNavList.querySelector('.mobile-sam-btn')) {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <a href="/sam.html" class="mobile-nav-link mobile-sam-btn" style="color:#f59e0b; font-weight:700;">
+          <span class="mobile-nav-icon" style="display:inline-flex; align-items:center; color:#f59e0b;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </span>
+          <span>Sam AI Study Companion</span>
+        </a>
+      `;
+      const mobileTt = mobileNavList.querySelector('a[href*="timetable"]');
+      if (mobileTt && mobileTt.parentElement) {
+        mobileTt.parentElement.insertAdjacentElement('afterend', li);
+      } else {
+        mobileNavList.appendChild(li);
+      }
+    }
+
+    // 3. Inject floating Sam AI widget script on all pages except full /sam.html
+    const isSamPage = window.location.pathname.includes('/sam');
+    if (!isSamPage && !document.querySelector('script[src*="sam-widget.js"]')) {
+      const script = document.createElement('script');
+      script.src = '/js/sam-widget.js';
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+  }
+
   function initNav() {
     setupThemeSupport();
     setupInstallButtons();
     modernizeNavIcons();
+    setupSamWidget();
 
     // 1. Highlight current active page link
     const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
