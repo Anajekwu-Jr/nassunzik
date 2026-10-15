@@ -56,99 +56,96 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
       bottom: 24px;
       right: 24px;
       z-index: 9998;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
       background: linear-gradient(135deg, #091e42 0%, #1e3a8a 60%, #b45309 100%);
       color: #ffffff;
-      border: 1.5px solid rgba(245, 158, 11, 0.5);
-      border-radius: 9999px;
-      padding: 10px 18px 10px 12px;
-      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.4), 0 0 15px rgba(245, 158, 11, 0.35);
+      border: 2px solid #f59e0b;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.45), 0 0 16px rgba(245, 158, 11, 0.35);
       cursor: pointer;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 0.875rem;
-      font-weight: 600;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       user-select: none;
     }
     .sam-launcher-btn:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 14px 28px -4px rgba(15, 23, 42, 0.5), 0 0 20px rgba(245, 158, 11, 0.5);
-      border-color: #f59e0b;
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 14px 28px -4px rgba(15, 23, 42, 0.55), 0 0 22px rgba(245, 158, 11, 0.55);
+      border-color: #fbbf24;
     }
     .sam-launcher-btn:active {
-      transform: translateY(0) scale(0.98);
+      transform: translateY(0) scale(0.96);
     }
     .sam-launcher-avatar {
       position: relative;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #0f172a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid #f59e0b;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    .sam-launcher-avatar svg {
-      width: 20px;
-      height: 20px;
-      color: #fbbf24;
-    .sam-launcher-avatar {
-      position: relative;
-      width: 42px;
-      height: 42px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       background: #091e42;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid #f59e0b;
-      overflow: hidden;
+      overflow: visible;
       flex-shrink: 0;
-      box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
     }
     .sam-launcher-avatar img {
       width: 100%;
       height: 100%;
+      border-radius: 50%;
       object-fit: cover;
       display: block;
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
     }
     .sam-status-pulse {
       position: absolute;
       bottom: 1px;
       right: 1px;
-      width: 10px;
-      height: 10px;
+      width: 11px;
+      height: 11px;
       background: #10b981;
       border: 2px solid #091e42;
       border-radius: 50%;
       box-shadow: 0 0 8px #10b981;
     }
-    .sam-launcher-label {
+    .sam-launcher-callout {
+      position: absolute;
+      top: -34px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #091e42;
+      color: #fbbf24;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 11px;
+      border-radius: 9999px;
+      border: 1.5px solid #f59e0b;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.45);
+      white-space: nowrap;
+      pointer-events: none;
+      animation: samCalloutFloat 2.6s infinite ease-in-out;
       display: flex;
       align-items: center;
-      gap: 6px;
-      line-height: 1;
-    }
-    .sam-launcher-name {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #ffffff;
+      gap: 5px;
       letter-spacing: 0.02em;
     }
-    .sam-launcher-bubble {
-      background: #f59e0b;
-      color: #091e42;
-      font-size: 0.72rem;
-      font-weight: 800;
-      padding: 2px 7px;
-      border-radius: 9999px;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
+    .sam-launcher-callout::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid #f59e0b;
+    }
+    @keyframes samCalloutFloat {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, -5px); }
     }
 
     /* Chat Drawer Container */
@@ -312,11 +309,11 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
       align-self: flex-start;
     }
     .sam-msg-avatar {
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: #0f172a;
-      border: 1.5px solid #f59e0b;
+      background: #091e42;
+      border: 2px solid #f59e0b;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -324,6 +321,13 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
       flex-shrink: 0;
       margin-top: 2px;
       overflow: hidden;
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.35);
+    }
+    .sam-msg-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     .sam-msg-bubble {
       padding: 10px 14px;
@@ -601,28 +605,35 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
       box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
     }
     .sam-send-btn {
-      background: #1e3a8a;
+      background: linear-gradient(135deg, #1e3a8a 0%, #b45309 100%);
       color: #ffffff;
-      border: none;
-      padding: 0 10px;
-      height: 36px;
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      padding: 0 14px;
+      height: 38px;
       border-radius: 10px;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: all 0.15s ease;
       flex-shrink: 0;
-      gap: 3px;
+      gap: 6px;
       font-weight: 700;
+      font-size: 0.82rem;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2);
     }
     .sam-send-btn:hover:not(:disabled) {
-      background: #f59e0b;
+      background: linear-gradient(135deg, #2563eb 0%, #d97706 100%);
       transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
     }
     .sam-send-btn:disabled {
       opacity: 0.4;
       cursor: not-allowed;
+    }
+    .sam-send-text {
+      font-size: 0.82rem;
+      font-weight: 700;
     }
 
     @media (max-width: 480px) {
@@ -684,15 +695,14 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
   launcher.className = 'sam-launcher-btn';
   launcher.id = 'samLauncherBtn';
   launcher.setAttribute('role', 'button');
-  launcher.setAttribute('aria-label', 'Ask Sam - AI Study Companion');
+  launcher.setAttribute('aria-label', 'Ask Sam');
   launcher.innerHTML = `
-    <div class="sam-launcher-avatar">
-      <img src="/resources/images/sam_avatar.jpg" alt="Sam AI" class="sam-avatar-img" onerror="this.style.display='none'">
-      <div class="sam-status-pulse"></div>
+    <div class="sam-launcher-callout">
+      <span>Ask Sam</span>
     </div>
-    <div class="sam-launcher-label">
-      <span class="sam-launcher-name">Ask Sam</span>
-      <span class="sam-launcher-bubble">AI</span>
+    <div class="sam-launcher-avatar">
+      <img src="/resources/images/sam_avatar.jpg" alt="Sam AI" class="sam-avatar-img" onerror="this.src='/resources/images/nass-logo.jpg'">
+      <div class="sam-status-pulse"></div>
     </div>
   `;
   document.body.appendChild(launcher);
@@ -804,11 +814,11 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
         </svg>
       </button>
 
-      <textarea class="sam-textarea" id="samTextarea" rows="1" placeholder="Ask Sam anything... (Press Tab to send)"></textarea>
+      <textarea class="sam-textarea" id="samTextarea" rows="1" placeholder="Ask Sam anything... (Press Enter to send)"></textarea>
 
-      <button type="button" class="sam-send-btn" id="samSendBtn" aria-label="Send message (Tab)" title="Send message (Press Tab)">
-        <span style="font-size: 0.65rem; font-weight: 800; letter-spacing: 0.03em;">TAB</span>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <button type="button" class="sam-send-btn" id="samSendBtn" aria-label="Send message" title="Send message (Enter)">
+        <span class="sam-send-text">Send</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <line x1="22" y1="2" x2="11" y2="13"></line>
           <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
         </svg>
@@ -863,7 +873,7 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
         <div class="sam-msg-row ${isUser ? 'user' : 'model'}">
           ${!isUser ? `
             <div class="sam-msg-avatar">
-              <img src="/resources/images/sam_avatar.jpg" alt="Sam AI" class="sam-avatar-img" onerror="this.style.display='none'">
+              <img src="/resources/images/sam_avatar.jpg" alt="Sam AI" class="sam-avatar-img" onerror="this.src='/resources/images/nass-logo.jpg'">
             </div>
           ` : ''}
           <div class="sam-msg-bubble">
@@ -942,12 +952,9 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
     textarea.style.height = Math.min(textarea.scrollHeight, 100) + 'px';
   });
 
-  // Tab key or Enter sends message
+  // Enter sends message (Shift+Enter for newline)
   textarea.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      sendMessage();
-    } else if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
@@ -1161,7 +1168,7 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
     thinkingRow.id = 'samThinkingIndicator';
     thinkingRow.innerHTML = `
       <div class="sam-msg-avatar">
-        <img src="/resources/images/sam_avatar.jpg" alt="Sam AI" class="sam-avatar-img" onerror="this.style.display='none'">
+        <img src="/resources/images/sam_avatar.jpg" alt="Sam AI" class="sam-avatar-img" onerror="this.src='/resources/images/nass-logo.jpg'">
       </div>
       <div class="sam-thinking">
         <span>Sam is thinking</span>

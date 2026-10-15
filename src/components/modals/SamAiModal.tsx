@@ -248,8 +248,15 @@ export const SamAiModal: React.FC = () => {
           }`}
         >
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-full bg-slate-900 border-2 border-amber-500 flex items-center justify-center text-amber-400 relative">
-              <Sparkles className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-full bg-slate-900 border-2 border-amber-500 overflow-hidden relative shrink-0 shadow-sm">
+              <img
+                src="/resources/images/sam_avatar.jpg"
+                alt="Sam AI"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/resources/images/nass-logo.jpg';
+                }}
+              />
               <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border border-slate-900 rounded-full"></span>
             </div>
             <div>
@@ -347,8 +354,15 @@ export const SamAiModal: React.FC = () => {
             return (
               <div key={idx} className={`flex gap-2 ${isUser ? 'justify-end' : 'justify-start'}`}>
                 {!isUser && (
-                  <div className="w-6 h-6 rounded-full bg-slate-900 border border-amber-500/60 flex items-center justify-center text-amber-400 shrink-0 mt-0.5">
-                    <Sparkles className="w-3.5 h-3.5" />
+                  <div className="w-7 h-7 rounded-full bg-slate-900 border border-amber-500 overflow-hidden shrink-0 mt-0.5 shadow-xs">
+                    <img
+                      src="/resources/images/sam_avatar.jpg"
+                      alt="Sam AI"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/resources/images/nass-logo.jpg';
+                      }}
+                    />
                   </div>
                 )}
                 <div
@@ -381,7 +395,9 @@ export const SamAiModal: React.FC = () => {
 
           {isThinking && (
             <div className="flex items-center gap-2 text-xs text-amber-400 italic">
-              <Sparkles className="w-3.5 h-3.5 animate-spin" />
+              <div className="w-5 h-5 rounded-full overflow-hidden border border-amber-500/80 shrink-0">
+                <img src="/resources/images/sam_avatar.jpg" alt="Sam" className="w-full h-full object-cover" />
+              </div>
               <span>Sam is formulating an answer...</span>
             </div>
           )}
@@ -466,7 +482,7 @@ export const SamAiModal: React.FC = () => {
               }
             }}
             rows={1}
-            placeholder="Ask Sam about a course, theorem or note..."
+            placeholder="Ask Sam anything... (Press Enter to send)"
             className={`flex-1 max-h-24 min-h-[38px] p-2 text-xs rounded-xl border outline-none resize-none leading-relaxed ${
               isLight
                 ? 'bg-slate-50 border-slate-300 text-slate-900 focus:border-amber-500'
@@ -478,10 +494,12 @@ export const SamAiModal: React.FC = () => {
             type="button"
             onClick={handleSend}
             disabled={(!input.trim() && !attachedFile) || isThinking}
-            className="p-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-950 font-bold transition-all shrink-0"
-            title="Send Message"
+            className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-900 to-amber-600 hover:from-blue-800 hover:to-amber-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold transition-all shrink-0 flex items-center gap-1.5 shadow-sm border border-amber-500/40"
+            title="Send Message (Enter)"
+            aria-label="Send Message"
           >
-            <Send className="w-4 h-4" />
+            <Send className="w-3.5 h-3.5" />
+            <span className="text-xs font-bold">Send</span>
           </button>
         </div>
       </div>

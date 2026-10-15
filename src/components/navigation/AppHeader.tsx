@@ -76,12 +76,21 @@ export const AppHeader: React.FC = () => {
               triggerHaptic();
               setSamOpen(true);
             }}
-            className="px-2.5 py-1 rounded-full flex items-center gap-1 bg-amber-500/15 border border-amber-500/40 text-amber-500 hover:bg-amber-500/25 active:scale-95 transition"
-            aria-label="Open Sam AI"
-            title="Ask Sam AI Study Companion"
+            className="px-2.5 py-1 rounded-full flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/40 text-amber-400 hover:bg-amber-500/25 active:scale-95 transition shadow-xs"
+            aria-label="Ask Sam"
+            title="Ask Sam - AI Study Companion"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
-            <span className="text-[11px] font-bold tracking-tight">Sam AI</span>
+            <div className="w-4 h-4 rounded-full overflow-hidden border border-amber-500 shrink-0">
+              <img
+                src="/resources/images/sam_avatar.jpg"
+                alt="Sam AI"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/resources/images/nass-logo.jpg';
+                }}
+              />
+            </div>
+            <span className="text-[11px] font-bold tracking-tight text-amber-500">Ask Sam</span>
           </button>
 
           {/* Global Search */}

@@ -173,15 +173,22 @@ export const HomeScreen: React.FC = () => {
       >
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-[#091e42] border-2 border-amber-500 flex items-center justify-center text-amber-400 shrink-0 shadow-sm relative">
-              <Sparkles className="w-6 h-6 animate-pulse" />
+            <div className="w-11 h-11 rounded-2xl bg-[#091e42] border-2 border-amber-500 overflow-hidden shrink-0 shadow-sm relative">
+              <img
+                src="/resources/images/sam_avatar.jpg"
+                alt="Sam AI"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/resources/images/nass-logo.jpg';
+                }}
+              />
               <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 border-2 border-[#091e42] rounded-full"></span>
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <h3 className="text-sm font-extrabold text-amber-500">Ask Sam AI</h3>
+                <h3 className="text-sm font-extrabold text-amber-500">Ask Sam</h3>
                 <span className="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/40 px-1.5 py-0.2 rounded font-semibold uppercase">
-                  Companion
+                  AI Companion
                 </span>
               </div>
               <p className={`text-xs ${isLight ? 'text-slate-600' : 'text-slate-300'}`}>
@@ -193,7 +200,7 @@ export const HomeScreen: React.FC = () => {
             type="button"
             className="px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 text-xs font-bold shrink-0 shadow-sm hover:bg-amber-400 transition-colors"
           >
-            Chat Now
+            Ask Sam
           </button>
         </div>
       </div>
