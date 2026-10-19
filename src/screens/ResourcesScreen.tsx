@@ -245,7 +245,7 @@ export const ResourcesScreen: React.FC = () => {
                       setSamOpen(true);
                     }}
                     className="py-1.5 px-2.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-[11px] font-semibold flex items-center justify-center gap-1 active:scale-95 transition"
-                    title="Ask Sam AI about this note"
+                    title="Ask Sam about this note"
                   >
                     <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
                     <span>Ask Sam</span>

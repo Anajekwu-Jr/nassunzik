@@ -17,9 +17,20 @@ const ai = new GoogleGenAI({
   }
 });
 
-// Ultra-responsive model invocation: delivers instant replies (sub-second / low latency)
+// Load career pathways from data/career_pathways.json
+let careerPathways = [];
+try {
+  const careerDataPath = path.join(process.cwd(), 'data', 'career_pathways.json');
+  if (fs.existsSync(careerDataPath)) {
+    careerPathways = JSON.parse(fs.readFileSync(careerDataPath, 'utf-8'));
+  }
+} catch (e) {
+  console.warn('Failed to load career_pathways.json:', e.message);
+}
+
+// Ultra-responsive model invocation: delivers instant sub-second replies
 async function callGeminiWithFallback(params) {
-  // 1. First attempt: ultra-fast gemini-3.1-flash-lite for instant response
+  // 1. First attempt: ultra-fast gemini-3.1-flash-lite (fastest latency, sub-second)
   try {
     const res = await ai.models.generateContent({
       ...params,
@@ -29,23 +40,10 @@ async function callGeminiWithFallback(params) {
       return res.text;
     }
   } catch (errLite) {
-    console.warn('Gemini 3.1 Flash Lite error, falling back:', errLite.message);
+    console.warn('Gemini 3.1 Flash Lite error, trying 3.8-flash:', errLite.message);
   }
 
-  // 2. Second attempt: gemini-2.5-flash
-  try {
-    const res = await ai.models.generateContent({
-      ...params,
-      model: 'gemini-2.5-flash'
-    });
-    if (res && res.text) {
-      return res.text;
-    }
-  } catch (err25) {
-    console.warn('Gemini 2.5 Flash error, falling back:', err25.message);
-  }
-
-  // 3. Third attempt: gemini-3.8-flash
+  // 2. Second attempt: gemini-3.8-flash
   try {
     const res = await ai.models.generateContent({
       ...params,
@@ -67,11 +65,23 @@ function generateDepartmentalFallbackReply(message, courseCode, context) {
   if (lowerMsg.includes('president') || lowerMsg.includes('executive') || lowerMsg.includes('nass') || lowerMsg.includes('phancore') || lowerMsg.includes('patrick')) {
     const execs = db.prepare('SELECT name, office, level, phone, email FROM executives').all();
     const pres = execs.find(e => e.office.toLowerCase().includes('president')) || execs[0];
-    return `### 🏛️ NASS Executive Council (2026/2027)\n\n**President**: ${pres ? pres.name : 'Comr. Anajekwu Chidera Patrick (PhanCore)'} (${pres ? pres.level : '400'}L)\n- **Office**: ${pres ? pres.office : 'President & Executive Lead'}\n- **Phone**: ${pres ? pres.phone : '08087955696'}\n- **Email**: ${pres ? pres.email : 'cp.anajekwu@stu.unizik.edu.ng'}\n\n#### Other Key Executives:\n${execs.filter(e => e !== pres).slice(0, 5).map(e => `- **${e.name}** (${e.office}, ${e.level}L)`).join('\n')}\n\nFor the full list of executives and association activities, visit the **NASS** page (/nass.html)!`;
+    return `### 🏛️ NASS Executive Council (2026/2027)\n\n**President**: ${pres ? pres.name : 'Comr. Anajekwu Chidera Patrick (PhanCore)'} (${pres ? pres.level : '400'}L)\n- **Office**: ${pres ? pres.office : 'President & Executive Lead'}\n- **Phone**: ${pres ? pres.phone : '08087955696'}\n- **Email**: ${pres ? pres.email : 'cp.anajekwu@stu.unizik.edu.ng'}\n\n#### Other Key Executives:\n${execs.filter(e => e !== pres).slice(0, 7).map(e => `- **${e.name}** (${e.office}, ${e.level}L)`).join('\n')}\n\nFor the full list of executives and association activities, visit the **NASS** page on our official portal: [officialnassunzik.vercel.app/nass.html](https://officialnassunzik.vercel.app/nass.html)!`;
+  }
+
+  if (lowerMsg.includes('website') || lowerMsg.includes('link') || lowerMsg.includes('url') || lowerMsg.includes('portal') || lowerMsg.includes('officialnassunzik')) {
+    return `### 🌐 Official Departmental Website & Portal\n\n- **Official Website URL**: [https://officialnassunzik.vercel.app/](https://officialnassunzik.vercel.app/)\n- **Department**: Department of Statistics, Faculty of Physical Sciences, Nnamdi Azikiwe University (UNIZIK), Awka\n- **Motto**: "Facts from Figures"\n- **Available Portals & Features**:\n  - 📚 **Academics & Curriculum** (/academia.html): 100L – 400L course structures & outlines\n  - ⏰ **Timetable** (/timetable.html): Live lecture schedules & venues\n  - 📂 **Past Questions Archive** (/past-questions.html): Searchable exam papers\n  - 🏭 **SIWES Internship Guide** (/siwes.html): STA 399 rules & defense prep\n  - 📑 **Final Year Projects** (/projects.html): STA 499 5-chapter format & statistical models\n  - 👥 **Staff & CIRS Directory** (/staff-profile.html): 49 faculty members\n  - 🏛️ **NASS Executives** (/nass.html): Student leadership\n  - 💼 **Careers & Pathways** (/careers.html): Data Science, Actuarial Science, Biostatistics\n  - 🤖 **Sam AI Study Terminal** (/sam.html): AI academic companion`;
+  }
+
+  if (lowerMsg.includes('career') || lowerMsg.includes('job') || lowerMsg.includes('prospect') || lowerMsg.includes('data analyst') || lowerMsg.includes('actuary') || lowerMsg.includes('data science') || lowerMsg.includes('biostatist')) {
+    return `### 💼 Statistics Careers & Professional Pathways\n\nA Bachelor of Science (B.Sc.) in Statistics from UNIZIK prepares you for high-impact analytical disciplines:\n\n1. **Data Analytics**: Turning raw data into evidence. Key courses: STA 111, STA 121, STA 221, STA 341 (Regression), STA 351 (ANOVA). Tools: Excel, SQL, Power BI, Python/R.\n2. **Data Science & Machine Learning**: Building predictive models and algorithmic systems. Key courses: STA 211, STA 331, STA 421 (Time Series), COS 201. Tools: Python (Scikit-Learn, Pandas), R, C++.\n3. **Actuarial Science & Risk Management**: Quantifying financial risk, insurance pensions, and probabilistic solvency. Key courses: STA 112, STA 211, STA 312, STA 412. Professional bodies: SOA, IFoA.\n4. **Biostatistics & Epidemiology**: Clinical trials, public health surveillance, survival analysis. Key courses: STA 331, STA 431, STA 411. Tools: R, SPSS, SAS.\n5. **Quantitative Finance & Econometrics**: Market risk modeling, algorithmic trading. Key courses: STA 341, STA 421, STA 441.\n\nExplore all detailed roadmaps on the **Careers** page: [officialnassunzik.vercel.app/careers.html](https://officialnassunzik.vercel.app/careers.html)!`;
+  }
+
+  if (lowerMsg.includes('admission') || lowerMsg.includes('requirement') || lowerMsg.includes('jamb') || lowerMsg.includes('utme') || lowerMsg.includes('direct entry') || lowerMsg.includes('cut off')) {
+    return `### 🎓 UNIZIK Statistics Admission Requirements\n\n- **Degree**: B.Sc. Statistics (Faculty of Physical Sciences, UNIZIK)\n- **UTME Subject Combination** (4 subjects):\n  1. English Language (Compulsory)\n  2. Mathematics\n  3. Physics\n  4. One of: Chemistry, Economics, or Biology\n- **O'Level Requirements**: Minimum 5 credit passes at SSCE/WASSCE/NECO/GCE (in maximum 2 sittings) in:\n  - English Language\n  - Mathematics\n  - Physics\n  - Plus two other science or social science subjects\n- **Direct Entry (DE)**: Two Advanced Level (A-Level / IJMB / JUPEB) passes in Mathematics and Physics or Statistics, OR National Diploma (ND) / HND in Statistics or Mathematics with at least Upper Credit from an accredited polytechnic.`;
   }
 
   if (lowerMsg.includes('location') || lowerMsg.includes('where is') || lowerMsg.includes('address') || lowerMsg.includes('office')) {
-    return `### 📍 Department of Statistics Location & Contacts\n\n- **Physical Address**: Ground floor, New Physical Sciences Building, Science Village, Nnamdi Azikiwe University (UNIZIK) Main Campus, Awka, Anambra State, Nigeria.\n- **Office Hours**: Monday – Friday: 8:00 AM – 4:00 PM\n- **Official Email**: statistics@unizik.edu.ng / hod.statistics@unizik.edu.ng\n- **Official Phone**: +234 803 123 4567\n- **Social Communities**: Telegram (t.me/nass_unizik) & WhatsApp Official Community.`;
+    return `### 📍 Department of Statistics Location & Contacts\n\n- **Physical Address**: Ground floor, New Physical Sciences Building, Science Village, Nnamdi Azikiwe University (UNIZIK) Main Campus, Awka, Anambra State, Nigeria.\n- **Office Hours**: Monday – Friday: 8:00 AM – 4:00 PM\n- **Official Email**: statistics@unizik.edu.ng / hod.statistics@unizik.edu.ng\n- **Official Phone**: +234 803 123 4567\n- **Official Website**: [https://officialnassunzik.vercel.app/](https://officialnassunzik.vercel.app/)\n- **Social Communities**: Telegram (t.me/nass_unizik) & WhatsApp Official Community.`;
   }
 
   if (lowerMsg.includes('siwes') || lowerMsg.includes('industrial training') || lowerMsg.includes('it')) {
@@ -95,16 +105,90 @@ function generateDepartmentalFallbackReply(message, courseCode, context) {
     }
   }
 
+  if (lowerMsg.includes('bayes') || (lowerMsg.includes('probability') && lowerMsg.includes('prior'))) {
+    return `### 💡 Bayes' Theorem (STA 111 & STA 211)
+
+Bayes' theorem calculates the posterior probability of an event $A$ given prior knowledge and evidence $B$:
+
+$$P(A \\mid B) = \\frac{P(B \\mid A) \\, P(A)}{P(B)}$$
+
+When $A_1, A_2, \\dots, A_k$ form a mutually exclusive and exhaustive partition of the sample space:
+
+$$P(A_i \\mid B) = \\frac{P(B \\mid A_i) \\, P(A_i)}{\\sum_{j=1}^{k} P(B \\mid A_j) \\, P(A_j)}$$
+
+Where:
+- $P(A_i)$ is the **prior probability**
+- $P(B \\mid A_i)$ is the **likelihood** of observing evidence $B$ given $A_i$
+- $P(B)$ is the **marginal probability** of the evidence
+- $P(A_i \\mid B)$ is the **posterior probability**
+
+Reference: Lecture notes and past questions for **STA 111** (Descriptive Statistics & Intro Probability) and **STA 211** (Probability Theory II) available on the NASS portal.`;
+  }
+
+  if (lowerMsg.includes('regression') || lowerMsg.includes('linear model') || lowerMsg.includes('beta')) {
+    return `### 📈 Simple Linear Regression (STA 341 & STA 331)
+
+For the simple linear regression model:
+
+$$Y_i = \\beta_0 + \\beta_1 X_i + \\varepsilon_i, \\quad \\varepsilon_i \\overset{\\text{iid}}{\\sim} N(0, \\sigma^2)$$
+
+The Ordinary Least Squares (OLS) estimators are:
+
+$$\\hat{\\beta}_1 = \\frac{\\sum_{i=1}^{n} (X_i - \\bar{X})(Y_i - \\bar{Y})}{\\sum_{i=1}^{n} (X_i - \\bar{X})^2} = \\frac{S_{XY}}{S_{XX}}$$
+
+$$\\hat{\\beta}_0 = \\bar{Y} - \\hat{\\beta}_1 \\bar{X}$$
+
+And the coefficient of determination $R^2$ is:
+
+$$R^2 = \\frac{\\text{SSR}}{\\text{SST}} = 1 - \\frac{\\sum (Y_i - \\hat{Y}_i)^2}{\\sum (Y_i - \\bar{Y})^2}$$
+
+Reference: Check **STA 341** (Regression Analysis) materials and exercises on the official NASS portal.`;
+  }
+
+  if (lowerMsg.includes('normal distribution') || lowerMsg.includes('gaussian') || lowerMsg.includes('bell curve')) {
+    return `### 🔔 The Normal (Gaussian) Distribution (STA 211 & STA 214)
+
+If a continuous random variable $X$ is normally distributed with mean $\\mu$ and variance $\\sigma^2$, denoted $X \\sim N(\\mu, \\sigma^2)$, its probability density function (PDF) is:
+
+$$f(x) = \\frac{1}{\\sigma \\sqrt{2\\pi}} \\exp\\left( -\\frac{(x - \\mu)^2}{2\\sigma^2} \\right), \\quad -\\infty < x < \\infty$$
+
+The Standard Normal Variable $Z \\sim N(0, 1)$ transformation is:
+
+$$Z = \\frac{X - \\mu}{\\sigma}$$
+
+Reference: **STA 211** (Probability Theory II) & **STA 214** (Mathematical Statistics) lecture notes on the portal.`;
+  }
+
   if (lowerMsg.includes('cgpa') || lowerMsg.includes('grade') || lowerMsg.includes('scale')) {
-    return `### 📊 UNIZIK 5.0 CGPA Grading System\n\n- **A (70 - 100%)**: 5.0 Grade Points (Distinction / Excellent)\n- **B (60 - 69%)**: 4.0 Grade Points (Very Good)\n- **C (50 - 59%)**: 3.0 Grade Points (Good)\n- **D (45 - 49%)**: 2.0 Grade Points (Fair)\n- **E (40 - 44%)**: 1.0 Grade Point (Pass)\n- **F (0 - 39%)**: 0.0 Grade Points (Fail)\n\n**Degree Classifications:**\n- **First Class Honours**: 4.50 – 5.00 CGPA\n- **Second Class Upper (2:1)**: 3.50 – 4.49 CGPA\n- **Second Class Lower (2:2)**: 2.40 – 3.49 CGPA\n- **Third Class Honours**: 1.50 – 2.39 CGPA\n- **Pass**: 1.00 – 1.49 CGPA\n\nFormula: GPA = (Total Quality Points) ÷ (Total Credit Units Registered)`;
+    return `### 📊 UNIZIK 5.0 CGPA Grading System
+
+- **A (70 - 100%)**: 5.0 Grade Points (Distinction / Excellent)
+- **B (60 - 69%)**: 4.0 Grade Points (Very Good)
+- **C (50 - 59%)**: 3.0 Grade Points (Good)
+- **D (45 - 49%)**: 2.0 Grade Points (Fair)
+- **E (40 - 44%)**: 1.0 Grade Point (Pass)
+- **F (0 - 39%)**: 0.0 Grade Points (Fail)
+
+**Degree Classifications:**
+- **First Class Honours**: $4.50 \\le \\text{CGPA} \\le 5.00$
+- **Second Class Upper (2:1)**: $3.50 \\le \\text{CGPA} < 4.50$
+- **Second Class Lower (2:2)**: $2.40 \\le \\text{CGPA} < 3.50$
+- **Third Class Honours**: $1.50 \\le \\text{CGPA} < 2.40$
+- **Pass**: $1.00 \\le \\text{CGPA} < 1.50$
+
+**Mathematical Formula:**
+
+$$\\text{GPA} = \\frac{\\sum_{i=1}^{k} (C_i \\times GP_i)}{\\sum_{i=1}^{k} C_i}$$
+
+Where $C_i$ is the credit units for course $i$, and $GP_i$ is the numeric grade point earned ($5, 4, 3, 2, 1, 0$).`;
   }
 
   if (lowerMsg.includes('hod') || lowerMsg.includes('head of department') || lowerMsg.includes('staff') || lowerMsg.includes('lecturer')) {
     const hod = db.prepare("SELECT name, role_category, title, email, phone, office_location FROM staff WHERE role_category LIKE '%HOD%' OR title LIKE '%HOD%' OR title LIKE '%Head%' LIMIT 1").get();
-    return `### 🎓 Department Leadership & Staff\n\n${hod ? `**Head of Department (HOD)**: ${hod.name}\n- **Title**: ${hod.title || 'HOD / Professor of Statistics'}\n- **Office**: ${hod.office_location || 'Statistics Administrative Office 101'}\n- **Email**: ${hod.email || 'hod.statistics@unizik.edu.ng'}` : 'Department of Statistics, UNIZIK.'}\n\nYou can view the full 49 academic staff and lecturer profiles on the **Staff** page (/staff-profile.html)!`;
+    return `### 🎓 Department Leadership & Staff\n\n${hod ? `**Head of Department (HOD)**: ${hod.name}\n- **Title**: ${hod.title || 'HOD / Professor of Statistics'}\n- **Office**: ${hod.office_location || 'Statistics Administrative Office 101'}\n- **Email**: ${hod.email || 'hod.statistics@unizik.edu.ng'}` : 'Department of Statistics, UNIZIK.'}\n\nYou can view the full 49 academic staff and lecturer profiles on the **Staff** page: [officialnassunzik.vercel.app/staff-profile.html](https://officialnassunzik.vercel.app/staff-profile.html)!`;
   }
 
-  return `### Greetings Great NASSITE! 🎓\n\nI am **Sam**, your official AI Study Companion for the Department of Statistics, UNIZIK ("Facts from Figures").\n\nI have complete knowledge of our portal and curriculum:\n- **All 73 Courses** (e.g. **STA 111**, **STA 211**, **STA 331**, **COS 201**, **MTH 204**)\n- **Lecture Schedules & Timetable** across 100L – 400L\n- **110+ Lecture Notes & Past Questions**\n- **5.0 CGPA Scale & Degree Classification**\n- **SIWES & Final Year Project Guidelines**\n- **Staff & NASS Executives Contacts**\n\nAsk me anything about our website or courses!`;
+  return `### Greetings Great NASSITE! 🎓\n\nI am **Sam**, your official AI Study Companion for the Department of Statistics, UNIZIK ("Facts from Figures").\n\nI have complete knowledge of our portal and curriculum at [https://officialnassunzik.vercel.app/](https://officialnassunzik.vercel.app/):\n- **All 73 Courses** (e.g. **STA 111**, **STA 211**, **STA 331**, **COS 201**, **MTH 204**)\n- **Lecture Schedules & Timetable** across 100L – 400L\n- **110+ Lecture Notes & Past Questions**\n- **5.0 CGPA Scale & Degree Classification**\n- **SIWES & Final Year Project Guidelines**\n- **Staff & NASS Executives Contacts**\n- **Career Pathways & Professional Roadmaps**\n\nAsk me anything about our website or courses!`;
 }
 
 // Build live comprehensive departmental context from SQLite covering entire website
@@ -184,14 +268,44 @@ function getDepartmentalContext(selectedCourseCode = null, userMessage = '') {
       if (matchedExecs.length > 0) {
         specificMatches.push(`RELEVANT NASS EXECUTIVE MATCHES (OFFICIAL PUBLIC DIRECTORY):\n${matchedExecs.map(e => `- ${e.name} (${e.office}, ${e.level}L): Phone: ${e.phone}, Email: ${e.email}, Bio: ${e.bio}`).join('\n')}`);
       }
+      // Match Career Pathways
+      const matchedCareers = careerPathways.filter(cp => {
+        const titleWords = cp.title.toLowerCase().split(/\s+/);
+        const slugWords = cp.slug.toLowerCase().split(/-/);
+        return titleWords.some(w => w.length > 3 && q.includes(w)) ||
+               slugWords.some(w => w.length > 3 && q.includes(w)) ||
+               (q.includes('career') || q.includes('job') || q.includes('pathway') || q.includes('opportunities'));
+      });
+      if (matchedCareers.length > 0) {
+        specificMatches.push(`RELEVANT CAREER PATHWAYS FROM PORTAL:\n${matchedCareers.map(cp => `- **${cp.title}** (${cp.domain}): ${cp.overview}\n  * Key UNIZIK Courses: ${cp.unizik_courses.map(c => `${c.code} (${c.title})`).join(', ')}\n  * Key Skills: ${cp.skills_to_add.join(', ')}\n  * Potential Roles: ${cp.potential_roles.join(', ')}`).join('\n\n')}`);
+      }
       // Match FAQ
       const matchedFaqs = faqs.filter(f => q.split(' ').some(w => w.length > 3 && f.question.toLowerCase().includes(w)));
       if (matchedFaqs.length > 0) {
         specificMatches.push(`RELEVANT FAQs:\n${matchedFaqs.map(f => `Q: ${f.question}\nA: ${f.answer}`).join('\n\n')}`);
       }
+
+      // Match Student-Learned Knowledge & Corrections
+      try {
+        const learnedRows = db.prepare('SELECT topic, question, learned_fact, source_user FROM sam_learned_knowledge WHERE rating >= 0 ORDER BY id DESC LIMIT 25').all();
+        const matchedLearned = learnedRows.filter(l => {
+          const text = ((l.learned_fact || '') + ' ' + (l.topic || '') + ' ' + (l.question || '')).toLowerCase();
+          return q.split(/\s+/).some(w => w.length > 3 && text.includes(w));
+        });
+        if (matchedLearned.length > 0) {
+          specificMatches.push(`STUDENT & COMMUNITY LEARNED KNOWLEDGE (Directly learned from students & people):\n${matchedLearned.map(l => `- [${l.topic}] "${l.learned_fact}" (Source: ${l.source_user || 'Student'})`).join('\n')}`);
+        }
+      } catch (_) {}
     }
 
+    // Load recent learned facts from community
+    let communityLearned = [];
+    try {
+      communityLearned = db.prepare('SELECT topic, learned_fact, source_user, created_at FROM sam_learned_knowledge WHERE rating >= 0 ORDER BY id DESC LIMIT 15').all();
+    } catch (_) {}
+
     return {
+      officialWebsiteUrl: 'https://officialnassunzik.vercel.app/',
       institution: settings.university || 'Nnamdi Azikiwe University (UNIZIK), Awka, Anambra State, Nigeria',
       faculty: settings.faculty || 'Faculty of Physical Sciences',
       department: settings.department_name || 'Department of Statistics',
@@ -203,6 +317,13 @@ function getDepartmentalContext(selectedCourseCode = null, userMessage = '') {
       officeHours: settings.office_hours || 'Monday – Friday: 8:00 AM – 4:00 PM',
       email: settings.email || 'statistics@unizik.edu.ng',
       phone: settings.phone || '+234 803 123 4567',
+      admissionRequirements: {
+        degree: 'Bachelor of Science (B.Sc.) in Statistics',
+        duration: '4 Years (UTME), 3 Years (Direct Entry)',
+        utmeSubjects: 'English Language (Compulsory), Mathematics, Physics, and any of Chemistry, Economics, or Biology',
+        oLevelRequirements: 'Minimum of 5 credit passes at SSCE/WASSCE/NECO/GCE (in maximum 2 sittings) including English Language, Mathematics, Physics, and two other science or social science subjects',
+        directEntryRequirements: 'Two A-Level (or IJMB/JUPEB) passes in Mathematics and Physics or Statistics, OR National Diploma (ND) / HND in Statistics or Mathematics with at least Upper Credit from an accredited polytechnic'
+      },
       socialLinks: {
         telegram: settings.social_telegram || 'https://t.me/nass_unizik',
         whatsapp: settings.social_whatsapp || 'https://chat.whatsapp.com/nass-unizik-official',
@@ -229,21 +350,22 @@ function getDepartmentalContext(selectedCourseCode = null, userMessage = '') {
         philosophy: settings.about_philosophy || 'Empirical reality is best understood and optimized through rigorous probabilistic reasoning, mathematical formulation, and computational data exploration.',
         facilities: settings.about_facilities || '60-seat Computational Statistics & Data Science Laboratory with R, Python, SPSS, Stata, SAS, fiber internet, and 1,500+ departmental reference library books.'
       },
+      careerPathwaysSummary: careerPathways.map(cp => `${cp.title} (${cp.domain}): ${cp.tagline} - Overview: ${cp.overview}. Key UNIZIK Courses: ${cp.unizik_courses.map(c => c.code).join(', ')}. In-demand Skills: ${cp.skills_to_add.slice(0, 5).join(', ')}. Roles: ${cp.potential_roles.slice(0, 5).join(', ')}`),
       websiteSiteMap: [
-        { path: '/', title: 'Home / Portal Overview', purpose: 'Welcome banner, HOD address, key metrics, latest updates' },
-        { path: '/about.html', title: 'About the Department', purpose: 'History, vision, mission, facilities, laboratory, leadership' },
-        { path: '/academia.html', title: 'Academic Programs & Curriculum', purpose: 'B.Sc, PGD, M.Sc, Ph.D program outlines, 100L-400L course structures' },
-        { path: '/timetable.html', title: 'Interactive Timetable', purpose: 'Full lecture schedules filtered by level (100L-400L) and day of week' },
-        { path: '/past-questions.html', title: 'Past Examination Questions', purpose: 'Comprehensive search archive of exam papers by course and year' },
-        { path: '/siwes.html', title: 'SIWES Industrial Training', purpose: '6-month internship guide (STA 399 in 300L), logbook rules, acceptance form, defense' },
-        { path: '/projects.html', title: 'Final Year Research Projects', purpose: 'STA 499 5-chapter format, proposal template, statistical methodology guidelines' },
-        { path: '/staff-profile.html', title: 'Staff & Faculty Directory', purpose: 'Profiles, qualifications, research specializations, office numbers, emails' },
-        { path: '/nass.html', title: 'NASS Executives & Student Body', purpose: 'Executive council (President Patrick Chidera / PhanCore), VP, Gen Sec, committees' },
-        { path: '/events.html', title: 'Departmental Events & Activities', purpose: 'Academic resumption, NASS Week, symposiums, orientation, sports' },
-        { path: '/news.html', title: 'News & Senate Announcements', purpose: 'Senate approved 2026/2027 calendar dates, resumption, exams, matriculation' },
-        { path: '/careers.html', title: 'Statistics Careers & Opportunities', purpose: 'Career paths in Data Science, Actuarial Science, Biostatistics, Machine Learning' },
-        { path: '/contacts.html', title: 'Contact & Inquiry Channels', purpose: 'Physical office location, email, phone, directory' },
-        { path: '/sam.html', title: 'Sam AI Study Companion Workspace', purpose: 'Full-screen intelligent study assistant, formula explanations, past question breakdown' }
+        { path: 'https://officialnassunzik.vercel.app/', title: 'Home / Portal Overview', purpose: 'Welcome banner, HOD address, key metrics, latest updates' },
+        { path: 'https://officialnassunzik.vercel.app/about.html', title: 'About the Department', purpose: 'History, vision, mission, facilities, laboratory, leadership' },
+        { path: 'https://officialnassunzik.vercel.app/academia.html', title: 'Academic Programs & Curriculum', purpose: 'B.Sc, PGD, M.Sc, Ph.D program outlines, 100L-400L course structures' },
+        { path: 'https://officialnassunzik.vercel.app/timetable.html', title: 'Interactive Timetable', purpose: 'Full lecture schedules filtered by level (100L-400L) and day of week' },
+        { path: 'https://officialnassunzik.vercel.app/past-questions.html', title: 'Past Examination Questions', purpose: 'Comprehensive search archive of exam papers by course and year' },
+        { path: 'https://officialnassunzik.vercel.app/siwes.html', title: 'SIWES Industrial Training', purpose: '6-month internship guide (STA 399 in 300L), logbook rules, acceptance form, defense' },
+        { path: 'https://officialnassunzik.vercel.app/projects.html', title: 'Final Year Research Projects', purpose: 'STA 499 5-chapter format, proposal template, statistical methodology guidelines' },
+        { path: 'https://officialnassunzik.vercel.app/staff-profile.html', title: 'Staff & Faculty Directory', purpose: 'Profiles, qualifications, research specializations, office numbers, emails' },
+        { path: 'https://officialnassunzik.vercel.app/nass.html', title: 'NASS Executives & Student Body', purpose: 'Executive council (President Patrick Chidera / PhanCore), VP, Gen Sec, committees' },
+        { path: 'https://officialnassunzik.vercel.app/events.html', title: 'Departmental Events & Activities', purpose: 'Academic resumption, NASS Week, symposiums, orientation, sports' },
+        { path: 'https://officialnassunzik.vercel.app/news.html', title: 'News & Senate Announcements', purpose: 'Senate approved 2026/2027 calendar dates, resumption, exams, matriculation' },
+        { path: 'https://officialnassunzik.vercel.app/careers.html', title: 'Statistics Careers & Opportunities', purpose: 'Career paths in Data Science, Actuarial Science, Biostatistics, Machine Learning' },
+        { path: 'https://officialnassunzik.vercel.app/contacts.html', title: 'Contact & Inquiry Channels', purpose: 'Physical office location, email, phone, directory' },
+        { path: 'https://officialnassunzik.vercel.app/sam.html', title: 'Sam AI Study Companion Workspace', purpose: 'Full-screen intelligent study assistant, formula explanations, past question breakdown' }
       ],
       coursesSummary: courses.map(c => `${c.code} (${c.level}L, Sem ${c.semester}, ${c.credit_units}CU, ${c.status || 'Compulsory'}): ${c.title}`),
       timetableSummary: timetable.map(t => `${t.level}L ${t.day} ${t.start_time}-${t.end_time}: ${t.course_code} (${t.course_title}) at ${t.venue || 'Lecture Hall'} [Lecturer: ${t.lecturer || 'Staff'}]`),
@@ -279,6 +401,7 @@ function getDepartmentalContext(selectedCourseCode = null, userMessage = '') {
         ],
         gpaFormula: 'GPA = (Sum of (Grade Point × Credit Units)) ÷ Total Credit Units Registered in the semester'
       },
+      communityLearnedKnowledge: communityLearned.map(l => `[${l.topic}] "${l.learned_fact}" (Learned from ${l.source_user || 'community'})`),
       specificMatches: specificMatches.join('\n\n')
     };
   } catch (err) {
@@ -350,49 +473,74 @@ ${courseTimetable.map(t => `  * ${t.day_of_week} from ${t.start_time} to ${t.end
     }
 
     const systemInstruction = `
-You are "Sam" (Sam AI), the official, brilliant, approachable, and encouraging AI Study Companion & Academic Mentor for the National Association Of Statistics Students (NASS), Department of Statistics, Faculty of Physical Sciences, Nnamdi Azikiwe University (UNIZIK), Awka, Nigeria.
+You are "Sam", the official, friendly, brilliant, and encouraging Academic AI Study Companion for the National Association Of Statistics Students (NASS), Department of Statistics, Faculty of Physical Sciences, Nnamdi Azikiwe University (UNIZIK), Awka, Nigeria.
 
-CORE MISSION & WEBSITE KNOWLEDGE TRAINING:
+CORE DEMEANOUR & ACCREDITATION:
 - Name: Sam (Sam AI)
-- Identity: NASS UNIZIK Academic AI Study Companion
-- Demeanour: Warm, brilliant, articulate, encouraging, culturally attuned to UNIZIK students ("NASSITES", "Great Zikites"), intellectually rigorous, and structured.
+- Demeanour: Warm, friendly, intelligent, articulate, welcoming to UNIZIK students ("Great NASSite!", "Great Zikite!"), intellectually sharp, and encouraging.
 - Motto: "Facts from Figures".
-- Specializations: Probability theory, mathematical statistics, regression analysis, sampling techniques, experimental design, operational research, time series, biostatistics, demographic analysis, computational statistics (R, Python, SPSS, C++, Excel), UNIZIK departmental handbook, course curriculum, timetable schedules, past exam question breakdown, and CGPA calculation.
-- COMPLETE WEBSITE KNOWLEDGE: You have full, authoritative training knowledge of EVERYTHING on the departmental website and portal (all courses, lecture notes, staff, executives, timetables, SIWES, project guidelines, past questions, FAQs, contacts, and news). When questions are asked regarding what is provided on the website, answer accurately, specifically, and authoritatively quoting the authentic departmental data.
+- Specializations: Probability, Mathematical Statistics, Regression, Time Series, Biostatistics, Demography, Operational Research, Experimental Design, R, Python, SPSS, COS 201 (C++), UNIZIK curriculum, timetables, and academic guidelines.
+- COMPLETE WEBSITE KNOWLEDGE TRAINING (https://officialnassunzik.vercel.app/): You are authoritatively trained on ALL data, pages, courses, staff, timetables, past questions, news, events, SIWES rules, and project formats from the departmental website. When asked questions regarding what is on the website, answer accurately and directly.
 
-YOUR CAPABILITIES & RULES:
-1. WEBSITE & ACADEMIC INQUIRIES:
-   - When asked about department leadership (HOD Prof. Francis Chukwuemeka Eze), executives (President Patrick Chidera / PhanCore, VP, etc.), course advisers, lecture timetables, venues, office locations, admission requirements, or contact info, provide exact details directly from the website data.
-   - When asked about graduation criteria or GPA calculations, explain the UNIZIK 5.0 CGPA scale with exact boundaries and formula.
-   - When asked about SIWES, give the 6-month 300L STA 399 criteria, logbook, and defense guidelines.
-   - When asked about final year research (STA 499), give the standard 5-chapter format and statistical tools (R, SPSS, Python).
+STRICT INSTRUCTIONS YOU MUST OBEY:
+1. ANSWER ONLY WHAT IS ASKED:
+   - Answer strictly and exclusively the specific question you were asked.
+   - Do NOT answer what you were not asked. Do NOT dump unsolicited course outlines, essays, or off-topic information.
+   - Be direct, concise, and sharply focused.
 
-2. COURSE DISCUSSIONS & LECTURE NOTES:
-   - When a student asks about any course (e.g., STA 111, STA 121, STA 211, STA 214, STA 231, STA 331, STA 411, COS 102, COS 201, MTH 204, PHY 102, etc.), provide deep, pedagogical explanations.
-   - Break down complex statistical formulas step-by-step. Use clear mathematical notation ($$...$$ for display math, $$...$$ or readable text for inline math).
-   - If asked for exam preparation or past question solutions, provide comprehensive, worked solutions with clear steps: given data, hypothesis/formula, substitution, computation, conclusion/interpretation.
-   - Refer to the actual lecture notes, textbooks, and past examination papers available on the NASS UNIZIK portal.
+2. STUDIES & COURSE MATERIALS REFERENCE:
+   - When a student asks about their studies, courses, formulas, or academic concepts, smartly and naturally reference relevant course materials, specific course codes (e.g. STA 111, STA 121, STA 211, STA 214, STA 231, STA 311, STA 331, STA 341, STA 411, COS 201), lecture notes, recommended textbooks, and past examination questions available on the official NASS UNIZIK portal.
 
-3. DOCUMENT & NOTE ANALYSIS:
-   - If the student provides or uploads an external document, image, homework problem, or notes, analyze it meticulously. Break down the contents, solve questions, highlight core definitions, and explain every nuance clearly.
+3. LEARN FROM PEOPLE'S RESPONSES:
+   - You actively learn from students' responses, community updates, and corrections.
+   - When community-learned knowledge or student feedback is available in your context, incorporate it accurately into your answers.
 
-4. STUDY MODES:
-   - Study Mode: "${studyMode}"
-   * "general": Answer questions about the department, staff, executives, courses, timetable, and campus life.
-   * "explain": Teach concepts thoroughly using intuitive analogies, formal definitions, and applied examples.
-   * "quiz": Act as an interactive quiz master. Present questions, wait for answers, grade them, and explain.
-   * "exam_prep": Focus on past examination questions, frequently asked UNIZIK exam concepts, and high-yield scoring tips.
-   * "code_help": Provide clean, annotated statistical code in R, Python, SPSS syntax, or C++.
+4. UPLOADED DOCUMENTS & ATTACHMENTS:
+   - If the student uploads an assignment, exam question photo, PDF, or study document, carefully analyze the file's content, formulas, or questions, and provide a clear, step-by-step solution or summary.
 
-5. COMPLETE DEPARTMENTAL & WEBSITE KNOWLEDGE BASE:
+5. STUDY MODE: "${studyMode}"
+   - "general": Quick, friendly, smart answers to departmental and academic questions.
+   - "explain": Deep pedagogical breakdown with intuition and formulas.
+   - "quiz": Interactive questions to test understanding.
+   - "exam_prep": UNIZIK past examination breakdowns and scoring tips.
+   - "code_help": Clean, working code in R, Python, SPSS, or C++.
+
+6. MATHEMATICAL & STATISTICAL FORMULAS (STRICT LATEX FORMAT):
+   - Whenever responding with ANY mathematical or statistical formula, theorem, proof, probability distribution, estimator, test statistic, hypothesis test, or calculation, write it cleanly, accurately, and beautifully as though coded in LaTeX.
+   - Standalone / Primary Formulas: ALWAYS use display math blocks ($$ ... $$) placed on their own lines for prominence:
+     $$
+     \text{formula}
+     $$
+     Examples:
+     $$\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i$$
+     $$S^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^2 = \frac{\sum X_i^2 - \frac{(\sum X_i)^2}{n}}{n - 1}$$
+     $$f(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right), \quad -\infty < x < \infty$$
+     $$t = \frac{\bar{X} - \mu_0}{S / \sqrt{n}} \sim t_{n-1}$$
+     $$P(X = x) = \binom{n}{x} p^x (1 - p)^{n - x}, \quad x = 0, 1, 2, \dots, n$$
+     $$\hat{\beta}_1 = \frac{\sum (X_i - \bar{X})(Y_i - \bar{Y})}{\sum (X_i - \bar{X})^2}, \quad \hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{X}$$
+   - Inline Math Expressions: ALWAYS use inline LaTeX delimiters ($ ... $) for variables, parameters, hypotheses, degrees of freedom, and symbols:
+     e.g., $X \sim N(\mu, \sigma^2)$, $H_0: \mu_1 = \mu_2$, $\alpha = 0.05$, $p$-value $< 0.01$, $\chi^2_{\text{calc}}$, $\lambda > 0$, $\mathbb{E}[X] = \mu$, $\text{Var}(X) = \sigma^2$.
+   - Never write sloppy ASCII math like "sum(x)/n" or "sigma^2 = sum(x-xbar)^2/(n-1)". Always use proper LaTeX syntax (\frac{...}{...}, \sum_{...}^{...}, \int, \prod, \sqrt{...}, \binom{n}{k}, \pm, \times, \cdot, \le, \ge, \neq, \hat{\theta}, \bar{X}, \tilde{X}).
+   - Break multi-step derivations down line-by-line, each step formatted in display LaTeX with accompanying friendly explanations.
+
+COMPLETE DEPARTMENTAL & WEBSITE KNOWLEDGE BASE:
 ${JSON.stringify(context, null, 2)}
 ${specificCourseDetails}
-
-6. TONE & FORMATTING:
-   - Use clean Markdown with headers (###), bullet points, and code blocks.
-   - Keep answers well-spaced, scannable, and engaging.
-   - Never make up fake UNIZIK policies. If unsure, advise the student to consult their Course Adviser or the HOD's office.
 `;
+
+    // Learn from user response/correction if present in message
+    try {
+      const teachMatch = message && message.match(/(?:actually|note that|remember that|the correct answer is|correction:|update:|let me teach you|just so you know)\s*[:,-]?\s*(.+)/i);
+      if (teachMatch && teachMatch[1] && teachMatch[1].trim().length > 8) {
+        const fact = teachMatch[1].trim();
+        db.prepare(`
+          INSERT INTO sam_learned_knowledge (topic, question, learned_fact, source_user)
+          VALUES (?, ?, ?, ?)
+        `).run('Student Contribution', message.slice(0, 100), fact, 'Student Community');
+      }
+    } catch (e) {
+      console.warn('Auto-learning error:', e.message);
+    }
 
     // Construct contents array for Gemini
     const contents = [];
@@ -412,16 +560,43 @@ ${specificCourseDetails}
     const userParts = [];
 
     // If an external document was uploaded (base64)
-    if (uploadedFile && uploadedFile.base64 && uploadedFile.mimeType) {
-      userParts.push({
-        inlineData: {
-          mimeType: uploadedFile.mimeType,
-          data: uploadedFile.base64
+    if (uploadedFile && uploadedFile.base64) {
+      const mime = (uploadedFile.mimeType || '').toLowerCase();
+      const fileName = uploadedFile.fileName || 'uploaded_document';
+      const isImage = mime.startsWith('image/');
+      const isPdf = mime === 'application/pdf';
+
+      if (isImage || isPdf) {
+        const cleanMime = (mime === 'image/jpg') ? 'image/jpeg' : (mime || (isImage ? 'image/png' : 'application/pdf'));
+        userParts.push({
+          inlineData: {
+            mimeType: cleanMime,
+            data: uploadedFile.base64
+          }
+        });
+        userParts.push({
+          text: `[Attached File: "${fileName}"]\n${message || 'Please analyze this document/image in detail, extract any formulas or questions, and provide a clear, accurate, friendly answer.'}`
+        });
+      } else {
+        // Text / code / CSV / Word / markdown or document text
+        let extractedText = '';
+        try {
+          const buf = Buffer.from(uploadedFile.base64, 'base64');
+          extractedText = buf.toString('utf-8');
+          if (/[\x00-\x08\x0E-\x1F]/.test(extractedText.slice(0, 500))) {
+            const printable = extractedText.replace(/[^\x20-\x7E\t\n\r]/g, ' ').replace(/\s+/g, ' ');
+            extractedText = printable.slice(0, 20000);
+          } else {
+            extractedText = extractedText.slice(0, 30000);
+          }
+        } catch (e) {
+          extractedText = `(Content from ${fileName})`;
         }
-      });
-      userParts.push({
-        text: `[Attached Document: "${uploadedFile.fileName || 'uploaded_document'}"]\n${message || 'Please analyze this document in detail and explain the core concepts, formulas, and answer any questions within it.'}`
-      });
+
+        userParts.push({
+          text: `[Attached Document Content: "${fileName}"]\n--- START DOCUMENT CONTENT ---\n${extractedText}\n--- END DOCUMENT CONTENT ---\n\n${message || 'Please analyze this uploaded document in detail, solve any questions or statistics problems contained in it, and explain clearly.'}`
+        });
+      }
     } else {
       userParts.push({
         text: message
@@ -602,4 +777,71 @@ router.get('/suggestions', (req, res) => {
   ]);
 });
 
+// POST /api/sam/learn - Submit student corrections or new knowledge for Sam to learn
+router.post('/learn', (req, res) => {
+  try {
+    const { topic = 'Student Knowledge', question = '', learnedFact, sourceUser = 'Student' } = req.body;
+    if (!learnedFact || !learnedFact.trim()) {
+      return res.status(400).json({ error: 'Learned fact or contribution cannot be empty.' });
+    }
+
+    const insert = db.prepare(`
+      INSERT INTO sam_learned_knowledge (topic, question, learned_fact, source_user, rating)
+      VALUES (?, ?, ?, ?, 1)
+    `);
+    const result = insert.run(topic.trim(), question.trim(), learnedFact.trim(), sourceUser.trim());
+
+    res.json({
+      success: true,
+      message: 'Sam has successfully learned and stored this knowledge for all UNIZIK students!',
+      id: Number(result.lastInsertRowid)
+    });
+  } catch (err) {
+    console.error('Error in /api/sam/learn:', err);
+    res.status(500).json({ error: err.message || 'Failed to save learned knowledge' });
+  }
+});
+
+// POST /api/sam/feedback - Submit thumbs up / down with feedback
+router.post('/feedback', (req, res) => {
+  try {
+    const { messageId, isHelpful, comment, question, originalAnswer } = req.body;
+
+    if (comment && comment.trim()) {
+      // Store correction/feedback as learned knowledge if helpful
+      const insert = db.prepare(`
+        INSERT INTO sam_learned_knowledge (topic, question, learned_fact, source_user, rating)
+        VALUES (?, ?, ?, ?, ?)
+      `);
+      insert.run('Student Feedback & Correction', question || 'Feedback', comment.trim(), 'Student Reviewer', isHelpful ? 1 : 0);
+    }
+
+    res.json({
+      success: true,
+      message: isHelpful ? 'Thank you for your feedback!' : 'Thank you! Sam will learn from your correction.'
+    });
+  } catch (err) {
+    console.error('Error in /api/sam/feedback:', err);
+    res.status(500).json({ error: err.message || 'Failed to record feedback' });
+  }
+});
+
+// GET /api/sam/learned - List learned knowledge from students
+router.get('/learned', (req, res) => {
+  try {
+    const learned = db.prepare(`
+      SELECT id, topic, question, learned_fact, source_user, rating, created_at
+      FROM sam_learned_knowledge
+      WHERE rating >= 0
+      ORDER BY id DESC
+      LIMIT 50
+    `).all();
+
+    res.json(learned);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 export default router;
+

@@ -310,6 +310,19 @@ export function initDatabase() {
     );
   `);
 
+  // 16. Sam AI Learned Knowledge & Student Responses
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS sam_learned_knowledge (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      topic TEXT NOT NULL,
+      question TEXT,
+      learned_fact TEXT NOT NULL,
+      source_user TEXT DEFAULT 'student',
+      rating INTEGER DEFAULT 1,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+  `);
+
   // Safe migrations for newly added columns
   try {
     db.exec(`ALTER TABLE events ADD COLUMN is_featured INTEGER DEFAULT 0;`);

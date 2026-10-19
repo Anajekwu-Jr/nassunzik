@@ -112,36 +112,37 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
     }
     .sam-launcher-callout {
       position: absolute;
-      top: -34px;
+      top: -30px;
       left: 50%;
       transform: translateX(-50%);
-      background: #091e42;
+      background: rgba(9, 30, 66, 0.95);
       color: #fbbf24;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 800;
-      padding: 4px 11px;
+      padding: 3px 10px;
       border-radius: 9999px;
       border: 1.5px solid #f59e0b;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.45);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.5), 0 0 10px rgba(245, 158, 11, 0.3);
       white-space: nowrap;
       pointer-events: none;
-      animation: samCalloutFloat 2.6s infinite ease-in-out;
+      animation: samCalloutFloat 2.4s infinite ease-in-out;
       display: flex;
       align-items: center;
-      gap: 5px;
-      letter-spacing: 0.02em;
+      gap: 4px;
+      letter-spacing: 0.025em;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
     }
     .sam-launcher-callout::after {
       content: '';
       position: absolute;
-      bottom: -6px;
+      bottom: -5px;
       left: 50%;
       transform: translateX(-50%);
       width: 0;
       height: 0;
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
-      border-top: 6px solid #f59e0b;
+      border-top: 5px solid #f59e0b;
     }
     @keyframes samCalloutFloat {
       0%, 100% { transform: translate(-50%, 0); }
@@ -652,38 +653,148 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
   `;
   document.head.appendChild(styleEl);
 
-  // Simple Markdown Formatter
+  // Dynamically load KaTeX CSS & JS if not already on the page
+  if (!document.getElementById('katex-css')) {
+    const link = document.createElement('link');
+    link.id = 'katex-css';
+    link.rel = 'stylesheet';
+    link.href = '/vendor/katex/katex.min.css';
+    link.onerror = () => { link.href = 'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css'; };
+    document.head.appendChild(link);
+  }
+  if (!window.katex && !document.getElementById('katex-js')) {
+    const s = document.createElement('script');
+    s.id = 'katex-js';
+    s.src = '/vendor/katex/katex.min.js';
+    s.onerror = () => {
+      const fallback = document.createElement('script');
+      fallback.src = 'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js';
+      fallback.onload = () => { if (typeof renderMessages === 'function') renderMessages(); };
+      document.head.appendChild(fallback);
+    };
+    s.onload = () => {
+      if (typeof renderMessages === 'function') renderMessages();
+    };
+    document.head.appendChild(s);
+  }
+
+  // Markdown & LaTeX Math Formatter
   function formatMarkdown(text) {
     if (!text) return '';
-    let html = text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
 
-    // Code blocks
-    html = html.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
-      return `<pre><code class="language-${lang}">${code.trim()}</code></pre>`;
+    // 1. Protect code blocks from math parsing
+    const codeBlocks = [];
+    let html = text.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
+      const idx = codeBlocks.length;
+      codeBlocks.push(`<pre><code class="language-${lang}">${code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').trim()}</code></pre>`);
+      return `__CODE_BLOCK_${idx}__`;
     });
 
-    // Inline code
-    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    // Protect inline code
+    const inlineCodes = [];
+    html = html.replace(/`([^`]+)`/g, (match, code) => {
+      const idx = inlineCodes.length;
+      inlineCodes.push(`<code>${code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>`);
+      return `__INLINE_CODE_${idx}__`;
+    });
 
-    // Bold & Italics
+    // 2. Render and protect LaTeX Display Math: $$ ... $$ or \[ ... \]
+    const mathBlocks = [];
+    html = html.replace(/\$\$([\s\S]*?)\$\$/g, (match, math) => {
+      const idx = mathBlocks.length;
+      let rendered = '';
+      if (window.katex) {
+        try {
+          rendered = `<div class="katex-display" style="overflow-x:auto; padding:6px 10px; margin:8px 0; background:rgba(0,0,0,0.06); border-radius:8px; text-align:center;">${window.katex.renderToString(math.trim(), { displayMode: true, throwOnError: false })}</div>`;
+        } catch (e) {}
+      }
+      if (!rendered) {
+        rendered = `<div class="katex-display-fallback" style="overflow-x:auto; padding:6px 0; margin:8px 0; font-family:serif; text-align:center; color:#f59e0b; font-size:1.05rem;">$$${math.trim()}$$</div>`;
+      }
+      mathBlocks.push(rendered);
+      return `__MATH_BLOCK_${idx}__`;
+    });
+
+    html = html.replace(/\\\[([\s\S]*?)\\\]/g, (match, math) => {
+      const idx = mathBlocks.length;
+      let rendered = '';
+      if (window.katex) {
+        try {
+          rendered = `<div class="katex-display" style="overflow-x:auto; padding:6px 10px; margin:8px 0; background:rgba(0,0,0,0.06); border-radius:8px; text-align:center;">${window.katex.renderToString(math.trim(), { displayMode: true, throwOnError: false })}</div>`;
+        } catch (e) {}
+      }
+      if (!rendered) {
+        rendered = `<div class="katex-display-fallback" style="overflow-x:auto; padding:6px 0; margin:8px 0; font-family:serif; text-align:center; color:#f59e0b; font-size:1.05rem;">\\[${math.trim()}\\]</div>`;
+      }
+      mathBlocks.push(rendered);
+      return `__MATH_BLOCK_${idx}__`;
+    });
+
+    // 3. Render and protect LaTeX Inline Math: $ ... $ or \( ... \)
+    const inlineMaths = [];
+    html = html.replace(/(^|[^\\])\$([^\$\n]+?)\$/g, (match, prefix, math) => {
+      const idx = inlineMaths.length;
+      let rendered = '';
+      if (window.katex) {
+        try {
+          rendered = window.katex.renderToString(math.trim(), { displayMode: false, throwOnError: false });
+        } catch (e) {}
+      }
+      if (!rendered) {
+        rendered = `<span style="font-family:serif; color:#f59e0b; font-weight:600;">$${math.trim()}$</span>`;
+      }
+      inlineMaths.push(rendered);
+      return `${prefix}__INLINE_MATH_${idx}__`;
+    });
+
+    html = html.replace(/\\\(([\s\S]*?)\\\)/g, (match, math) => {
+      const idx = inlineMaths.length;
+      let rendered = '';
+      if (window.katex) {
+        try {
+          rendered = window.katex.renderToString(math.trim(), { displayMode: false, throwOnError: false });
+        } catch (e) {}
+      }
+      if (!rendered) {
+        rendered = `<span style="font-family:serif; color:#f59e0b; font-weight:600;">\\(${math.trim()}\\)</span>`;
+      }
+      inlineMaths.push(rendered);
+      return `__INLINE_MATH_${idx}__`;
+    });
+
+    // 4. HTML entity escape for remaining text
+    html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    // 5. Bold & Italics
     html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
     // Headers
-    html = html.replace(/^### (.*$)/gim, '<h4 style="margin: 8px 0 4px 0; font-size: 0.95rem; font-weight:700;">$1</h4>');
-    html = html.replace(/^## (.*$)/gim, '<h3 style="margin: 10px 0 4px 0; font-size: 1.05rem; font-weight:700;">$1</h3>');
-    html = html.replace(/^# (.*$)/gim, '<h2 style="margin: 12px 0 6px 0; font-size: 1.15rem; font-weight:700;">$1</h2>');
+    html = html.replace(/^### (.*$)/gim, '<h4 style="margin: 8px 0 4px 0; font-size: 0.95rem; font-weight:700; color:#f59e0b;">$1</h4>');
+    html = html.replace(/^## (.*$)/gim, '<h3 style="margin: 10px 0 4px 0; font-size: 1.05rem; font-weight:700; color:#f59e0b;">$1</h3>');
+    html = html.replace(/^# (.*$)/gim, '<h2 style="margin: 12px 0 6px 0; font-size: 1.15rem; font-weight:700; color:#f59e0b;">$1</h2>');
 
     // Bullet lists
-    html = html.replace(/^\s*-\s+(.*$)/gim, '<li>$1</li>');
-    html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+    html = html.replace(/^\s*[-*]\s+(.*$)/gim, '<li>$1</li>');
+    html = html.replace(/(<li>[\s\S]*?<\/li>)/g, '<ul>$1</ul>');
+
+    // Restore protected items
+    mathBlocks.forEach((block, i) => {
+      html = html.replace(`__MATH_BLOCK_${i}__`, block);
+    });
+    inlineMaths.forEach((item, i) => {
+      html = html.replace(`__INLINE_MATH_${i}__`, item);
+    });
+    inlineCodes.forEach((code, i) => {
+      html = html.replace(`__INLINE_CODE_${i}__`, code);
+    });
+    codeBlocks.forEach((block, i) => {
+      html = html.replace(`__CODE_BLOCK_${i}__`, block);
+    });
 
     // Line breaks to paragraphs
     const paragraphs = html.split(/\n{2,}/).map(p => {
-      if (p.startsWith('<pre>') || p.startsWith('<ul>') || p.startsWith('<h')) return p;
+      if (p.startsWith('<pre') || p.startsWith('<ul') || p.startsWith('<h') || p.startsWith('<div class="katex-display')) return p;
       return `<p>${p.replace(/\n/g, '<br>')}</p>`;
     });
 
@@ -701,7 +812,7 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
       <span>Ask Sam</span>
     </div>
     <div class="sam-launcher-avatar">
-      <img src="/resources/images/sam_avatar.jpg" alt="Sam AI" class="sam-avatar-img" onerror="this.src='/resources/images/nass-logo.jpg'">
+      <img src="/resources/images/sam_avatar.jpg" alt="Ask Sam" class="sam-avatar-img" onerror="this.src='/resources/images/nass-logo.jpg'">
       <div class="sam-status-pulse"></div>
     </div>
   `;
@@ -798,9 +909,9 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
     <!-- Input Bar -->
     <div class="sam-input-bar">
       <!-- Hidden file input -->
-      <input type="file" id="samFileInput" accept=".pdf,.docx,.doc,.txt,.png,.jpg,.jpeg" style="display: none;">
+      <input type="file" id="samFileInput" accept=".pdf,.docx,.doc,.txt,.csv,.png,.jpg,.jpeg,.webp" style="display: none;">
       
-      <button type="button" class="sam-tool-btn" id="samAttachBtn" title="Attach lecture note, PDF, or homework image" aria-label="Attach file">
+      <button type="button" class="sam-tool-btn" id="samAttachBtn" title="Attach lecture note, PDF, document, or homework image" aria-label="Attach file" style="cursor: pointer; display: flex; align-items: center; justify-content: center;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
         </svg>
@@ -881,18 +992,70 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
             <div class="sam-msg-time">
               <span>${m.timestamp || ''}</span>
               ${!isUser ? `
-                <button type="button" class="sam-speak-btn" data-idx="${idx}" title="Listen to this explanation">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                  </svg>
-                </button>
+                <div style="display:inline-flex; align-items:center; gap:6px; margin-left:auto;">
+                  <button type="button" class="sam-feedback-btn" data-idx="${idx}" title="Helpful response" style="background:none;border:none;cursor:pointer;opacity:0.75;font-size:0.75rem;padding:0 2px;">👍</button>
+                  <button type="button" class="sam-teach-btn" data-idx="${idx}" title="Teach Sam / Suggest Correction" style="background:none;border:none;cursor:pointer;opacity:0.85;font-size:0.68rem;color:#f59e0b;font-weight:700;display:flex;align-items:center;gap:2px;padding:0 2px;">✏️ Teach Sam</button>
+                  <button type="button" class="sam-speak-btn" data-idx="${idx}" title="Listen to this explanation">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                  </button>
+                </div>
               ` : ''}
             </div>
           </div>
         </div>
       `;
     }).join('');
+
+    // Attach teach sam handlers
+    messagesContainer.querySelectorAll('.sam-teach-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const idx = parseInt(btn.getAttribute('data-idx'), 10);
+        const correction = window.prompt("🎓 What correction or departmental fact should Sam learn from you?");
+        if (correction && correction.trim()) {
+          try {
+            const res = await fetch('/api/sam/learn', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                topic: state.selectedCourse || 'Department & Academic Knowledge',
+                question: state.messages[idx - 1]?.content || 'Student update',
+                learnedFact: correction.trim(),
+                sourceUser: 'Student Community'
+              })
+            });
+            const data = await res.json();
+            if (data.success) {
+              state.messages.push({
+                role: 'model',
+                content: `🎓 **Thank you Great NASSite!**\n\nI have successfully learned and saved your correction: *"${correction.trim()}"* into my UNIZIK Statistics knowledge base!`,
+                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+              });
+              renderMessages();
+            }
+          } catch (_) {}
+        }
+      });
+    });
+
+    // Attach feedback buttons
+    messagesContainer.querySelectorAll('.sam-feedback-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        btn.textContent = '✅';
+        btn.disabled = true;
+        try {
+          fetch('/api/sam/feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ isHelpful: true })
+          }).catch(() => {});
+        } catch (_) {}
+      });
+    });
 
     // Attach speak button handlers
     messagesContainer.querySelectorAll('.sam-speak-btn').forEach(btn => {
@@ -952,8 +1115,11 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
     textarea.style.height = Math.min(textarea.scrollHeight, 100) + 'px';
   });
 
-  // Enter sends message (Shift+Enter for newline)
+  // Enter sends message (Shift+Enter for newline, Tab NEVER sends)
   textarea.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      return; // Tab NEVER sends
+    }
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
@@ -975,41 +1141,54 @@ Pick a course or type your question below. You can also tap the 🎙️ **mic** 
   });
 
   // File Upload Handling
-  attachBtn.addEventListener('click', () => fileInput.click());
-  fileInput.addEventListener('change', async (e) => {
+  attachBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    fileInput.value = '';
+    fileInput.click();
+  });
+  fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('document', file);
-
     attachmentPreview.classList.add('show');
-    attachmentName.textContent = 'Uploading ' + file.name + '...';
+    attachmentName.textContent = file.name;
     attachmentSize.textContent = `(${(file.size / 1024).toFixed(0)} KB)`;
 
-    try {
-      const res = await fetch('/api/sam/upload', {
-        method: 'POST',
-        body: formData
-      });
-      const data = await res.json();
-      if (data.success) {
-        state.attachedFile = {
-          fileName: data.fileName,
-          fileSize: data.fileSize,
-          mimeType: data.mimeType,
-          base64: data.base64
-        };
-        attachmentName.textContent = data.fileName;
-        attachmentSize.textContent = `(${(data.fileSize / 1024).toFixed(0)} KB)`;
-      } else {
-        alert(data.error || 'Failed to upload document');
-        attachmentPreview.classList.remove('show');
-      }
-    } catch (err) {
-      alert('Upload failed: ' + err.message);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result;
+      const base64 = typeof result === 'string' && result.includes(',') ? result.split(',')[1] : result;
+
+      state.attachedFile = {
+        fileName: file.name,
+        fileSize: file.size,
+        mimeType: file.type || 'application/octet-stream',
+        base64: base64
+      };
+
+      // Also persist to server
+      try {
+        const formData = new FormData();
+        formData.append('document', file);
+        fetch('/api/sam/upload', {
+          method: 'POST',
+          body: formData
+        })
+          .then(r => r.json())
+          .then(data => {
+            if (data.success && state.attachedFile) {
+              state.attachedFile.fileUrl = data.fileUrl;
+            }
+          })
+          .catch(() => {});
+      } catch (_) {}
+    };
+
+    reader.onerror = () => {
       attachmentPreview.classList.remove('show');
-    }
+    };
+
+    reader.readAsDataURL(file);
     fileInput.value = '';
   });
 

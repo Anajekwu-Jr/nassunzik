@@ -96,6 +96,7 @@ app.use('/css', express.static(path.join(ROOT_DIR, 'css')));
 app.use('/js', express.static(path.join(ROOT_DIR, 'js')));
 app.use('/resources', express.static(path.join(ROOT_DIR, 'resources')));
 app.use('/uploads', express.static(path.join(ROOT_DIR, 'uploads')));
+app.use('/vendor/katex', express.static(path.join(ROOT_DIR, 'node_modules/katex/dist')));
 app.use(express.static(path.join(ROOT_DIR, 'public')));
 
 // PWA Service Worker & Manifest headers
@@ -251,6 +252,9 @@ app.get(['/downloads/Statistical_Tables.pdf', '/Statistical_Tables.pdf', '/downl
   res.setHeader('Content-Disposition', 'attachment; filename="Statistical_Tables_UNIZIK.pdf"');
   res.sendFile(filePath);
 });
+
+// KaTeX vendor static assets for mathematical formula rendering
+app.use('/vendor/katex', express.static(path.join(ROOT_DIR, 'public/vendor/katex')));
 
 // Career legacy URLs redirect to the expanded section in About Department
 app.get(['/careers', '/careers.html', '/where-statistics-can-take-you', '/where-can-statistics-take-you'], (req, res) => {

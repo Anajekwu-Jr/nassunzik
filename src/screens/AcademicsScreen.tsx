@@ -268,7 +268,7 @@ export const AcademicsScreen: React.FC = () => {
                             setSamOpen(true);
                           }}
                           className="flex items-center gap-1 text-[10px] font-bold text-amber-300 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-full hover:bg-amber-500/25 transition"
-                          title={`Discuss ${c.code} with Sam AI`}
+                          title={`Discuss ${c.code} with Sam`}
                         >
                           <Sparkles className="w-3 h-3 text-amber-400 animate-pulse" />
                           <span>Ask Sam</span>

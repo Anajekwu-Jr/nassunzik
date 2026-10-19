@@ -9,6 +9,8 @@
   <link rel="icon" type="image/jpeg" href="/resources/images/nass-logo.jpg">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/academia.css">
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css" onerror="this.href='https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css'">
+  <script src="/vendor/katex/katex.min.js" onerror="this.src='https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js'"></script>
 
   <style>
     :root {
@@ -677,9 +679,9 @@
           </div>
 
           <div class="sam-composer-input-row">
-            <input type="file" id="fullDocInput" accept=".pdf,.docx,.doc,.txt,.png,.jpg,.jpeg" style="display:none;">
+            <input type="file" id="fullDocInput" accept=".pdf,.docx,.doc,.txt,.csv,.png,.jpg,.jpeg,.webp" style="display:none;">
             
-            <button type="button" class="sam-action-btn secondary" id="fullAttachBtn" title="Attach external PDF, note, or homework photo">
+            <button type="button" class="sam-action-btn secondary" id="fullAttachBtn" title="Attach external PDF, note, or homework photo" aria-label="Attach file" style="cursor:pointer; display:inline-flex; align-items:center; justify-content:center;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
             </button>
 
@@ -769,23 +771,122 @@ Select a course from the left sidebar to focus our discussion, or ask anything a
       const clearFullChatBtn = document.getElementById('clearFullChatBtn');
       const exportChatBtn = document.getElementById('exportChatBtn');
 
-      // Markdown Formatter
+      // Markdown & LaTeX Math Formatter
       function formatMarkdown(text) {
         if (!text) return '';
-        let html = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        html = html.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
-          return `<pre><code class="language-${lang}">${code.trim()}</code></pre>`;
+
+        // 1. Protect code blocks from math parsing
+        const codeBlocks = [];
+        let html = text.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
+          const idx = codeBlocks.length;
+          codeBlocks.push(`<pre><code class="language-${lang}">${code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').trim()}</code></pre>`);
+          return `__CODE_BLOCK_${idx}__`;
         });
-        html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+        // Protect inline code
+        const inlineCodes = [];
+        html = html.replace(/`([^`]+)`/g, (match, code) => {
+          const idx = inlineCodes.length;
+          inlineCodes.push(`<code>${code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>`);
+          return `__INLINE_CODE_${idx}__`;
+        });
+
+        // 2. Render and protect LaTeX Display Math: $$ ... $$ or \[ ... \]
+        const mathBlocks = [];
+        html = html.replace(/\$\$([\s\S]*?)\$\$/g, (match, math) => {
+          const idx = mathBlocks.length;
+          let rendered = '';
+          if (window.katex) {
+            try {
+              rendered = `<div class="katex-display" style="overflow-x:auto; padding:8px 12px; margin:10px 0; background:rgba(0,0,0,0.06); border-radius:8px; text-align:center;">${window.katex.renderToString(math.trim(), { displayMode: true, throwOnError: false })}</div>`;
+            } catch (e) {}
+          }
+          if (!rendered) {
+            rendered = `<div class="katex-display-fallback" style="overflow-x:auto; padding:6px 0; margin:8px 0; font-family:serif; text-align:center; color:#f59e0b; font-size:1.05rem;">$$${math.trim()}$$</div>`;
+          }
+          mathBlocks.push(rendered);
+          return `__MATH_BLOCK_${idx}__`;
+        });
+
+        html = html.replace(/\\\[([\s\S]*?)\\\]/g, (match, math) => {
+          const idx = mathBlocks.length;
+          let rendered = '';
+          if (window.katex) {
+            try {
+              rendered = `<div class="katex-display" style="overflow-x:auto; padding:8px 12px; margin:10px 0; background:rgba(0,0,0,0.06); border-radius:8px; text-align:center;">${window.katex.renderToString(math.trim(), { displayMode: true, throwOnError: false })}</div>`;
+            } catch (e) {}
+          }
+          if (!rendered) {
+            rendered = `<div class="katex-display-fallback" style="overflow-x:auto; padding:6px 0; margin:8px 0; font-family:serif; text-align:center; color:#f59e0b; font-size:1.05rem;">\\[${math.trim()}\\]</div>`;
+          }
+          mathBlocks.push(rendered);
+          return `__MATH_BLOCK_${idx}__`;
+        });
+
+        // 3. Render and protect LaTeX Inline Math: $ ... $ or \( ... \)
+        const inlineMaths = [];
+        html = html.replace(/(^|[^\\])\$([^\$\n]+?)\$/g, (match, prefix, math) => {
+          const idx = inlineMaths.length;
+          let rendered = '';
+          if (window.katex) {
+            try {
+              rendered = window.katex.renderToString(math.trim(), { displayMode: false, throwOnError: false });
+            } catch (e) {}
+          }
+          if (!rendered) {
+            rendered = `<span style="font-family:serif; color:#f59e0b; font-weight:600;">$${math.trim()}$</span>`;
+          }
+          inlineMaths.push(rendered);
+          return `${prefix}__INLINE_MATH_${idx}__`;
+        });
+
+        html = html.replace(/\\\(([\s\S]*?)\\\)/g, (match, math) => {
+          const idx = inlineMaths.length;
+          let rendered = '';
+          if (window.katex) {
+            try {
+              rendered = window.katex.renderToString(math.trim(), { displayMode: false, throwOnError: false });
+            } catch (e) {}
+          }
+          if (!rendered) {
+            rendered = `<span style="font-family:serif; color:#f59e0b; font-weight:600;">\\(${math.trim()}\\)</span>`;
+          }
+          inlineMaths.push(rendered);
+          return `__INLINE_MATH_${idx}__`;
+        });
+
+        // 4. HTML entity escape remaining text
+        html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        // 5. Bold & Italics
         html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
         html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-        html = html.replace(/^### (.*$)/gim, '<h4>$1</h4>');
-        html = html.replace(/^## (.*$)/gim, '<h3>$1</h3>');
-        html = html.replace(/^# (.*$)/gim, '<h2>$1</h2>');
-        html = html.replace(/^\s*-\s+(.*$)/gim, '<li>$1</li>');
-        html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+
+        // Headers
+        html = html.replace(/^### (.*$)/gim, '<h4 style="margin:8px 0 4px 0; font-size:0.95rem; font-weight:700; color:var(--sam-gold);">$1</h4>');
+        html = html.replace(/^## (.*$)/gim, '<h3 style="margin:10px 0 4px 0; font-size:1.05rem; font-weight:700; color:var(--sam-gold);">$1</h3>');
+        html = html.replace(/^# (.*$)/gim, '<h2 style="margin:12px 0 6px 0; font-size:1.15rem; font-weight:700; color:var(--sam-gold);">$1</h2>');
+
+        // Bullet lists
+        html = html.replace(/^\s*[-*]\s+(.*$)/gim, '<li>$1</li>');
+        html = html.replace(/(<li>[\s\S]*?<\/li>)/g, '<ul>$1</ul>');
+
+        // Restore protected items
+        mathBlocks.forEach((block, i) => {
+          html = html.replace(`__MATH_BLOCK_${i}__`, block);
+        });
+        inlineMaths.forEach((item, i) => {
+          html = html.replace(`__INLINE_MATH_${i}__`, item);
+        });
+        inlineCodes.forEach((code, i) => {
+          html = html.replace(`__INLINE_CODE_${i}__`, code);
+        });
+        codeBlocks.forEach((block, i) => {
+          html = html.replace(`__CODE_BLOCK_${i}__`, block);
+        });
+
         const paragraphs = html.split(/\n{2,}/).map(p => {
-          if (p.startsWith('<pre>') || p.startsWith('<ul>') || p.startsWith('<h')) return p;
+          if (p.startsWith('<pre') || p.startsWith('<ul') || p.startsWith('<h') || p.startsWith('<div class="katex-display')) return p;
           return `<p>${p.replace(/\n/g, '<br>')}</p>`;
         });
         return paragraphs.join('');
@@ -806,6 +907,12 @@ Select a course from the left sidebar to focus our discussion, or ask anything a
                 <div class="sam-bubble-actions">
                   <span>${m.timestamp || ''}</span>
                   ${!isUser ? `
+                    <button type="button" class="sam-act-btn" onclick="window.rateHelpful(${idx})">
+                      👍 Helpful
+                    </button>
+                    <button type="button" class="sam-act-btn" style="color:var(--sam-gold); font-weight:700;" onclick="window.teachSamPrompt(${idx})">
+                      ✏️ Teach Sam
+                    </button>
                     <button type="button" class="sam-act-btn" onclick="window.speakMsg(${idx})">
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                       Listen
@@ -823,6 +930,41 @@ Select a course from the left sidebar to focus our discussion, or ask anything a
         fullFeed.scrollTop = fullFeed.scrollHeight;
       }
 
+      window.teachSamPrompt = async function(idx) {
+        const correction = window.prompt("🎓 What correction or departmental knowledge should Sam learn from you?");
+        if (correction && correction.trim()) {
+          try {
+            const res = await fetch('/api/sam/learn', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                topic: currentCourse ? currentCourse.code : 'Department & Academic Knowledge',
+                question: messages[idx - 1]?.content || 'Student update',
+                learnedFact: correction.trim(),
+                sourceUser: 'Student Community'
+              })
+            });
+            const data = await res.json();
+            if (data.success) {
+              messages.push({
+                role: 'model',
+                content: `🎓 **Thank you Great NASSite!**\n\nI have successfully learned and saved your contribution: *"${correction.trim()}"* into my UNIZIK Statistics knowledge base!`,
+                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+              });
+              renderFeed();
+            }
+          } catch (_) {}
+        }
+      };
+
+      window.rateHelpful = function(idx) {
+        fetch('/api/sam/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ isHelpful: true })
+        }).catch(() => {});
+      };
+
       window.speakMsg = function(idx) {
         const msg = messages[idx];
         if (msg && 'speechSynthesis' in window) {
@@ -836,9 +978,7 @@ Select a course from the left sidebar to focus our discussion, or ask anything a
       window.copyMsg = function(idx) {
         const msg = messages[idx];
         if (msg) {
-          navigator.clipboard.writeText(msg.content).then(() => {
-            alert('Copied to clipboard!');
-          });
+          navigator.clipboard.writeText(msg.content);
         }
       };
 
@@ -992,41 +1132,54 @@ What would you like to explore in **${currentCourse.code}**?
       });
 
       // File Attachment
-      fullAttachBtn.addEventListener('click', () => fullDocInput.click());
-      fullDocInput.addEventListener('change', async (e) => {
+      fullAttachBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        fullDocInput.value = '';
+        fullDocInput.click();
+      });
+      fullDocInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
-        const formData = new FormData();
-        formData.append('document', file);
-
         fullAttachmentTag.style.display = 'inline-flex';
-        fullAttachmentName.textContent = 'Uploading ' + file.name + '...';
+        fullAttachmentName.textContent = file.name;
         fullAttachmentSize.textContent = `(${(file.size / 1024).toFixed(0)} KB)`;
 
-        try {
-          const res = await fetch('/api/sam/upload', {
-            method: 'POST',
-            body: formData
-          });
-          const data = await res.json();
-          if (data.success) {
-            attachedFile = {
-              fileName: data.fileName,
-              fileSize: data.fileSize,
-              mimeType: data.mimeType,
-              base64: data.base64
-            };
-            fullAttachmentName.textContent = data.fileName;
-            fullAttachmentSize.textContent = `(${(data.fileSize / 1024).toFixed(0)} KB)`;
-          } else {
-            alert(data.error || 'Upload error');
-            fullAttachmentTag.style.display = 'none';
-          }
-        } catch (err) {
-          alert('Upload failed: ' + err.message);
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result;
+          const base64 = typeof result === 'string' && result.includes(',') ? result.split(',')[1] : result;
+
+          attachedFile = {
+            fileName: file.name,
+            fileSize: file.size,
+            mimeType: file.type || 'application/octet-stream',
+            base64: base64
+          };
+
+          // Also upload to server
+          try {
+            const formData = new FormData();
+            formData.append('document', file);
+            fetch('/api/sam/upload', {
+              method: 'POST',
+              body: formData
+            })
+              .then(r => r.json())
+              .then(data => {
+                if (data.success && attachedFile) {
+                  attachedFile.fileUrl = data.fileUrl;
+                }
+              })
+              .catch(() => {});
+          } catch (_) {}
+        };
+
+        reader.onerror = () => {
           fullAttachmentTag.style.display = 'none';
-        }
+        };
+
+        reader.readAsDataURL(file);
         fullDocInput.value = '';
       });
 
@@ -1142,6 +1295,9 @@ What would you like to explore in **${currentCourse.code}**?
       });
 
       fullTextarea.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+          return; // Tab key does NOT send
+        }
         if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault();
           sendMessage();
@@ -1159,7 +1315,7 @@ What would you like to explore in **${currentCourse.code}**?
 
         const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         const userMsg = attachedFile
-          ? `📎 **[Attached: ${attachedFile.fileName}]**\n\n${text}`
+          ? `📎 **[Attached: ${attachedFile.fileName}]**\n\n${text || 'Please analyze this uploaded document.'}`
           : text;
 
         messages.push({
@@ -1190,7 +1346,7 @@ What would you like to explore in **${currentCourse.code}**?
         fullFeed.scrollTop = fullFeed.scrollHeight;
 
         const payload = {
-          message: text,
+          message: text || 'Please analyze this uploaded document in detail and solve any questions or statistics problems contained in it.',
           courseCode: currentCourse ? currentCourse.code : undefined,
           studyMode: currentMode,
           conversationHistory: messages.map(m => ({ role: m.role, content: m.content })),
