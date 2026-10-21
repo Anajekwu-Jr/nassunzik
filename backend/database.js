@@ -310,18 +310,10 @@ export function initDatabase() {
     );
   `);
 
-  // 16. Sam AI Learned Knowledge & Student Responses
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS sam_learned_knowledge (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      topic TEXT NOT NULL,
-      question TEXT,
-      learned_fact TEXT NOT NULL,
-      source_user TEXT DEFAULT 'student',
-      rating INTEGER DEFAULT 1,
-      created_at TEXT NOT NULL DEFAULT (datetime('now'))
-    );
-  `);
+  // Cleanup any legacy AI tables
+  try {
+    db.exec(`DROP TABLE IF EXISTS sam_learned_knowledge;`);
+  } catch (_) {}
 
   // Safe migrations for newly added columns
   try {
@@ -623,8 +615,8 @@ function seedInitialData() {
       name: 'Comr. Chidozie Rejoice Ogochukwu',
       office: 'Secretary General',
       level: 400,
-      phone: '+234 812 345 6791',
-      email: 'secgen@nass-unizik.org',
+      phone: '07043119361',
+      email: 'ro.chidozie@stu.unizik.edu.ng',
       photo_url: '/resources/images/executives/secretary_general.jpg?v=2',
       bio: 'Managing administrative correspondence, official secretarial records, meeting archives, and departmental notifications.',
       tenure: '2026/2027',
@@ -991,7 +983,7 @@ function seedInitialData() {
     insertContact.run('Dr Okechukwu Jeremiah Obulezi', 'Staff Adviser, NASS', 'Academic Staff', 'adviser.nass@unizik.edu.ng', '+234 803 555 0102', 'Statistics Room 108', 'ADVISER');
     insertContact.run('Comr. Anajekwu Chidera Patrick (PhanCore)', 'NASS President & Executive Lead', '400 Level / NASS Executive', 'cp.anajekwu@stu.unizik.edu.ng', '08087955696', 'NASS Secretariat, Statistics Wing', 'EXECUTIVE');
     insertContact.run('Comr. Obunadike Vivian Chiemerie', 'Vice President, NASS', '400 Level / NASS Executive', 'cv.obunadike@stu.unizik.edu.ng', '+234 916 664 5452', 'NASS Secretariat, Statistics Wing', 'EXECUTIVE');
-    insertContact.run('Comr. Chidozie Rejoice Ogochukwu', 'Secretary General, NASS', '400 Level / NASS Executive', 'secgen@nass-unizik.org', '+234 812 345 6791', 'NASS Secretariat, Statistics Wing', 'EXECUTIVE');
+    insertContact.run('Comr. Chidozie Rejoice Ogochukwu', 'Secretary General, NASS', '400 Level / NASS Executive', 'ro.chidozie@stu.unizik.edu.ng', '07043119361', 'NASS Secretariat, Statistics Wing', 'EXECUTIVE');
     insertContact.run('Comr. Ejefonye Mmesoma Stephanie', 'Director of Academics, NASS', '300 Level / NASS Executive', 'm.ejefonye@stu.unizik.edu.ng', '07062399227', 'NASS Secretariat, Statistics Wing', 'EXECUTIVE');
     insertContact.run('Comr. Chinedu Chidinma Veronica', 'Financial Secretary, NASS', '400 Level / NASS Executive', 'vc.chinedu@stu.unizik.edu.ng', '09022372647', 'NASS Secretariat, Statistics Wing', 'EXECUTIVE');
     insertContact.run('Comr. Ezenwelu Chiamaka Princess', 'Treasurer, NASS', '400 Level / NASS Executive', 'cp.ezenwelu@stu.unizik.edu.ng', '09071473090', 'NASS Secretariat, Statistics Wing', 'EXECUTIVE');

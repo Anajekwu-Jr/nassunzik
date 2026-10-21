@@ -19,7 +19,6 @@ import { NotificationSheet } from './components/modals/NotificationSheet';
 import { SettingsSheet } from './components/modals/SettingsSheet';
 import { AnnouncementDetailModal } from './components/modals/AnnouncementDetailModal';
 import { EventDetailModal } from './components/modals/EventDetailModal';
-import { SamAiModal } from './components/modals/SamAiModal';
 
 const MainScreenContent: React.FC = () => {
   const { activeTab } = useApp();
@@ -55,7 +54,6 @@ export default function App() {
         <SettingsSheet />
         <AnnouncementDetailModal />
         <EventDetailModal />
-        <SamAiModal />
       </DeviceSimulatorFrame>
     </AppProvider>
   );
