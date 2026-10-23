@@ -176,16 +176,48 @@ export const ResourcesScreen: React.FC = () => {
           filteredResources.map((res) => {
             const isBookmarked = bookmarkedResources.includes(res.id);
 
+            const previewImg = res.preview_image || (res.file_path && /\.(jpg|jpeg|png|webp)$/i.test(res.file_path) ? res.file_path : null);
+
             return (
               <div
                 key={res.id}
                 className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition space-y-2.5"
               >
+                {/* Past Question Little Preview Image at Top */}
+                {previewImg && (
+                  <div
+                    onClick={() => {
+                      triggerHaptic();
+                      setActiveResource(res);
+                    }}
+                    className="w-full h-36 rounded-xl overflow-hidden relative bg-[#091e42] border border-slate-750 cursor-pointer group shadow-inner"
+                    title={`Click to preview ${res.course_code || ''} question paper`}
+                  >
+                    <img
+                      src={previewImg}
+                      alt={res.title}
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent flex items-end justify-between p-2">
+                      <span className="text-[10px] font-extrabold text-amber-400 bg-[#091e42]/90 border border-amber-500/40 px-2 py-0.5 rounded shadow-sm">
+                        {res.course_code || 'STA'}
+                      </span>
+                      <span className="text-[10px] font-bold text-white bg-slate-900/90 border border-slate-700 px-2 py-0.5 rounded flex items-center gap-1 shadow-sm group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                        <Eye className="w-3 h-3 text-amber-400 group-hover:text-slate-950" />
+                        Preview
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-start gap-2.5 flex-1 min-w-0">
-                    <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
-                      <FileText className="w-4 h-4" />
-                    </div>
+                    {!previewImg && (
+                      <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                        <FileText className="w-4 h-4" />
+                      </div>
+                    )}
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 mb-0.5">

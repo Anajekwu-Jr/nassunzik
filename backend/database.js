@@ -3,8 +3,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import bcrypt from 'bcryptjs';
 
+const ROOT_DIR = process.cwd();
 const isVercel = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
-const ROOT_DATA_DIR = path.resolve(process.cwd(), 'data');
+const ROOT_DATA_DIR = path.resolve(ROOT_DIR, 'data');
 
 let DB_DIR = ROOT_DATA_DIR;
 let DB_PATH = path.join(DB_DIR, 'nass_portal.db');
@@ -82,6 +83,7 @@ export function initDatabase() {
       file_size INTEGER DEFAULT 0,
       academic_year TEXT,          -- e.g. '2023/2024'
       semester INTEGER,
+      preview_image TEXT,
       created_at TEXT NOT NULL DEFAULT (datetime('now')),
       updated_at TEXT NOT NULL DEFAULT (datetime('now')),
       FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
@@ -319,6 +321,9 @@ export function initDatabase() {
   try {
     db.exec(`ALTER TABLE events ADD COLUMN is_featured INTEGER DEFAULT 0;`);
   } catch (_) {}
+  try {
+    db.exec(`ALTER TABLE course_resources ADD COLUMN preview_image TEXT;`);
+  } catch (_) {}
 
   seedInitialData();
 }
@@ -549,7 +554,40 @@ function seedInitialData() {
   }
 
   // Course Resources & Past Questions: initialized clean, ready for official Drive integration
-  // (Demo and sample PDFs removed per user request)
+  const pqManifestPath = path.join(ROOT_DIR, "downloaded_pq_manifest.json");
+  if (fs.existsSync(pqManifestPath)) {
+    try {
+      const existingPqCount = db.prepare("SELECT COUNT(*) as count FROM course_resources WHERE resource_type = 'past_question'").get();
+      if (existingPqCount.count < 10) {
+        const manifest = JSON.parse(fs.readFileSync(pqManifestPath, "utf-8"));
+        const courseLookup = {
+          'STA 311': { id: 61, code: 'STA 311', title: 'Probability III', level: 300, semester: 1 },
+          'STA 312': { id: 71, code: 'STA 312', title: 'Distribution theory I', level: 300, semester: 2 },
+          'STA 321': { id: 62, code: 'STA 321', title: 'Statistical Inference III', level: 300, semester: 1 },
+          'STA 324': { id: 72, code: 'STA 324', title: 'Survey methods and sampling theory', level: 300, semester: 2 },
+          'STA 342': { id: 75, code: 'NAU-STA 342', title: 'Statistical Application of Matrix Algebra', level: 300, semester: 2 },
+          'STA 351': { id: 65, code: 'NAU-STA 351', title: 'Analysis of Variance I', level: 300, semester: 1 },
+          'STA 361': { id: 66, code: 'NAU-STA 361', title: 'Demography', level: 300, semester: 1 },
+          'STA 362': { id: 74, code: 'NAU-STA 362', title: 'Statistical Methods In Epidemiology', level: 300, semester: 2 },
+          'STA 371': { id: 67, code: 'NAU-STA 371', title: 'Operations Research I', level: 300, semester: 1 }
+        };
+        const insertPq = db.prepare(`
+          INSERT INTO course_resources (course_id, title, resource_type, file_name, file_path, file_size, academic_year, semester, preview_image, created_at, updated_at)
+          VALUES (?, ?, 'past_question', ?, ?, ?, '2023/2024', ?, ?, datetime('now'), datetime('now'))
+        `);
+        const counts = {};
+        manifest.forEach(item => {
+          const cInfo = courseLookup[item.course_code] || { id: 61, code: item.course_code, title: 'Departmental Statistics Examination', semester: 1 };
+          counts[item.course_code] = (counts[item.course_code] || 0) + 1;
+          const paperNum = counts[item.course_code];
+          const title = `${cInfo.code}: ${cInfo.title} Past Examination Paper (Paper ${paperNum})`;
+          insertPq.run(cInfo.id, title, item.file_name, item.file_path, item.file_size, cInfo.semester, item.file_path);
+        });
+      }
+    } catch (e) {
+      console.warn("Past questions seeding notice:", e.message);
+    }
+  }
 
   // Seed / Sync Staff with Official Departmental CIRS Roster
   const officialStaffPath = path.join(DB_DIR, "official_cirs_staff.json");

@@ -74,12 +74,22 @@ export const DocumentViewerModal: React.FC = () => {
       </div>
 
       {/* Viewer Content Frame */}
-      <div className="flex-1 w-full bg-[#040b17] overflow-hidden relative flex flex-col">
-        <iframe
-          src={`${fileUrl}#toolbar=0`}
-          title={activeResource.title}
-          className="w-full h-full border-0 bg-white"
-        />
+      <div className="flex-1 w-full bg-[#040b17] overflow-y-auto relative flex flex-col items-center justify-center p-2">
+        {/\.(jpg|jpeg|png|webp|gif)$/i.test(fileUrl) ? (
+          <div className="w-full h-full flex items-center justify-center overflow-auto py-2">
+            <img
+              src={fileUrl}
+              alt={activeResource.title}
+              className="max-w-full max-h-[72vh] object-contain rounded-lg shadow-2xl border border-slate-800"
+            />
+          </div>
+        ) : (
+          <iframe
+            src={`${fileUrl}#toolbar=0`}
+            title={activeResource.title}
+            className="w-full h-full border-0 bg-white"
+          />
+        )}
 
         {/* Floating Save Overlay Bar at Bottom */}
         <div className="absolute bottom-4 left-4 right-4 z-10 flex items-center gap-2 bg-[#061226]/95 backdrop-blur border border-blue-900/60 rounded-xl p-2.5 shadow-xl">

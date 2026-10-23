@@ -426,6 +426,9 @@
         </div>
       </div>
       <div class="pq-modal-body">
+        <div id="modalImageWrap" style="display:none; text-align:center; padding: 20px; overflow-y:auto; max-height: calc(85vh - 70px); background: #040b17;">
+          <img id="modalImgViewer" src="" alt="Past Question Document" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 4px 24px rgba(0,0,0,0.5); margin: 0 auto; display: block;" />
+        </div>
         <iframe id="modalPdfIframe" class="pq-modal-iframe" title="PDF Document Viewer" src="about:blank"></iframe>
       </div>
     </div>
@@ -538,6 +541,8 @@
       const modalTitle = document.getElementById('modalPaperTitle');
       const modalSubtitle = document.getElementById('modalPaperSubtitle');
       const modalIframe = document.getElementById('modalPdfIframe');
+      const modalImageWrap = document.getElementById('modalImageWrap');
+      const modalImgViewer = document.getElementById('modalImgViewer');
       const modalDownloadBtn = document.getElementById('modalDownloadBtn');
       const modalNewTabBtn = document.getElementById('modalNewTabBtn');
       const modalCloseBtn = document.getElementById('modalCloseBtn');
@@ -765,15 +770,47 @@
         const fileSize = formatFileSize(paper.file_size);
         const filePath = paper.file_path || '/resources/documents/sample_past_question.pdf';
         const fileName = paper.file_name || `${paper.course_code}_Past_Questions.pdf`;
+        const previewImage = paper.preview_image || (/\.(jpg|jpeg|png|webp)$/i.test(filePath) ? filePath : null);
+        const isImage = /\.(jpg|jpeg|png|webp|gif)$/i.test(filePath);
 
         return `
           <div class="pq-card" data-paper-id="${paper.id}">
-            <div class="pq-card-top">
+            <!-- 1. Little preview image of the past question shown at top -->
+            <div class="pq-card-preview-wrap js-preview-paper" 
+              data-id="${paper.id}" 
+              data-title="${escapeAttr(paper.title)}" 
+              data-code="${escapeAttr(paper.course_code)}" 
+              data-coursetitle="${escapeAttr(paper.course_title)}"
+              data-year="${escapeAttr(paper.academic_year || '2023/2024')}" 
+              data-url="${escapeAttr(filePath)}" 
+              data-filename="${escapeAttr(fileName)}"
+              role="button"
+              tabindex="0"
+              title="Click to preview full question paper">
+              ${previewImage ? `
+                <img src="${escapeAttr(previewImage)}" alt="${escapeAttr(paper.course_code)} Past Question Preview" class="pq-preview-img" loading="lazy" onerror="this.style.display='none'" />
+                <div class="pq-preview-overlay">
+                  <span class="pq-preview-badge">${escapeHtml(paper.course_code)}</span>
+                  <span class="pq-preview-zoom-btn">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                    Preview
+                  </span>
+                </div>
+              ` : `
+                <div style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:#cbd5e1; background:linear-gradient(135deg, #091e42 0%, #1e3a8a 100%);">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                  <span style="font-size:0.75rem; font-weight:700; color:#f8fafc; letter-spacing:0.04em;">${escapeHtml(paper.course_code)} EXAMINATION</span>
+                </div>
+              `}
+            </div>
+
+            <!-- 2. Course Code and Title below the preview image -->
+            <div class="pq-card-top" style="margin-bottom:8px;">
               <span class="pq-course-code ${levelClass}">${escapeHtml(paper.course_code)}</span>
               <span class="pq-year-chip">${escapeHtml(paper.academic_year || '2023/2024')} Session</span>
             </div>
 
-            <h3 class="pq-course-title">${escapeHtml(paper.course_title)}</h3>
+            <h3 class="pq-course-title">${escapeHtml(paper.course_code)}: ${escapeHtml(paper.course_title)}</h3>
             <div class="pq-paper-name">${escapeHtml(paper.title)}</div>
 
             <div class="pq-meta-row">
@@ -789,7 +826,7 @@
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                   <polyline points="14 2 14 8 20 8"></polyline>
                 </svg>
-                PDF · ${fileSize}
+                ${isImage ? 'JPEG Image' : 'PDF'} · ${fileSize}
               </span>
             </div>
 
@@ -806,7 +843,7 @@
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                   <circle cx="12" cy="12" r="3"></circle>
                 </svg>
-                Preview PDF
+                Preview
               </button>
               <a href="${escapeAttr(filePath)}" download="${escapeAttr(fileName)}" class="pq-btn-download" title="Download ${escapeAttr(fileName)}">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -823,14 +860,14 @@
 
       // Attach button clicks to modal
       function attachCardListeners() {
-        document.querySelectorAll('.js-preview-paper').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const title = btn.dataset.title;
-            const code = btn.dataset.code;
-            const courseTitle = btn.dataset.coursetitle;
-            const year = btn.dataset.year;
-            const url = btn.dataset.url;
-            const filename = btn.dataset.filename;
+        document.querySelectorAll('.js-preview-paper').forEach(el => {
+          el.addEventListener('click', () => {
+            const title = el.dataset.title;
+            const code = el.dataset.code;
+            const courseTitle = el.dataset.coursetitle;
+            const year = el.dataset.year;
+            const url = el.dataset.url;
+            const filename = el.dataset.filename;
 
             openPdfModal(title, code, courseTitle, year, url, filename);
           });
@@ -840,8 +877,21 @@
       // Modal open
       function openPdfModal(title, code, courseTitle, year, url, filename) {
         modalTitle.textContent = `${code}: ${title}`;
-        modalSubtitle.textContent = `${courseTitle} · Academic Session: ${year} · NASS UNIZIK Archive`;
-        modalIframe.src = url;
+        modalSubtitle.textContent = `${courseTitle} · Academic Session: ${year} · NASS UNIZIK Departmental Repository`;
+        
+        const isImage = /\.(jpg|jpeg|png|webp|gif)$/i.test(url);
+        if (isImage) {
+          modalImgViewer.src = url;
+          modalImageWrap.style.display = 'block';
+          modalPdfIframe.style.display = 'none';
+          modalPdfIframe.src = 'about:blank';
+        } else {
+          modalPdfIframe.src = url;
+          modalPdfIframe.style.display = 'block';
+          modalImageWrap.style.display = 'none';
+          modalImgViewer.src = '';
+        }
+
         modalDownloadBtn.href = url;
         modalDownloadBtn.download = filename;
         modalNewTabBtn.href = url;
@@ -856,6 +906,7 @@
         document.body.style.overflow = '';
         setTimeout(() => {
           modalIframe.src = 'about:blank';
+          if (modalImgViewer) modalImgViewer.src = '';
         }, 200);
       }
 
