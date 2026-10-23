@@ -322,8 +322,8 @@
         </div>
 
         <div class="bento-grid">
-          <!-- Featured Tile 1: Courses & Syllabi (Col Span 4) -->
-          <a href="/academia.html" class="bento-tile col-span-4" id="cardAcademia">
+          <!-- Featured Tile 1: Courses & Syllabi (Col Span 3) -->
+          <a href="/academia.html" class="bento-tile col-span-3" id="cardAcademia">
             <div>
               <div class="quick-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -334,7 +334,7 @@
                 </svg>
               </div>
               <h3 class="quick-title">Courses & Outlines</h3>
-              <p class="quick-text">100L through 400L syllabus, credit ratings, prerequisite trees, and past examination papers.</p>
+              <p class="quick-text">100L through 400L syllabus, credit ratings, prerequisite trees, and core materials.</p>
             </div>
             <div style="margin-top: 18px; font-size: 0.75rem; font-weight: 700; color: var(--brand); display: flex; align-items: center; gap: 4px;">
               <span>View Curriculum</span>
@@ -342,14 +342,37 @@
             </div>
           </a>
 
-          <!-- Featured Tile 2: Lecture Timetable (Col Span 4) -->
-          <a href="/timetable.html" class="bento-tile col-span-4" id="cardTimetable">
+          <!-- Featured Tile 2: Past Examination Questions (Col Span 3) -->
+          <a href="/past-questions.html" class="bento-tile col-span-3" id="cardPastQuestions" style="border: 2px solid rgba(245, 158, 11, 0.4); background: linear-gradient(135deg, rgba(245, 158, 11, 0.05) 0%, var(--surface-color) 100%);">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                <div class="quick-icon" style="background: rgba(245, 158, 11, 0.15); color: #d97706;">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                  </svg>
+                </div>
+                <span class="badge" style="background: #f59e0b; color: #0c2340; font-weight: 800; font-size: 0.6875rem;">29 PAPERS</span>
+              </div>
+              <h3 class="quick-title">Past Questions</h3>
+              <p class="quick-text">Verified past question papers with visual previews. Browse by course or download copies.</p>
+            </div>
+            <div style="margin-top: 18px; font-size: 0.75rem; font-weight: 700; color: #d97706; display: flex; align-items: center; gap: 4px;">
+              <span>Browse Question Bank</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+          </a>
+
+          <!-- Featured Tile 3: Lecture Timetable (Col Span 3) -->
+          <a href="/timetable.html" class="bento-tile col-span-3" id="cardTimetable">
             <div>
               <div class="quick-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                  <line x1="16" x2="16" y1="2" y2="6"></line>
-                  <line x1="8" x2="8" y1="2" y2="6"></line>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
                   <line x1="3" x2="21" y1="10" y2="10"></line>
                 </svg>
               </div>
@@ -362,8 +385,8 @@
             </div>
           </a>
 
-          <!-- Featured Tile 3: SIWES Industrial Training (Col Span 4) -->
-          <a href="/siwes.html" class="bento-tile col-span-4" id="cardSiwes">
+          <!-- Featured Tile 4: SIWES Industrial Training (Col Span 3) -->
+          <a href="/siwes.html" class="bento-tile col-span-3" id="cardSiwes">
             <div>
               <div class="quick-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -467,6 +490,309 @@
             <div class="stat-label">Alumni Worldwide</div>
             <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Nnamdi Azikiwe University</div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Past Examination Questions Showcase Section (Direct Access & Instant Previews) -->
+    <section class="section section-muted reveal-on-scroll" id="pastQuestionsShowcaseSection" style="padding: 64px 0; background: var(--surface-muted); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+      <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <div class="section-tag" style="background: rgba(245, 158, 11, 0.15); color: #d97706; font-weight: 800; font-size: 0.72rem; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 8px;">
+              OFFICIAL EXAMINATION QUESTION BANK
+            </div>
+            <h2 class="section-title" style="margin-bottom: 6px;">Past Examination Question Papers</h2>
+            <p class="section-subtitle" style="margin-bottom: 0; max-width: 640px;">
+              Direct access to official examination question papers from the Department of Statistics repository. Each paper includes a visual preview thumbnail and direct one-click download.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <a href="/past-questions.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 700; background: #0c2340; border-color: #0c2340;">
+              <span>View All 29+ Papers</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Featured Past Questions Grid (Pre-rendered for Instant Viewability + Live Hydration) -->
+        <div class="pq-card-grid" id="homepagePqGrid">
+          <!-- Card 1: STA 311 -->
+          <div class="pq-card" data-paper-id="206">
+            <div class="pq-card-preview-wrap js-preview-paper" 
+              data-title="STA 311: Probability III Past Examination Paper (Paper 1)" 
+              data-code="STA 311" 
+              data-coursetitle="Probability III" 
+              data-year="2023/2024" 
+              data-url="/resources/past_questions/sta_311_pq_01.jpg" 
+              data-filename="sta_311_pq_01.jpg"
+              role="button" tabindex="0" title="Click to preview STA 311 paper">
+              <img src="/resources/past_questions/sta_311_pq_01.jpg" alt="STA 311 Past Question" class="pq-preview-img" loading="lazy">
+              <div class="pq-preview-overlay">
+                <span class="pq-preview-badge">STA 311</span>
+                <span class="pq-preview-zoom-btn">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                  Preview
+                </span>
+              </div>
+            </div>
+            <div class="pq-card-top" style="margin-bottom:8px;">
+              <span class="pq-course-code level-300">STA 311</span>
+              <span class="pq-year-chip">2023/2024 Session</span>
+            </div>
+            <h3 class="pq-course-title">STA 311: Probability III</h3>
+            <div class="pq-paper-name">STA 311: Probability III Past Examination Paper (Paper 1)</div>
+            <div class="pq-meta-row">
+              <span class="pq-meta-item">300 Level · First Semester</span>
+              <span class="pq-meta-item">JPEG Image · 33 KB</span>
+            </div>
+            <div class="pq-action-row">
+              <button type="button" class="pq-btn-preview js-preview-paper"
+                data-title="STA 311: Probability III Past Examination Paper (Paper 1)" 
+                data-code="STA 311" 
+                data-coursetitle="Probability III" 
+                data-year="2023/2024" 
+                data-url="/resources/past_questions/sta_311_pq_01.jpg" 
+                data-filename="sta_311_pq_01.jpg">
+                Preview
+              </button>
+              <a href="/resources/past_questions/sta_311_pq_01.jpg" download="STA_311_Past_Question_1.jpg" class="pq-btn-download">
+                Download
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 2: STA 312 -->
+          <div class="pq-card" data-paper-id="209">
+            <div class="pq-card-preview-wrap js-preview-paper" 
+              data-title="STA 312: Distribution theory I Past Examination Paper (Paper 1)" 
+              data-code="STA 312" 
+              data-coursetitle="Distribution theory I" 
+              data-year="2023/2024" 
+              data-url="/resources/past_questions/sta_312_pq_04.jpg" 
+              data-filename="sta_312_pq_04.jpg"
+              role="button" tabindex="0" title="Click to preview STA 312 paper">
+              <img src="/resources/past_questions/sta_312_pq_04.jpg" alt="STA 312 Past Question" class="pq-preview-img" loading="lazy">
+              <div class="pq-preview-overlay">
+                <span class="pq-preview-badge">STA 312</span>
+                <span class="pq-preview-zoom-btn">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                  Preview
+                </span>
+              </div>
+            </div>
+            <div class="pq-card-top" style="margin-bottom:8px;">
+              <span class="pq-course-code level-300">STA 312</span>
+              <span class="pq-year-chip">2023/2024 Session</span>
+            </div>
+            <h3 class="pq-course-title">STA 312: Distribution theory I</h3>
+            <div class="pq-paper-name">STA 312: Distribution theory I Past Examination Paper (Paper 1)</div>
+            <div class="pq-meta-row">
+              <span class="pq-meta-item">300 Level · Second Semester</span>
+              <span class="pq-meta-item">JPEG Image · 37 KB</span>
+            </div>
+            <div class="pq-action-row">
+              <button type="button" class="pq-btn-preview js-preview-paper"
+                data-title="STA 312: Distribution theory I Past Examination Paper (Paper 1)" 
+                data-code="STA 312" 
+                data-coursetitle="Distribution theory I" 
+                data-year="2023/2024" 
+                data-url="/resources/past_questions/sta_312_pq_04.jpg" 
+                data-filename="sta_312_pq_04.jpg">
+                Preview
+              </button>
+              <a href="/resources/past_questions/sta_312_pq_04.jpg" download="STA_312_Past_Question_1.jpg" class="pq-btn-download">
+                Download
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 3: STA 321 -->
+          <div class="pq-card" data-paper-id="214">
+            <div class="pq-card-preview-wrap js-preview-paper" 
+              data-title="STA 321: Statistical Inference III Past Examination Paper (Paper 1)" 
+              data-code="STA 321" 
+              data-coursetitle="Statistical Inference III" 
+              data-year="2023/2024" 
+              data-url="/resources/past_questions/sta_321_pq_09.jpg" 
+              data-filename="sta_321_pq_09.jpg"
+              role="button" tabindex="0" title="Click to preview STA 321 paper">
+              <img src="/resources/past_questions/sta_321_pq_09.jpg" alt="STA 321 Past Question" class="pq-preview-img" loading="lazy">
+              <div class="pq-preview-overlay">
+                <span class="pq-preview-badge">STA 321</span>
+                <span class="pq-preview-zoom-btn">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                  Preview
+                </span>
+              </div>
+            </div>
+            <div class="pq-card-top" style="margin-bottom:8px;">
+              <span class="pq-course-code level-300">STA 321</span>
+              <span class="pq-year-chip">2023/2024 Session</span>
+            </div>
+            <h3 class="pq-course-title">STA 321: Statistical Inference III</h3>
+            <div class="pq-paper-name">STA 321: Statistical Inference III Past Examination Paper (Paper 1)</div>
+            <div class="pq-meta-row">
+              <span class="pq-meta-item">300 Level · First Semester</span>
+              <span class="pq-meta-item">JPEG Image · 53 KB</span>
+            </div>
+            <div class="pq-action-row">
+              <button type="button" class="pq-btn-preview js-preview-paper"
+                data-title="STA 321: Statistical Inference III Past Examination Paper (Paper 1)" 
+                data-code="STA 321" 
+                data-coursetitle="Statistical Inference III" 
+                data-year="2023/2024" 
+                data-url="/resources/past_questions/sta_321_pq_09.jpg" 
+                data-filename="sta_321_pq_09.jpg">
+                Preview
+              </button>
+              <a href="/resources/past_questions/sta_321_pq_09.jpg" download="STA_321_Past_Question_1.jpg" class="pq-btn-download">
+                Download
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 4: STA 324 -->
+          <div class="pq-card" data-paper-id="218">
+            <div class="pq-card-preview-wrap js-preview-paper" 
+              data-title="STA 324: Survey methods and sampling theory Past Examination Paper (Paper 1)" 
+              data-code="STA 324" 
+              data-coursetitle="Survey methods and sampling theory" 
+              data-year="2023/2024" 
+              data-url="/resources/past_questions/sta_324_pq_13.jpg" 
+              data-filename="sta_324_pq_13.jpg"
+              role="button" tabindex="0" title="Click to preview STA 324 paper">
+              <img src="/resources/past_questions/sta_324_pq_13.jpg" alt="STA 324 Past Question" class="pq-preview-img" loading="lazy">
+              <div class="pq-preview-overlay">
+                <span class="pq-preview-badge">STA 324</span>
+                <span class="pq-preview-zoom-btn">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                  Preview
+                </span>
+              </div>
+            </div>
+            <div class="pq-card-top" style="margin-bottom:8px;">
+              <span class="pq-course-code level-300">STA 324</span>
+              <span class="pq-year-chip">2023/2024 Session</span>
+            </div>
+            <h3 class="pq-course-title">STA 324: Survey Methods & Sampling</h3>
+            <div class="pq-paper-name">STA 324: Survey methods and sampling theory Past Paper (Paper 1)</div>
+            <div class="pq-meta-row">
+              <span class="pq-meta-item">300 Level · Second Semester</span>
+              <span class="pq-meta-item">JPEG Image · 114 KB</span>
+            </div>
+            <div class="pq-action-row">
+              <button type="button" class="pq-btn-preview js-preview-paper"
+                data-title="STA 324: Survey methods and sampling theory Past Examination Paper (Paper 1)" 
+                data-code="STA 324" 
+                data-coursetitle="Survey methods and sampling theory" 
+                data-year="2023/2024" 
+                data-url="/resources/past_questions/sta_324_pq_13.jpg" 
+                data-filename="sta_324_pq_13.jpg">
+                Preview
+              </button>
+              <a href="/resources/past_questions/sta_324_pq_13.jpg" download="STA_324_Past_Question_1.jpg" class="pq-btn-download">
+                Download
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 5: STA 342 -->
+          <div class="pq-card" data-paper-id="221">
+            <div class="pq-card-preview-wrap js-preview-paper" 
+              data-title="NAU-STA 342: Statistical Application of Matrix Algebra Past Examination Paper (Paper 1)" 
+              data-code="STA 342" 
+              data-coursetitle="Statistical Application of Matrix Algebra" 
+              data-year="2023/2024" 
+              data-url="/resources/past_questions/sta_342_pq_16.jpg" 
+              data-filename="sta_342_pq_16.jpg"
+              role="button" tabindex="0" title="Click to preview STA 342 paper">
+              <img src="/resources/past_questions/sta_342_pq_16.jpg" alt="STA 342 Past Question" class="pq-preview-img" loading="lazy">
+              <div class="pq-preview-overlay">
+                <span class="pq-preview-badge">STA 342</span>
+                <span class="pq-preview-zoom-btn">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                  Preview
+                </span>
+              </div>
+            </div>
+            <div class="pq-card-top" style="margin-bottom:8px;">
+              <span class="pq-course-code level-300">STA 342</span>
+              <span class="pq-year-chip">2023/2024 Session</span>
+            </div>
+            <h3 class="pq-course-title">STA 342: Matrix Algebra Applications</h3>
+            <div class="pq-paper-name">NAU-STA 342: Statistical Application of Matrix Algebra Past Paper 1</div>
+            <div class="pq-meta-row">
+              <span class="pq-meta-item">300 Level · Second Semester</span>
+              <span class="pq-meta-item">JPEG Image · 48 KB</span>
+            </div>
+            <div class="pq-action-row">
+              <button type="button" class="pq-btn-preview js-preview-paper"
+                data-title="NAU-STA 342: Statistical Application of Matrix Algebra Past Examination Paper (Paper 1)" 
+                data-code="STA 342" 
+                data-coursetitle="Statistical Application of Matrix Algebra" 
+                data-year="2023/2024" 
+                data-url="/resources/past_questions/sta_342_pq_16.jpg" 
+                data-filename="sta_342_pq_16.jpg">
+                Preview
+              </button>
+              <a href="/resources/past_questions/sta_342_pq_16.jpg" download="STA_342_Past_Question_1.jpg" class="pq-btn-download">
+                Download
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 6: STA 362 -->
+          <div class="pq-card" data-paper-id="228">
+            <div class="pq-card-preview-wrap js-preview-paper" 
+              data-title="NAU-STA 362: Statistical Methods In Epidemiology Past Examination Paper (Paper 1)" 
+              data-code="STA 362" 
+              data-coursetitle="Statistical Methods In Epidemiology" 
+              data-year="2023/2024" 
+              data-url="/resources/past_questions/sta_362_pq_23.jpg" 
+              data-filename="sta_362_pq_23.jpg"
+              role="button" tabindex="0" title="Click to preview STA 362 paper">
+              <img src="/resources/past_questions/sta_362_pq_23.jpg" alt="STA 362 Past Question" class="pq-preview-img" loading="lazy">
+              <div class="pq-preview-overlay">
+                <span class="pq-preview-badge">STA 362</span>
+                <span class="pq-preview-zoom-btn">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                  Preview
+                </span>
+              </div>
+            </div>
+            <div class="pq-card-top" style="margin-bottom:8px;">
+              <span class="pq-course-code level-300">STA 362</span>
+              <span class="pq-year-chip">2023/2024 Session</span>
+            </div>
+            <h3 class="pq-course-title">STA 362: Methods in Epidemiology</h3>
+            <div class="pq-paper-name">NAU-STA 362: Statistical Methods In Epidemiology Past Paper 1</div>
+            <div class="pq-meta-row">
+              <span class="pq-meta-item">300 Level · Second Semester</span>
+              <span class="pq-meta-item">JPEG Image · 55 KB</span>
+            </div>
+            <div class="pq-action-row">
+              <button type="button" class="pq-btn-preview js-preview-paper"
+                data-title="NAU-STA 362: Statistical Methods In Epidemiology Past Examination Paper (Paper 1)" 
+                data-code="STA 362" 
+                data-coursetitle="Statistical Methods In Epidemiology" 
+                data-year="2023/2024" 
+                data-url="/resources/past_questions/sta_362_pq_23.jpg" 
+                data-filename="sta_362_pq_23.jpg">
+                Preview
+              </button>
+              <a href="/resources/past_questions/sta_362_pq_23.jpg" download="STA_362_Past_Question_1.jpg" class="pq-btn-download">
+                Download
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 36px;">
+          <a href="/past-questions.html" class="btn btn-primary" style="padding: 12px 32px; font-weight: 700; background: #0c2340; border-color: #0c2340; display: inline-flex; align-items: center; gap: 8px;">
+            <span>Browse Complete Past Examination Question Repository (29+ Papers)</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
         </div>
       </div>
     </section>
@@ -721,6 +1047,43 @@
     </div>
   </footer>
 
+  <!-- Past Question Document Preview Modal -->
+  <div class="pq-modal-backdrop" id="pdfPreviewModal" role="dialog" aria-modal="true" aria-labelledby="modalPaperTitle">
+    <div class="pq-modal-dialog">
+      <div class="pq-modal-header">
+        <div class="pq-modal-title-wrap">
+          <div class="pq-modal-title" id="modalPaperTitle">Past Question Document</div>
+          <div class="pq-modal-subtitle" id="modalPaperSubtitle">Course & Session Info</div>
+        </div>
+        <div class="pq-modal-actions">
+          <a href="#" id="modalNewTabBtn" target="_blank" rel="noopener noreferrer" class="pq-btn-preview" title="Open in full screen or print">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            <span>Open in Tab</span>
+          </a>
+          <a href="#" id="modalDownloadBtn" download class="pq-btn-download" title="Download Document">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>Download</span>
+          </a>
+          <button type="button" id="modalCloseBtn" class="search-modal-close" style="position: static; font-size: 24px; color: var(--text-muted); cursor: pointer; border: none; background: none;" aria-label="Close modal">&times;</button>
+        </div>
+      </div>
+      <div class="pq-modal-body">
+        <div id="modalImageWrap" style="display:none; text-align:center; padding: 20px; overflow-y:auto; max-height: calc(85vh - 70px); background: #040b17;">
+          <img id="modalImgViewer" src="" alt="Past Question Document" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 4px 24px rgba(0,0,0,0.5); margin: 0 auto; display: block;" />
+        </div>
+        <iframe id="modalPdfIframe" class="pq-modal-iframe" title="PDF Document Viewer" src="about:blank"></iframe>
+      </div>
+    </div>
+  </div>
+
   <script src="/js/icons.js"></script>
   <script src="/js/api.js"></script>
   <script src="/js/settings-sync.js"></script>
@@ -930,7 +1293,196 @@
       } catch (e) {
         console.log('Using default events preview');
       }
+
+      // Live past questions hydration from Departmental Repository
+      try {
+        const pqGrid = document.getElementById('homepagePqGrid');
+        if (pqGrid && window.NassAPI && typeof NassAPI.getMaterials === 'function') {
+          const pastQuestions = await NassAPI.getMaterials({ resource_type: 'past_question' });
+          if (Array.isArray(pastQuestions) && pastQuestions.length > 0) {
+            // Select up to 6 papers featuring visual previews
+            const papersWithPreview = pastQuestions.filter(p => p.preview_image || /\.(jpg|jpeg|png)$/i.test(p.file_path || ''));
+            const displayList = papersWithPreview.length >= 4 ? papersWithPreview.slice(0, 6) : pastQuestions.slice(0, 6);
+
+            pqGrid.innerHTML = displayList.map(p => {
+              const filePath = p.file_path || '/resources/past_questions/sta_311_pq_01.jpg';
+              const previewImg = p.preview_image || (/\.(jpg|jpeg|png|webp)$/i.test(filePath) ? filePath : null);
+              const fileName = p.file_name || (filePath.split('/').pop()) || `${p.course_code}_Past_Question.jpg`;
+              const isImage = /\.(jpg|jpeg|png|webp|gif)$/i.test(filePath);
+              const title = p.title || `${p.course_code} Past Examination Paper`;
+              const courseCode = p.course_code || 'STA';
+              const courseTitle = p.course_title || 'Statistics Course';
+              const session = p.academic_year || '2023/2024';
+              const levelText = p.course_level ? `${p.course_level} Level` : '300 Level';
+              const semText = p.course_semester === 1 ? 'First Semester' : 'Second Semester';
+              const sizeText = p.file_size ? (p.file_size > 1048576 ? (p.file_size / 1048576).toFixed(1) + ' MB' : Math.round(p.file_size / 1024) + ' KB') : 'JPEG Document';
+
+              return `
+                <div class="pq-card" data-paper-id="${p.id}">
+                  <div class="pq-card-preview-wrap js-preview-paper" 
+                    data-title="${escapeAttr(title)}" 
+                    data-code="${escapeAttr(courseCode)}" 
+                    data-coursetitle="${escapeAttr(courseTitle)}" 
+                    data-year="${escapeAttr(session)}" 
+                    data-url="${escapeAttr(filePath)}" 
+                    data-filename="${escapeAttr(fileName)}"
+                    role="button" tabindex="0" title="Click to preview ${escapeAttr(courseCode)} paper">
+                    ${previewImg ? `
+                      <img src="${escapeAttr(previewImg)}" alt="${escapeAttr(courseCode)} Past Question" class="pq-preview-img" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#091e42;color:#f8fafc;font-weight:700;\\'>${escapeAttr(courseCode)} EXAM</div>'">
+                      <div class="pq-preview-overlay">
+                        <span class="pq-preview-badge">${escapeHtml(courseCode)}</span>
+                        <span class="pq-preview-zoom-btn">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                          Preview
+                        </span>
+                      </div>
+                    ` : `
+                      <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#091e42 0%,#1e3a8a 100%);color:#f8fafc;">
+                        <span style="font-size:0.75rem;font-weight:700;">${escapeHtml(courseCode)} EXAMINATION</span>
+                      </div>
+                    `}
+                  </div>
+                  <div class="pq-card-top" style="margin-bottom:8px;">
+                    <span class="pq-course-code level-${p.course_level || 300}">${escapeHtml(courseCode)}</span>
+                    <span class="pq-year-chip">${escapeHtml(session)} Session</span>
+                  </div>
+                  <h3 class="pq-course-title">${escapeHtml(courseCode)}: ${escapeHtml(courseTitle)}</h3>
+                  <div class="pq-paper-name">${escapeHtml(title)}</div>
+                  <div class="pq-meta-row">
+                    <span class="pq-meta-item">${levelText} · ${semText}</span>
+                    <span class="pq-meta-item">${isImage ? 'JPEG Image' : 'PDF Document'} · ${sizeText}</span>
+                  </div>
+                  <div class="pq-action-row">
+                    <button type="button" class="pq-btn-preview js-preview-paper"
+                      data-title="${escapeAttr(title)}" 
+                      data-code="${escapeAttr(courseCode)}" 
+                      data-coursetitle="${escapeAttr(courseTitle)}" 
+                      data-year="${escapeAttr(session)}" 
+                      data-url="${escapeAttr(filePath)}" 
+                      data-filename="${escapeAttr(fileName)}">
+                      Preview
+                    </button>
+                    <a href="${escapeAttr(filePath)}" download="${escapeAttr(fileName)}" class="pq-btn-download">
+                      Download
+                    </a>
+                  </div>
+                </div>
+              `;
+            }).join('');
+          }
+        }
+      } catch (err) {
+        console.warn('Live past questions preview notice:', err);
+      }
     }
+
+    // Modal helpers & event bindings
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+    function escapeAttr(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // Modal Preview Handler for Homepage
+    (function initPqModal() {
+      const modal = document.getElementById('pdfPreviewModal');
+      if (!modal) return;
+      const titleEl = document.getElementById('modalPaperTitle');
+      const subtitleEl = document.getElementById('modalPaperSubtitle');
+      const newTabBtn = document.getElementById('modalNewTabBtn');
+      const downloadBtn = document.getElementById('modalDownloadBtn');
+      const closeBtn = document.getElementById('modalCloseBtn');
+      const imgViewer = document.getElementById('modalImgViewer');
+      const imgWrap = document.getElementById('modalImageWrap');
+      const pdfIframe = document.getElementById('modalPdfIframe');
+
+      function openModal(data) {
+        if (!data || !data.url) return;
+        if (titleEl) titleEl.textContent = `${data.code || ''}: ${data.title || 'Past Examination Paper'}`;
+        if (subtitleEl) subtitleEl.textContent = `${data.coursetitle ? data.coursetitle + ' · ' : ''}Session: ${data.year || '2023/2024'} · NASS UNIZIK Departmental Repository`;
+
+        const isImg = /\.(jpg|jpeg|png|webp|gif)$/i.test(data.url);
+        if (isImg) {
+          if (imgViewer) imgViewer.src = data.url;
+          if (imgWrap) imgWrap.style.display = 'block';
+          if (pdfIframe) {
+            pdfIframe.style.display = 'none';
+            pdfIframe.src = 'about:blank';
+          }
+        } else {
+          if (pdfIframe) {
+            pdfIframe.src = data.url;
+            pdfIframe.style.display = 'block';
+          }
+          if (imgWrap) imgWrap.style.display = 'none';
+          if (imgViewer) imgViewer.src = '';
+        }
+
+        if (downloadBtn) {
+          downloadBtn.href = data.url;
+          downloadBtn.download = data.filename || 'Past_Question.jpg';
+        }
+        if (newTabBtn) {
+          newTabBtn.href = data.url;
+        }
+
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+          if (pdfIframe) pdfIframe.src = 'about:blank';
+          if (imgViewer) imgViewer.src = '';
+        }, 200);
+      }
+
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+
+      // Delegate click for any .js-preview-paper element
+      document.addEventListener('click', (e) => {
+        const trigger = e.target.closest('.js-preview-paper');
+        if (!trigger) return;
+        e.preventDefault();
+        openModal({
+          title: trigger.dataset.title,
+          code: trigger.dataset.code,
+          coursetitle: trigger.dataset.coursetitle,
+          year: trigger.dataset.year,
+          url: trigger.dataset.url,
+          filename: trigger.dataset.filename
+        });
+      });
+
+      // Keyboard accessible preview
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          const trigger = e.target.closest('.pq-card-preview-wrap.js-preview-paper');
+          if (trigger) {
+            e.preventDefault();
+            openModal({
+              title: trigger.dataset.title,
+              code: trigger.dataset.code,
+              coursetitle: trigger.dataset.coursetitle,
+              year: trigger.dataset.year,
+              url: trigger.dataset.url,
+              filename: trigger.dataset.filename
+            });
+          }
+        }
+      });
+    })();
 
     window.loadHomeData = loadHomeData;
     document.addEventListener('DOMContentLoaded', loadHomeData);

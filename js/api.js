@@ -162,7 +162,7 @@ const API = {
         // Cache successful GET responses in localStorage for instant offline access
         if (isGet && data) {
           try {
-            const cacheKey = `nass_api_cache_${endpoint.split('?')[0]}`;
+            const cacheKey = `nass_api_cache_${endpoint}`;
             localStorage.setItem(cacheKey, JSON.stringify(data));
           } catch (_) {}
         }
@@ -179,7 +179,7 @@ const API = {
         // On failure for GET, serve cached copy if available
         if (isGet) {
           try {
-            const cacheKey = `nass_api_cache_${endpoint.split('?')[0]}`;
+            const cacheKey = `nass_api_cache_${endpoint}`;
             const cached = localStorage.getItem(cacheKey);
             if (cached) {
               console.warn(`[NassAPI] Serving cached data for ${endpoint}:`, err.message || err);
