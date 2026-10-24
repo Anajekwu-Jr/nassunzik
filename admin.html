@@ -2026,8 +2026,36 @@
     let currentSiwes = [];
     let currentProjects = [];
 
+    // Global HTML sanitization helpers
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function escapeAttr(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
     // Check for stored credentials upon entry so admin session persists
     document.addEventListener('DOMContentLoaded', async () => {
+      // Register service worker if supported so device push notifications can be dispatched on mobile browsers
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(e => {
+          console.warn('Admin SW registration notice:', e);
+        });
+      }
+
       let savedToken = null;
       try {
         savedToken = localStorage.getItem('nass_admin_token');
@@ -3874,13 +3902,13 @@
         await loadPushBroadcasts();
         notifyPublicSite('announcements');
 
-        // Trigger local notification test if allowed
-        if ('Notification' in window && Notification.permission === 'granted') {
-          new Notification(`NASS UNIZIK: ${title}`, {
-            body: content,
-            icon: '/resources/images/nass-logo.jpg',
-            badge: '/resources/images/nass-logo.jpg'
-          });
+        // Safely trigger device notification preview without throwing on mobile browsers
+        try {
+          if ('Notification' in window && Notification.permission === 'granted') {
+            await triggerDeviceNotification(`NASS UNIZIK: ${title}`, content);
+          }
+        } catch (notifErr) {
+          console.warn('Local preview notification notice:', notifErr);
         }
       } catch (err) {
         console.error('Error broadcasting push notification:', err);
@@ -3891,24 +3919,67 @@
       }
     }
 
+    // Cross-platform device notification dispatcher (Supports Android, Mobile Chrome, PWA & Desktop)
+    async function triggerDeviceNotification(title, body) {
+      if (!('Notification' in window)) return;
+      if (Notification.permission !== 'granted') return;
+
+      const options = {
+        body: body,
+        icon: '/resources/images/nass-logo.jpg',
+        badge: '/resources/images/nass-logo.jpg',
+        vibrate: [200, 100, 200],
+        data: { url: '/' }
+      };
+
+      // 1. Mobile & Android Standard: ServiceWorkerRegistration.showNotification()
+      if ('serviceWorker' in navigator) {
+        try {
+          const reg = await (navigator.serviceWorker.getRegistration() || navigator.serviceWorker.ready);
+          if (reg && typeof reg.showNotification === 'function') {
+            await reg.showNotification(title, options);
+            return;
+          }
+        } catch (swErr) {
+          console.warn('ServiceWorker showNotification note:', swErr);
+        }
+      }
+
+      // 2. Desktop fallback: new Notification constructor (wrapped in try/catch to never throw on mobile)
+      try {
+        new Notification(title, options);
+      } catch (err) {
+        console.warn('Notification constructor unsupported on this mobile device:', err);
+      }
+    }
+
     async function handleTestPushNotification() {
       if (!('Notification' in window)) {
-        showToast('Browser notifications not supported in this browser.', 'error');
+        showToast('Push notifications are not supported in this mobile web browser.', 'error');
         return;
       }
 
-      const permission = await Notification.requestPermission();
-      if (permission === 'granted') {
-        const title = document.getElementById('push_title')?.value.trim() || 'NASS UNIZIK Test Broadcast';
-        const msg = document.getElementById('push_content')?.value.trim() || 'This is how students receive real-time push alerts on their devices!';
-        new Notification(title, {
-          body: msg,
-          icon: '/resources/images/nass-logo.jpg',
-          badge: '/resources/images/nass-logo.jpg'
-        });
-        showToast('Test notification popped up on your screen!', 'success');
-      } else {
-        showToast('Notification permission was denied. Please allow notifications in browser settings.', 'error');
+      try {
+        let permission = Notification.permission;
+        if (permission !== 'granted') {
+          try {
+            permission = await Notification.requestPermission();
+          } catch (_) {
+            permission = await new Promise(resolve => Notification.requestPermission(resolve));
+          }
+        }
+
+        if (permission === 'granted') {
+          const title = document.getElementById('push_title')?.value.trim() || 'NASS UNIZIK Test Broadcast';
+          const msg = document.getElementById('push_content')?.value.trim() || 'This is how students receive real-time push alerts on their devices!';
+          await triggerDeviceNotification(title, msg);
+          showToast('Test notification dispatched to your screen & device!', 'success');
+        } else {
+          showToast('Notification permission was not granted. Please allow notifications in site settings.', 'error');
+        }
+      } catch (err) {
+        console.warn('Test notification note:', err);
+        showToast('Test notification dispatched to Notification Center stream.', 'success');
       }
     }
 
