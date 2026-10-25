@@ -1,9 +1,9 @@
 {
-  "id": "/",
-  "name": "National Association of Students of Statistics | UNIZIK",
+  "id": "/app",
+  "name": "NASS UNIZIK Departmental Mobile Application",
   "short_name": "NASS UNIZIK",
-  "description": "Official departmental portal of the National Association of Students of Statistics (NASS), Nnamdi Azikiwe University, Awka. Facts from Figures.",
-  "start_url": "/",
+  "description": "Official student mobile software application for the National Association of Students of Statistics (NASS), Department of Statistics, Nnamdi Azikiwe University (UNIZIK).",
+  "start_url": "/app",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",
@@ -12,6 +12,18 @@
   "lang": "en-NG",
   "categories": ["education", "productivity", "utilities"],
   "icons": [
+    {
+      "src": "/resources/images/nass-badge.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "badge"
+    },
+    {
+      "src": "/resources/images/nass-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
     {
       "src": "/resources/images/nass-logo.jpg",
       "sizes": "512x512",

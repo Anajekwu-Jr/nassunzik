@@ -13,6 +13,18 @@
   "categories": ["education", "productivity", "utilities"],
   "icons": [
     {
+      "src": "/resources/images/nass-badge.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "badge"
+    },
+    {
+      "src": "/resources/images/nass-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
       "src": "/resources/images/nass-logo.jpg",
       "sizes": "512x512",
       "type": "image/jpeg",

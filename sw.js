@@ -106,11 +106,18 @@ self.addEventListener('push', (event) => {
     }
   }
 
+  const origin = self.location ? self.location.origin : '';
+  const iconUrl = origin + '/resources/images/nass-icon-192.png';
+  const badgeUrl = origin + '/resources/images/nass-badge.png';
+
   const options = {
     body: data.body,
-    icon: '/resources/images/nass-logo.jpg',
-    badge: '/resources/images/nass-logo.jpg',
+    icon: iconUrl,
+    badge: badgeUrl,
+    image: data.image || (origin + '/resources/images/nass-logo.jpg'),
     vibrate: [200, 100, 200],
+    tag: 'nass-unizik-announcement',
+    renotify: true,
     data: { url: data.url || '/' }
   };
 

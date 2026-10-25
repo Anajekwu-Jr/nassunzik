@@ -33,7 +33,8 @@
   <!-- Top Institutional Bar -->
   <div class="institutional-topbar" id="topbar">
     <div class="container topbar-content">
-      <div class="topbar-left">
+      <div class="topbar-left" style="display: flex; align-items: center; gap: 10px;">
+        <img src="/resources/images/nass-logo.jpg" alt="NASS UNIZIK Icon" class="topbar-app-icon" style="width: 22px; height: 22px; border-radius: 5px; object-fit: cover; border: 1.5px solid #f59e0b; box-shadow: 0 1px 4px rgba(0,0,0,0.25); display: inline-block; vertical-align: middle;">
         <span class="topbar-motto">Facts from Figures</span>
         <span class="topbar-divider">|</span>
         <span>Department of Statistics, Nnamdi Azikiwe University (UNIZIK)</span>
@@ -1492,10 +1493,49 @@
         loadHomeData();
       }
     });
+    // Show device push alert if announcements updated and permission granted
+    async function showLiveAnnouncementPush(title, content) {
+      if (!('Notification' in window) || Notification.permission !== 'granted') return;
+      const origin = window.location.origin || '';
+      const options = {
+        body: content,
+        icon: origin + '/resources/images/nass-icon-192.png',
+        badge: origin + '/resources/images/nass-badge.png',
+        image: origin + '/resources/images/nass-logo.jpg',
+        vibrate: [200, 100, 200],
+        tag: 'nass-unizik-announcement',
+        renotify: true,
+        data: { url: '/' }
+      };
+
+      if ('serviceWorker' in navigator) {
+        try {
+          const reg = await (navigator.serviceWorker.getRegistration() || navigator.serviceWorker.ready);
+          if (reg && typeof reg.showNotification === 'function') {
+            await reg.showNotification(title, options);
+            return;
+          }
+        } catch (_) {}
+      }
+
+      try {
+        new Notification(title, options);
+      } catch (_) {}
+    }
+
     if ('BroadcastChannel' in window) {
       const bc = new BroadcastChannel('nass_portal_channel');
-      bc.onmessage = () => {
+      bc.onmessage = async (e) => {
         loadHomeData();
+        if (e.data && e.data.module === 'announcements') {
+          try {
+            const list = await NassAPI.getAnnouncements();
+            if (Array.isArray(list) && list.length > 0) {
+              const latest = list[0];
+              showLiveAnnouncementPush(`NASS UNIZIK: ${latest.title}`, latest.content);
+            }
+          } catch (_) {}
+        }
       };
     }
   </script>

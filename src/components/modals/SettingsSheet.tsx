@@ -33,12 +33,15 @@ export const SettingsSheet: React.FC = () => {
 
   if (!settingsOpen) return null;
 
-  const togglePush = () => {
+  const togglePush = async () => {
     triggerHaptic();
     const nextState = !pushEnabled;
     setPushEnabled(nextState);
     try {
       localStorage.setItem('nass_push_enabled', JSON.stringify(nextState));
+      if (nextState && 'Notification' in window && Notification.permission === 'default') {
+        await Notification.requestPermission();
+      }
     } catch {}
   };
 

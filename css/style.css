@@ -681,6 +681,24 @@ a:hover {
   font-size: 0.75rem;
 }
 
+.topbar-app-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1.5px solid #f59e0b;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.topbar-app-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+}
+
 .topbar-divider {
   opacity: 0.3;
 }
