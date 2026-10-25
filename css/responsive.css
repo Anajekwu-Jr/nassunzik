@@ -1,38 +1,123 @@
 /* ==========================================================================
    NASS PORTAL - RESPONSIVE STYLESHEET
-   100% Viewport Mobile Optimization, Breakpoints, and Touch-Friendly Rules
+   Comprehensive Layout Stabilization, Viewport Lock & Fluid Scaling
+   Motto: "Facts from Figures"
    ========================================================================== */
 
-/* Universal Layout & Box Sizing Reset for Mobile Fluidity */
-html, body {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* --------------------------------------------------------------------------
+   1. Universal Layout, Reset & Anti-Shaking Global Rules
+   -------------------------------------------------------------------------- */
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
-main, section, header, footer, .hero-section {
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden !important;
+  overscroll-behavior-x: none !important;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Fluid Content Centered Container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(16px, 4vw, 32px);
+  padding-right: clamp(16px, 4vw, 32px);
+  box-sizing: border-box;
+}
+
+/* Prevent Media, Iframes, Tables, and Pre elements from overflowing viewport */
+img, video, canvas, svg, iframe {
+  max-width: 100% !important;
+  height: auto;
+}
+
+table {
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+.table-responsive {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior-x: contain;
+}
+
+/* Wrap long words, URLs, hashes, and emails anywhere so no string pushes the layout */
+p, span, h1, h2, h3, h4, h5, h6, a, li, th, td, code, pre, label, div {
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+/* Prevent flex and grid children from blowing past container width */
+.flex > *,
+.grid > *,
+[class*="grid"] > *,
+div[style*="display: flex"] > *,
+div[style*="display: grid"] > * {
+  min-width: 0 !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. Fluid Typography & Spacing with clamp()
+   Ensures nothing looks too big or too small on any device
+   -------------------------------------------------------------------------- */
+.hero-title {
+  font-size: clamp(1.75rem, 3.8vw + 0.6rem, 3.25rem) !important;
+  line-height: 1.15 !important;
+}
+
+.hero-lead {
+  font-size: clamp(0.92rem, 0.9vw + 0.65rem, 1.15rem) !important;
+  line-height: 1.6 !important;
+}
+
+.section-title {
+  font-size: clamp(1.4rem, 2.2vw + 0.6rem, 2.25rem) !important;
+  line-height: 1.25 !important;
+}
+
+.page-title {
+  font-size: clamp(1.6rem, 2.8vw + 0.6rem, 2.5rem) !important;
+  line-height: 1.2 !important;
+}
+
+.stat-value {
+  font-size: clamp(1.85rem, 3vw + 0.8rem, 2.85rem) !important;
+  line-height: 1.1 !important;
+}
+
+.section {
+  padding: clamp(32px, 4.5vw, 64px) 0 !important;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
 }
 
-img, video, canvas, svg {
-  max-width: 100%;
-  height: auto;
+/* Full-height sections use 100dvh instead of 100vh */
+.full-screen-section,
+.min-h-screen,
+.h-screen {
+  min-height: 100dvh !important;
 }
 
-/* Mobile Navigation Drawer - Left Docked */
+/* --------------------------------------------------------------------------
+   3. Mobile Navigation Drawer (Docked Left, 100dvh)
+   -------------------------------------------------------------------------- */
 .mobile-nav-backdrop {
   position: fixed;
   inset: 0;
   background-color: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   z-index: 998;
   display: none;
 }
@@ -48,7 +133,7 @@ img, video, canvas, svg {
   right: auto;
   width: 300px;
   max-width: 85vw;
-  height: 100vh;
+  height: 100dvh;
   background-color: var(--surface-color);
   box-shadow: 5px 0 25px rgba(0, 0, 0, 0.15);
   z-index: 999;
@@ -56,6 +141,7 @@ img, video, canvas, svg {
   flex-direction: column;
   transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1);
   overflow-y: auto;
+  overscroll-behavior-y: contain;
 }
 
 .mobile-nav-drawer.open {
@@ -114,7 +200,7 @@ img, video, canvas, svg {
   font-size: 0.8125rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  min-height: 44px; /* Touch target accessibility */
+  min-height: 44px;
   transition: all var(--transition-fast);
 }
 
@@ -141,36 +227,49 @@ img, video, canvas, svg {
   color: var(--text-muted);
 }
 
-/* ==========================================================================
-   BREAKPOINT: Desktop to Tablet (max-width: 1024px)
-   ========================================================================== */
-@media (max-width: 1024px) {
-  .hero-grid,
-  .hod-grid,
-  .news-events-grid,
-  .two-col-grid,
-  div[style*="grid-template-columns: 1fr 1.6fr"],
-  div[style*="grid-template-columns: 1.2fr 0.8fr"],
-  div[style*="grid-template-columns: 1fr 1fr"] {
-    grid-template-columns: 1fr !important;
-    gap: 30px !important;
-  }
-
-  .hero-grid > *,
-  .hod-grid > *,
-  .news-events-grid > *,
-  .two-col-grid > * {
-    min-width: 0 !important;
-    width: 100% !important;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+/* --------------------------------------------------------------------------
+   4. DESKTOP MEDIA QUERY (1025px and up)
+   -------------------------------------------------------------------------- */
+@media (min-width: 1025px) {
+  .container {
+    max-width: 1200px;
+    padding-left: 32px;
+    padding-right: 32px;
   }
 
   .main-nav {
-    display: none; /* Switch to hamburger on tablet & mobile */
+    display: flex;
+  }
+
+  .hamburger-btn {
+    display: none;
+  }
+
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr 1.2fr;
+    gap: 40px;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1.25fr 0.85fr;
+    gap: 48px;
+    align-items: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. TABLET MEDIA QUERY (601px to 1024px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .main-nav {
+    display: none; /* Drawer hamburger on tablet */
   }
 
   .hamburger-btn {
@@ -180,31 +279,88 @@ img, video, canvas, svg {
     min-height: 44px;
     min-width: 44px;
   }
-}
 
-/* ==========================================================================
-   BREAKPOINT: Tablet & Mobile Devices (max-width: 768px)
-   Occupies 100% Viewport, Zero Half-Width Constraints
-   ========================================================================== */
-@media (max-width: 768px) {
-  :root {
-    --header-height: 68px;
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
 
-  /* Full Viewport Container Scaling */
+  .hod-grid,
+  .news-events-grid,
+  .two-col-grid,
+  div[style*="grid-template-columns: 1fr 1.6fr"],
+  div[style*="grid-template-columns: 1.2fr 0.8fr"] {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 30px !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  .col-span-8,
+  .col-span-12 {
+    grid-column: span 2 !important;
+  }
+
+  .col-span-4,
+  .col-span-6,
+  .col-span-3 {
+    grid-column: span 1 !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. MOBILE MEDIA QUERY (up to 600px)
+   Requirement 7: On mobile, stack everything in a single column
+   Requirement 3: Fix every element wider than screen, min-width: 0, text wrap
+   Requirement 8: 100dvh, overscroll-behavior-x: none
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  :root {
+    --header-height: 64px;
+  }
+
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
   .container {
     width: 100% !important;
     max-width: 100% !important;
     padding-left: 16px !important;
     padding-right: 16px !important;
-    box-sizing: border-box !important;
   }
 
   .institutional-topbar {
-    display: none; /* Conceal micro-topbar on small phones to save vertical space */
+    display: none !important; /* Save vertical space on mobile phones */
   }
 
   /* Header Optimization */
+  .main-nav {
+    display: none !important;
+  }
+
+  .hamburger-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
   .header-container {
     gap: 8px !important;
     padding-left: 0 !important;
@@ -215,60 +371,72 @@ img, video, canvas, svg {
     gap: 6px !important;
   }
 
-  .theme-toggle-btn .theme-toggle-label {
-    display: none !important;
-  }
-
-  .theme-toggle-btn {
-    padding: 8px 10px !important;
-    min-height: 40px !important;
-  }
-
+  .theme-toggle-btn .theme-toggle-label,
   .search-trigger-btn span.search-placeholder,
   .search-shortcut {
     display: none !important;
   }
 
+  .theme-toggle-btn,
   .search-trigger-btn {
-    padding: 8px 12px !important;
+    padding: 8px 10px !important;
     min-height: 40px !important;
   }
 
-  /* Hero Section: 100% Full-Width Mobile Sizing */
-  .hero-section {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 36px 0 44px !important;
-    box-sizing: border-box !important;
-  }
-
-  .hero-grid {
+  /* STACK EVERYTHING IN A SINGLE COLUMN ON MOBILE (<=600px) */
+  .hero-grid,
+  .hod-grid,
+  .news-events-grid,
+  .two-col-grid,
+  .bento-grid,
+  .stats-grid,
+  .footer-grid,
+  .quick-links-grid,
+  .features-grid,
+  .courses-grid,
+  .staff-grid,
+  .events-grid,
+  .archive-grid,
+  .curriculum-grid,
+  .admin-stat-grid,
+  .resources-grid,
+  [class*="grid"],
+  div[style*="grid-template-columns"],
+  div[style*="display: grid"],
+  div[style*="display:grid"] {
+    display: grid !important;
     grid-template-columns: 1fr !important;
-    gap: 24px !important;
-    width: 100% !important;
-  }
-
-  .hero-content {
+    gap: 16px !important;
     width: 100% !important;
     max-width: 100% !important;
   }
 
-  .hero-title {
-    font-size: 2.1rem !important;
-    line-height: 1.18 !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
-    margin-bottom: 14px !important;
-  }
-
-  .hero-lead {
-    font-size: 0.95rem !important;
+  /* Bento Tiles & Cards in 1 Column */
+  .col-span-12,
+  .col-span-8,
+  .col-span-6,
+  .col-span-4,
+  .col-span-3,
+  .bento-tile,
+  .bento-card {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
     max-width: 100% !important;
-    line-height: 1.6 !important;
-    margin-bottom: 22px !important;
+    min-width: 0 !important;
   }
 
-  /* Hero CTA Group - Stacks 100% Full-Width Buttons */
+  /* Hero Content & CTA Group: 100% Full Width Column */
+  .hero-section {
+    padding: 28px 0 36px !important;
+  }
+
+  .hero-content,
+  .hero-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
   .hero-cta-group {
     display: flex !important;
     flex-direction: column !important;
@@ -283,164 +451,105 @@ img, video, canvas, svg {
     width: 100% !important;
     justify-content: center !important;
     text-align: center !important;
-    box-sizing: border-box !important;
   }
 
-  /* Hero Card Noticeboard - Full Mobile Width */
-  .hero-card {
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-    margin-top: 8px !important;
-    padding: 20px 16px !important;
-  }
-
-  /* Section Spacing & Titles */
-  .section {
-    padding: 36px 0 !important;
+  /* Filter Bars & Button Groups */
+  .filter-bar {
+    padding: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
     width: 100% !important;
     max-width: 100% !important;
   }
 
-  .section-title {
-    font-size: 1.65rem !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
-  }
-
-  .page-title {
-    font-size: 1.85rem !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
-  }
-
-  /* Quick Access Bento Grid - Collapses 12-col Desktop into 100% Full-Width Mobile Cards */
-  .bento-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 14px !important;
+  .filter-btn-group {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
     width: 100% !important;
   }
 
-  .col-span-12,
-  .col-span-8,
-  .col-span-6,
-  .col-span-4,
-  .col-span-3,
-  .bento-tile,
-  .bento-card {
-    grid-column: auto !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
+  .filter-btn {
+    flex: 1 1 auto !important;
+    text-align: center !important;
+    min-height: 40px !important;
+    padding: 6px 12px !important;
   }
 
-  /* Statistics Banner Grid */
-  .stats-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-    width: 100% !important;
-  }
-
-  .stat-card {
-    padding: 16px 12px !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  .stat-value {
-    font-size: 2rem !important;
-    word-break: break-word !important;
-  }
-
-  .stat-label {
-    font-size: 0.75rem !important;
-    line-height: 1.4 !important;
-  }
-
-  /* HOD & News / Events Grids - 100% 1-Column Mobile Layout */
-  .hod-grid,
-  .news-events-grid,
-  .two-col-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 24px !important;
-    width: 100% !important;
-  }
-
+  /* Cards, Articles, Events: Single Column Stack */
   .card,
-  .event-card {
+  .event-card,
+  .stat-card,
+  .bento-card {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
-    box-sizing: border-box !important;
   }
 
   .event-card {
     flex-direction: column !important;
+    align-items: flex-start !important;
     gap: 12px !important;
   }
 
-  .event-date-badge {
-    align-self: flex-start !important;
+  /* Flex containers that might overflow on mobile */
+  .card[style*="display: flex"],
+  div[style*="display: flex; justify-content: space-between"] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
   }
 
-  /* Any Desktop Multi-column Grids across Courses, Staff, News, Archive */
-  div[style*="grid-template-columns: repeat(auto-fill, minmax(360px"],
-  div[style*="grid-template-columns: repeat(auto-fill, minmax(340px"],
-  div[style*="grid-template-columns: repeat(auto-fill, minmax(320px"],
-  div[style*="grid-template-columns: repeat(auto-fill, minmax(300px"],
-  div[style*="grid-template-columns: repeat(auto-fill, minmax(280px"],
-  div[style*="grid-template-columns: repeat(auto-fill, minmax(260px"],
-  div[style*="grid-template-columns: repeat(auto-fit, minmax(300px"],
-  div[style*="grid-template-columns: repeat(auto-fit, minmax(280px"],
-  div[style*="grid-template-columns: repeat(auto-fit, minmax(260px"],
-  div[style*="grid-template-columns: repeat(auto-fit, minmax(240px"],
-  div[style*="grid-template-columns: repeat(auto-fit, minmax(220px"] {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
+  /* Prevent any inline min-widths from exceeding 100% screen */
+  div[style*="min-width"],
+  span[style*="min-width"],
+  input[style*="min-width"],
+  select[style*="min-width"] {
+    min-width: 0 !important;
+    max-width: 100% !important;
     width: 100% !important;
   }
 
-  /* Footer: 1 Column Full Width */
-  .footer-grid {
-    grid-template-columns: 1fr !important;
-    gap: 28px !important;
+  /* Search Inputs and Controls */
+  .form-control,
+  .form-input,
+  .form-select,
+  input[type="text"],
+  input[type="search"],
+  select {
     width: 100% !important;
+    max-width: 100% !important;
   }
 
+  /* Footer Stack */
   .footer-bottom-container {
     flex-direction: column !important;
     text-align: center !important;
-    gap: 10px !important;
+    gap: 12px !important;
     width: 100% !important;
-  }
-
-  /* General Button Mobile Touch Target */
-  .btn {
-    min-height: 44px;
-    box-sizing: border-box;
   }
 
   .search-modal-container {
     margin-top: 10px;
-    width: 95vw !important;
-    max-width: 95vw !important;
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
   }
 }
 
-/* ==========================================================================
-   BREAKPOINT: Compact Mobile Devices (max-width: 480px)
-   ========================================================================== */
-@media (max-width: 480px) {
-  .brand-title {
-    font-size: 1rem !important;
+/* --------------------------------------------------------------------------
+   7. ULTRA-COMPACT MOBILE SCREENS (360px and down)
+   e.g. 320px - 360px devices (Galaxy Fold cover, narrow Androids)
+   -------------------------------------------------------------------------- */
+@media (max-width: 360px) {
+  .container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
   }
-  
-  .brand-subtitle {
-    display: none !important; /* Hide tiny subtitle on narrow phones to prevent header stretching */
+
+  .brand-title {
+    font-size: 0.95rem !important;
   }
 
   .brand-logo {
@@ -449,57 +558,11 @@ img, video, canvas, svg {
   }
 
   .hero-title {
-    font-size: 1.75rem !important;
-    line-height: 1.15 !important;
-  }
-
-  .hero-lead {
-    font-size: 0.875rem !important;
-  }
-
-  .section-title {
-    font-size: 1.45rem !important;
-  }
-
-  .filter-bar {
-    padding: 10px !important;
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 6px !important;
-    width: 100% !important;
-  }
-
-  .filter-btn {
-    font-size: 0.75rem !important;
-    padding: 6px 10px !important;
-  }
-
-  .card-body {
-    padding: 14px 16px !important;
-  }
-}
-
-/* ==========================================================================
-   BREAKPOINT: Ultra-Compact Mobile Screens (max-width: 360px)
-   e.g. 320px - 360px phones (Galaxy Fold cover, small Androids)
-   ========================================================================== */
-@media (max-width: 360px) {
-  .container {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
-
-  .hero-title {
     font-size: 1.55rem !important;
   }
 
-  .stats-grid {
-    grid-template-columns: 1fr !important;
-    gap: 10px !important;
-  }
-
-  .brand-title {
-    font-size: 0.95rem !important;
+  .hero-card {
+    padding: 16px 12px !important;
   }
 
   .search-trigger-btn,
