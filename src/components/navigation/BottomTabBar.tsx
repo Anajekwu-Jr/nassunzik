@@ -23,7 +23,7 @@ export const BottomTabBar: React.FC = () => {
   return (
     <nav
       aria-label="App Navigation"
-      className={`fixed bottom-0 left-0 right-0 z-30 backdrop-blur-xl border-t transition-colors ${
+      className={`sticky bottom-0 left-0 right-0 z-30 backdrop-blur-xl border-t transition-colors w-full shrink-0 ${
         isLight
           ? 'bg-white/95 border-slate-200/90 text-slate-900 shadow-lg'
           : 'bg-[#061226]/95 border-blue-900/40 text-white'

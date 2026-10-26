@@ -42,7 +42,9 @@ export default function App() {
 
       <DeviceSimulatorFrame>
         <AppHeader />
-        <MainScreenContent />
+        <div className="flex-1 overflow-y-auto overflow-x-hidden relative flex flex-col scroll-touch">
+          <MainScreenContent />
+        </div>
         <BottomTabBar />
 
         {/* Global Overlays & Bottom Sheets */}
