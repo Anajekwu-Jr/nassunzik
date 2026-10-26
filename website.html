@@ -223,23 +223,55 @@
 
           <div id="heroAnnouncementsList">
             <div class="bulletin-item">
-              <strong class="bulletin-title">First Semester 2026/2027 Resumption (Oct 12 & 14)</strong>
-              <p class="bulletin-content">
-                Per official Senate memorandum (Ref: NAU/R/E/032/97), new students resume Oct 12; returning students resume Oct 14 for tuition payments, departmental clearance, and lecture commencement.
-              </p>
-              <div class="bulletin-meta">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; gap:8px;">
+                <strong class="bulletin-title">First Semester 2026/2027 Resumption & Course Registration</strong>
                 <span class="badge badge-urgent">SENATE APPROVED</span>
-                <span>Office of the Registrar</span>
+              </div>
+              <p class="bulletin-content">
+                Per official Senate memorandum (Ref: NAU/R/E/032/97), new students resume Oct 12; returning students resume Oct 14. Course registration and payment verification are active on the portal. Ensure your academic adviser signs your green file before submitting to the General Office.
+              </p>
+              <div class="bulletin-meta" style="display:flex; justify-content:space-between; align-items:center;">
+                <span>Head of Department & Senate</span>
+                <span style="color:var(--text-muted); font-size:0.75rem;">Oct 12, 2026</span>
               </div>
             </div>
             <div class="bulletin-item">
-              <strong class="bulletin-title">Matriculation & Examination Dates Fixed</strong>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; gap:8px;">
+                <strong class="bulletin-title">SIWES Orientation & Placement Submission Notice</strong>
+                <span class="badge badge-urgent">IMPORTANT</span>
+              </div>
               <p class="bulletin-content">
-                Matriculation holds on Friday, January 29, 2027. First Semester degree examinations (CBE & PBE) commence Monday, February 22 through Friday, March 19, 2027.
+                Students preparing for the 3-month SIWES industrial training (conducted twice: after 200 Level second semester and after 300 Level second semester) must obtain their departmental introductory letter and submit signed acceptance forms to Coordinator Mr. Charles Anabike.
               </p>
-              <div class="bulletin-meta">
+              <div class="bulletin-meta" style="display:flex; justify-content:space-between; align-items:center;">
+                <span>SIWES Coordinator (Mr. Charles Anabike)</span>
+                <span style="color:var(--text-muted); font-size:0.75rem;">Oct 08, 2026</span>
+              </div>
+            </div>
+            <div class="bulletin-item">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; gap:8px;">
+                <strong class="bulletin-title">Matriculation & Examination Dates Fixed</strong>
                 <span class="badge badge-general">ACADEMIC</span>
+              </div>
+              <p class="bulletin-content">
+                Matriculation holds on Friday, January 29, 2027. First Semester degree examinations (CBE & PBE) commence Monday, February 22 through Friday, March 19, 2027. Lecture and examination timetables are published on the portal.
+              </p>
+              <div class="bulletin-meta" style="display:flex; justify-content:space-between; align-items:center;">
                 <span>Registrar / Senate Committee</span>
+                <span style="color:var(--text-muted); font-size:0.75rem;">Oct 05, 2026</span>
+              </div>
+            </div>
+            <div class="bulletin-item">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; gap:8px;">
+                <strong class="bulletin-title">NASS Annual Statistics Bootcamp & R/Python Workshop</strong>
+                <span class="badge badge-general">WORKSHOP</span>
+              </div>
+              <p class="bulletin-content">
+                The NASS Academic Committee in partnership with NAU-LISA will host weekly statistical computing workshops covering R, SPSS, and Python every Saturday at 11:00 AM in the Departmental Computer Laboratory. Bring your laptops.
+              </p>
+              <div class="bulletin-meta" style="display:flex; justify-content:space-between; align-items:center;">
+                <span>Academic Directorate (Comr. Ejefonye M.)</span>
+                <span style="color:var(--text-muted); font-size:0.75rem;">Sep 28, 2026</span>
               </div>
             </div>
           </div>
@@ -1137,107 +1169,31 @@
         console.warn('Could not fetch academic session settings:', err);
       }
 
-      // Populate Noticeboard Bulletin exclusively from Featured News and Featured Events
+      // Populate Noticeboard Bulletin directly from Announcements to match mobile app billboard
       try {
-        const [featuredNews, featuredEvents] = await Promise.all([
-          NassAPI.getNews({ featured: 'true' }).catch(() => []),
-          NassAPI.getEvents({ featured: 'true' }).catch(() => [])
-        ]);
-
-        const bulletinItems = [];
-
-        if (Array.isArray(featuredNews)) {
-          featuredNews.forEach(n => {
-            bulletinItems.push({
-              id: n.id,
-              type: 'NEWS',
-              badge: 'FEATURED NEWS',
-              badgeClass: 'badge-general',
-              title: n.title,
-              content: n.summary || n.content || '',
-              meta: (n.published_at ? n.published_at.slice(0, 10) : 'Featured Update') + ' · ' + (n.author || 'NASS Editorial Board'),
-              image: n.featured_image,
-              link: `/news.html?id=${n.id}`,
-              dateNum: new Date(n.published_at || n.created_at || Date.now()).getTime()
-            });
-          });
-        }
-
-        if (Array.isArray(featuredEvents)) {
-          featuredEvents.forEach(e => {
-            bulletinItems.push({
-              id: e.id,
-              type: 'EVENT',
-              badge: 'FEATURED EVENT',
-              badgeClass: 'badge-urgent',
-              title: e.title,
-              content: e.description || `Departmental Event scheduled at ${e.venue}`,
-              meta: `${e.event_date || 'Upcoming'}${e.event_time ? ' · ' + e.event_time : ''} · ${e.venue || 'UNIZIK Awka'}`,
-              image: e.banner_image,
-              link: `/events.html?id=${e.id}`,
-              dateNum: new Date(e.event_date || Date.now()).getTime()
-            });
-          });
-        }
-
-        // Fallback: If no news or events are specifically marked as featured, show latest news and upcoming events
-        if (bulletinItems.length === 0) {
-          const [allNews, allEvents] = await Promise.all([
-            NassAPI.getNews({ limit: 2 }).catch(() => []),
-            NassAPI.getEvents({ status: 'UPCOMING' }).catch(() => [])
-          ]);
-          (allNews || []).slice(0, 2).forEach(n => {
-            bulletinItems.push({
-              id: n.id,
-              type: 'NEWS',
-              badge: 'NEWS',
-              badgeClass: 'badge-general',
-              title: n.title,
-              content: n.summary || n.content || '',
-              meta: (n.published_at ? n.published_at.slice(0, 10) : 'Recent News') + ' · ' + (n.author || 'Secretariat'),
-              image: n.featured_image,
-              link: `/news.html?id=${n.id}`,
-              dateNum: 0
-            });
-          });
-          (allEvents || []).slice(0, 1).forEach(e => {
-            bulletinItems.push({
-              id: e.id,
-              type: 'EVENT',
-              badge: 'EVENT',
-              badgeClass: 'badge-urgent',
-              title: e.title,
-              content: e.description || '',
-              meta: `${e.event_date} · ${e.venue}`,
-              image: e.banner_image,
-              link: `/events.html?id=${e.id}`,
-              dateNum: 0
-            });
-          });
-        }
-
+        const announcements = await NassAPI.getAnnouncements().catch(() => []);
         const list = document.getElementById('heroAnnouncementsList');
-        if (list && bulletinItems.length > 0) {
-          list.innerHTML = bulletinItems.slice(0, 3).map(item => `
-            <div class="bulletin-item">
-              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; gap:8px;">
-                <strong class="bulletin-title">
-                  <a href="${item.link}" style="color:inherit; text-decoration:none;">${item.title}</a>
-                </strong>
-                <span class="badge ${item.badgeClass}">${item.badge}</span>
-              </div>
-              ${item.image ? `
-                <div style="margin: 8px 0; max-height: 130px; overflow: hidden; border-radius: var(--radius-sm);">
-                  <img src="${item.image}" alt="${item.title}" style="width: 100%; height: auto; max-height: 130px; object-fit: cover; display: block;" onerror="this.parentElement.style.display='none'">
+        if (list && Array.isArray(announcements) && announcements.length > 0) {
+          list.innerHTML = announcements.slice(0, 4).map(item => {
+            const isUrgent = (item.priority && item.priority.toLowerCase() === 'urgent') || item.priority === 'IMPORTANT' || item.priority === 'high';
+            const badgeLabel = isUrgent ? (item.priority === 'IMPORTANT' ? 'IMPORTANT' : 'SENATE APPROVED') : (item.priority === 'NORMAL' ? 'ACADEMIC' : 'CIRCULAR');
+            const badgeClass = isUrgent ? 'badge-urgent' : 'badge-general';
+            const author = item.author || (isUrgent ? 'Head of Department & Senate' : 'Academic Directorate');
+            const dateStr = item.date || (item.created_at ? new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : 'Oct 2026');
+            return `
+              <div class="bulletin-item">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; gap:8px;">
+                  <strong class="bulletin-title">${item.title}</strong>
+                  <span class="badge ${badgeClass}">${badgeLabel}</span>
                 </div>
-              ` : ''}
-              <p class="bulletin-content">${item.content ? (item.content.length > 180 ? item.content.slice(0, 180) + '...' : item.content) : ''}</p>
-              <div class="bulletin-meta" style="display:flex; justify-content:space-between; align-items:center;">
-                <span>${item.meta}</span>
-                <a href="${item.link}" style="color:var(--primary-color); font-weight:600; text-decoration:none; font-size:0.78125rem;">Read Details &rarr;</a>
+                <p class="bulletin-content">${item.content || ''}</p>
+                <div class="bulletin-meta" style="display:flex; justify-content:space-between; align-items:center;">
+                  <span>${author}</span>
+                  <span style="color:var(--text-muted); font-size:0.75rem;">${dateStr}</span>
+                </div>
               </div>
-            </div>
-          `).join('');
+            `;
+          }).join('');
         }
       } catch (e) {
         console.warn('Noticeboard Bulletin loader notice:', e);
@@ -1594,5 +1550,7 @@
       };
     }
   </script>
+  <!-- Sam AI Floating Chat Widget -->
+  <script defer src="/js/sam-ai-widget.js"></script>
 </body>
 </html>

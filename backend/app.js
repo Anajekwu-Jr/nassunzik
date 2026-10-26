@@ -24,6 +24,7 @@ import materialRoutes from './routes/materials.js';
 import settingsRoutes from './routes/settings.js';
 import careersRoutes from './routes/careers.js';
 import scheduledNotificationRoutes from './routes/scheduled_notifications.js';
+import chatRoutes from './routes/chat.js';
 import { startNotificationScheduler } from './scheduler.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -138,6 +139,7 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/careers', careersRoutes);
 app.use('/api/scheduled-notifications', scheduledNotificationRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

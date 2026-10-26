@@ -382,20 +382,26 @@ function seedInitialData() {
       VALUES (?, ?, ?, ?)
     `);
     insertAnn.run(
-      'Resumption of First Semester 2025/2026 Academic Session',
-      'All statistics students are reminded that departmental course registration and verification of payments closes on Friday, October 30th. Ensure your course advisors sign your green files.',
+      'First Semester 2026/2027 Resumption & Course Registration',
+      'Per official Senate memorandum (Ref: NAU/R/E/032/97), new students resume Oct 12; returning students resume Oct 14. Course registration and payment verification are active on the portal. Ensure your academic adviser signs your green file before submitting to the General Office.',
       'URGENT',
       1
     );
     insertAnn.run(
-      'SIWES Orientation & Placement Submission Deadline',
-      '300 Level students embarking on the 6-month Industrial Training must submit their acceptance letters to the Departmental SIWES Coordinator before the end of the month.',
+      'SIWES Orientation & Placement Submission Notice',
+      'Students preparing for the 3-month SIWES industrial training (conducted twice: after 200 Level second semester and after 300 Level second semester) must obtain their departmental introductory letter and submit signed acceptance forms to Coordinator Mr. Charles Anabike.',
       'IMPORTANT',
       1
     );
     insertAnn.run(
+      'Matriculation & Examination Dates Fixed',
+      'Matriculation holds on Friday, January 29, 2027. First Semester degree examinations (CBE & PBE) commence Monday, February 22 through Friday, March 19, 2027. Lecture and examination timetables are published on the portal.',
+      'NORMAL',
+      1
+    );
+    insertAnn.run(
       'NASS Annual Statistics Bootcamp & R/Python Workshop',
-      'Registration is now open for the hands-on data analytics and statistical modeling bootcamp covering R, SPSS, and Python.',
+      'The NASS Academic Committee in partnership with NAU-LISA will host weekly statistical computing workshops covering R, SPSS, and Python every Saturday at 11:00 AM in the Departmental Computer Laboratory. Bring your laptops.',
       'NORMAL',
       1
     );
@@ -501,7 +507,7 @@ function seedInitialData() {
       300,
       2,
       6,
-      'Six months of industrial training in statistical and research departments of government agencies, banks, hospitals, research institutes or corporate industries.',
+      'Three months of practical industrial training (undertaken twice: after 200L second semester and after 300L second semester) in statistical and research departments of government agencies, banks, hospitals, research institutes or corporate industries.',
       'Practical attachment in industry applying statistical data collection, data quality validation, automated reporting, database querying and industrial research.'
     );
 
@@ -711,7 +717,7 @@ function seedInitialData() {
       phone: '08144016159/09050148729',
       email: '',
       photo_url: '/resources/images/executives/director_of_socials.jpg?v=2',
-      bio: 'Chief coordinator of the Annual NASS Week, freshmen orientation banquet, cultural festivals, student welfare, and social engagements.',
+      bio: 'Coordinator of social activities in the department.',
       tenure: '2026/2027',
       display_order: 8
     }
@@ -1061,7 +1067,7 @@ function seedInitialData() {
 
     insertFaq.run(
       'When is the SIWES industrial training scheduled and how long does it last?',
-      'SIWES takes place at the 300 Level during the second semester break and lasts for a mandatory period of six (6) months. Students submit weekly logbooks, undergo institutional supervision, and defend their technical report.',
+      'SIWES is 3 months and is done twice: after 200 Level second semester (SIWES I) and after 300 Level second semester (SIWES II). Students submit weekly logbooks, undergo institutional supervision, and defend their technical reports.',
       'SIWES',
       2
     );

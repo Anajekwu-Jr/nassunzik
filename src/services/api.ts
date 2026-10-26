@@ -1250,7 +1250,7 @@ const DEFAULT_EXECUTIVES: Executive[] = [
     phone: '08144016159/09050148729',
     email: '',
     photo_url: '/resources/images/executives/director_of_socials.jpg?v=2',
-    bio: 'Chief coordinator of the Annual NASS Week, freshmen orientation banquet, cultural festivals, student welfare, and social engagements.',
+    bio: 'Coordinator of social activities in the department.',
     tenure: '2026/2027',
     display_order: 8
   }
@@ -1296,7 +1296,7 @@ const DEFAULT_EVENTS: EventItem[] = [
     date: 'September 24, 2026',
     time: '9:00 AM',
     venue: 'Departmental Boardroom & Statistics Computer Lab',
-    description: 'Rigorous presentation and defense of 6-month industrial experience by 300 Level students before academic panelists and external assessors.',
+    description: 'Rigorous presentation and defense of 3-month industrial training experience (completed after 200L and 300L second semester) before academic panelists and external assessors.',
     organizer: 'Departmental SIWES Board & Prof. Osuji',
     photo_url: '/resources/images/gallery/prof_osuji_vantora27_siwes_defense_2026.jpg',
     is_upcoming: false
@@ -1306,27 +1306,35 @@ const DEFAULT_EVENTS: EventItem[] = [
 const DEFAULT_ANNOUNCEMENTS: Announcement[] = [
   {
     id: 1,
-    title: 'Commencement of 2026/2027 Harmattan Semester Course Registration',
-    content: 'All undergraduate students across 100L, 200L, 300L, and 400L are directed to complete their online course registrations on the portal before the statutory deadline. Ensure verified academic adviser endorsement before submitting signed forms to the General Office.',
+    title: 'First Semester 2026/2027 Resumption & Course Registration',
+    content: 'Per official Senate memorandum (Ref: NAU/R/E/032/97), new students resume Oct 12; returning students resume Oct 14. Course registration and payment verification are active on the portal. Ensure your academic adviser signs your green file before submitting to the General Office.',
     priority: 'high',
-    date: 'Oct 05, 2026',
-    author: 'Head of Department'
+    date: 'Oct 12, 2026',
+    author: 'Head of Department & Senate'
   },
   {
     id: 2,
-    title: 'Official Statistical Tables Compendium Available in Portal',
-    content: 'Students enrolled in STA 111, STA 112, STA 211, STA 312, and STA 341 are reminded to access the UNIZIK Official Statistical Tables (Standard Normal, Student t, Chi-Square, F-distribution) directly inside the portal for classroom and examination use.',
+    title: 'SIWES Orientation & Placement Submission Notice',
+    content: 'Students preparing for the 3-month SIWES industrial training (conducted twice: after 200 Level second semester and after 300 Level second semester) must obtain their departmental introductory letter and submit signed acceptance forms to Coordinator Mr. Charles Anabike.',
     priority: 'high',
-    date: 'Oct 02, 2026',
-    author: 'Academic Directorate (Comr. Ejefonye M.)'
+    date: 'Oct 08, 2026',
+    author: 'SIWES Coordinator (Mr. Charles Anabike)'
   },
   {
     id: 3,
-    title: 'Departmental R & Python Data Science Weekend Clinic',
-    content: 'The NASS Academic Committee in partnership with NAU-LISA will host weekly statistical computing workshops every Saturday at 11:00 AM in the departmental computer laboratory. Bring your laptops.',
+    title: 'Matriculation & Examination Dates Fixed',
+    content: 'Matriculation holds on Friday, January 29, 2027. First Semester degree examinations (CBE & PBE) commence Monday, February 22 through Friday, March 19, 2027. Lecture and examination timetables are published on the portal.',
+    priority: 'normal',
+    date: 'Oct 05, 2026',
+    author: 'Registrar / Senate Committee'
+  },
+  {
+    id: 4,
+    title: 'NASS Annual Statistics Bootcamp & R/Python Workshop',
+    content: 'The NASS Academic Committee in partnership with NAU-LISA will host weekly statistical computing workshops covering R, SPSS, and Python every Saturday at 11:00 AM in the Departmental Computer Laboratory. Bring your laptops.',
     priority: 'normal',
     date: 'Sep 28, 2026',
-    author: 'NASS Secretariat'
+    author: 'Academic Directorate (Comr. Ejefonye M.)'
   }
 ];
 
@@ -1520,8 +1528,19 @@ export const StatsAPI = {
       if (res.ok) {
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
-          setLocalCache('announcements', data);
-          return data;
+          const mapped: Announcement[] = data.map((item: any, idx: number) => {
+            const isUrgent = (item.priority && item.priority.toLowerCase() === 'urgent') || item.priority === 'IMPORTANT' || item.priority === 'high';
+            return {
+              id: item.id || idx + 1,
+              title: item.title,
+              content: item.content,
+              priority: isUrgent ? 'high' : 'normal',
+              date: item.date || (item.created_at ? new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : 'Oct 2026'),
+              author: item.author || (isUrgent ? 'Head of Department' : 'Academic Directorate')
+            };
+          });
+          setLocalCache('announcements', mapped);
+          return mapped;
         }
       }
     } catch (err) {

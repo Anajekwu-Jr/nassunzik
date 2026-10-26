@@ -12,7 +12,9 @@ import {
   MapPin,
   Clock,
   ShieldCheck,
-  Bookmark
+  Bookmark,
+  Bot,
+  MessageSquare
 } from 'lucide-react';
 
 export const HomeScreen: React.FC = () => {
@@ -272,6 +274,43 @@ export const HomeScreen: React.FC = () => {
               NASS Exco
             </span>
           </button>
+        </div>
+      </div>
+
+      {/* Sam AI Companion Spotlight Card */}
+      <div
+        onClick={() => {
+          triggerHaptic();
+          (window as any).openSamAI?.();
+        }}
+        role="button"
+        tabIndex={0}
+        className={`relative overflow-hidden rounded-2xl p-3.5 border shadow-sm cursor-pointer transition active:scale-[0.98] select-none ${
+          isLight
+            ? 'bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 border-amber-500/40 text-white'
+            : 'bg-gradient-to-r from-[#071526] via-[#0c2340] to-[#173661] border-amber-500/40 text-white hover:border-amber-400'
+        }`}
+      >
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 flex items-center justify-center font-bold shadow-md shrink-0">
+              <Bot className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <h4 className="text-xs font-extrabold uppercase tracking-wider text-white">Sam AI</h4>
+                <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40">
+                  COMPANION
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-300 line-clamp-1 mt-0.5">
+                Ask about courses, lecture notes, SIWES, or excos
+              </p>
+            </div>
+          </div>
+          <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center text-amber-400 shrink-0">
+            <MessageSquare className="w-3.5 h-3.5" />
+          </div>
         </div>
       </div>
 
