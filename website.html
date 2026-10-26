@@ -1493,6 +1493,36 @@
         loadHomeData();
       }
     });
+
+    async function checkClientAppInstalled() {
+      if ('getInstalledRelatedApps' in navigator) {
+        try {
+          const apps = await navigator.getInstalledRelatedApps();
+          if (apps && apps.length > 0) return true;
+        } catch (_) {}
+      }
+      try {
+        return await new Promise((resolve) => {
+          const req = indexedDB.open('nass_pwa_meta', 1);
+          req.onerror = () => resolve(false);
+          req.onsuccess = (e) => {
+            try {
+              const db = e.target.result;
+              if (!db.objectStoreNames.contains('meta')) return resolve(false);
+              const tx = db.transaction('meta', 'readonly');
+              const getReq = tx.objectStore('meta').get('is_installed');
+              getReq.onsuccess = () => resolve(Boolean(getReq.result));
+              getReq.onerror = () => resolve(false);
+            } catch (_) {
+              resolve(false);
+            }
+          };
+        });
+      } catch (_) {
+        return false;
+      }
+    }
+
     // Show device push alert if announcements updated and permission granted
     async function showLiveAnnouncementPush(title, content) {
       if (!('Notification' in window) || Notification.permission !== 'granted') return;
@@ -1501,11 +1531,11 @@
         body: content,
         icon: origin + '/resources/images/nass-icon-192.png',
         badge: origin + '/resources/images/nass-badge.png',
-        image: origin + '/resources/images/nass-logo.jpg',
+        // Text-only: image omitted so notification is completely readable
         vibrate: [200, 100, 200],
         tag: 'nass-unizik-announcement',
         renotify: true,
-        data: { url: '/' }
+        data: { url: '/app' }
       };
 
       if ('serviceWorker' in navigator) {
@@ -1519,7 +1549,15 @@
       }
 
       try {
-        new Notification(title, options);
+        const notif = new Notification(title, options);
+        notif.onclick = async () => {
+          notif.close();
+          const isInstalled = await checkClientAppInstalled();
+          if (isInstalled) {
+            window.location.href = '/app';
+          }
+          // Otherwise nowhere!
+        };
       } catch (_) {}
     }
 

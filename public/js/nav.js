@@ -390,6 +390,28 @@
     // Pre-create modal in DOM
     ensureInstallModal();
 
+    function markAppInstalled() {
+      try {
+        const req = indexedDB.open('nass_pwa_meta', 1);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains('meta')) {
+            db.createObjectStore('meta');
+          }
+        };
+        req.onsuccess = (e) => {
+          const db = e.target.result;
+          const tx = db.transaction('meta', 'readwrite');
+          tx.objectStore('meta').put(true, 'is_installed');
+        };
+      } catch (_) {}
+    }
+
+    window.addEventListener('appinstalled', markAppInstalled);
+    if (window.matchMedia && (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone)) {
+      markAppInstalled();
+    }
+
     // Register Service Worker for PWA installability
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').catch(err => {

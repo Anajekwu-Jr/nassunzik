@@ -3942,6 +3942,35 @@
       }
     }
 
+    async function checkClientAppInstalled() {
+      if ('getInstalledRelatedApps' in navigator) {
+        try {
+          const apps = await navigator.getInstalledRelatedApps();
+          if (apps && apps.length > 0) return true;
+        } catch (_) {}
+      }
+      try {
+        return await new Promise((resolve) => {
+          const req = indexedDB.open('nass_pwa_meta', 1);
+          req.onerror = () => resolve(false);
+          req.onsuccess = (e) => {
+            try {
+              const db = e.target.result;
+              if (!db.objectStoreNames.contains('meta')) return resolve(false);
+              const tx = db.transaction('meta', 'readonly');
+              const getReq = tx.objectStore('meta').get('is_installed');
+              getReq.onsuccess = () => resolve(Boolean(getReq.result));
+              getReq.onerror = () => resolve(false);
+            } catch (_) {
+              resolve(false);
+            }
+          };
+        });
+      } catch (_) {
+        return false;
+      }
+    }
+
     // Cross-platform device notification dispatcher (Supports Android, Mobile Chrome, PWA & Desktop)
     async function triggerDeviceNotification(title, body) {
       if (!('Notification' in window)) return;
@@ -3955,11 +3984,11 @@
         body: body,
         icon: iconUrl,
         badge: badgeUrl,
-        image: origin + '/resources/images/nass-logo.jpg',
+        // Text-only notification: no large image attached so message is completely readable
         vibrate: [200, 100, 200],
         tag: 'nass-unizik-alert-' + Date.now(),
         renotify: true,
-        data: { url: '/' }
+        data: { url: '/app' }
       };
 
       // 1. Mobile & Android Standard: ServiceWorkerRegistration.showNotification()
@@ -3978,7 +4007,15 @@
 
       // 2. Desktop fallback: new Notification constructor (wrapped in try/catch to never throw on mobile)
       try {
-        new Notification(title, options);
+        const notif = new Notification(title, options);
+        notif.onclick = async () => {
+          notif.close();
+          const isInstalled = await checkClientAppInstalled();
+          if (isInstalled) {
+            window.location.href = '/app';
+          }
+          // Otherwise nowhere!
+        };
       } catch (err) {
         console.warn('Notification constructor unsupported on this mobile device:', err);
       }

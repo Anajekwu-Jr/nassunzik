@@ -1,7 +1,7 @@
 // NASS UNIZIK Departmental Service Worker
-// Provides offline capability, asset caching, and PWA installability
+// Provides offline capability, asset caching, PWA installability, and clean text-only push alerts
 
-const CACHE_NAME = 'nass-unizik-v4';
+const CACHE_NAME = 'nass-unizik-v5';
 const PRECACHE_URLS = [
   '/',
   '/website.html',
@@ -10,8 +10,11 @@ const PRECACHE_URLS = [
   '/manifest.json',
   '/css/style.css',
   '/css/components.css',
+  '/css/responsive.css',
   '/js/nav.js',
   '/resources/images/nass-logo.jpg',
+  '/resources/images/nass-icon-192.png',
+  '/resources/images/nass-badge.png',
   '/pwa-192x192.png',
   '/pwa-512x512.png'
 ];
@@ -95,9 +98,11 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
-// Push & System Notification Handling (Cross-Platform Mobile & Desktop)
+// Push Notification Handling:
+// 1. Text only (no large logo image) so the entire message is completely readable
+// 2. Uses official NASS logo icon for both icon and top status bar badge
 self.addEventListener('push', (event) => {
-  let data = { title: 'NASS UNIZIK Update', body: 'New departmental announcement available.', url: '/' };
+  let data = { title: 'NASS UNIZIK Update', body: 'New departmental announcement available.', url: '/app' };
   if (event.data) {
     try {
       data = Object.assign(data, event.data.json());
@@ -114,30 +119,97 @@ self.addEventListener('push', (event) => {
     body: data.body,
     icon: iconUrl,
     badge: badgeUrl,
-    image: data.image || (origin + '/resources/images/nass-logo.jpg'),
+    // Note: 'image' is omitted so notification shows clean text without blocking header/body
     vibrate: [200, 100, 200],
     tag: 'nass-unizik-announcement',
     renotify: true,
-    data: { url: data.url || '/' }
+    data: { url: '/app' }
   };
 
   event.waitUntil(self.registration.showNotification(data.title, options));
 });
 
+// Helper to determine if NASS mobile app is installed or running on this device
+async function isNassAppInstalled(clientList) {
+  // 1. If any client is open in standalone mode or on the app route
+  if (Array.isArray(clientList)) {
+    for (const client of clientList) {
+      if (
+        client.displayMode === 'standalone' ||
+        (client.url && client.url.includes('/app'))
+      ) {
+        return true;
+      }
+    }
+  }
+
+  // 2. Query getInstalledRelatedApps if supported in service worker
+  if ('getInstalledRelatedApps' in self.navigator) {
+    try {
+      const apps = await self.navigator.getInstalledRelatedApps();
+      if (apps && apps.length > 0) return true;
+    } catch (_) {}
+  }
+
+  // 3. Query persistent IndexedDB storage
+  try {
+    const isIdbInstalled = await new Promise((resolve) => {
+      const req = indexedDB.open('nass_pwa_meta', 1);
+      req.onerror = () => resolve(false);
+      req.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains('meta')) {
+          db.createObjectStore('meta');
+        }
+      };
+      req.onsuccess = (e) => {
+        try {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains('meta')) return resolve(false);
+          const tx = db.transaction('meta', 'readonly');
+          const store = tx.objectStore('meta');
+          const getReq = store.get('is_installed');
+          getReq.onsuccess = () => resolve(Boolean(getReq.result));
+          getReq.onerror = () => resolve(false);
+        } catch (_) {
+          resolve(false);
+        }
+      };
+    });
+    if (isIdbInstalled) return true;
+  } catch (_) {}
+
+  return false;
+}
+
+// Notification Click Handler:
+// Returns or redirects user to the NASS mobile app if installed, otherwise nowhere
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const targetUrl = (event.notification.data && event.notification.data.url) ? event.notification.data.url : '/';
 
   event.waitUntil(
-    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+    (async () => {
+      const clientList = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+
+      // 1. If an existing NASS app window or tab is already open, return/focus to it
       for (const client of clientList) {
-        if (client.url.includes(self.location.origin) && 'focus' in client) {
+        if (client.url && client.url.includes('/app') && 'focus' in client) {
           return client.focus();
         }
       }
-      if (self.clients.openWindow) {
-        return self.clients.openWindow(targetUrl);
+
+      // 2. Check if the NASS mobile app is installed on this device
+      const installed = await isNassAppInstalled(clientList);
+
+      if (installed) {
+        // App is installed: open/launch the NASS mobile app
+        if (self.clients.openWindow) {
+          return self.clients.openWindow('/app');
+        }
       }
-    })
+
+      // 3. Otherwise nowhere (do not redirect or open browser windows)
+      return;
+    })()
   );
 });
