@@ -293,18 +293,19 @@ export const HomeScreen: React.FC = () => {
       >
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 flex items-center justify-center font-bold shadow-md shrink-0">
-              <Bot className="w-5 h-5" />
+            <div className="w-11 h-11 rounded-xl border-2 border-amber-400/80 overflow-hidden shadow-md shrink-0 bg-slate-900">
+              <img
+                src="/resources/images/sam-ai.jpg"
+                alt="SAM AI"
+                className="w-full h-full object-cover"
+              />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <h4 className="text-xs font-extrabold uppercase tracking-wider text-white">Sam AI</h4>
-                <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40">
-                  COMPANION
-                </span>
+                <h4 className="text-xs font-extrabold uppercase tracking-wider text-white">SAM AI</h4>
               </div>
               <p className="text-[11px] text-slate-300 line-clamp-1 mt-0.5">
-                Ask about courses, lecture notes, SIWES, or excos
+                Official AI bot for statistics department
               </p>
             </div>
           </div>

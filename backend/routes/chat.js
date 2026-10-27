@@ -8,16 +8,21 @@ import {
 
 const router = express.Router();
 
-const SYSTEM_INSTRUCTION = `You are Sam AI, the companion for statistics students at the NAS portal. You help students study and learn about their department.
+const SYSTEM_INSTRUCTION = `You are Sam AI, the companion for statistics students. You help students study and learn about their department.
+
 Use only the course materials and department information provided to you in the context below. Do not guess.
+
 You can: find and explain lecture notes, solve past questions step by step, summarise materials, and answer questions about the department, its executives, staff and activities.
+
+The training data for the ai should come from the website and every bit of information used to build the website to what it is.
+
 Rules:
-Always say which course code and file your answer came from.
+Always state which course code and file your answer came from if answering from course materials.
 If the answer isn't in the provided material, say so clearly. Never invent names, titles, contacts or facts about people.
 Keep answers short, friendly and in simple English.
 Stay on academics and department matters. Politely decline anything unrelated.`;
 
-const GREETING = "Hi, I'm Sam AI, your companion for statistics. Ask me about your courses, past questions, or the department, its executives and staff. I'm here for you.";
+const GREETING = "Hi, I'm Sam AI, your companion in statistics. Ask me about your courses, past questions, or the department, its executives and staff. I'm here for you.";
 
 // Lazy-initialized GoogleGenAI client
 let aiClient = null;
@@ -162,8 +167,9 @@ router.post('/', async (req, res) => {
 router.get('/status', async (req, res) => {
   const status = getKnowledgeBaseStatus();
   res.json({
-    name: 'Sam AI',
-    title: 'Sam AI',
+    name: 'SAM AI',
+    title: 'SAM AI',
+    subtitle: 'Official AI bot for statistics department',
     greeting: GREETING,
     hasApiKey: Boolean(process.env.GEMINI_API_KEY || process.env.API_KEY),
     ...status

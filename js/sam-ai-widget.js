@@ -6,7 +6,7 @@
   if (window.SamAIWidgetLoaded) return;
   window.SamAIWidgetLoaded = true;
 
-  const GREETING = "Hi, I'm Sam AI, your companion for statistics. Ask me about your courses, past questions, or the department, its executives and staff. I'm here for you.";
+  const GREETING = "Hi, I'm Sam AI, your companion in statistics. Ask me about your courses, past questions, or the department, its executives and staff. I'm here for you.";
   const STORAGE_KEY = 'nass_sam_ai_chat_history_v1';
 
   // Inject CSS if not already present
@@ -49,25 +49,15 @@
     launcher.className = 'sam-ai-launcher';
     launcher.id = 'samAiLauncher';
     launcher.setAttribute('role', 'button');
-    launcher.setAttribute('aria-label', 'Open Sam AI Chatbot');
+    launcher.setAttribute('aria-label', 'Ask Sam');
     launcher.innerHTML = `
-      <div class="sam-launcher-avatar">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
-          <path d="M4 11v2a8 8 0 0 0 16 0v-2"/>
-          <rect width="18" height="12" x="3" y="10" rx="4"/>
-          <circle cx="8" cy="16" r="1.5" fill="currentColor"/>
-          <circle cx="16" cy="16" r="1.5" fill="currentColor"/>
-        </svg>
-        <span class="sam-launcher-pulse"></span>
-        <span class="sam-launcher-beacon"></span>
+      <div class="sam-launcher-bubble">
+        <span>Ask Sam</span>
+        <div class="sam-launcher-bubble-tail"></div>
       </div>
-      <div class="sam-launcher-text">
-        <div class="sam-launcher-title">
-          <span>Sam AI</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
-        <div class="sam-launcher-sub">Ask about courses & excos</div>
+      <div class="sam-launcher-img-wrap">
+        <img src="/resources/images/sam-ai.jpg" alt="SAM AI" class="sam-launcher-img" />
+        <span class="sam-launcher-online-dot"></span>
       </div>
     `;
 
@@ -79,21 +69,14 @@
       <div class="sam-chat-header">
         <div class="sam-header-info">
           <div class="sam-header-avatar">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
-              <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
-              <rect width="18" height="12" x="3" y="10" rx="4"/>
-              <circle cx="8" cy="16" r="1.5" fill="currentColor"/>
-              <circle cx="16" cy="16" r="1.5" fill="currentColor"/>
-            </svg>
+            <img src="/resources/images/sam-ai.jpg" alt="SAM AI" class="sam-avatar-img" />
           </div>
           <div>
             <div class="sam-header-title">
-              <span>Sam AI</span>
-              <span class="sam-header-badge">UNIZIK STATS</span>
+              <span>SAM AI</span>
             </div>
             <div class="sam-header-status">
-              <span class="sam-header-dot"></span>
-              <span>Online · Statistics Companion</span>
+              <span>Official AI bot for statistics department</span>
             </div>
           </div>
         </div>
@@ -101,29 +84,10 @@
           <button type="button" class="sam-action-btn" id="samClearBtn" title="Reset conversation">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
           </button>
-          <button type="button" class="sam-action-btn" id="samCloseBtn" title="Minimize Sam AI">
+          <button type="button" class="sam-action-btn" id="samCloseBtn" title="Minimize SAM AI">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
         </div>
-      </div>
-
-      <!-- Quick Suggestion Pills -->
-      <div class="sam-suggestions-wrap">
-        <button class="sam-suggestion-pill" data-prompt="Explain Bayes Theorem in STA 112">
-          <span>💡 Bayes Theorem (STA 112)</span>
-        </button>
-        <button class="sam-suggestion-pill" data-prompt="What is STA 312 Bivariate Distribution?">
-          <span>📊 STA 312 Bivariate</span>
-        </button>
-        <button class="sam-suggestion-pill" data-prompt="Who is the Director of Socials?">
-          <span>👥 Director of Socials</span>
-        </button>
-        <button class="sam-suggestion-pill" data-prompt="How long is SIWES and when is it done?">
-          <span>🛠 SIWES Guidelines</span>
-        </button>
-        <button class="sam-suggestion-pill" data-prompt="What past questions are available for STA 211?">
-          <span>📝 STA 211 Questions</span>
-        </button>
       </div>
 
       <!-- Messages Stream -->
