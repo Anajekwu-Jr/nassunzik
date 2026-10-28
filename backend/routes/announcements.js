@@ -1,5 +1,5 @@
 import express from 'express';
-import { db } from '../database.js';
+import { db, exportSnapshot } from '../database.js';
 import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -42,6 +42,7 @@ router.post('/', requireAuth(), (req, res) => {
     );
 
     const announcement = db.prepare('SELECT * FROM announcements WHERE id = ?').get(result.lastInsertRowid);
+    exportSnapshot();
     res.status(201).json(announcement);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -66,6 +67,7 @@ router.put('/:id', requireAuth(), (req, res) => {
     );
 
     const announcement = db.prepare('SELECT * FROM announcements WHERE id = ?').get(req.params.id);
+    exportSnapshot();
     res.json(announcement);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -78,6 +80,7 @@ router.delete('/:id', requireAuth(), (req, res) => {
     if (result.changes === 0) {
       return res.status(404).json({ error: 'Announcement not found' });
     }
+    exportSnapshot();
     res.json({ success: true, message: 'Announcement deleted successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });

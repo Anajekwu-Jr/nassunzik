@@ -11,7 +11,7 @@
     "lint": "node -e 'console.log(\"Lint passed\")'"
   },
   "engines": {
-    "node": ">=22.5.0"
+    "node": "22.x"
   },
   "dependencies": {
     "@google/genai": "^2.31.0",
@@ -29,7 +29,8 @@
     "pdf-lib": "^1.17.1",
     "pdf-parse": "^2.4.5",
     "react": "^19.0.1",
-    "react-dom": "^19.0.1"
+    "react-dom": "^19.0.1",
+    "sql.js": "^1.15.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^3.0.0",

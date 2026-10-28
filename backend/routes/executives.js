@@ -1,5 +1,5 @@
 import express from 'express';
-import { db } from '../database.js';
+import { db, exportSnapshot } from '../database.js';
 import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -69,6 +69,7 @@ router.post('/', requireAuth(), (req, res) => {
     );
 
     const newExec = db.prepare('SELECT * FROM executives WHERE id = ?').get(result.lastInsertRowid);
+    exportSnapshot();
     res.status(201).json(formatExecutive(newExec));
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -124,6 +125,7 @@ router.put('/:id', requireAuth(), (req, res) => {
     );
 
     const updated = db.prepare('SELECT * FROM executives WHERE id = ?').get(idToQuery);
+    exportSnapshot();
     res.json(formatExecutive(updated));
   } catch (err) {
     console.error('Error saving executive profile:', err);
@@ -137,6 +139,7 @@ router.delete('/:id', requireAuth(), (req, res) => {
     if (result.changes === 0) {
       return res.status(404).json({ error: 'Executive not found' });
     }
+    exportSnapshot();
     res.json({ success: true, message: 'Executive deleted successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -1,4 +1,3 @@
-import { DatabaseSync } from 'node:sqlite';
 import fs from 'node:fs';
 import path from 'node:path';
 import bcrypt from 'bcryptjs';
@@ -30,10 +29,94 @@ if (isVercel) {
   }
 }
 
-const db = new DatabaseSync(DB_PATH);
+// Universal SQLite Engine: Supports node:sqlite when available, or sql.js WebAssembly anywhere
+let db = null;
 
-// Enable foreign keys and WAL mode for performance
-db.exec('PRAGMA foreign_keys = ON;');
+// 1. Try node:sqlite (native Node 22+)
+try {
+  const sqlite = await import('node:sqlite');
+  if (sqlite && sqlite.DatabaseSync) {
+    db = new sqlite.DatabaseSync(DB_PATH);
+    try { db.exec('PRAGMA foreign_keys = ON;'); } catch (_) {}
+  }
+} catch (_) {
+  db = null;
+}
+
+// 2. Fallback to sql.js (WebAssembly SQLite, works on any Node.js version and Vercel)
+if (!db) {
+  try {
+    const initSqlJs = (await import('sql.js')).default;
+    const SQL = await initSqlJs();
+    let rawDb;
+    if (fs.existsSync(DB_PATH)) {
+      try {
+        const fileBuffer = fs.readFileSync(DB_PATH);
+        rawDb = new SQL.Database(fileBuffer);
+      } catch (_) {
+        rawDb = new SQL.Database();
+      }
+    } else {
+      rawDb = new SQL.Database();
+    }
+
+    function persistDb() {
+      try {
+        const data = rawDb.export();
+        fs.writeFileSync(DB_PATH, Buffer.from(data));
+      } catch (_) {}
+    }
+
+    db = {
+      exec(sql) {
+        const res = rawDb.exec(sql);
+        persistDb();
+        return res;
+      },
+      prepare(sql) {
+        return {
+          get(...args) {
+            const stmt = rawDb.prepare(sql);
+            const params = args.length === 1 && Array.isArray(args[0]) ? args[0] : args;
+            if (params.length > 0) stmt.bind(params);
+            let row = undefined;
+            if (stmt.step()) {
+              row = stmt.getAsObject();
+            }
+            stmt.free();
+            return row;
+          },
+          all(...args) {
+            const stmt = rawDb.prepare(sql);
+            const params = args.length === 1 && Array.isArray(args[0]) ? args[0] : args;
+            if (params.length > 0) stmt.bind(params);
+            const rows = [];
+            while (stmt.step()) {
+              rows.push(stmt.getAsObject());
+            }
+            stmt.free();
+            return rows;
+          },
+          run(...args) {
+            const params = args.length === 1 && Array.isArray(args[0]) ? args[0] : args;
+            rawDb.run(sql, params);
+            const changes = rawDb.getRowsModified();
+            let lastInsertRowid = 0;
+            try {
+              const res = rawDb.exec('SELECT last_insert_rowid() AS id');
+              lastInsertRowid = res[0]?.values[0]?.[0] || 0;
+            } catch (_) {}
+            persistDb();
+            return { changes, lastInsertRowid };
+          }
+        };
+      }
+    };
+  } catch (sqlJsErr) {
+    console.error('Fatal: Failed to initialize sql.js:', sqlJsErr);
+    throw sqlJsErr;
+  }
+}
 
 export function initDatabase() {
   // 1. Users table (Admins, Editors, Super Admins)
@@ -1107,44 +1190,70 @@ function seedInitialData() {
   console.log('Database initialized and seeded successfully.');
 }
 
+export const ALL_TABLES = [
+  'site_settings',
+  'users',
+  'courses',
+  'course_resources',
+  'staff',
+  'executives',
+  'timetable',
+  'news',
+  'events',
+  'siwes_resources',
+  'final_year_projects',
+  'project_resources',
+  'gallery',
+  'contacts',
+  'announcements',
+  'faqs',
+  'careers',
+  'scheduled_notifications'
+];
+
+export function exportSnapshotData() {
+  const backup = {};
+  for (const table of ALL_TABLES) {
+    try {
+      backup[table] = db.prepare('SELECT * FROM ' + table).all();
+    } catch (_) {
+      backup[table] = [];
+    }
+  }
+  return backup;
+}
+
 export function exportSnapshot() {
   try {
-    const tables = ['site_settings', 'courses', 'course_resources', 'staff', 'executives', 'news', 'events', 'siwes', 'projects', 'timetable', 'announcements', 'faqs'];
-    const backup = {};
-    for (const table of tables) {
-      try {
-        backup[table] = db.prepare('SELECT * FROM ' + table).all();
-      } catch (_) {
-        backup[table] = [];
-      }
-    }
+    const backup = exportSnapshotData();
     const targetFile = isVercel
       ? path.join('/tmp', 'portal_state_backup.json')
       : path.join(ROOT_DATA_DIR, 'portal_state_backup.json');
     fs.writeFileSync(targetFile, JSON.stringify(backup, null, 2));
+
+    const distTarget = path.join(ROOT_DIR, 'dist', 'data', 'portal_state_backup.json');
+    if (fs.existsSync(path.dirname(distTarget))) {
+      try { fs.writeFileSync(distTarget, JSON.stringify(backup, null, 2)); } catch (_) {}
+    }
   } catch (err) {
     console.error('Error exporting snapshot:', err);
   }
 }
 
-export function importSnapshot() {
-  let backupFile = path.join(ROOT_DATA_DIR, 'portal_state_backup.json');
-  if (isVercel && fs.existsSync(path.join('/tmp', 'portal_state_backup.json'))) {
-    backupFile = path.join('/tmp', 'portal_state_backup.json');
-  } else if (!fs.existsSync(backupFile)) {
-    backupFile = path.join(DB_DIR, 'portal_state_backup.json');
-  }
-  if (!fs.existsSync(backupFile)) return false;
+export function importSnapshotData(data) {
+  if (!data || typeof data !== 'object') return false;
+
   try {
-    const raw = fs.readFileSync(backupFile, 'utf-8');
-    const data = JSON.parse(raw);
-    if (data.site_settings && Array.isArray(data.site_settings)) {
+    // 1. site_settings
+    if (Array.isArray(data.site_settings) && data.site_settings.length > 0) {
       const stmt = db.prepare('INSERT INTO site_settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value');
       for (const s of data.site_settings) {
         if (s.key && s.value !== undefined) stmt.run(s.key, s.value);
       }
     }
-    if (data.courses && Array.isArray(data.courses)) {
+
+    // 2. courses
+    if (Array.isArray(data.courses) && data.courses.length > 0) {
       const insCourse = db.prepare(`
         INSERT INTO courses (id, code, title, level, semester, credit_units, status, description, outline)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -1162,7 +1271,9 @@ export function importSnapshot() {
         insCourse.run(c.id, c.code, c.title, c.level, c.semester, c.credit_units || 3, c.status || 'Compulsory', c.description || '', c.outline || '');
       }
     }
-    if (data.course_resources && Array.isArray(data.course_resources) && data.course_resources.length > 0) {
+
+    // 3. course_resources
+    if (Array.isArray(data.course_resources) && data.course_resources.length > 0) {
       const insRes = db.prepare(`
         INSERT INTO course_resources (id, course_id, title, resource_type, file_name, file_path, file_size, academic_year, semester)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -1177,20 +1288,12 @@ export function importSnapshot() {
           semester = excluded.semester
       `);
       for (const r of data.course_resources) {
-        insRes.run(
-          r.id,
-          r.course_id,
-          r.title,
-          r.resource_type || 'lecture_note',
-          r.file_name,
-          r.file_path,
-          r.file_size || 0,
-          r.academic_year || '2026/2027',
-          r.semester || 1
-        );
+        insRes.run(r.id, r.course_id, r.title, r.resource_type || 'lecture_note', r.file_name, r.file_path, r.file_size || 0, r.academic_year || '2026/2027', r.semester || 1);
       }
     }
-    if (data.staff && Array.isArray(data.staff) && data.staff.length > 0) {
+
+    // 4. staff
+    if (Array.isArray(data.staff) && data.staff.length > 0) {
       const insStaff = db.prepare(`
         INSERT INTO staff (id, name, title, role_category, qualifications, specialization, email, phone, office, photo_url, bio, display_order, cirs_url, cirs_id)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -1210,27 +1313,202 @@ export function importSnapshot() {
           cirs_id = excluded.cirs_id
       `);
       for (const s of data.staff) {
-        insStaff.run(
-          s.id,
-          s.name,
-          s.title,
-          s.role_category,
-          s.qualifications || '',
-          s.specialization || '',
-          s.email || '',
-          s.phone || '',
-          s.office || '',
-          s.photo_url || '/resources/images/staff_default.jpg',
-          s.bio || '',
-          s.display_order || 10,
-          s.cirs_url || '',
-          s.cirs_id || ''
-        );
+        insStaff.run(s.id, s.name, s.title, s.role_category, s.qualifications || '', s.specialization || '', s.email || '', s.phone || '', s.office || '', s.photo_url || '/resources/images/staff_default.jpg', s.bio || '', s.display_order || 10, s.cirs_url || '', s.cirs_id || '');
       }
     }
+
+    // 5. executives
+    if (Array.isArray(data.executives) && data.executives.length > 0) {
+      const insExco = db.prepare(`
+        INSERT INTO executives (id, name, office, level, phone, email, photo_url, bio, tenure, display_order)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+          name = excluded.name,
+          office = excluded.office,
+          level = excluded.level,
+          phone = excluded.phone,
+          email = excluded.email,
+          photo_url = excluded.photo_url,
+          bio = excluded.bio,
+          tenure = excluded.tenure,
+          display_order = excluded.display_order
+      `);
+      for (const e of data.executives) {
+        insExco.run(e.id, e.name, e.office, e.level || 400, e.phone || '', e.email || '', e.photo_url || '', e.bio || '', e.tenure || '2026/2027', e.display_order || 0);
+      }
+    }
+
+    // 6. timetable
+    if (Array.isArray(data.timetable) && data.timetable.length > 0) {
+      const insTt = db.prepare(`
+        INSERT INTO timetable (id, level, semester, day, start_time, end_time, course_code, course_title, lecturer, venue)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+          level = excluded.level,
+          semester = excluded.semester,
+          day = excluded.day,
+          start_time = excluded.start_time,
+          end_time = excluded.end_time,
+          course_code = excluded.course_code,
+          course_title = excluded.course_title,
+          lecturer = excluded.lecturer,
+          venue = excluded.venue
+      `);
+      for (const t of data.timetable) {
+        insTt.run(t.id, t.level, t.semester, t.day, t.start_time, t.end_time, t.course_code, t.course_title, t.lecturer || '', t.venue || '');
+      }
+    }
+
+    // 7. news
+    if (Array.isArray(data.news) && data.news.length > 0) {
+      const insNews = db.prepare(`
+        INSERT INTO news (id, title, slug, summary, content, category, author, featured_image, published_at, is_featured)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+          title = excluded.title,
+          slug = excluded.slug,
+          summary = excluded.summary,
+          content = excluded.content,
+          category = excluded.category,
+          author = excluded.author,
+          featured_image = excluded.featured_image,
+          published_at = excluded.published_at,
+          is_featured = excluded.is_featured
+      `);
+      for (const n of data.news) {
+        insNews.run(n.id, n.title, n.slug, n.summary || '', n.content || '', n.category || 'General', n.author || 'NASS Secretariat', n.featured_image || '', n.published_at || new Date().toISOString(), n.is_featured || 0);
+      }
+    }
+
+    // 8. events
+    if (Array.isArray(data.events) && data.events.length > 0) {
+      const insEvent = db.prepare(`
+        INSERT INTO events (id, title, event_date, event_time, venue, description, category, status, registration_url, banner_image, is_featured)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+          title = excluded.title,
+          event_date = excluded.event_date,
+          event_time = excluded.event_time,
+          venue = excluded.venue,
+          description = excluded.description,
+          category = excluded.category,
+          status = excluded.status,
+          registration_url = excluded.registration_url,
+          banner_image = excluded.banner_image,
+          is_featured = excluded.is_featured
+      `);
+      for (const ev of data.events) {
+        insEvent.run(ev.id, ev.title, ev.event_date, ev.event_time || '', ev.venue || '', ev.description || '', ev.category || 'General', ev.status || 'UPCOMING', ev.registration_url || '', ev.banner_image || '', ev.is_featured || 0);
+      }
+    }
+
+    // 9. announcements
+    if (Array.isArray(data.announcements) && data.announcements.length > 0) {
+      const insAnn = db.prepare(`
+        INSERT INTO announcements (id, title, content, priority, is_active)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+          title = excluded.title,
+          content = excluded.content,
+          priority = excluded.priority,
+          is_active = excluded.is_active
+      `);
+      for (const a of data.announcements) {
+        insAnn.run(a.id, a.title, a.content, a.priority || 'NORMAL', a.is_active !== undefined ? a.is_active : 1);
+      }
+    }
+
+    // 10. faqs
+    if (Array.isArray(data.faqs) && data.faqs.length > 0) {
+      const insFaq = db.prepare(`
+        INSERT INTO faqs (id, question, answer, category, display_order)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+          question = excluded.question,
+          answer = excluded.answer,
+          category = excluded.category,
+          display_order = excluded.display_order
+      `);
+      for (const f of data.faqs) {
+        insFaq.run(f.id, f.question, f.answer, f.category || 'General', f.display_order || 0);
+      }
+    }
+
+    // 11. siwes_resources
+    if (Array.isArray(data.siwes_resources) && data.siwes_resources.length > 0) {
+      const insSiwes = db.prepare(`
+        INSERT INTO siwes_resources (id, title, description, category, file_name, file_path, file_size)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+          title = excluded.title,
+          description = excluded.description,
+          category = excluded.category,
+          file_name = excluded.file_name,
+          file_path = excluded.file_path,
+          file_size = excluded.file_size
+      `);
+      for (const s of data.siwes_resources) {
+        insSiwes.run(s.id, s.title, s.description || '', s.category || 'Guide', s.file_name || '', s.file_path, s.file_size || 0);
+      }
+    }
+
+    // 12. project_resources
+    const projList = Array.isArray(data.project_resources) ? data.project_resources : (Array.isArray(data.final_year_projects) ? data.final_year_projects : []);
+    if (projList.length > 0) {
+      const insProj = db.prepare(`
+        INSERT INTO project_resources (id, title, description, category, file_name, file_path, file_size)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+          title = excluded.title,
+          description = excluded.description,
+          category = excluded.category,
+          file_name = excluded.file_name,
+          file_path = excluded.file_path,
+          file_size = excluded.file_size
+      `);
+      for (const p of projList) {
+        insProj.run(p.id, p.title, p.description || '', p.category || 'Topic Guidelines', p.file_name || '', p.file_path, p.file_size || 0);
+      }
+    }
+
+    // 13. gallery
+    if (Array.isArray(data.gallery) && data.gallery.length > 0) {
+      const insGal = db.prepare(`
+        INSERT INTO gallery (id, title, year, event_name, image_url, description)
+        VALUES (?, ?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+          title = excluded.title,
+          year = excluded.year,
+          event_name = excluded.event_name,
+          image_url = excluded.image_url,
+          description = excluded.description
+      `);
+      for (const g of data.gallery) {
+        insGal.run(g.id, g.title, g.year || 2026, g.event_name || 'Event', g.image_url, g.description || '');
+      }
+    }
+
     return true;
   } catch (err) {
-    console.error('Error importing snapshot:', err);
+    console.error('Error importing snapshot data:', err);
+    return false;
+  }
+}
+
+export function importSnapshot() {
+  let backupFile = path.join(ROOT_DATA_DIR, 'portal_state_backup.json');
+  if (isVercel && fs.existsSync(path.join('/tmp', 'portal_state_backup.json'))) {
+    backupFile = path.join('/tmp', 'portal_state_backup.json');
+  } else if (!fs.existsSync(backupFile)) {
+    backupFile = path.join(DB_DIR, 'portal_state_backup.json');
+  }
+  if (!fs.existsSync(backupFile)) return false;
+  try {
+    const raw = fs.readFileSync(backupFile, 'utf-8');
+    const data = JSON.parse(raw);
+    return importSnapshotData(data);
+  } catch (err) {
+    console.error('Error reading snapshot file:', err);
     return false;
   }
 }

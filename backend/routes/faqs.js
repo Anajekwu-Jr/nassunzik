@@ -1,5 +1,5 @@
 import express from 'express';
-import { db } from '../database.js';
+import { db, exportSnapshot } from '../database.js';
 import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -56,6 +56,7 @@ router.post('/', requireAuth(), (req, res) => {
     `);
     const info = insert.run(question, answer, category || 'General', sort_order || 0);
     const newFaq = db.prepare('SELECT * FROM faqs WHERE id = ?').get(info.lastInsertRowid);
+    exportSnapshot();
     res.status(201).json(newFaq);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -84,6 +85,7 @@ router.put('/:id', requireAuth(), (req, res) => {
     );
 
     const updated = db.prepare('SELECT * FROM faqs WHERE id = ?').get(req.params.id);
+    exportSnapshot();
     res.json(updated);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -99,6 +101,7 @@ router.delete('/:id', requireAuth(), (req, res) => {
     }
 
     db.prepare('DELETE FROM faqs WHERE id = ?').run(req.params.id);
+    exportSnapshot();
     res.json({ message: 'FAQ deleted successfully', id: req.params.id });
   } catch (err) {
     res.status(500).json({ error: err.message });

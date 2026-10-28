@@ -1,5 +1,5 @@
 import express from 'express';
-import { db } from '../database.js';
+import { db, exportSnapshot } from '../database.js';
 import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -95,6 +95,7 @@ router.post('/', requireAuth(), (req, res) => {
       WHERE cr.id = ?
     `;
     const newMaterial = db.prepare(query).get(info.lastInsertRowid);
+    exportSnapshot();
     res.status(201).json(newMaterial);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -143,6 +144,7 @@ router.put('/:id', requireAuth(), (req, res) => {
       WHERE cr.id = ?
     `).get(req.params.id);
 
+    exportSnapshot();
     res.json(updated);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -158,6 +160,7 @@ router.delete('/:id', requireAuth(), (req, res) => {
     }
 
     db.prepare('DELETE FROM course_resources WHERE id = ?').run(req.params.id);
+    exportSnapshot();
     res.json({ message: 'Material deleted successfully', id: req.params.id });
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { initDatabase } from './database.js';
+import { initDatabase, exportSnapshotData, importSnapshotData, exportSnapshot } from './database.js';
 
 import authRoutes from './routes/auth.js';
 import courseRoutes from './routes/courses.js';
@@ -30,12 +30,15 @@ import { startNotificationScheduler } from './scheduler.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
+const isVercel = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
 
 // Initialize database schema and data
 initDatabase();
 
-// Start background notification scheduler
-startNotificationScheduler();
+// Start background notification scheduler only in persistent server environments (not in serverless lambdas)
+if (!isVercel) {
+  startNotificationScheduler();
+}
 
 const app = express();
 
@@ -147,9 +150,38 @@ app.get('/api/health', (req, res) => {
     status: 'ok',
     app: 'NASS Departmental Portal',
     department: 'Department of Statistics, UNIZIK',
-    environment: process.env.VERCEL ? 'vercel-serverless' : 'node-express',
+    environment: isVercel ? 'vercel-serverless' : 'node-express',
     timestamp: new Date().toISOString()
   });
+});
+
+// Full portal state export (for live public site sync & backup)
+app.get('/api/portal-state', (req, res) => {
+  try {
+    const backup = exportSnapshotData();
+    res.json(backup);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Full portal state sync (persists changes immediately to database and disk)
+app.post('/api/portal-state/sync', (req, res) => {
+  try {
+    const data = req.body && req.body.snapshot ? req.body.snapshot : (req.body && req.body.data ? req.body.data : req.body);
+    const ok = importSnapshotData(data);
+    if (!ok) {
+      return res.status(400).json({ error: 'Invalid portal state payload' });
+    }
+    exportSnapshot();
+    res.json({
+      success: true,
+      message: 'Portal state synchronized and published successfully.',
+      timestamp: new Date().toISOString()
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // PWA Manifest and Service Worker routes
@@ -275,7 +307,7 @@ if (process.env.NODE_ENV === 'production') {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
-} else {
+} else if (!isVercel) {
   try {
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({

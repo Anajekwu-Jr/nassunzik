@@ -3,6 +3,12 @@
   "framework": null,
   "buildCommand": "node scripts/build.js",
   "outputDirectory": "dist",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "{data/**,node_modules/sql.js/dist/**}",
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",

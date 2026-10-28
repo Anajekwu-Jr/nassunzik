@@ -586,4 +586,37 @@ const API = {
   }
 };
 
+// Listen for real-time portal updates from Admin editor
+if (typeof window !== 'undefined') {
+  function clearApiCache() {
+    try {
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('nass_api_cache_')) {
+          localStorage.removeItem(key);
+        }
+      }
+    } catch (_) {}
+  }
+
+  if ('BroadcastChannel' in window) {
+    try {
+      const channel = new BroadcastChannel('nass_portal_channel');
+      channel.onmessage = function() {
+        clearApiCache();
+      };
+    } catch (_) {}
+  }
+
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'nass_data_updated' || e.key === 'nass_settings_updated' || e.key === 'nass_portal_last_synced') {
+      clearApiCache();
+    }
+  });
+
+  window.addEventListener('nass:data_updated', function() {
+    clearApiCache();
+  });
+}
+
 window.NassAPI = API;
