@@ -1,6 +1,6 @@
 Signature-Version: 1.0
 Created-By: 1.0 (Android APKSig Universal)
-SHA-256-Digest-Manifest: FGamzmufcIt3LXTTvW+GgXPu13YtdDvyuhzniGI6WE0=
+SHA-256-Digest-Manifest: lQkNLVkTOcB58r0+sozOcfEDbhsD3XR2gGYkcjeMqDs=
 
 Name: AndroidManifest.xml
 SHA-256-Digest: eZdARuouwKWk4URYgKH8ydeLOAUI5BqV4O+4/razhKc=
@@ -215,11 +215,23 @@ SHA-256-Digest: lJtpBMogiV+kSUv2UslwRL9yQbBborP8zrM16vkS660=
 Name: assets/images/gallery/vantora_class_2027.jpg
 SHA-256-Digest: eJ/UP7B9ZVFS4rT1oD37ag5uivg7m/wVRpP6nFdYC04=
 
+Name: assets/images/nass-badge.png
+SHA-256-Digest: 1FEODoV16FXbKUJni7A3bmKYE/VJMVx4K5Kfkho/PQ8=
+
+Name: assets/images/nass-icon-192.png
+SHA-256-Digest: aA5PVqk3gaZTiJkjslHtZ3JdSt6QTMhtBBzpnvvLfJU=
+
+Name: assets/images/nass-icon-512.png
+SHA-256-Digest: ERH5Nke0pFM/lZr5I5ZC8uKVUyRBxZxHKwpOUeoGf3Y=
+
 Name: assets/images/nass-logo.jpg
 SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
 
 Name: assets/images/news_default.jpg
 SHA-256-Digest: WVudCuwjvAjx5mnyYZyr8m0Wv0rsZmpsX29Inpd+bH8=
+
+Name: assets/images/sam-ai.jpg
+SHA-256-Digest: xfb8ZWviITaBd/SMV0oCkWB/EorYbxWFYFnxShLlCO0=
 
 Name: assets/images/staff/NAU1238.jpg
 SHA-256-Digest: wuhgnP7NkUvBKZeaGC3p1cvvxmY5e8eDpZuwHRZAUJw=
@@ -363,10 +375,10 @@ Name: assets/data/career_pathways.json
 SHA-256-Digest: 2AgAvTmt+fuY0E1bXxf/SVnizt7p/R83o7fV6rLOloc=
 
 Name: assets/data/course_resources_seed.json
-SHA-256-Digest: eeBcgsS/1G/QqDopuFObwwbEZOP1nJRJp8TJ60BxTm0=
+SHA-256-Digest: CrH7sZF9k64RkKfclMGhkuEOQh/TkeEqHqUY7EDgFiE=
 
 Name: assets/data/nass_portal.db
-SHA-256-Digest: I/CEWJ0ZGclBhW09frB/z7qGC4QY3/tmACYUvC5wbJE=
+SHA-256-Digest: 22q3W9oZes8wVHaPuAawpuKnGMZBNywbs83oHLgP91Y=
 
 Name: assets/data/official_cirs_details.json
 SHA-256-Digest: Vhlff/opjKJaieYlZs91q3P03/H49PDnsm9AB1epnKI=
@@ -375,11 +387,14 @@ Name: assets/data/official_cirs_staff.json
 SHA-256-Digest: 47U+7QB5aCVkGjhWNmVPtky1NaCLJmE7ecNcP4koGnM=
 
 Name: assets/data/portal_state_backup.json
-SHA-256-Digest: 5QeT9UItqXHD+C6FFZ72Ruy48vxLingx8zSkqHkKsqQ=
+SHA-256-Digest: XRAT9s10sQEeUDxRuj6IQM9Q0YBlDnu8IEq3eig6Usw=
+
+Name: assets/data/sam_ai_knowledge_cache.json
+SHA-256-Digest: o2jXHhwYxBywvlwlOnwW7HgCzR8KOIGJhw6Rl9E0zYA=
 
 Name: assets/database/cirs_statistics_staff.json
 SHA-256-Digest: 5W9vUpdkuHjcNd4nUXLytGTN6C6UqBlHctvdDCoqfew=
 
 Name: assets/www/index.html
-SHA-256-Digest: GX0YlkpoSWMqYZ1Y8j+/e7ZSpZ5CdHaanHLXwH39oQk=
+SHA-256-Digest: iRHFJVgvT3rBKUdEeXzJBp9jsigEHhcxGNFc92WyXOo=
 

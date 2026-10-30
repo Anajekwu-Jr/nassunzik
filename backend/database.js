@@ -1421,16 +1421,16 @@ export function importSnapshotData(data) {
     // 10. faqs
     if (Array.isArray(data.faqs) && data.faqs.length > 0) {
       const insFaq = db.prepare(`
-        INSERT INTO faqs (id, question, answer, category, display_order)
+        INSERT INTO faqs (id, question, answer, category, sort_order)
         VALUES (?, ?, ?, ?, ?)
         ON CONFLICT(id) DO UPDATE SET
           question = excluded.question,
           answer = excluded.answer,
           category = excluded.category,
-          display_order = excluded.display_order
+          sort_order = excluded.sort_order
       `);
       for (const f of data.faqs) {
-        insFaq.run(f.id, f.question, f.answer, f.category || 'General', f.display_order || 0);
+        insFaq.run(f.id, f.question, f.answer, f.category || 'General', f.sort_order !== undefined ? f.sort_order : (f.display_order || 0));
       }
     }
 
