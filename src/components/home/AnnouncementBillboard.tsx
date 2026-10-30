@@ -212,12 +212,12 @@ export const AnnouncementBillboard: React.FC<AnnouncementBillboardProps> = ({ an
                 <div className="flex items-center justify-between gap-2 mb-2">
                   <div className="flex items-center gap-1.5">
                     {isUrgent ? (
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-100 border border-amber-300 dark:text-amber-300 dark:bg-amber-950/80 dark:border-amber-600/60 px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-100 border border-amber-300 dark:text-amber-300 dark:bg-amber-950/80 dark:border-amber-600/60 px-2 py-0.5 rounded-md flex items-center gap-1">
                         <AlertCircle className="w-3 h-3 text-red-500" />
                         URGENT
                       </span>
                     ) : (
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-100 border border-blue-300 dark:text-blue-300 dark:bg-blue-950/70 dark:border-blue-700/50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-100 border border-blue-300 dark:text-blue-300 dark:bg-blue-950/70 dark:border-blue-700/50 px-2 py-0.5 rounded-md flex items-center gap-1">
                         <Sparkles className="w-2.5 h-2.5 text-amber-500" />
                         CIRCULAR
                       </span>

@@ -42,17 +42,16 @@
 /* Floating bubble above the robot image */
 .sam-launcher-bubble {
   position: relative;
-  background: linear-gradient(135deg, #071526 0%, #0c2340 100%);
+  background: #0c2340;
   color: #ffffff;
   font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  padding: 4px 12px;
-  border-radius: 9999px;
-  box-shadow: 0 6px 16px rgba(12, 35, 64, 0.35), 0 2px 5px rgba(0, 0, 0, 0.15);
+  padding: 4px 10px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(12, 35, 64, 0.25);
   border: 1.5px solid #f59e0b;
   white-space: nowrap;
-  animation: sam-bubble-bob 2.8s ease-in-out infinite;
 }
 
 .sam-launcher-bubble-tail {
@@ -241,7 +240,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   padding: 5px 10px;
-  border-radius: 9999px;
+  border-radius: 6px;
   background: #ffffff;
   color: #0c2340;
   border: 1px solid #cbd5e1;

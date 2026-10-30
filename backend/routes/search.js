@@ -562,7 +562,7 @@ router.get('/', (req, res) => {
         id: ev.id,
         title: ev.title,
         subtitle: `Event (${ev.status}) · ${ev.event_date} at ${ev.event_time}`,
-        description: `${ev.venue} — ${ev.description.substring(0, 90)}...`,
+        description: `${ev.venue} - ${ev.description.substring(0, 90)}...`,
         url: `/events.html#event-${ev.id}`,
         type: 'Event'
       }));
@@ -616,7 +616,7 @@ router.get('/', (req, res) => {
     if (matchedContacts.length > 0) {
       categories.contacts = matchedContacts.slice(0, 6).map(c => ({
         id: c.id,
-        title: `${c.name} — ${c.role_or_title}`,
+        title: `${c.name} - ${c.role_or_title}`,
         subtitle: `${c.department_or_level} · ${c.phone || c.email}`,
         description: `Office: ${c.office_location || 'Statistics Administrative Office, Ground floor, New Physical Sciences Building'}`,
         url: `/contacts.html`,

@@ -403,8 +403,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 12px;
-  border-radius: 9999px;
+  padding: 5px 10px;
+  border-radius: 4px;
   font-size: 0.6875rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -1976,8 +1976,8 @@
   background-color: #0f172a;
   color: #ffffff;
   border: 1px solid #334155;
-  border-radius: 9999px;
-  padding: 10px 20px;
+  border-radius: 6px;
+  padding: 10px 18px;
   font-size: 0.8125rem;
   font-weight: 600;
   display: inline-flex;

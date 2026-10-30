@@ -238,7 +238,13 @@ const pageRoutes = [
   { path: '/about', file: 'about.html' },
   { path: '/about.html', file: 'about.html' },
   { path: '/admin', file: 'admin.html' },
-  { path: '/admin.html', file: 'admin.html' }
+  { path: '/admin.html', file: 'admin.html' },
+  { path: '/privacy', file: 'privacy.html' },
+  { path: '/privacy.html', file: 'privacy.html' },
+  { path: '/privacy-policy', file: 'privacy.html' },
+  { path: '/terms', file: 'terms.html' },
+  { path: '/terms.html', file: 'terms.html' },
+  { path: '/terms-and-conditions', file: 'terms.html' }
 ];
 
 // 14MB+ Full Departmental Software Package (Universal cross-platform offline bundle)

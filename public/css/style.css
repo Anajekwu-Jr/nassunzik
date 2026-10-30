@@ -6,7 +6,7 @@
    ========================================================================== */
 
 :root {
-  /* NASS Lovable Portal Color Palette */
+  /* NASS Official NASS Portal Palette */
   --primary-color: #0c2340;       /* Rich UNIZIK Navy (Primary) */
   --primary: #0c2340;
   --primary-hover: #163660;
@@ -19,7 +19,7 @@
   --secondary: #1e3a5f;
   --secondary-light: #2d5182;
   
-  --brand: #d9483b;               /* Lovable Warm Coral/Crimson Accent */
+  --brand: #d9483b;               /* UNIZIK Crimson Accent */
   --brand-color: #d9483b;
   --brand-foreground: #ffffff;
   --brand-hover: #bf3c30;
@@ -62,7 +62,7 @@
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
 
   /* Spacing & Layout */
-  --container-max-width: 1280px;
+  --container-max-width: 1200px;
   --header-height: 72px;
   --topbar-height: 34px;
   --radius-xs: 4px;
@@ -85,7 +85,7 @@
 }
 
 /* ==========================================================================
-   Dark Mode Palette - Lovable Deep Midnight Navy
+   Dark Mode Palette - Departmental Midnight Navy
    ========================================================================== */
 [data-theme="dark"] {
   --primary-color: #f8fafc;
@@ -604,6 +604,15 @@
   padding: 0;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
+
 html {
   font-size: 16px;
   scroll-behavior: smooth;
@@ -615,19 +624,38 @@ body {
   color: var(--text-primary);
   background-color: var(--background-color);
   line-height: 1.6;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
 
 main {
   flex: 1 0 auto;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
-img {
+section, header, footer, article, nav {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+img, video, canvas, svg, iframe {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+table {
+  max-width: 100%;
+}
+
+p, span, h1, h2, h3, h4, h5, h6, a, li, th, td {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 a {
@@ -640,14 +668,15 @@ a:hover {
   color: var(--primary-hover);
 }
 
-/* Container */
+/* Centered Content Container with max-width ~1200px and responsive side padding */
 .container {
   width: 100%;
-  max-width: var(--container-max-width);
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: clamp(16px, 4vw, 32px);
+  padding-right: clamp(16px, 4vw, 32px);
+  box-sizing: border-box;
 }
 
 /* Top Notification / Institutional Bar */
@@ -681,6 +710,24 @@ a:hover {
   font-size: 0.75rem;
 }
 
+.topbar-app-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1.5px solid #f59e0b;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.topbar-app-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+}
+
 .topbar-divider {
   opacity: 0.3;
 }
@@ -704,7 +751,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Header & Navigation - Lovable Style */
+/* Header & Navigation - Institutional Style */
 .site-header {
   background-color: rgba(250, 249, 247, 0.92);
   backdrop-filter: blur(16px);
@@ -990,7 +1037,7 @@ a:hover {
   top: 0 !important;
   left: 0 !important;
   width: 100vw !important;
-  height: 100vh !important;
+  height: 100dvh !important;
   background: rgba(12, 35, 64, 0.85) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
@@ -1164,7 +1211,7 @@ a:hover {
   font-size: 0.68rem;
   font-weight: 700;
   padding: 3px 8px;
-  border-radius: 9999px;
+  border-radius: 4px;
   background: #dbeafe;
   color: #1e40af;
   text-transform: uppercase;
@@ -1355,7 +1402,7 @@ a:hover {
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Hero Section - Lovable NASS Aesthetic */
+/* Hero Section - Official NASS Institutional Aesthetic */
 .hero-section {
   background: linear-gradient(135deg, #0c2340 0%, #0f2744 50%, #1e3a5f 100%);
   color: #ffffff;
@@ -1734,7 +1781,7 @@ a:hover {
   line-height: 1.6;
 }
 
-/* Bento Grid System - Lovable Style */
+/* Bento Grid System - Institutional Style */
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -1870,7 +1917,7 @@ a:hover {
   letter-spacing: 0.1em;
 }
 
-/* Page Header (Subpages) - Lovable Style */
+/* Page Header (Subpages) - Institutional Style */
 .page-header {
   background: linear-gradient(135deg, #0c2340 0%, #163660 100%);
   color: #ffffff;
@@ -1923,7 +1970,7 @@ a:hover {
   line-height: 1.6;
 }
 
-/* Site Footer - Lovable Deep UNIZIK Navy */
+/* Site Footer - UNIZIK Departmental Navy */
 .site-footer {
   background-color: #0c2340;
   color: #f8fafc;

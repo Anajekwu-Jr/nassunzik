@@ -44,7 +44,7 @@ export const BottomTabBar: React.FC = () => {
                 className="flex-1 flex flex-col items-center justify-center py-1 transition-all group"
               >
                 <div
-                  className={`px-4 py-1 rounded-full transition-colors ${
+                  className={`px-4 py-1 rounded-md transition-colors ${
                     isActive
                       ? isLight
                         ? 'bg-amber-500/20 text-amber-600'

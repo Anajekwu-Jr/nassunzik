@@ -6,7 +6,7 @@
    ========================================================================== */
 
 :root {
-  /* NASS Lovable Portal Color Palette */
+  /* NASS Official NASS Portal Palette */
   --primary-color: #0c2340;       /* Rich UNIZIK Navy (Primary) */
   --primary: #0c2340;
   --primary-hover: #163660;
@@ -19,7 +19,7 @@
   --secondary: #1e3a5f;
   --secondary-light: #2d5182;
   
-  --brand: #d9483b;               /* Lovable Warm Coral/Crimson Accent */
+  --brand: #d9483b;               /* UNIZIK Crimson Accent */
   --brand-color: #d9483b;
   --brand-foreground: #ffffff;
   --brand-hover: #bf3c30;
@@ -85,7 +85,7 @@
 }
 
 /* ==========================================================================
-   Dark Mode Palette - Lovable Deep Midnight Navy
+   Dark Mode Palette - Departmental Midnight Navy
    ========================================================================== */
 [data-theme="dark"] {
   --primary-color: #f8fafc;
@@ -751,7 +751,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Header & Navigation - Lovable Style */
+/* Header & Navigation - Institutional Style */
 .site-header {
   background-color: rgba(250, 249, 247, 0.92);
   backdrop-filter: blur(16px);
@@ -1211,7 +1211,7 @@ a:hover {
   font-size: 0.68rem;
   font-weight: 700;
   padding: 3px 8px;
-  border-radius: 9999px;
+  border-radius: 4px;
   background: #dbeafe;
   color: #1e40af;
   text-transform: uppercase;
@@ -1402,7 +1402,7 @@ a:hover {
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Hero Section - Lovable NASS Aesthetic */
+/* Hero Section - Official NASS Institutional Aesthetic */
 .hero-section {
   background: linear-gradient(135deg, #0c2340 0%, #0f2744 50%, #1e3a5f 100%);
   color: #ffffff;
@@ -1781,7 +1781,7 @@ a:hover {
   line-height: 1.6;
 }
 
-/* Bento Grid System - Lovable Style */
+/* Bento Grid System - Institutional Style */
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -1917,7 +1917,7 @@ a:hover {
   letter-spacing: 0.1em;
 }
 
-/* Page Header (Subpages) - Lovable Style */
+/* Page Header (Subpages) - Institutional Style */
 .page-header {
   background: linear-gradient(135deg, #0c2340 0%, #163660 100%);
   color: #ffffff;
@@ -1970,7 +1970,7 @@ a:hover {
   line-height: 1.6;
 }
 
-/* Site Footer - Lovable Deep UNIZIK Navy */
+/* Site Footer - UNIZIK Departmental Navy */
 .site-footer {
   background-color: #0c2340;
   color: #f8fafc;

@@ -43,7 +43,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({
 
       {/* Top University Identity Banner */}
       <div className="relative z-10 text-center animate-in fade-in slide-in-from-top-4 duration-700">
-        <span className="text-[11px] font-bold tracking-widest uppercase text-amber-400/90 px-3 py-1 rounded-full bg-amber-950/40 border border-amber-800/40 shadow-sm">
+        <span className="text-[11px] font-bold tracking-widest uppercase text-amber-400/90 px-3 py-1 rounded-md bg-amber-950/40 border border-amber-800/40 shadow-sm">
           UNIZIK · AWKA
         </span>
         <p className="text-[11px] text-slate-300 font-medium mt-2 tracking-wide">
