@@ -25,6 +25,22 @@ let isIndexing = false;
 
 function hasNewOrModifiedFiles(sinceTime) {
   if (!sinceTime) return true;
+
+  // 1. Check if SQLite database file was modified (new courses, excos, events added)
+  const dbPaths = [
+    path.join(ROOT_DIR, 'data', 'nass_portal.db'),
+    path.join('/tmp', 'nass_portal.db')
+  ];
+  for (const dbPath of dbPaths) {
+    if (fs.existsSync(dbPath)) {
+      try {
+        const stat = fs.statSync(dbPath);
+        if (stat.mtimeMs > sinceTime) return true;
+      } catch {}
+    }
+  }
+
+  // 2. Check if any course PDF or note was uploaded or changed
   for (const dir of PDF_DIRS) {
     if (!fs.existsSync(dir)) continue;
     try {
@@ -103,7 +119,12 @@ function getDepartmentChunks() {
   try {
     // 1. Courses
     const courses = db.prepare('SELECT code, title, level, semester, credit_units, description, outline FROM courses').all();
+    const coursesByLevel = { 100: { 1: [], 2: [] }, 200: { 1: [], 2: [] }, 300: { 1: [], 2: [] }, 400: { 1: [], 2: [] } };
+
     for (const c of courses) {
+      if (coursesByLevel[c.level] && coursesByLevel[c.level][c.semester]) {
+        coursesByLevel[c.level][c.semester].push(c);
+      }
       const text = `Course Code: ${c.code}\nCourse Title: ${c.title}\nLevel: ${c.level} Level (Semester ${c.semester})\nCredit Units: ${c.credit_units || 3}\nDescription: ${c.description || 'Core Departmental Statistics Course'}\nSyllabus Outline: ${c.outline || 'Standard NUC / UNIZIK syllabus curriculum.'}`;
       deptChunks.push({
         id: `dept-course-${c.code.replace(/\s+/g, '')}`,
@@ -113,6 +134,23 @@ function getDepartmentChunks() {
         category: 'course'
       });
     }
+
+    // 1b. Level summary overviews for 100L, 200L, 300L, 400L
+    for (const lvl of [100, 200, 300, 400]) {
+      const s1 = coursesByLevel[lvl][1] || [];
+      const s2 = coursesByLevel[lvl][2] || [];
+      let summaryText = `${lvl} Level Statistics Courses Overview at UNIZIK:\n`;
+      summaryText += `First Semester (${s1.length} courses):\n` + s1.map(c => `- ${c.code}: ${c.title} (${c.credit_units || 3} units)`).join('\n') + '\n\n';
+      summaryText += `Second Semester (${s2.length} courses):\n` + s2.map(c => `- ${c.code}: ${c.title} (${c.credit_units || 3} units)`).join('\n');
+
+      deptChunks.push({
+        id: `dept-courses-level-${lvl}`,
+        courseCode: `${lvl} LEVEL COURSES`,
+        fileName: `${lvl} Level Course Catalog Summary`,
+        text: summaryText,
+        category: 'course_level_summary'
+      });
+    }
   } catch (err) {
     console.warn('Could not index courses for Sam AI:', err.message);
   }
@@ -120,7 +158,9 @@ function getDepartmentChunks() {
   try {
     // 2. Executives
     const excos = db.prepare('SELECT name, office, level, phone, bio, tenure FROM executives').all();
+    let excoRosterText = 'National Association of Statistics Students (NASS UNIZIK) Executive Council Officers:\n';
     for (const e of excos) {
+      excoRosterText += `- ${e.office}: ${e.name} (${e.level} Level)\n`;
       const text = `Executive Officer: ${e.name}\nOffice: ${e.office}\nLevel: ${e.level} Level\nTenure: ${e.tenure || '2026/2027'}\nPhone/Contact: ${e.phone || 'Available via NASS Secretariat'}\nDuties & Bio: ${e.bio || 'Executive Officer of the National Association of Statistics Students (NASS UNIZIK).'}`;
       deptChunks.push({
         id: `dept-exco-${e.office.replace(/\s+/g, '')}`,
@@ -130,6 +170,13 @@ function getDepartmentChunks() {
         category: 'executive'
       });
     }
+    deptChunks.push({
+      id: 'dept-exco-roster-summary',
+      courseCode: 'NASS EXCO DIRECTORY',
+      fileName: 'NASS Executive Council Summary',
+      text: excoRosterText,
+      category: 'executive'
+    });
   } catch (err) {
     console.warn('Could not index executives for Sam AI:', err.message);
   }
@@ -137,7 +184,9 @@ function getDepartmentChunks() {
   try {
     // 3. Staff members
     const staff = db.prepare('SELECT name, title, role_category, qualifications, specialization, email, phone, office, bio FROM staff').all();
+    let staffRosterText = 'Department of Statistics Academic & Administrative Staff Directory, UNIZIK:\n';
     for (const s of staff) {
+      staffRosterText += `- ${s.name} (${s.title || ''}): Specialization: ${s.specialization || 'Statistics'}, Office: ${s.office || 'Statistics Complex'}\n`;
       const text = `Staff Member: ${s.title || ''} ${s.name}\nRole Category: ${s.role_category || 'Academic'}\nQualifications: ${s.qualifications || 'B.Sc, M.Sc, Ph.D'}\nArea of Specialization: ${s.specialization || 'Statistics'}\nOffice: ${s.office || 'Statistics Complex, Faculty of Physical Sciences'}\nEmail: ${s.email || 'statistics@unizik.edu.ng'}\nBiography & Background: ${s.bio || 'Department of Statistics Lecturer, Nnamdi Azikiwe University'}`;
       deptChunks.push({
         id: `dept-staff-${s.name.replace(/\s+/g, '').slice(0, 15)}`,
@@ -147,12 +196,62 @@ function getDepartmentChunks() {
         category: 'staff'
       });
     }
+    deptChunks.push({
+      id: 'dept-staff-roster-summary',
+      courseCode: 'STAFF DIRECTORY',
+      fileName: 'Department Staff Directory Overview',
+      text: staffRosterText,
+      category: 'staff'
+    });
   } catch (err) {
     console.warn('Could not index staff for Sam AI:', err.message);
   }
 
   try {
-    // 4. Announcements
+    // 4. Events
+    const events = db.prepare('SELECT title, event_date, event_time, venue, description, category FROM events ORDER BY event_date ASC').all();
+    let eventsRosterText = 'Department of Statistics Academic & Association Events Calendar:\n';
+    for (const ev of events) {
+      eventsRosterText += `- ${ev.title}: Date: ${ev.event_date} (${ev.event_time || 'TBD'}), Venue: ${ev.venue}, Category: ${ev.category}\n`;
+      const text = `Department Event: ${ev.title}\nDate: ${ev.event_date}\nTime: ${ev.event_time || 'TBD'}\nVenue: ${ev.venue}\nCategory: ${ev.category}\nDetails: ${ev.description}`;
+      deptChunks.push({
+        id: `dept-event-${ev.title.slice(0, 20).replace(/\s+/g, '')}`,
+        courseCode: 'EVENTS',
+        fileName: 'Department Calendar & Events',
+        text,
+        category: 'event'
+      });
+    }
+    deptChunks.push({
+      id: 'dept-events-summary',
+      courseCode: 'EVENTS CALENDAR',
+      fileName: 'Department Events Calendar Summary',
+      text: eventsRosterText,
+      category: 'event'
+    });
+  } catch (err) {
+    console.warn('Could not index events for Sam AI:', err.message);
+  }
+
+  try {
+    // 5. News & Articles
+    const news = db.prepare('SELECT title, summary, content, category, author FROM news ORDER BY published_at DESC LIMIT 15').all();
+    for (const n of news) {
+      const text = `News Article: ${n.title}\nCategory: ${n.category}\nAuthor: ${n.author}\nSummary: ${n.summary}\nFull Content: ${n.content}`;
+      deptChunks.push({
+        id: `dept-news-${n.title.slice(0, 20).replace(/\s+/g, '')}`,
+        courseCode: 'NEWS',
+        fileName: 'Department News Bulletin',
+        text,
+        category: 'news'
+      });
+    }
+  } catch (err) {
+    console.warn('Could not index news for Sam AI:', err.message);
+  }
+
+  try {
+    // 6. Announcements
     const announcements = db.prepare('SELECT title, content, priority, created_at FROM announcements WHERE is_active = 1').all();
     for (const a of announcements) {
       const text = `Announcement Title: ${a.title}\nPriority: ${a.priority}\nDate: ${a.created_at || 'Current 2026/2027 Academic Term'}\nDetails: ${a.content}`;
@@ -169,7 +268,7 @@ function getDepartmentChunks() {
   }
 
   try {
-    // 5. FAQs
+    // 7. FAQs
     const faqs = db.prepare('SELECT question, answer, category FROM faqs').all();
     for (const f of faqs) {
       const text = `Frequently Asked Question: ${f.question}\nCategory: ${f.category}\nOfficial Answer: ${f.answer}`;
@@ -185,7 +284,7 @@ function getDepartmentChunks() {
     console.warn('Could not index FAQs for Sam AI:', err.message);
   }
 
-  // 6. Explicit authoritative SIWES guidelines chunk
+  // 8. Explicit authoritative SIWES guidelines chunk
   deptChunks.push({
     id: 'dept-siwes-official-rules',
     courseCode: 'SIWES',
@@ -351,6 +450,13 @@ export function findRelevantChunks(question, chunks = cachedChunks, topK = 6) {
     qLower.includes('social') || qLower.includes('director') || qLower.includes('offorkee') || qLower.includes('treasurer');
   const isStaffQuery = qLower.includes('staff') || qLower.includes('hod') || qLower.includes('lecturer') ||
     qLower.includes('professor') || qLower.includes('osuji') || qLower.includes('enogwe') || qLower.includes('anabike');
+  const isEventQuery = qLower.includes('event') || qLower.includes('activity') || qLower.includes('activities') ||
+    qLower.includes('calendar') || qLower.includes('matriculation') || qLower.includes('exam') || qLower.includes('break') ||
+    qLower.includes('convocation') || qLower.includes('quiz') || qLower.includes('dinner');
+
+  // Detect level query (e.g., 100 level, 200 level, 300 level, 400 level)
+  const levelMatch = qLower.match(/\b(100|200|300|400)\s*(?:lvl|level)?\b/i);
+  const queriedLevel = levelMatch ? levelMatch[1] : null;
 
   const scored = [];
 
@@ -367,9 +473,19 @@ export function findRelevantChunks(question, chunks = cachedChunks, topK = 6) {
       }
     }
 
-    // 2. Exco / Staff category boosts
-    if (isExcoQuery && chunk.category === 'executive') score += 35;
-    if (isStaffQuery && (chunk.category === 'staff' || chunk.category === 'siwes')) score += 35;
+    // 1b. Level summary overview matching boost (+65)
+    if (queriedLevel) {
+      if (chunk.id === `dept-courses-level-${queriedLevel}`) {
+        score += 85;
+      } else if (chunk.category === 'course' && chunkLower.includes(`level: ${queriedLevel} level`)) {
+        score += 20;
+      }
+    }
+
+    // 2. Exco / Staff / Event category boosts
+    if (isExcoQuery && (chunk.category === 'executive' || chunk.id === 'dept-exco-roster-summary')) score += 40;
+    if (isStaffQuery && (chunk.category === 'staff' || chunk.id === 'dept-staff-roster-summary')) score += 40;
+    if (isEventQuery && (chunk.category === 'event' || chunk.id === 'dept-events-summary')) score += 45;
     if (queriedCourse === 'SIWES' && (chunk.category === 'siwes' || chunk.courseCode === 'SIWES')) score += 60;
 
     // 3. Exact phrase match boost (+20)

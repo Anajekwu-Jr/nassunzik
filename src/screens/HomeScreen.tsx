@@ -281,7 +281,7 @@ export const HomeScreen: React.FC = () => {
       <div
         onClick={() => {
           triggerHaptic();
-          (window as any).openSamAI?.();
+          ((window as any).openSamAI || (window as any).openGeminiAI)?.();
         }}
         role="button"
         tabIndex={0}
@@ -305,7 +305,7 @@ export const HomeScreen: React.FC = () => {
                 <h4 className="text-xs font-extrabold uppercase tracking-wider text-white">SAM AI</h4>
               </div>
               <p className="text-[11px] text-slate-300 line-clamp-1 mt-0.5">
-                Official AI bot for statistics department
+                Friendly study companion for statistics students
               </p>
             </div>
           </div>

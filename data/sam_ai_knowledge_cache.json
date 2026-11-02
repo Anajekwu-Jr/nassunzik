@@ -1,7 +1,7 @@
 {
-  "timestamp": 1793094349320,
+  "timestamp": 1793573113242,
   "pdfCount": 77,
-  "chunkCount": 5933,
+  "chunkCount": 5955,
   "chunks": [
     {
       "id": "dept-course-GST111",
@@ -515,6 +515,34 @@
       "category": "course"
     },
     {
+      "id": "dept-courses-level-100",
+      "courseCode": "100 LEVEL COURSES",
+      "fileName": "100 Level Course Catalog Summary",
+      "text": "100 Level Statistics Courses Overview at UNIZIK:\nFirst Semester (10 courses):\n- GST 111: Communication in English (2 units)\n- NAU GST 113: Humanities (2 units)\n- COS 101: Introduction to Computer Science (3 units)\n- MTH 101: Elementary Mathematics I (2 units)\n- STA 111: Descriptive Statistics (3 units)\n- STA 121: Statistical Inference I (3 units)\n- NAU-PHY101: General Physics I (2 units)\n- NAU-BIO 101: General Biology (2 units)\n- ECO 111: Principles of Economics (2 units)\n- BUA 101: Introduction of Business (2 units)\n\nSecond Semester (11 courses):\n- GST 112: Nigerian Peoples and Culture (2 units)\n- NAU GST 114: Basic Igbo Studies (2 units)\n- STA 112: Probability 1 (3 units)\n- STA 122: Statistical computing 1 (3 units)\n- MTH 102: Elementary Mathematics II (2 units)\n- NAU-PHY 102: Physics II (2 units)\n- NAU-MAT 112: Intro to actuarial Mathematics I (2 units)\n- COS 102: Computer Programming II (3 units)\n- NAU-BIO 102: General Biology II (2 units)\n- ECO 112: Principles of Economics II (2 units)\n- BUA 102: Introduction To Business II (2 units)",
+      "category": "course_level_summary"
+    },
+    {
+      "id": "dept-courses-level-200",
+      "courseCode": "200 LEVEL COURSES",
+      "fileName": "200 Level Course Catalog Summary",
+      "text": "200 Level Statistics Courses Overview at UNIZIK:\nFirst Semester (10 courses):\n- ENT 211: Entrepreneurship and Innovation 2 (2 units)\n- STA 211: Probability II (3 units)\n- STA 221: Statistical Inference II (3 units)\n- STA 231: Statistical Computing II (2 units)\n- COS 201: Computer Programming I (3 units)\n- MTH 231: Introduction to Mathematical Methods (3 units)\n- MTH 201: Linear Algebra I (3 units)\n- ECO 211: Micro Economics I (2 units)\n- IFT 211: Digital Logic Design (2 units)\n- AMS 101: Principles of Management (2 units)\n\nSecond Semester (10 courses):\n- GST 212: Philosophy, Logic, and Human Existence (2 units)\n- STA 202: Statistics for Physical Sciences & Engineering (3 units)\n- STA 212: Introduction to Social & Economic Statistics (3 units)\n- NAU-STA 214: Probability and Probability Distribution (2 units)\n- COS 202: Computer Programming II (3 units)\n- NAU-MTH 202: Elementary Differential Equation II (3 units)\n- STA 299: Industrial Training (3 units)\n- MTH 204: Linear Algebra II (3 units)\n- MTH 212: Introduction to Actuarial Mathematics (3 units)\n- ECO 212: Micro Economics II (3 units)",
+      "category": "course_level_summary"
+    },
+    {
+      "id": "dept-courses-level-300",
+      "courseCode": "300 LEVEL COURSES",
+      "fileName": "300 Level Course Catalog Summary",
+      "text": "300 Level Statistics Courses Overview at UNIZIK:\nFirst Semester (8 courses):\n- STA 311: Probability III (3 units)\n- STA 321: Statistical Inference III (3 units)\n- STA 331: Statistical Computing III (2 units)\n- NAU-STA 341: Regression Analysis I (3 units)\n- NAU-STA 351: Analysis of Variance I (2 units)\n- NAU-STA 361: Demography (2 units)\n- NAU-STA 371: Operations Research I (2 units)\n- NAU-STA 381: Biometry (2 units)\n\nSecond Semester (8 courses):\n- GST 312: Peace and Conflict Resolution (2 units)\n- ENT 312: Venture Creation (2 units)\n- STA 312: Distribution theory I (3 units)\n- STA 324: Survey methods and sampling theory (3 units)\n- NAU-STA 322: Statistical Quality Control I (2 units)\n- NAU-STA 362: Statistical Methods In Epidemiology (2 units)\n- NAU-STA 342: Statistical Application of Matrix Algebra (2 units)\n- STA 399: Industrial Attachment (3 units)",
+      "category": "course_level_summary"
+    },
+    {
+      "id": "dept-courses-level-400",
+      "courseCode": "400 LEVEL COURSES",
+      "fileName": "400 Level Course Catalog Summary",
+      "text": "400 Level Statistics Courses Overview at UNIZIK:\nFirst Semester (9 courses):\n- STA 411: Probability IV (3 units)\n- STA 413: Statistical Inference IV (3 units)\n- NAU-STA 421: Times Analysis (2 units)\n- NAU-STA 441: Regression Analysis II (2 units)\n- NAU-STA 451: Design And Analysis of Experiment (2 units)\n- NAU-STA 461: Multivariate Analysis I (2 units)\n- NAU-STA 491: Seminar (1 units)\n- NAU-STA 471: Operations Research II (2 units)\n- NAU-STA 481: Statistical Quality Control I (2 units)\n\nSecond Semester (7 courses):\n- STA 412: Distribution Theory II (3 units)\n- STA 422: Logical Background of Statistics and Decision Theory (3 units)\n- NAU-STA 424: Stochastic Processes (2 units)\n- NAU-STA 432: Non–parametric Methods (2 units)\n- NAU-STA 442: Multivariate Analysis II (2 units)\n- NAU-STA 452: Analysis of Variance II (2 units)\n- STA 499: Project (6 units)",
+      "category": "course_level_summary"
+    },
+    {
       "id": "dept-exco-President&ExecutiveLead",
       "courseCode": "NASS EXCO",
       "fileName": "NASS Executive Council Directory",
@@ -568,6 +596,13 @@
       "courseCode": "NASS EXCO",
       "fileName": "NASS Executive Council Directory",
       "text": "Executive Officer: Comr. Offorkee Chidera Elvis\nOffice: Director of Socials\nLevel: 300 Level\nTenure: 2026/2027\nPhone/Contact: 08144016159/09050148729\nDuties & Bio: Coordinator of social activities in the department.",
+      "category": "executive"
+    },
+    {
+      "id": "dept-exco-roster-summary",
+      "courseCode": "NASS EXCO DIRECTORY",
+      "fileName": "NASS Executive Council Summary",
+      "text": "National Association of Statistics Students (NASS UNIZIK) Executive Council Officers:\n- President & Executive Lead: Comr. Anajekwu Chidera Patrick (PhanCore) (400 Level)\n- Vice President: Comr. Obunadike Vivian Chiemerie (400 Level)\n- Secretary General: Comr. Chidozie Rejoice Ogochukwu (400 Level)\n- Director of Academics: Comr. Ejefonye Mmesoma Stephanie (300 Level)\n- Financial Secretary: Comr. Chinedu Chidinma Veronica (400 Level)\n- Treasurer: Comr. Ezenwelu Chiamaka Princess (400 Level)\n- Director of Sports: Comr. Ugochukwu Franklin (400 Level)\n- Director of Socials: Comr. Offorkee Chidera Elvis (300 Level)\n",
       "category": "executive"
     },
     {
@@ -912,6 +947,125 @@
       "fileName": "Department Academic Staff & CIRS Directory",
       "text": "Staff Member: Administrative Assistant Mr. Onwudinjo Chukwuemeka Anthony\nRole Category: ACADEMIC\nQualifications: B.Sc / HND (Public Administration / Secretarial Studies)\nArea of Specialization: Departmental Records, Academic Secretarial Administration & Student Affairs\nOffice: Departmental General Administrative Registry, Ground Floor\nEmail: nau7340@unizik.edu.ng\nBiography & Background: Onwudinjo Chukwuemeka Anthony is a dedicated member of the Department of Statistics at Nnamdi Azikiwe University (UNIZIK), serving as ADMINISTRATIVE ASSISTANT.",
       "category": "staff"
+    },
+    {
+      "id": "dept-staff-roster-summary",
+      "courseCode": "STAFF DIRECTORY",
+      "fileName": "Department Staff Directory Overview",
+      "text": "Department of Statistics Academic & Administrative Staff Directory, UNIZIK:\n- Prof. Francis Chukwuemeka Eze (Head of Department (HOD) / Professor of Statistics): Specialization: Statistics, Office: Department of Statistics Building, HOD Office 101\n- Dr. Okechukwu Jeremiah Obulezi (Staff Adviser, NASS UNIZIK / Senior Lecturer): Specialization: Applied Statistics, Data Analysis, Statistical Computing, Office: Department of Statistics Building, Staff Adviser Office 108\n- Prof. Chigbu Emeka Polycarp (Professor of Statistics): Specialization: Mathematical Statistics, Probability Theory, Advanced Statistical Inference, Office: Statistics Faculty Wing, Professor Suite 104\n- Prof. Etaga Oghenekevwe Harrison (Professor of Statistics): Specialization: Regression, Probability Modelling, Computational, Econometrics And Mathematical Statistics, Office: Statistics Faculty Wing, Professor Suite 105\n- Prof. Nwankwo Chike Henry (Professor of Statistics): Specialization: STATISTICS, Office: Statistics Faculty Wing, Professor Suite 106\n- Prof. Obiora-ilouno Onyebuchi Happiness (Professor of Statistics): Specialization: Operations Research And Computational Statistics, Office: Statistics Faculty Wing, Professor Suite 107\n- Prof. Okoli Cecilia Nchedo (Professor of Statistics): Specialization: Mathematical Statistics, Probability Theory, Advanced Statistical Inference, Office: Statistics Faculty Wing, Professor Suite 108\n- Prof. Onyeagu Iheanyi Sidney (Professor of Statistics): Specialization: Mathematical Statistics, Probability Theory, Advanced Statistical Inference, Office: Statistics Faculty Wing, Professor Suite 109\n- Prof. Osuji Amaeze George (Professor of Statistics): Specialization: Mathematical Statistics, Probability Theory, Advanced Statistical Inference, Office: Statistics Faculty Wing, Professor Suite 102\n- Prof. Umeh Uzoma Edith (Professor of Statistics): Specialization: Mathematical Statistics, Probability Theory, Advanced Statistical Inference, Office: Statistics Faculty Wing, Professor Suite 103\n- Prof. Uzuke Chinwendu Alice (Professor of Statistics): Specialization: Biostatistics,  Regression Analysis, Econometrics, Non Parametric Statistics, Geospatial Statistical Modeling, Office: Statistics Faculty Wing, Professor Suite 104\n- Dr. Awopeju Kabiru Abidemi (Senior Lecturer): Specialization: Mathematical Statistics, Medical Statistics, Statistical Inference, Office: Statistics Academic Wing, Faculty Office 212\n- Dr. Afuecheta Osita Emmanuel (Lecturer I): Specialization: Applied Statistics, Data Analysis, Statistical Computing, Office: Statistics Academic Wing, Faculty Office 213\n- Mr. Chukwunenye Gozie Victor (Lecturer I): Specialization: Biostatistics And Medical Statistics, Design And Analysis Of Experiment, Environmental Statistics, Office: Statistics Academic Wing, Faculty Office 214\n- Mrs. Eriobu Nkiru Obioma (Lecturer I): Specialization: Biostatistics And Nonparametric, Statistical Inference, Office: Statistics Academic Wing, Faculty Office 201\n- Dr. Ibeakuzie Onyedikachi Precious (Lecturer I): Specialization: STATISTICS, Office: Statistics Academic Wing, Faculty Office 202\n- Dr. Ikediuwa Udoka Chinedu (Lecturer I): Specialization: Statistics, Statistics, Office: Statistics Academic Wing, Faculty Office 203\n- Mrs. Ngonadi Lilian Oluebube (Lecturer I): Specialization: Design Of Experiments, Office: Statistics Academic Wing, Faculty Office 204\n- Dr. Nnanatu Chibuzor C (Lecturer I): Specialization: Bayesian Statistics, Biostatistics, Child And Maternal Health, Computational Statistics, Environmental Statistics, Epidemic Modelling, Machine Learning And Artificial Intelligence (AI), Medical Statistics, Modelling Sustainable Development Goals (SDGs) Indicators Including Gender-based Violence And Good Health For All, Population Modelling And Estimation, Power Analysis, Spatial And Spatio-temporal Modelling, Statistical Software Package Development, Office: Statistics Academic Wing, Faculty Office 205\n- Dr. Utazi Chigozie Edson (Lecturer I): Specialization: Applied Statistics, Data Analysis, Statistical Computing, Office: Statistics Academic Wing, Faculty Office 206\n- Mrs. Aforka Kenechukwu Florence (Lecturer II): Specialization: Regression Analysis, Regression Analysis, Office: Statistics Academic Wing, Faculty Office 207\n- Mrs. Chikwelu Chinelo Ujunwa (Lecturer II): Specialization: Biostatistics, Office: Statistics Academic Wing, Faculty Office 208\n- Dr. Enogwe Samuel Ugochukwu (Lecturer II): Specialization: Econometrics, Operations Research, Office: Statistics Academic Wing, Faculty Office 209\n- Dr. Nnabude Chinelo Ijeoma. (Lecturer II): Specialization: Multivariate Analysis, Office: Statistics Academic Wing, Faculty Office 210\n- Dr. Odum Jane Ogechukwu (Lecturer II): Specialization: Applied Statistics, Data Analysis, Statistical Computing, Office: Statistics Academic Wing, Faculty Office 211\n- Dr. Okoye Chinwe Grace (Lecturer II): Specialization: Bio Statistics, Office: Statistics Academic Wing, Faculty Office 212\n- Dr. Oladimeji Olanrewaju Adedipupo (Lecturer II): Specialization: Applied Statistics, Data Analysis, Statistical Computing, Office: Statistics Academic Wing, Faculty Office 213\n- Mrs. Omeje Ifunanya Lydia (Lecturer II): Specialization: Data Science, Design Of Experiment, Machine Learning, Statistical Modeling, Structural Equation Modeling, Office: Statistics Academic Wing, Faculty Office 214\n- Mr. Omoruyi Aideniosa Frederick (Lecturer II): Specialization: Mathematical Statistics, Operations Research, Office: Statistics Academic Wing, Faculty Office 201\n- Mr. Onyenekwe Chukwuenyem Enoch (Lecturer II): Specialization: Bayesian Statistics, Medical -Economic Statistics, Office: Statistics Academic Wing, Faculty Office 202\n- Dr. Anabike Ifeanyi Charles (Assistant Lecturer): Specialization: Applied Statistics, Data Analysis, Statistical Computing, Office: Statistics Academic Wing, Faculty Office 203\n- Mr. Obubu Maxwell (Graduate Assistant): Specialization: Departmental Records, Academic Secretarial Administration & Student Affairs, Office: Departmental General Administrative Registry, Ground Floor\n- Mrs. Nnazie Ogonna Scholastica (Assistant Chief Technologist): Specialization: Statistical Computing Laboratory, Practical Data Systems & Analytics, Office: Departmental Computing & Statistical Laboratory, Room 104\n- Mrs. Osefoh Celestina Ifeyinwa (Deputy Chief Executive Officer): Specialization: Departmental Records, Academic Secretarial Administration & Student Affairs, Office: Departmental General Administrative Registry, Ground Floor\n- Mr. Iroulo Onyemaechi Anthony Sunday (Principal Executive Officer I): Specialization: Political Science, Office: Departmental General Administrative Registry, Ground Floor\n- Mrs. Ezuma Uche Lawritta (Senior Technologist): Specialization: Statistical Computing Laboratory, Practical Data Systems & Analytics, Office: Departmental Computing & Statistical Laboratory, Room 107\n- Mrs. Iloh Uche Michael (Technologist II): Specialization: MATHEMATICAL STATISTICS, Office: Departmental Computing & Statistical Laboratory, Room 104\n- Mr. Nmeregini Ogbonna David (Technologist II): Specialization: Statistical Computing Laboratory, Practical Data Systems & Analytics, Office: Departmental Computing & Statistical Laboratory, Room 105\n- Mr. Nnatuanya Chinedu Christian (Technologist I): Specialization: Computer Hardware System Engineer, Local Area Network Planner And Installer, Microsoft Offce Application User, R Software/Package User, Wireless Network Installer And Administrator, Office: Departmental Computing & Statistical Laboratory, Room 106\n- Mrs. Okoye Ijeoma Sandra (Technologist I): Specialization: Biostatistics, Office: Departmental Computing & Statistical Laboratory, Room 107\n- Mr. Okpala Ikenna Frank (Technologist I): Specialization: Good Knowledge Of Statistical Application Software, Mathematical Statistics, Office: Departmental Computing & Statistical Laboratory, Room 104\n- Mrs. Onuora (nee Muomezie) Ifunanya Candid (Technologist I): Specialization: Statistical Computing Laboratory, Practical Data Systems & Analytics, Office: Departmental Computing & Statistical Laboratory, Room 105\n- Mrs. Onyeleonu Obiageli Comfort (Technologist II): Specialization: Maths/statistics, Office: Departmental Computing & Statistical Laboratory, Room 106\n- Mr. Orji Gabriel Oyo (Technologist I): Specialization: Statistics, Office: Departmental Computing & Statistical Laboratory, Room 107\n- Mr. Onyiriuka Michael Chukwuemeka (Administrative Officer): Specialization: Economics, Office: Departmental General Administrative Registry, Ground Floor\n- Mrs. Eze Ogechukwu Florence (Executive Officer): Specialization: Departmental Records, Academic Secretarial Administration & Student Affairs, Office: Departmental General Administrative Registry, Ground Floor\n- Mrs. Molokwu Nnenna Florence (Administrative Assistant): Specialization: Departmental Records, Academic Secretarial Administration & Student Affairs, Office: Departmental General Administrative Registry, Ground Floor\n- Mr. Okolo Emeka Christopher (Administrative Assistant): Specialization: Departmental Records, Academic Secretarial Administration & Student Affairs, Office: Departmental General Administrative Registry, Ground Floor\n- Mr. Onwudinjo Chukwuemeka Anthony (Administrative Assistant): Specialization: Departmental Records, Academic Secretarial Administration & Student Affairs, Office: Departmental General Administrative Registry, Ground Floor\n",
+      "category": "staff"
+    },
+    {
+      "id": "dept-event-ResumptionofNewSt",
+      "courseCode": "EVENTS",
+      "fileName": "Department Calendar & Events",
+      "text": "Department Event: Resumption of New Students & Lectures Begin\nDate: 2026-10-12\nTime: 08:00 AM - 04:00 PM\nVenue: Department of Statistics & Faculty Lecture Theatres\nCategory: Resumption\nDetails: New students continue clearance, documentation, and introductory lectures begin for the 2026/2027 academic session.",
+      "category": "event"
+    },
+    {
+      "id": "dept-event-ResumptionofReturn",
+      "courseCode": "EVENTS",
+      "fileName": "Department Calendar & Events",
+      "text": "Department Event: Resumption of Returning Students & Course Enrolment\nDate: 2026-10-14\nTime: 08:00 AM - 05:00 PM\nVenue: Department of Statistics Building, UNIZIK Main Campus\nCategory: Resumption\nDetails: Old students return to campus. Payment of school charges, course registration, and full lectures commence.",
+      "category": "event"
+    },
+    {
+      "id": "dept-event-2024/2025&2025/202",
+      "courseCode": "EVENTS",
+      "fileName": "Department Calendar & Events",
+      "text": "Department Event: 2024/2025 & 2025/2026 Convocation Ceremonies\nDate: 2026-11-15\nTime: 09:00 AM - 04:00 PM\nVenue: UNIZIK Convocation Arena, Awka\nCategory: Ceremony\nDetails: University convocation ceremonies celebrating graduating classes of the 2024/2025 and 2025/2026 academic sessions (Nov 15-20, 2026).",
+      "category": "event"
+    },
+    {
+      "id": "dept-event-University-WideCont",
+      "courseCode": "EVENTS",
+      "fileName": "Department Calendar & Events",
+      "text": "Department Event: University-Wide Continuous Assessment Quiz\nDate: 2026-11-30\nTime: 09:00 AM - 03:00 PM\nVenue: Classrooms & University CBT Center\nCategory: Examination\nDetails: Mid-semester assessment test for all regular undergraduate courses across all levels.",
+      "category": "event"
+    },
+    {
+      "id": "dept-event-Vacation,Christmas",
+      "courseCode": "EVENTS",
+      "fileName": "Department Calendar & Events",
+      "text": "Department Event: Vacation, Christmas and Election Break\nDate: 2026-12-23\nTime: 12:00 PM\nVenue: University-Wide\nCategory: Academic Break\nDetails: Official university vacation, Christmas, and national election recess running through Saturday, January 22, 2027.",
+      "category": "event"
+    },
+    {
+      "id": "dept-event-AllStudentsReturn",
+      "courseCode": "EVENTS",
+      "fileName": "Department Calendar & Events",
+      "text": "Department Event: All Students Return to Campus\nDate: 2027-01-23\nTime: 08:00 AM - 06:00 PM\nVenue: UNIZIK Hostels & Campus Halls\nCategory: Academic\nDetails: Students return to campus following Christmas and election break in preparation for lecture continuation on Monday, January 25, 2027.",
+      "category": "event"
+    },
+    {
+      "id": "dept-event-FirstSemester2026/",
+      "courseCode": "EVENTS",
+      "fileName": "Department Calendar & Events",
+      "text": "Department Event: First Semester 2026/2027 Matriculation Ceremony\nDate: 2027-01-29\nTime: 09:00 AM - 01:00 PM\nVenue: Faculty of Physical Sciences Grounds\nCategory: Matriculation\nDetails: Formal oath-taking and matriculation ceremony for all 2026/2027 fresh undergraduate students.",
+      "category": "event"
+    },
+    {
+      "id": "dept-event-FirstSemesterAcade",
+      "courseCode": "EVENTS",
+      "fileName": "Department Calendar & Events",
+      "text": "Department Event: First Semester Academic Revision Week\nDate: 2027-02-15\nTime: 08:00 AM - 05:00 PM\nVenue: Department of Statistics Lecture Rooms\nCategory: Academic\nDetails: Intensive revision lectures, study group meetings, and past question preparations ahead of degree examinations.",
+      "category": "event"
+    },
+    {
+      "id": "dept-event-FirstSemesterDegre",
+      "courseCode": "EVENTS",
+      "fileName": "Department Calendar & Events",
+      "text": "Department Event: First Semester Degree Examinations (CBE & PBE)\nDate: 2027-02-22\nTime: 08:30 AM - 05:00 PM\nVenue: Faculty Examination Halls & CBT Centers\nCategory: Examination\nDetails: First semester degree examinations commence for regular students (both Computer-Based and Paper-Based exams) through March 19, 2027.",
+      "category": "event"
+    },
+    {
+      "id": "dept-event-SchoolofGeneralSt",
+      "courseCode": "EVENTS",
+      "fileName": "Department Calendar & Events",
+      "text": "Department Event: School of General Studies (GS) Examinations\nDate: 2027-03-15\nTime: 08:00 AM - 05:00 PM\nVenue: University CBT Centers\nCategory: Examination\nDetails: General Studies (GS) examinations running Monday, March 15 to Friday, March 19, 2027.",
+      "category": "event"
+    },
+    {
+      "id": "dept-event-EndofFirstSemeste",
+      "courseCode": "EVENTS",
+      "fileName": "Department Calendar & Events",
+      "text": "Department Event: End of First Semester Examinations & Vacation Break\nDate: 2027-03-19\nTime: 05:00 PM\nVenue: UNIZIK Main Campus\nCategory: Academic Break\nDetails: Official conclusion of First Semester examinations. Vacation and Easter Break begins Saturday, March 20 and lasts through Friday, April 2, 2027.",
+      "category": "event"
+    },
+    {
+      "id": "dept-events-summary",
+      "courseCode": "EVENTS CALENDAR",
+      "fileName": "Department Events Calendar Summary",
+      "text": "Department of Statistics Academic & Association Events Calendar:\n- Resumption of New Students & Lectures Begin: Date: 2026-10-12 (08:00 AM - 04:00 PM), Venue: Department of Statistics & Faculty Lecture Theatres, Category: Resumption\n- Resumption of Returning Students & Course Enrolment: Date: 2026-10-14 (08:00 AM - 05:00 PM), Venue: Department of Statistics Building, UNIZIK Main Campus, Category: Resumption\n- 2024/2025 & 2025/2026 Convocation Ceremonies: Date: 2026-11-15 (09:00 AM - 04:00 PM), Venue: UNIZIK Convocation Arena, Awka, Category: Ceremony\n- University-Wide Continuous Assessment Quiz: Date: 2026-11-30 (09:00 AM - 03:00 PM), Venue: Classrooms & University CBT Center, Category: Examination\n- Vacation, Christmas and Election Break: Date: 2026-12-23 (12:00 PM), Venue: University-Wide, Category: Academic Break\n- All Students Return to Campus: Date: 2027-01-23 (08:00 AM - 06:00 PM), Venue: UNIZIK Hostels & Campus Halls, Category: Academic\n- First Semester 2026/2027 Matriculation Ceremony: Date: 2027-01-29 (09:00 AM - 01:00 PM), Venue: Faculty of Physical Sciences Grounds, Category: Matriculation\n- First Semester Academic Revision Week: Date: 2027-02-15 (08:00 AM - 05:00 PM), Venue: Department of Statistics Lecture Rooms, Category: Academic\n- First Semester Degree Examinations (CBE & PBE): Date: 2027-02-22 (08:30 AM - 05:00 PM), Venue: Faculty Examination Halls & CBT Centers, Category: Examination\n- School of General Studies (GS) Examinations: Date: 2027-03-15 (08:00 AM - 05:00 PM), Venue: University CBT Centers, Category: Examination\n- End of First Semester Examinations & Vacation Break: Date: 2027-03-19 (05:00 PM), Venue: UNIZIK Main Campus, Category: Academic Break\n",
+      "category": "event"
+    },
+    {
+      "id": "dept-news-FirstSemesterExami",
+      "courseCode": "NEWS",
+      "fileName": "Department News Bulletin",
+      "text": "News Article: First Semester Examination Dates Announced: Monday, February 22 to Friday, March 19, 2027\nCategory: Examinations\nAuthor: NASS Academic Directorate\nSummary: First Semester Degree Examinations (CBE & PBE) commence February 22, 2027. Revision Week begins February 15, and General Studies (GS) exams run March 15–19, 2027.\nFull Content: The Department of Statistics wishes to notify all students of the approved examination timetable schedule for the First Semester of the 2026/2027 academic year:\n\n• Revision Week: Monday, February 15 – Saturday, February 20, 2027\n(Lectures conclude; tutorial study circles and past question reviews hold across all levels)\n\n• First Semester Examinations (Both CBE & PBE):\nMonday, February 22, 2027 – Friday, March 19, 2027\n\n• School of General Studies (GS) Computer-Based Examinations:\nMonday, March 15, 2027 – Friday, March 19, 2027\n\n• Official End of First Semester Examinations:\nFriday, March 19, 2027\n\n• Semester Vacation & Easter Break:\nSaturday, March 20, 2027 – Friday, April 2, 2027\n\nStudents are reminded that minimum 75% lecture attendance is required to sit for degree examinations.",
+      "category": "news"
+    },
+    {
+      "id": "dept-news-MatriculationCeremo",
+      "courseCode": "NEWS",
+      "fileName": "Department News Bulletin",
+      "text": "News Article: Matriculation Ceremony for 2026/2027 Freshmen Scheduled for Friday, January 29, 2027\nCategory: Matriculation\nAuthor: NASS Executive Council\nSummary: The University Senate has fixed Friday, January 29, 2027, for the official Matriculation Ceremony for all newly admitted undergraduates across all faculties.\nFull Content: The Registrar's Office has announced that the 2026/2027 Matriculation Ceremony for regular undergraduate students will hold on Friday, January 29, 2027.\n\nKey Guidelines for Matriculants:\n• All 100 Level students must complete their biometric documentation and payment of school fees prior to matriculation.\n• Academic gowns will be issued through the Faculty of Physical Sciences Officer upon presentation of fee receipts.\n• Matriculation oaths must be duly endorsed and deposited at the Departmental Secretary's office.\n• Formal matriculation lecture lectures and departmental photo sessions will take place following the university-wide ceremony.",
+      "category": "news"
+    },
+    {
+      "id": "dept-news-ResumptionSchedule:",
+      "courseCode": "NEWS",
+      "fileName": "Department News Bulletin",
+      "text": "News Article: Resumption Schedule: Fresh Students Resume Oct 12, Returning Students Resume Oct 14, 2026\nCategory: Resumption\nAuthor: NASS Secretariat\nSummary: Staggered resumption schedule for the 2026/2027 session: Freshmen continue registration on October 12, while returning students return October 14, 2026 for fees payment and course enrolment.\nFull Content: In compliance with university directives from the Registrar, the Department of Statistics announces resumption protocols for all undergraduate cohorts:\n\n1. New Students (100 Level & Direct Entry):\nResumption is slated for Monday, October 12, 2026. Newly admitted candidates are expected to conclude physical verification, biometrics, student file documentation, and attend inaugural departmental orientation sessions.\n\n2. Old Students (200L, 300L & 400L):\nReturning undergraduates return to campus on Wednesday, October 14, 2026. Payment of university school charges, departmental association dues, and online course registration on the UNIZIK portal will commence immediately.\n\nCourse registration slips must be presented to Level Course Advisers for physical endorsement within the first two weeks of resumption.",
+      "category": "news"
+    },
+    {
+      "id": "dept-news-UNIZIKSenateApprov",
+      "courseCode": "NEWS",
+      "fileName": "Department News Bulletin",
+      "text": "News Article: UNIZIK Senate Approves First Semester 2026/2027 Academic Calendar: Key Resumption, Matriculation & Exam Dates\nCategory: Academic Notice\nAuthor: Office of the Registrar / NASS Academic Desk\nSummary: The Senate of Nnamdi Azikiwe University, at its 246th meeting on September 30, 2026, officially approved the 2026/2027 Academic Calendar (Ref: NAU/R/E/032/97) for regular undergraduate students.\nFull Content: The Senate of Nnamdi Azikiwe University, at its 246th meeting held on Wednesday, 30th September 2026, formally approved the Academic Calendar of Events for the 2026/2027 Academic Session for all regular undergraduate students.\n\nIn an internal memorandum released by the Office of the Registrar (Ref. No.: NAU/R/E/032/97, dated 2nd October 2026), the university outlined key milestones for the First Semester as follows:\n\n• Resumption & Registration (New Students): Monday, October 12, 2026\n• Resumption, Tuition Payment & Course Registration (Returning Students): Wednesday, October 14, 2026\n• Convocation Ceremonies (2024/2025 & 2025/2026): Sunday, November 15 – Friday, November 20, 2026\n• University-Wide Quiz: Monday, November 30, 2026\n• Vacation, Christmas & Election Break: Wednesday, December 23, 2026 – Saturday, January 22, 2027\n• All Students Return to Campus: Saturday, January 23, 2027\n• First Semester Lectures Resume: Monday, January 25, 2027\n• Matriculation Ceremony: Friday, January 29, 2027\n• Revision Week: Monday, February 15, 2027\n• First Semester Degree Examinations (CBE & PBE): Monday, February 22 – Friday, March 19, 2027\n• School of General Studies (GS) Examinations: Monday, March 15 – Friday, March 19, 2027\n• End of First Semester Examinations: Friday, March 19, 2027\n• Vacation and Easter Break: Saturday, March 20 – Friday, April 2, 2027\n\nAll students of the Department of Statistics are instructed to observe these dates strictly.",
+      "category": "news"
     },
     {
       "id": "dept-ann-FirstSemester2026/",

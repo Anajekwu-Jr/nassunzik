@@ -8,21 +8,23 @@ import {
 
 const router = express.Router();
 
-const SYSTEM_INSTRUCTION = `You are Sam AI, the companion for statistics students. You help students study and learn about their department.
+const SYSTEM_INSTRUCTION = `You are Sam AI, the friendly study companion for statistics students at the NASS portal. You know the statistics department and its courses well, and you help students study, understand their courses, and find their way around department life.
 
-Use only the course materials and department information provided to you in the context below. Do not guess.
+Your knowledge comes from the NASS website and the course materials provided to you. Treat it as what you simply know. Never mention sources, file names, documents or where an answer came from.
 
-You can: find and explain lecture notes, solve past questions step by step, summarise materials, and answer questions about the department, its executives, staff and activities.
+What you help with:
+- All statistics courses: what they cover, course codes, lecture notes, past questions, and step-by-step explanations.
+- Department information: executives, staff, lecturers, events and student activities.
 
-The training data for the ai should come from the website and every bit of information used to build the website to what it is.
+How you talk:
+- Warm, upbeat and encouraging, like a helpful senior student. Use simple English.
+- Keep answers short and engaging. Offer a quick follow-up like "Want me to walk you through a past question on this?"
+- Stay on statistics and department matters. If someone asks about something unrelated, politely steer them back.
 
-Rules:
-Always state which course code and file your answer came from if answering from course materials.
-If the answer isn't in the provided material, say so clearly. Never invent names, titles, contacts or facts about people.
-Keep answers short, friendly and in simple English.
-Stay on academics and department matters. Politely decline anything unrelated.`;
+Honesty:
+- Never invent names, titles, contacts, dates or course details. If you don't have the information, say so in a friendly way and suggest they check with the department or an executive.`;
 
-const GREETING = "Hi, I'm Sam AI, your companion in statistics. Ask me about your courses, past questions, or the department, its executives and staff. I'm here for you.";
+const GREETING = "Hey! I'm Sam AI, your statistics companion. Ask me about your courses, past questions, or anything about the department. What are we studying today?";
 
 // Lazy-initialized GoogleGenAI client
 let aiClient = null;
@@ -62,14 +64,14 @@ router.post('/', async (req, res) => {
     // 2. Find most relevant chunks based on user query
     const relevantChunks = findRelevantChunks(userQuery, chunks, 7);
 
-    // 3. Format context string with course code and file name
+    // 3. Format context string cleanly without exposing file names or source paths
     let contextText = '';
     if (relevantChunks.length > 0) {
       contextText = relevantChunks.map((c, i) => {
-        return `[SOURCE ${i + 1}]\nCourse Code: ${c.courseCode}\nFile: ${c.fileName}\nContent:\n${c.text}\n`;
+        return `[TOPIC ${i + 1}: ${c.courseCode}]\n${c.text}\n`;
       }).join('\n---------------------\n');
     } else {
-      contextText = 'No specific course document found matching the query tokens directly. Rely on departmental guidelines.';
+      contextText = 'General departmental knowledge from NASS portal.';
     }
 
     // 4. Verify Gemini API key
@@ -82,7 +84,7 @@ router.post('/', async (req, res) => {
     }
 
     // 5. Build prompt payload
-    const promptWithContext = `CONTEXT FROM DEPARTMENT MATERIALS & COURSE DOCUMENTS:\n\n${contextText}\n\nSTUDENT QUESTION:\n${userQuery}`;
+    const promptWithContext = `DEPARTMENT AND COURSE KNOWLEDGE:\n\n${contextText}\n\nSTUDENT QUESTION:\n${userQuery}`;
 
     // 6. Build conversation contents (including short history if provided)
     const contents = [];
@@ -114,7 +116,7 @@ router.post('/', async (req, res) => {
           contents,
           config: {
             systemInstruction: SYSTEM_INSTRUCTION,
-            temperature: 0.2, // Lower temperature to prioritize strict factuality
+            temperature: 0.3,
             maxOutputTokens: 1000
           }
         });
@@ -137,20 +139,13 @@ router.post('/', async (req, res) => {
     // Direct grounded synthesis fallback if remote API is experiencing downtime/503
     if (!reply && relevantChunks.length > 0) {
       const best = relevantChunks[0];
-      reply = `Based on ${best.courseCode} (${best.fileName}):\n\n${best.text.slice(0, 450)}...\n\n(Course Code: ${best.courseCode}, File: ${best.fileName})`;
+      reply = `${best.text.slice(0, 450)}...\n\nWant me to walk you through a past question on this?`;
     } else if (!reply) {
-      reply = "I'm sorry, I couldn't locate specific information about that in the provided departmental materials. Please ask about your statistics courses, lecture notes, past questions, or executives.";
+      reply = "I don't have that specific information right now. Could you check with the department or an executive officer? What are we studying today?";
     }
-
-    // 8. Extract sources cited
-    const sources = relevantChunks.map(c => ({
-      courseCode: c.courseCode,
-      fileName: c.fileName
-    })).filter((v, i, a) => a.findIndex(t => t.courseCode === v.courseCode && t.fileName === v.fileName) === i);
 
     return res.json({
       reply,
-      sources,
       timestamp: new Date().toISOString()
     });
 
@@ -169,7 +164,7 @@ router.get('/status', async (req, res) => {
   res.json({
     name: 'SAM AI',
     title: 'SAM AI',
-    subtitle: 'Official AI bot for statistics department',
+    subtitle: 'Friendly Study Companion · Department of Statistics',
     greeting: GREETING,
     hasApiKey: Boolean(process.env.GEMINI_API_KEY || process.env.API_KEY),
     ...status

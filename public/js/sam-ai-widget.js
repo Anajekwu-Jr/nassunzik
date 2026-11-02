@@ -1,13 +1,13 @@
 /**
  * Sam AI - Floating Chat Widget
- * Official companion for Statistics students at Nnamdi Azikiwe University
+ * Friendly study companion for statistics students at the NASS portal
  */
 (function() {
   if (window.SamAIWidgetLoaded) return;
   window.SamAIWidgetLoaded = true;
 
-  const GREETING = "Hi, I'm Sam AI, your companion in statistics. Ask me about your courses, past questions, or the department, its executives and staff. I'm here for you.";
-  const STORAGE_KEY = 'nass_sam_ai_chat_history_v1';
+  const GREETING = "Hey! I'm Sam AI, your statistics companion. Ask me about your courses, past questions, or anything about the department. What are we studying today?";
+  const STORAGE_KEY = 'nass_sam_ai_chat_history_v2';
 
   // Inject CSS if not already present
   if (!document.querySelector('link[href*="sam-ai-widget.css"]')) {
@@ -26,8 +26,7 @@
     return [
       {
         role: 'assistant',
-        content: GREETING,
-        sources: []
+        content: GREETING
       }
     ];
   }
@@ -76,7 +75,7 @@
               <span>SAM AI</span>
             </div>
             <div class="sam-header-status">
-              <span>Official AI bot for statistics department</span>
+              <span>Friendly Study Companion · Department of Statistics</span>
             </div>
           </div>
         </div>
@@ -100,7 +99,7 @@
             id="samInputText"
             class="sam-chat-input"
             rows="1"
-            placeholder="Ask Sam AI about courses, notes, excos..."
+            placeholder="Ask Sam AI about courses, notes, excos, events..."
             aria-label="Ask Sam AI a question"
           ></textarea>
           <button type="submit" class="sam-send-btn" id="samSendBtn" title="Send Question">
@@ -108,7 +107,7 @@
           </button>
         </form>
         <div class="sam-chat-disclaimer">
-          Sam AI answers using official UNIZIK Statistics materials and records.
+          Sam AI is your statistics study companion.
         </div>
       </div>
     `;
@@ -147,8 +146,14 @@
         }
       }
     };
+    // Backwards-compatible alias for any callers
+    window.openGeminiAI = window.openSamAI;
 
     window.addEventListener('open-sam-ai', (e) => {
+      const prompt = e.detail && e.detail.prompt;
+      window.openSamAI(prompt);
+    });
+    window.addEventListener('open-gemini-ai', (e) => {
       const prompt = e.detail && e.detail.prompt;
       window.openSamAI(prompt);
     });
@@ -178,8 +183,7 @@
     chatHistory = [
       {
         role: 'assistant',
-        content: GREETING,
-        sources: []
+        content: GREETING
       }
     ];
     saveChatHistory(chatHistory);
@@ -226,25 +230,10 @@
       const isUser = msg.role === 'user';
       const formatted = isUser ? escapeHTML(msg.content) : formatReply(msg.content);
 
-      let sourcesHtml = '';
-      if (!isUser && Array.isArray(msg.sources) && msg.sources.length > 0) {
-        sourcesHtml = `
-          <div class="sam-msg-sources">
-            ${msg.sources.map(s => `
-              <span class="sam-source-tag" title="Source: ${escapeHTML(s.fileName)}">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                <span>${escapeHTML(s.courseCode || 'Doc')} · ${escapeHTML(s.fileName)}</span>
-              </span>
-            `).join('')}
-          </div>
-        `;
-      }
-
       return `
         <div class="sam-msg-wrap ${isUser ? 'sam-msg-user' : 'sam-msg-bot'}">
           <div class="sam-msg-bubble">
             ${formatted}
-            ${sourcesHtml}
           </div>
         </div>
       `;
@@ -301,22 +290,19 @@
       if (res.ok && data.reply) {
         chatHistory.push({
           role: 'assistant',
-          content: data.reply,
-          sources: data.sources || []
+          content: data.reply
         });
       } else {
         chatHistory.push({
           role: 'assistant',
-          content: data.error || "I'm sorry, I encountered a temporary problem reading the course materials. Please try asking again in a moment.",
-          sources: []
+          content: data.error || "I don't have that exact detail right now. Could you check with the department or an executive officer? What else are we studying today?"
         });
       }
     } catch (err) {
       typingEl?.remove();
       chatHistory.push({
         role: 'assistant',
-        content: "Network connection error. Please verify your connection and try again.",
-        sources: []
+        content: "Network connection error. Please verify your connection and try again."
       });
     } finally {
       isSending = false;
