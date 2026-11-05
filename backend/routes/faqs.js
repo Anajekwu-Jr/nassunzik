@@ -4,6 +4,21 @@ import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
+function getFaqsFallback() {
+  try {
+    const fs = require('node:fs');
+    const path = require('node:path');
+    const backupFile = path.resolve(process.cwd(), 'data', 'portal_state_backup.json');
+    if (fs.existsSync(backupFile)) {
+      const data = JSON.parse(fs.readFileSync(backupFile, 'utf-8'));
+      if (Array.isArray(data.faqs) && data.faqs.length > 0) {
+        return data.faqs;
+      }
+    }
+  } catch (_) {}
+  return [];
+}
+
 // GET all FAQs with optional category and search filters
 router.get('/', (req, res) => {
   const { category, search } = req.query;
@@ -22,17 +37,36 @@ router.get('/', (req, res) => {
 
   query += ' ORDER BY sort_order ASC, id ASC';
   try {
-    const faqs = db.prepare(query).all(...params);
+    let faqs = db.prepare(query).all(...params);
+    if (!Array.isArray(faqs) || faqs.length === 0) {
+      faqs = getFaqsFallback();
+    }
     res.json(faqs);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.warn('FAQs DB query warning, returning fallback:', err.message);
+    let faqs = getFaqsFallback();
+    if (category && category !== 'All') {
+      faqs = faqs.filter(f => f.category === category);
+    }
+    if (search) {
+      const sLower = search.toLowerCase();
+      faqs = faqs.filter(f => (f.question && f.question.toLowerCase().includes(sLower)) || (f.answer && f.answer.toLowerCase().includes(sLower)));
+    }
+    res.json(faqs);
   }
 });
 
 // GET single FAQ by ID
 router.get('/:id', (req, res) => {
   try {
-    const faq = db.prepare('SELECT * FROM faqs WHERE id = ?').get(req.params.id);
+    let faq;
+    try {
+      faq = db.prepare('SELECT * FROM faqs WHERE id = ?').get(req.params.id);
+    } catch (_) {}
+    if (!faq) {
+      const targetId = parseInt(req.params.id, 10);
+      faq = getFaqsFallback().find(f => f.id === targetId);
+    }
     if (!faq) {
       return res.status(404).json({ error: 'FAQ not found' });
     }

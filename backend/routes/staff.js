@@ -24,77 +24,145 @@ function getCirsDetails() {
   return cirsDetailsCache;
 }
 
-router.get('/', (req, res) => {
-  const { category, role, search, include_cirs } = req.query;
-  const roleFilter = category || role;
-  let query = 'SELECT * FROM staff WHERE 1=1';
-  const params = [];
-
-  if (roleFilter) {
-    query += ' AND role_category = ?';
-    params.push(roleFilter);
-  }
-  if (search) {
-    query += ' AND (name LIKE ? OR title LIKE ? OR qualifications LIKE ? OR specialization LIKE ? OR cirs_id LIKE ?)';
-    const term = `%${search}%`;
-    params.push(term, term, term, term, term);
-  }
-
-  query += ' ORDER BY display_order ASC, name ASC';
-  const staff = db.prepare(query).all(...params);
-
-  const cirsDetails = getCirsDetails();
-  // Attach quick CIRS counts to summary cards
-  staff.forEach(s => {
-    const cid = (s.cirs_id || '').toUpperCase();
-    if (cid && cirsDetails[cid]) {
-      const cd = cirsDetails[cid];
-      s.cirs_pub_count = cd.publications ? cd.publications.length : 0;
-      s.cirs_qual_count = cd.qualifications ? cd.qualifications.length : 0;
-      s.cirs_exp_count = cd.experience ? cd.experience.length : 0;
-      if (include_cirs === 'true' || include_cirs === '1') {
-        s.cirs_data = cd;
+function getStaffFallback() {
+  try {
+    const backupFile = path.join(ROOT_DIR, 'data', 'portal_state_backup.json');
+    if (fs.existsSync(backupFile)) {
+      const data = JSON.parse(fs.readFileSync(backupFile, 'utf-8'));
+      if (Array.isArray(data.staff) && data.staff.length > 0) {
+        return data.staff;
       }
-    } else {
-      s.cirs_pub_count = 0;
-      s.cirs_qual_count = 0;
-      s.cirs_exp_count = 0;
     }
-  });
+  } catch (_) {}
+  try {
+    const cirsFile = path.join(ROOT_DIR, 'data', 'official_cirs_staff.json');
+    if (fs.existsSync(cirsFile)) {
+      return JSON.parse(fs.readFileSync(cirsFile, 'utf-8'));
+    }
+  } catch (_) {}
+  return [];
+}
 
-  res.json(staff);
+router.get('/', (req, res) => {
+  try {
+    const { category, role, search, include_cirs } = req.query;
+    const roleFilter = category || role;
+    let query = 'SELECT * FROM staff WHERE 1=1';
+    const params = [];
+
+    if (roleFilter) {
+      query += ' AND role_category = ?';
+      params.push(roleFilter);
+    }
+    if (search) {
+      query += ' AND (name LIKE ? OR title LIKE ? OR qualifications LIKE ? OR specialization LIKE ? OR cirs_id LIKE ?)';
+      const term = `%${search}%`;
+      params.push(term, term, term, term, term);
+    }
+
+    query += ' ORDER BY display_order ASC, name ASC';
+    let staff = [];
+    try {
+      staff = db.prepare(query).all(...params);
+    } catch (dbErr) {
+      console.warn('Staff DB query warning, using fallback:', dbErr.message);
+      staff = getStaffFallback();
+      if (roleFilter) {
+        staff = staff.filter(s => s.role_category === roleFilter);
+      }
+      if (search) {
+        const sLower = search.toLowerCase();
+        staff = staff.filter(s => 
+          (s.name && s.name.toLowerCase().includes(sLower)) ||
+          (s.title && s.title.toLowerCase().includes(sLower)) ||
+          (s.qualifications && s.qualifications.toLowerCase().includes(sLower))
+        );
+      }
+    }
+
+    if (!Array.isArray(staff) || staff.length === 0) {
+      staff = getStaffFallback();
+    }
+
+    const cirsDetails = getCirsDetails();
+    // Attach quick CIRS counts to summary cards
+    staff.forEach(s => {
+      const cid = (s.cirs_id || '').toUpperCase();
+      if (cid && cirsDetails[cid]) {
+        const cd = cirsDetails[cid];
+        s.cirs_pub_count = cd.publications ? cd.publications.length : 0;
+        s.cirs_qual_count = cd.qualifications ? cd.qualifications.length : 0;
+        s.cirs_exp_count = cd.experience ? cd.experience.length : 0;
+        if (include_cirs === 'true' || include_cirs === '1') {
+          s.cirs_data = cd;
+        }
+      } else {
+        s.cirs_pub_count = 0;
+        s.cirs_qual_count = 0;
+        s.cirs_exp_count = 0;
+      }
+    });
+
+    res.json(staff);
+  } catch (err) {
+    console.error('Unhandled error in /api/staff GET:', err);
+    res.json(getStaffFallback());
+  }
 });
 
 router.get('/:id', (req, res) => {
-  const param = req.params.id;
-  let staff;
-  if (/^\d+$/.test(param)) {
-    staff = db.prepare('SELECT * FROM staff WHERE id = ?').get(param);
-  } else {
-    staff = db.prepare('SELECT * FROM staff WHERE UPPER(cirs_id) = UPPER(?) OR LOWER(name) LIKE LOWER(?)').get(param, `%${param}%`);
-  }
+  try {
+    const param = req.params.id;
+    let staff;
+    try {
+      if (/^\d+$/.test(param)) {
+        staff = db.prepare('SELECT * FROM staff WHERE id = ?').get(param);
+      } else {
+        staff = db.prepare('SELECT * FROM staff WHERE UPPER(cirs_id) = UPPER(?) OR LOWER(name) LIKE LOWER(?)').get(param, `%${param}%`);
+      }
+    } catch (dbErr) {
+      console.warn('Staff single query warning, checking fallback:', dbErr.message);
+    }
 
-  if (!staff) {
-    return res.status(404).json({ error: 'Staff member not found' });
-  }
+    if (!staff) {
+      const fallbackList = getStaffFallback();
+      if (/^\d+$/.test(param)) {
+        const targetId = parseInt(param, 10);
+        staff = fallbackList.find(s => s.id === targetId);
+      } else {
+        const pLower = param.toLowerCase();
+        staff = fallbackList.find(s => 
+          (s.cirs_id && s.cirs_id.toLowerCase() === pLower) ||
+          (s.name && s.name.toLowerCase().includes(pLower))
+        );
+      }
+    }
 
-  // Attach enriched CIRS details
-  const cirsDetails = getCirsDetails();
-  const cid = (staff.cirs_id || '').toUpperCase();
-  if (cid && cirsDetails[cid]) {
-    staff.cirs_data = cirsDetails[cid];
-  } else {
-    staff.cirs_data = {
-      qualifications: staff.qualifications ? staff.qualifications.split(/[,;]\s*/).map(q => q.trim()).filter(Boolean) : [],
-      publications: [],
-      experience: [],
-      leadership: [],
-      memberships: [],
-      eventsAttended: []
-    };
-  }
+    if (!staff) {
+      return res.status(404).json({ error: 'Staff member not found' });
+    }
 
-  res.json(staff);
+    // Attach enriched CIRS details
+    const cirsDetails = getCirsDetails();
+    const cid = (staff.cirs_id || '').toUpperCase();
+    if (cid && cirsDetails[cid]) {
+      staff.cirs_data = cirsDetails[cid];
+    } else {
+      staff.cirs_data = {
+        qualifications: staff.qualifications ? staff.qualifications.split(/[,;]\s*/).map(q => q.trim()).filter(Boolean) : [],
+        publications: [],
+        experience: [],
+        leadership: [],
+        memberships: [],
+        eventsAttended: []
+      };
+    }
+
+    res.json(staff);
+  } catch (err) {
+    console.error('Unhandled error in /api/staff/:id GET:', err);
+    res.status(500).json({ error: 'Unable to retrieve staff profile' });
+  }
 });
 
 router.post('/', requireAuth(), (req, res) => {

@@ -36,8 +36,36 @@ let db = null;
 try {
   const sqlite = await import('node:sqlite');
   if (sqlite && sqlite.DatabaseSync) {
-    db = new sqlite.DatabaseSync(DB_PATH);
-    try { db.exec('PRAGMA foreign_keys = ON;'); } catch (_) {}
+    const rawSync = new sqlite.DatabaseSync(DB_PATH);
+    try { rawSync.exec('PRAGMA foreign_keys = ON;'); } catch (_) {}
+
+    function normalizeParams(args) {
+      const raw = args.length === 1 && Array.isArray(args[0]) ? args[0] : args;
+      return raw.map(v => (v === undefined ? null : v));
+    }
+
+    db = {
+      exec(sql) {
+        return rawSync.exec(sql);
+      },
+      prepare(sql) {
+        const stmt = rawSync.prepare(sql);
+        return {
+          get(...args) {
+            const params = normalizeParams(args);
+            return stmt.get(...params);
+          },
+          all(...args) {
+            const params = normalizeParams(args);
+            return stmt.all(...params);
+          },
+          run(...args) {
+            const params = normalizeParams(args);
+            return stmt.run(...params);
+          }
+        };
+      }
+    };
   }
 } catch (_) {
   db = null;
@@ -679,7 +707,10 @@ function seedInitialData() {
   }
 
   // Seed / Sync Staff with Official Departmental CIRS Roster
-  const officialStaffPath = path.join(DB_DIR, "official_cirs_staff.json");
+  let officialStaffPath = path.join(ROOT_DATA_DIR, "official_cirs_staff.json");
+  if (!fs.existsSync(officialStaffPath)) {
+    officialStaffPath = path.join(DB_DIR, "official_cirs_staff.json");
+  }
   let staffList = [];
   if (fs.existsSync(officialStaffPath)) {
     try {
@@ -1496,13 +1527,22 @@ export function importSnapshotData(data) {
 }
 
 export function importSnapshot() {
-  let backupFile = path.join(ROOT_DATA_DIR, 'portal_state_backup.json');
-  if (isVercel && fs.existsSync(path.join('/tmp', 'portal_state_backup.json'))) {
-    backupFile = path.join('/tmp', 'portal_state_backup.json');
-  } else if (!fs.existsSync(backupFile)) {
-    backupFile = path.join(DB_DIR, 'portal_state_backup.json');
+  const candidatePaths = [
+    path.join(ROOT_DATA_DIR, 'portal_state_backup.json'),
+    path.join(ROOT_DIR, 'dist', 'data', 'portal_state_backup.json'),
+    path.join('/tmp', 'portal_state_backup.json'),
+    path.join(DB_DIR, 'portal_state_backup.json')
+  ];
+
+  let backupFile = null;
+  for (const p of candidatePaths) {
+    if (fs.existsSync(p)) {
+      backupFile = p;
+      break;
+    }
   }
-  if (!fs.existsSync(backupFile)) return false;
+
+  if (!backupFile) return false;
   try {
     const raw = fs.readFileSync(backupFile, 'utf-8');
     const data = JSON.parse(raw);

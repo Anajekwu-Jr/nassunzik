@@ -14,7 +14,8 @@ router.get('/', (req, res) => {
     }));
     res.json(formatted);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.warn('Scheduled notifications query warning:', err.message);
+    res.json([]);
   }
 });
 

@@ -4,78 +4,160 @@ import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
+function getCoursesFallback() {
+  try {
+    const fs = require('node:fs');
+    const path = require('node:path');
+    const backupFile = path.resolve(process.cwd(), 'data', 'portal_state_backup.json');
+    if (fs.existsSync(backupFile)) {
+      const data = JSON.parse(fs.readFileSync(backupFile, 'utf-8'));
+      if (Array.isArray(data.courses) && data.courses.length > 0) {
+        const resources = Array.isArray(data.course_resources) ? data.course_resources : [];
+        return data.courses.map(c => ({
+          ...c,
+          resources: resources.filter(r => r.course_id === c.id)
+        }));
+      }
+    }
+  } catch (_) {}
+  return [];
+}
+
 // GET all courses with optional filters
 router.get('/', (req, res) => {
-  const { level, semester, search, status } = req.query;
-  let query = 'SELECT * FROM courses WHERE 1=1';
-  const params = [];
+  try {
+    const { level, semester, search, status } = req.query;
+    let query = 'SELECT * FROM courses WHERE 1=1';
+    const params = [];
 
-  if (level) {
-    query += ' AND level = ?';
-    params.push(parseInt(level, 10));
+    if (level) {
+      query += ' AND level = ?';
+      params.push(parseInt(level, 10));
+    }
+    if (semester) {
+      query += ' AND semester = ?';
+      params.push(parseInt(semester, 10));
+    }
+    if (status) {
+      query += ' AND status = ?';
+      params.push(status);
+    }
+    if (search) {
+      const rawSearch = search.trim();
+      const cleanSearch = rawSearch.toLowerCase();
+      const cleanSpaced = cleanSearch.replace(/[_\-\.]+/g, ' ').trim();
+      const cleanUnderscored = cleanSearch.replace(/[\s\-\.]+/g, '_').trim();
+      const cleanWithoutExt = cleanSearch.replace(/\.(pdf|docx|jpg|png)$/i, '');
+
+      const term = `%${rawSearch}%`;
+      const termSpaced = `%${cleanSpaced}%`;
+      const termUnderscored = `%${cleanUnderscored}%`;
+      const termWithoutExt = `%${cleanWithoutExt}%`;
+
+      query += ` AND (
+        code LIKE ? OR title LIKE ? OR description LIKE ? OR outline LIKE ?
+        OR code LIKE ? OR title LIKE ?
+        OR id IN (
+          SELECT course_id FROM course_resources 
+          WHERE title LIKE ? OR file_name LIKE ? OR file_path LIKE ?
+             OR title LIKE ? OR file_name LIKE ? OR file_path LIKE ?
+             OR title LIKE ? OR file_name LIKE ? OR file_path LIKE ?
+             OR title LIKE ? OR file_name LIKE ? OR file_path LIKE ?
+        )
+      )`;
+      params.push(
+        term, term, term, term,
+        termSpaced, termSpaced,
+        term, term, term,
+        termSpaced, termSpaced, termSpaced,
+        termUnderscored, termUnderscored, termUnderscored,
+        termWithoutExt, termWithoutExt, termWithoutExt
+      );
+    }
+
+    query += " ORDER BY level ASC, semester ASC, CASE WHEN status = 'Compulsory' THEN 0 ELSE 1 END, code ASC";
+    let courses = [];
+    try {
+      courses = db.prepare(query).all(...params);
+    } catch (dbErr) {
+      console.warn('Courses DB query warning, using fallback:', dbErr.message);
+      courses = getCoursesFallback();
+      if (level) {
+        const lvl = parseInt(level, 10);
+        courses = courses.filter(c => c.level === lvl);
+      }
+      if (semester) {
+        const sem = parseInt(semester, 10);
+        courses = courses.filter(c => c.semester === sem);
+      }
+      if (search) {
+        const sLower = search.toLowerCase();
+        courses = courses.filter(c => (c.code && c.code.toLowerCase().includes(sLower)) || (c.title && c.title.toLowerCase().includes(sLower)));
+      }
+      return res.json(courses);
+    }
+
+    if (!Array.isArray(courses) || courses.length === 0) {
+      courses = getCoursesFallback();
+      if (level) {
+        const lvl = parseInt(level, 10);
+        courses = courses.filter(c => c.level === lvl);
+      }
+      if (semester) {
+        const sem = parseInt(semester, 10);
+        courses = courses.filter(c => c.semester === sem);
+      }
+      return res.json(courses);
+    }
+
+    // Attach resources count
+    const coursesWithResources = courses.map(c => {
+      let resources = [];
+      try {
+        resources = db.prepare('SELECT * FROM course_resources WHERE course_id = ?').all(c.id);
+      } catch (_) {}
+      return { ...c, resources };
+    });
+
+    res.json(coursesWithResources);
+  } catch (err) {
+    console.error('Unhandled error in /api/courses GET:', err);
+    res.json(getCoursesFallback());
   }
-  if (semester) {
-    query += ' AND semester = ?';
-    params.push(parseInt(semester, 10));
-  }
-  if (status) {
-    query += ' AND status = ?';
-    params.push(status);
-  }
-  if (search) {
-    const rawSearch = search.trim();
-    const cleanSearch = rawSearch.toLowerCase();
-    const cleanSpaced = cleanSearch.replace(/[_\-\.]+/g, ' ').trim();
-    const cleanUnderscored = cleanSearch.replace(/[\s\-\.]+/g, '_').trim();
-    const cleanWithoutExt = cleanSearch.replace(/\.(pdf|docx|jpg|png)$/i, '');
-
-    const term = `%${rawSearch}%`;
-    const termSpaced = `%${cleanSpaced}%`;
-    const termUnderscored = `%${cleanUnderscored}%`;
-    const termWithoutExt = `%${cleanWithoutExt}%`;
-
-    query += ` AND (
-      code LIKE ? OR title LIKE ? OR description LIKE ? OR outline LIKE ?
-      OR code LIKE ? OR title LIKE ?
-      OR id IN (
-        SELECT course_id FROM course_resources 
-        WHERE title LIKE ? OR file_name LIKE ? OR file_path LIKE ?
-           OR title LIKE ? OR file_name LIKE ? OR file_path LIKE ?
-           OR title LIKE ? OR file_name LIKE ? OR file_path LIKE ?
-           OR title LIKE ? OR file_name LIKE ? OR file_path LIKE ?
-      )
-    )`;
-    params.push(
-      term, term, term, term,
-      termSpaced, termSpaced,
-      term, term, term,
-      termSpaced, termSpaced, termSpaced,
-      termUnderscored, termUnderscored, termUnderscored,
-      termWithoutExt, termWithoutExt, termWithoutExt
-    );
-  }
-
-  query += " ORDER BY level ASC, semester ASC, CASE WHEN status = 'Compulsory' THEN 0 ELSE 1 END, code ASC";
-  const courses = db.prepare(query).all(...params);
-
-  // Attach resources count
-  const coursesWithResources = courses.map(c => {
-    const resources = db.prepare('SELECT * FROM course_resources WHERE course_id = ?').all(c.id);
-    return { ...c, resources };
-  });
-
-  res.json(coursesWithResources);
 });
 
 // GET single course by ID with resources
 router.get('/:id', (req, res) => {
-  const course = db.prepare('SELECT * FROM courses WHERE id = ?').get(req.params.id);
-  if (!course) {
-    return res.status(404).json({ error: 'Course not found' });
-  }
+  try {
+    let course;
+    try {
+      course = db.prepare('SELECT * FROM courses WHERE id = ?').get(req.params.id);
+    } catch (dbErr) {
+      console.warn('Single course DB query warning:', dbErr.message);
+    }
 
-  const resources = db.prepare('SELECT * FROM course_resources WHERE course_id = ? ORDER BY id DESC').all(course.id);
-  res.json({ ...course, resources });
+    if (!course) {
+      const fallbackList = getCoursesFallback();
+      const targetId = parseInt(req.params.id, 10);
+      course = fallbackList.find(c => c.id === targetId || String(c.id) === String(req.params.id) || (c.code && c.code.toUpperCase() === String(req.params.id).toUpperCase()));
+    }
+
+    if (!course) {
+      return res.status(404).json({ error: 'Course not found' });
+    }
+
+    let resources = [];
+    try {
+      resources = db.prepare('SELECT * FROM course_resources WHERE course_id = ? ORDER BY id DESC').all(course.id);
+    } catch (_) {
+      resources = course.resources || [];
+    }
+
+    res.json({ ...course, resources });
+  } catch (err) {
+    console.error('Unhandled error in /api/courses/:id GET:', err);
+    res.status(500).json({ error: 'Unable to retrieve course details' });
+  }
 });
 
 // POST create course (Admin)

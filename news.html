@@ -383,7 +383,8 @@
           openNewsReader(parseInt(directId, 10));
         }
       } catch (err) {
-        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--danger-color); padding: 40px;">Failed to load news: ${err.message}</div>`;
+        console.warn('NassAPI.getNews error:', err);
+        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Departmental news is temporarily synchronizing. <button onclick="loadNews()" class="btn btn-secondary" style="margin-left: 10px; padding: 6px 14px;">Retry</button></div>`;
       }
     }
 

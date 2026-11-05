@@ -5,21 +5,37 @@ import { requireAuth } from '../middleware/auth.js';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  const { active_only } = req.query;
-  let query = 'SELECT * FROM announcements WHERE 1=1';
-  if (active_only === 'true') {
-    query += ' AND is_active = 1';
-  }
-  query += ` ORDER BY 
-    CASE priority
-      WHEN 'URGENT' THEN 1
-      WHEN 'IMPORTANT' THEN 2
-      ELSE 3
-    END ASC,
-    id DESC`;
+  try {
+    const { active_only } = req.query;
+    let query = 'SELECT * FROM announcements WHERE 1=1';
+    if (active_only === 'true') {
+      query += ' AND is_active = 1';
+    }
+    query += ` ORDER BY 
+      CASE priority
+        WHEN 'URGENT' THEN 1
+        WHEN 'IMPORTANT' THEN 2
+        ELSE 3
+      END ASC,
+      id DESC`;
 
-  const announcements = db.prepare(query).all();
-  res.json(announcements);
+    let announcements = [];
+    try {
+      announcements = db.prepare(query).all();
+    } catch (_) {
+      const fs = require('node:fs');
+      const path = require('node:path');
+      const backupFile = path.resolve(process.cwd(), 'data', 'portal_state_backup.json');
+      if (fs.existsSync(backupFile)) {
+        const data = JSON.parse(fs.readFileSync(backupFile, 'utf-8'));
+        announcements = data.announcements || [];
+      }
+    }
+    res.json(announcements);
+  } catch (err) {
+    console.error('Unhandled error in /api/announcements GET:', err);
+    res.json([]);
+  }
 });
 
 router.post('/', requireAuth(), (req, res) => {

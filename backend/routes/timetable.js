@@ -4,38 +4,88 @@ import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
+function getTimetableFallback() {
+  try {
+    const fs = require('node:fs');
+    const path = require('node:path');
+    const backupFile = path.resolve(process.cwd(), 'data', 'portal_state_backup.json');
+    if (fs.existsSync(backupFile)) {
+      const data = JSON.parse(fs.readFileSync(backupFile, 'utf-8'));
+      if (Array.isArray(data.timetable) && data.timetable.length > 0) {
+        return data.timetable;
+      }
+    }
+  } catch (_) {}
+  return [];
+}
+
 router.get('/', (req, res) => {
-  const { level, semester, day } = req.query;
-  let query = 'SELECT * FROM timetable WHERE 1=1';
-  const params = [];
+  try {
+    const { level, semester, day } = req.query;
+    let query = 'SELECT * FROM timetable WHERE 1=1';
+    const params = [];
 
-  if (level) {
-    query += ' AND level = ?';
-    params.push(parseInt(level, 10));
-  }
-  if (semester) {
-    query += ' AND semester = ?';
-    params.push(parseInt(semester, 10));
-  }
-  if (day) {
-    query += ' AND day = ?';
-    params.push(day);
-  }
+    if (level) {
+      query += ' AND level = ?';
+      params.push(parseInt(level, 10));
+    }
+    if (semester) {
+      query += ' AND semester = ?';
+      params.push(parseInt(semester, 10));
+    }
+    if (day) {
+      query += ' AND day = ?';
+      params.push(day);
+    }
 
-  // Order by day of week then start time
-  query += ` ORDER BY 
-    CASE day
-      WHEN 'Monday' THEN 1
-      WHEN 'Tuesday' THEN 2
-      WHEN 'Wednesday' THEN 3
-      WHEN 'Thursday' THEN 4
-      WHEN 'Friday' THEN 5
-      ELSE 6
-    END ASC,
-    start_time ASC`;
+    // Order by day of week then start time
+    query += ` ORDER BY 
+      CASE day
+        WHEN 'Monday' THEN 1
+        WHEN 'Tuesday' THEN 2
+        WHEN 'Wednesday' THEN 3
+        WHEN 'Thursday' THEN 4
+        WHEN 'Friday' THEN 5
+        ELSE 6
+      END ASC,
+      start_time ASC`;
 
-  const entries = db.prepare(query).all(...params);
-  res.json(entries);
+    let entries = [];
+    try {
+      entries = db.prepare(query).all(...params);
+    } catch (dbErr) {
+      console.warn('Timetable DB query warning, using fallback:', dbErr.message);
+      entries = getTimetableFallback();
+      if (level) {
+        const lvl = parseInt(level, 10);
+        entries = entries.filter(e => e.level === lvl);
+      }
+      if (semester) {
+        const sem = parseInt(semester, 10);
+        entries = entries.filter(e => e.semester === sem);
+      }
+      if (day) {
+        entries = entries.filter(e => e.day === day);
+      }
+    }
+
+    if (!Array.isArray(entries) || entries.length === 0) {
+      entries = getTimetableFallback();
+      if (level) {
+        const lvl = parseInt(level, 10);
+        entries = entries.filter(e => e.level === lvl);
+      }
+      if (semester) {
+        const sem = parseInt(semester, 10);
+        entries = entries.filter(e => e.semester === sem);
+      }
+    }
+
+    res.json(entries);
+  } catch (err) {
+    console.error('Unhandled error in /api/timetable GET:', err);
+    res.json(getTimetableFallback());
+  }
 });
 
 router.post('/', requireAuth(), (req, res) => {

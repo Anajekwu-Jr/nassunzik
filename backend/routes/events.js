@@ -4,34 +4,91 @@ import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
+function getEventsFallback() {
+  try {
+    const fs = require('node:fs');
+    const path = require('node:path');
+    const backupFile = path.resolve(process.cwd(), 'data', 'portal_state_backup.json');
+    if (fs.existsSync(backupFile)) {
+      const data = JSON.parse(fs.readFileSync(backupFile, 'utf-8'));
+      if (Array.isArray(data.events) && data.events.length > 0) {
+        return data.events;
+      }
+    }
+  } catch (_) {}
+  return [];
+}
+
 router.get('/', (req, res) => {
-  const { status, category, featured, is_featured } = req.query;
-  let query = 'SELECT * FROM events WHERE 1=1';
-  const params = [];
+  try {
+    const { status, category, featured, is_featured } = req.query;
+    let query = 'SELECT * FROM events WHERE 1=1';
+    const params = [];
 
-  if (status) {
-    query += ' AND status = ?';
-    params.push(status.toUpperCase());
-  }
-  if (category) {
-    query += ' AND category = ?';
-    params.push(category);
-  }
-  if (featured === 'true' || featured === '1' || is_featured === '1' || is_featured === 'true') {
-    query += ' AND is_featured = 1';
-  }
+    if (status) {
+      query += ' AND status = ?';
+      params.push(status.toUpperCase());
+    }
+    if (category) {
+      query += ' AND category = ?';
+      params.push(category);
+    }
+    if (featured === 'true' || featured === '1' || is_featured === '1' || is_featured === 'true') {
+      query += ' AND is_featured = 1';
+    }
 
-  query += ' ORDER BY event_date DESC, event_time ASC';
-  const events = db.prepare(query).all(...params);
-  res.json(events);
+    query += ' ORDER BY event_date DESC, event_time ASC';
+    let events = [];
+    try {
+      events = db.prepare(query).all(...params);
+    } catch (dbErr) {
+      console.warn('Events DB query warning, using fallback:', dbErr.message);
+      events = getEventsFallback();
+      if (status) {
+        events = events.filter(e => e.status && e.status.toUpperCase() === status.toUpperCase());
+      }
+      if (category) {
+        events = events.filter(e => e.category === category);
+      }
+      if (featured === 'true' || featured === '1' || is_featured === '1' || is_featured === 'true') {
+        events = events.filter(e => e.is_featured === 1);
+      }
+    }
+
+    if (!Array.isArray(events) || events.length === 0) {
+      events = getEventsFallback();
+    }
+
+    res.json(events);
+  } catch (err) {
+    console.error('Unhandled error in /api/events GET:', err);
+    res.json(getEventsFallback());
+  }
 });
 
 router.get('/:id', (req, res) => {
-  const event = db.prepare('SELECT * FROM events WHERE id = ?').get(req.params.id);
-  if (!event) {
-    return res.status(404).json({ error: 'Event not found' });
+  try {
+    let event;
+    try {
+      event = db.prepare('SELECT * FROM events WHERE id = ?').get(req.params.id);
+    } catch (dbErr) {
+      console.warn('Single event DB query warning:', dbErr.message);
+    }
+
+    if (!event) {
+      const fallbackList = getEventsFallback();
+      const targetId = parseInt(req.params.id, 10);
+      event = fallbackList.find(e => e.id === targetId || String(e.id) === String(req.params.id));
+    }
+
+    if (!event) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+    res.json(event);
+  } catch (err) {
+    console.error('Unhandled error in /api/events/:id GET:', err);
+    res.status(500).json({ error: 'Unable to retrieve event details' });
   }
-  res.json(event);
 });
 
 router.post('/', requireAuth(), (req, res) => {

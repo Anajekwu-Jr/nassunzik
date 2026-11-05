@@ -4,41 +4,79 @@ import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
+function getContactsFallback() {
+  try {
+    const fs = require('node:fs');
+    const path = require('node:path');
+    const backupFile = path.resolve(process.cwd(), 'data', 'portal_state_backup.json');
+    if (fs.existsSync(backupFile)) {
+      const data = JSON.parse(fs.readFileSync(backupFile, 'utf-8'));
+      if (Array.isArray(data.contacts) && data.contacts.length > 0) {
+        return data.contacts;
+      }
+    }
+  } catch (_) {}
+  return [];
+}
+
 router.get('/', (req, res) => {
-  const { type, contact_type, search } = req.query;
-  const filterType = type || contact_type;
-  let query = 'SELECT * FROM contacts WHERE 1=1';
-  const params = [];
+  try {
+    const { type, contact_type, search } = req.query;
+    const filterType = type || contact_type;
+    let query = 'SELECT * FROM contacts WHERE 1=1';
+    const params = [];
 
-  if (filterType) {
-    query += ' AND contact_type = ?';
-    params.push(filterType);
+    if (filterType) {
+      query += ' AND contact_type = ?';
+      params.push(filterType);
+    }
+    if (search) {
+      query += ' AND (name LIKE ? OR role_or_title LIKE ? OR department_or_level LIKE ? OR email LIKE ?)';
+      const term = `%${search}%`;
+      params.push(term, term, term, term);
+    }
+
+    query += ` ORDER BY 
+      CASE contact_type
+        WHEN 'HOD' THEN 1
+        WHEN 'ADVISER' THEN 2
+        WHEN 'EXECUTIVE' THEN 3
+        WHEN 'COURSE_REP' THEN 4
+        ELSE 5
+      END ASC,
+      CASE 
+        WHEN department_or_level LIKE '%400%' THEN 1
+        WHEN department_or_level LIKE '%300%' THEN 2
+        WHEN department_or_level LIKE '%200%' THEN 3
+        WHEN department_or_level LIKE '%100%' THEN 4
+        ELSE 5
+      END ASC,
+      id ASC`;
+
+    let contacts = [];
+    try {
+      contacts = db.prepare(query).all(...params);
+    } catch (dbErr) {
+      console.warn('Contacts DB query warning, using fallback:', dbErr.message);
+      contacts = getContactsFallback();
+      if (filterType) {
+        contacts = contacts.filter(c => c.contact_type === filterType);
+      }
+      if (search) {
+        const sLower = search.toLowerCase();
+        contacts = contacts.filter(c => (c.name && c.name.toLowerCase().includes(sLower)) || (c.role_or_title && c.role_or_title.toLowerCase().includes(sLower)));
+      }
+    }
+
+    if (!Array.isArray(contacts) || contacts.length === 0) {
+      contacts = getContactsFallback();
+    }
+
+    res.json(contacts);
+  } catch (err) {
+    console.error('Unhandled error in /api/contacts GET:', err);
+    res.json(getContactsFallback());
   }
-  if (search) {
-    query += ' AND (name LIKE ? OR role_or_title LIKE ? OR department_or_level LIKE ? OR email LIKE ?)';
-    const term = `%${search}%`;
-    params.push(term, term, term, term);
-  }
-
-  query += ` ORDER BY 
-    CASE contact_type
-      WHEN 'HOD' THEN 1
-      WHEN 'ADVISER' THEN 2
-      WHEN 'EXECUTIVE' THEN 3
-      WHEN 'COURSE_REP' THEN 4
-      ELSE 5
-    END ASC,
-    CASE 
-      WHEN department_or_level LIKE '%400%' THEN 1
-      WHEN department_or_level LIKE '%300%' THEN 2
-      WHEN department_or_level LIKE '%200%' THEN 3
-      WHEN department_or_level LIKE '%100%' THEN 4
-      ELSE 5
-    END ASC,
-    id ASC`;
-
-  const contacts = db.prepare(query).all(...params);
-  res.json(contacts);
 });
 
 router.post('/', requireAuth(), (req, res) => {

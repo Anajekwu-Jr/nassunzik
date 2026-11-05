@@ -343,7 +343,26 @@
           `;
         }).join('');
       } catch (err) {
-        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--danger-color); padding: 40px;">Failed to load contacts: ${err.message}</div>`;
+        console.warn('NassAPI.getContacts error, attempting direct static fallback:', err);
+        try {
+          const res = await fetch('/data/portal_state_backup.json');
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data.contacts) && data.contacts.length > 0) {
+              const contacts = activeType ? data.contacts.filter(c => c.contact_type === activeType) : data.contacts;
+              container.innerHTML = contacts.map(c => `
+                <div class="card" style="padding: 24px;">
+                  <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 4px;">${c.name}</h3>
+                  <div style="color: var(--primary-color); font-weight: 600; font-size: 0.875rem; margin-bottom: 8px;">${c.role_or_title}</div>
+                  <div style="font-size: 0.8125rem; color: var(--text-muted);">${c.department_or_level || 'Department of Statistics'}</div>
+                  ${c.phone ? `<div style="margin-top: 8px; font-size: 0.875rem;"><a href="tel:${c.phone}" style="color: var(--primary-color);">${c.phone}</a></div>` : ''}
+                </div>
+              `).join('');
+              return;
+            }
+          }
+        } catch (_) {}
+        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Directory information is temporarily synchronizing. <button onclick="loadContacts()" class="btn btn-secondary" style="margin-left: 10px; padding: 6px 14px;">Retry</button></div>`;
       }
     }
 

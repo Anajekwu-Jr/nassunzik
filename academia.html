@@ -595,7 +595,19 @@
           }
         }
       } catch (err) {
-        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--danger-color); padding: 40px;">Failed to load courses: ${err.message}</div>`;
+        console.warn('NassAPI.getCourses error, attempting direct static fallback:', err);
+        try {
+          const res = await fetch('/data/portal_state_backup.json');
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data.courses) && data.courses.length > 0) {
+              allCoursesData = data.courses;
+              applyFilters();
+              return;
+            }
+          }
+        } catch (_) {}
+        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Course syllabus is temporarily synchronizing. <button onclick="loadCourses()" class="btn btn-secondary" style="margin-left: 10px; padding: 6px 14px;">Retry</button></div>`;
       }
     }
 

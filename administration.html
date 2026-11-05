@@ -544,7 +544,20 @@
         updateCounts();
         applyFilters();
       } catch (err) {
-        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--danger-color); padding: 40px;">Failed to load staff directory: ${err.message}</div>`;
+        console.warn('NassAPI.getStaff error, attempting direct static fallback:', err);
+        try {
+          const res = await fetch('/data/portal_state_backup.json');
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data.staff) && data.staff.length > 0) {
+              allStaffData = data.staff;
+              updateCounts();
+              applyFilters();
+              return;
+            }
+          }
+        } catch (_) {}
+        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Faculty & staff directory is temporarily synchronizing. <button onclick="loadStaff()" class="btn btn-secondary" style="margin-left: 10px; padding: 6px 14px;">Retry</button></div>`;
       }
     }
 

@@ -803,7 +803,19 @@
         loadedEntries = entries || [];
         handleTimetableSearch();
       } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--danger-color); padding: 30px;">Failed to load timetable: ${err.message}</td></tr>`;
+        console.warn('NassAPI.getTimetable error, attempting direct static fallback:', err);
+        try {
+          const res = await fetch('/data/portal_state_backup.json');
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data.timetable) && data.timetable.length > 0) {
+              loadedEntries = data.timetable.filter(e => e.level === activeLevel && e.semester === activeSemester);
+              handleTimetableSearch();
+              return;
+            }
+          }
+        } catch (_) {}
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">Timetable is temporarily updating. <button onclick="loadTimetable()" class="btn btn-secondary" style="margin-left: 10px; padding: 4px 12px;">Retry</button></td></tr>`;
       }
     }
 

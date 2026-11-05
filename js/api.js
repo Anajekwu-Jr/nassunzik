@@ -31,8 +31,183 @@ const API = {
     }
   },
 
+  _snapshot: null,
+  _snapshotPromise: null,
+
+  async fetchBackupSnapshot() {
+    if (this._snapshot) return this._snapshot;
+    if (this._snapshotPromise) return this._snapshotPromise;
+    this._snapshotPromise = (async () => {
+      try {
+        const res = await fetch('/data/portal_state_backup.json');
+        if (res.ok) {
+          const json = await res.json();
+          this._snapshot = json;
+          return json;
+        }
+      } catch (_) {}
+      return null;
+    })();
+    return this._snapshotPromise;
+  },
+
   getFallback(endpoint) {
     const clean = endpoint.split('?')[0].replace(/^\/api/, '');
+    if (clean === '/executives' || clean === '/excos') {
+      return [
+        {
+          id: 1,
+          name: "Comr. Anajekwu Chidera Patrick (PhanCore)",
+          office: "President & Executive Lead",
+          portfolio: "President & Executive Lead",
+          role: "President & Executive Lead",
+          level: 400,
+          phone: "08087955696",
+          email: "cp.anajekwu@stu.unizik.edu.ng",
+          photo_url: "/resources/images/executives/president.png?v=2",
+          bio: "Leading the Executive Administration with dedication to student welfare, academic excellence, data skills development, and industrial linkages.",
+          tenure: "2026/2027",
+          display_order: 1
+        },
+        {
+          id: 2,
+          name: "Comr. Obunadike Vivian Chiemerie",
+          office: "Vice President",
+          portfolio: "Vice President",
+          role: "Vice President",
+          level: 400,
+          phone: "+234 916 664 5452",
+          email: "cv.obunadike@stu.unizik.edu.ng",
+          photo_url: "/resources/images/executives/vice_president.jpg?v=2",
+          bio: "Vice President of NASS UNIZIK Chapter, leading executive committee oversight, student welfare coordination, and collaborative departmental development.",
+          tenure: "2026/2027",
+          display_order: 2
+        },
+        {
+          id: 3,
+          name: "Comr. Chidozie Rejoice Ogochukwu",
+          office: "Secretary General",
+          portfolio: "Secretary General",
+          role: "Secretary General",
+          level: 400,
+          phone: "07043119361",
+          email: "ro.chidozie@stu.unizik.edu.ng",
+          photo_url: "/resources/images/executives/secretary_general.jpg?v=2",
+          bio: "Managing administrative correspondence, official secretarial records, meeting archives, and departmental notifications.",
+          tenure: "2026/2027",
+          display_order: 3
+        },
+        {
+          id: 4,
+          name: "Comr. Ejefonye Mmesoma Stephanie",
+          office: "Director of Academics",
+          portfolio: "Director of Academics",
+          role: "Director of Academics",
+          level: 300,
+          phone: "07062399227",
+          email: "m.ejefonye@stu.unizik.edu.ng",
+          photo_url: "/resources/images/executives/director_of_academics.jpg?v=2",
+          bio: "Directing academic affairs and scholastic development for statistics undergraduates. Coordinating course study circles, syllabus coverage, tutorial classes, and past question archives.",
+          tenure: "2026/2027",
+          display_order: 4
+        },
+        {
+          id: 5,
+          name: "Comr. Chinedu Chidinma Veronica",
+          office: "Financial Secretary",
+          portfolio: "Financial Secretary",
+          role: "Financial Secretary",
+          level: 400,
+          phone: "09022372647",
+          email: "vc.chinedu@stu.unizik.edu.ng",
+          photo_url: "/resources/images/executives/financial_secretary.jpg?v=2",
+          bio: "Responsible for departmental association dues records, fiscal receipts, statutory accounting, and financial transparency.",
+          tenure: "2026/2027",
+          display_order: 5
+        },
+        {
+          id: 6,
+          name: "Comr. Ezenwelu Chiamaka Princess",
+          office: "Treasurer",
+          portfolio: "Treasurer",
+          role: "Treasurer",
+          level: 400,
+          phone: "09071473090",
+          email: "cp.ezenwelu@stu.unizik.edu.ng",
+          photo_url: "/resources/images/executives/treasurer.jpg?v=2",
+          bio: "Custodian of association funds, managing treasury disbursements, banking transactions, and financial custody.",
+          tenure: "2026/2027",
+          display_order: 6
+        },
+        {
+          id: 7,
+          name: "Comr. Ugochukwu Franklin",
+          office: "Director of Sports",
+          portfolio: "Director of Sports",
+          role: "Director of Sports",
+          level: 400,
+          phone: "08165607073",
+          email: "f_878.ugochukwu@stu.unizik.edu.ng",
+          photo_url: "/resources/images/executives/director_of_sports.jpg?v=2",
+          bio: "Coordinating departmental athletic events, Dean Cup championships, inter-level football fixtures, and student fitness activities.",
+          tenure: "2026/2027",
+          display_order: 7
+        },
+        {
+          id: 8,
+          name: "Comr. Offorkee Chidera Elvis",
+          office: "Director of Socials",
+          portfolio: "Director of Socials",
+          role: "Director of Socials",
+          level: 300,
+          phone: "08144016159",
+          email: "",
+          photo_url: "/resources/images/executives/director_of_socials.jpg?v=2",
+          bio: "Coordinator of social activities in the department.",
+          tenure: "2026/2027",
+          display_order: 8
+        }
+      ];
+    }
+    if (clean === '/gallery') {
+      const items = [
+        {
+          id: 8,
+          title: "NASS - Probix Class of 2026",
+          year: 2026,
+          event_name: "Class Sets & Graduands",
+          image_url: "/resources/images/gallery/probix_class_2026.jpg",
+          description: "Official cohort portrait of the graduating Probix Class of 2026, Department of Statistics, Nnamdi Azikiwe University, Awka."
+        },
+        {
+          id: 9,
+          title: "NASS - Vantora Class of 2027",
+          year: 2026,
+          event_name: "Class Sets & Cohorts",
+          image_url: "/resources/images/gallery/vantora_class_2027.jpg",
+          description: "The energetic Vantora Class of 2027 during departmental assembly and academic orientation at the Faculty of Physical Sciences."
+        },
+        {
+          id: 10,
+          title: "NASS HOD Cup Runner Up 2025/2026",
+          year: 2026,
+          event_name: "Sports & Competitions",
+          image_url: "/resources/images/gallery/hod_cup_runner_up_2025_2026.jpg",
+          description: "Statistics departmental football team celebrating their runner-up triumph at the annual HOD Cup championship tournament."
+        },
+        {
+          id: 11,
+          title: "Prof Osuji with Vantora'27 after First SIWES Defense",
+          year: 2026,
+          event_name: "Academic Defense & Milestones",
+          image_url: "/resources/images/gallery/prof_osuji_vantora27_siwes_defense_2026.jpg",
+          description: "Prof. George A. Osuji alongside 300L Vantora Class of 2027 students following the successful conclusion of their 1st SIWES departmental oral defense."
+        }
+      ];
+      const years = [2026];
+      const grouped = { 2026: items };
+      return { items, grouped, availableYears: years };
+    }
     if (clean === '/events') {
       return [
         {
@@ -124,6 +299,83 @@ const API = {
         staff_adviser: "Dr. Awopeju Kabiru Abidemi"
       };
     }
+    if (clean === '/faqs') {
+      return [
+        {
+          id: 1,
+          question: "How do I register for my statistics courses this semester?",
+          answer: "Log into the UNIZIK student portal, select your semester courses as specified in the NASS course directory, pay the appropriate departmental and faculty dues, and present your signed course form to your Course Adviser for endorsement.",
+          category: "Registration"
+        },
+        {
+          id: 2,
+          question: "Who is my Course Adviser and where can I find them?",
+          answer: "Each undergraduate level (100L through 400L) is assigned a dedicated Academic Staff Adviser. You can find their full contact details, office locations, and office consultation hours in the Departmental Directory or Administration section.",
+          category: "Academic"
+        },
+        {
+          id: 3,
+          question: "What are the requirements for SIWES industrial training?",
+          answer: "Students undergo 3-month industrial training twice: after 200L second semester and after 300L second semester. Pick up your official introduction letter from the SIWES Coordinator and submit your placement form to the departmental general office.",
+          category: "SIWES"
+        }
+      ];
+    }
+    return null;
+  },
+
+  async getAsyncFallback(endpoint) {
+    const clean = endpoint.split('?')[0].replace(/^\/api/, '');
+    const sync = this.getFallback(endpoint);
+    if (sync !== null) return sync;
+
+    try {
+      const snapshot = this._snapshot || (await this.fetchBackupSnapshot());
+      if (snapshot) {
+        if (clean === '/staff') {
+          if (Array.isArray(snapshot.staff) && snapshot.staff.length > 0) return snapshot.staff;
+        }
+        if (clean === '/timetable') {
+          if (Array.isArray(snapshot.timetable) && snapshot.timetable.length > 0) return snapshot.timetable;
+        }
+        if (clean === '/courses') {
+          if (Array.isArray(snapshot.courses) && snapshot.courses.length > 0) {
+            const resources = Array.isArray(snapshot.course_resources) ? snapshot.course_resources : [];
+            return snapshot.courses.map(c => ({
+              ...c,
+              resources: resources.filter(r => r.course_id === c.id)
+            }));
+          }
+        }
+        if (clean === '/contacts') {
+          if (Array.isArray(snapshot.contacts) && snapshot.contacts.length > 0) return snapshot.contacts;
+        }
+        if (clean === '/announcements') {
+          if (Array.isArray(snapshot.announcements) && snapshot.announcements.length > 0) return snapshot.announcements;
+        }
+        if (clean === '/gallery') {
+          if (Array.isArray(snapshot.gallery) && snapshot.gallery.length > 0) {
+            const items = snapshot.gallery;
+            const years = [...new Set(items.map(i => i.year))].sort((a, b) => b - a);
+            const grouped = {};
+            years.forEach(y => { grouped[y] = items.filter(i => i.year === y); });
+            return { items, grouped, availableYears: years };
+          }
+        }
+      }
+    } catch (_) {}
+
+    // Special fallback for staff from official CIRS staff json
+    if (clean === '/staff') {
+      try {
+        const res = await fetch('/data/official_cirs_staff.json');
+        if (res.ok) {
+          const list = await res.json();
+          if (Array.isArray(list) && list.length > 0) return list;
+        }
+      } catch (_) {}
+    }
+
     return null;
   },
 
@@ -156,6 +408,24 @@ const API = {
         const data = await res.json().catch(() => ({}));
 
         if (!res.ok) {
+          if (isGet) {
+            // Check cache first
+            try {
+              const cacheKey = `nass_api_cache_${endpoint}`;
+              const cached = localStorage.getItem(cacheKey);
+              if (cached) {
+                console.warn(`[NassAPI] Server returned ${res.status}, serving cached data for ${endpoint}`);
+                return JSON.parse(cached);
+              }
+            } catch (_) {}
+
+            // Check async snapshot / built-in fallback
+            const fallback = await this.getAsyncFallback(endpoint);
+            if (fallback !== null) {
+              console.warn(`[NassAPI] Server returned ${res.status}, serving resilient fallback for ${endpoint}`);
+              return fallback;
+            }
+          }
           throw new Error(data.error || `Request failed with status ${res.status}`);
         }
 
@@ -187,8 +457,8 @@ const API = {
             }
           } catch (_) {}
 
-          // Built-in fallback
-          const fallback = this.getFallback(endpoint);
+          // Built-in / async fallback
+          const fallback = await this.getAsyncFallback(endpoint);
           if (fallback !== null) {
             console.warn(`[NassAPI] Serving offline fallback for ${endpoint}:`, err.message || err);
             return fallback;

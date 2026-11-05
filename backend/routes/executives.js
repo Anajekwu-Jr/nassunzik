@@ -13,27 +13,177 @@ function formatExecutive(exec) {
   };
 }
 
-router.get('/', (req, res) => {
-  const { tenure } = req.query;
-  let query = 'SELECT * FROM executives WHERE 1=1';
-  const params = [];
-
-  if (tenure) {
-    query += ' AND tenure = ?';
-    params.push(tenure);
+const OFFICIAL_FALLBACK_EXECUTIVES = [
+  {
+    id: 1,
+    name: 'Comr. Anajekwu Chidera Patrick (PhanCore)',
+    office: 'President & Executive Lead',
+    level: 400,
+    phone: '08087955696',
+    email: 'cp.anajekwu@stu.unizik.edu.ng',
+    photo_url: '/resources/images/executives/president.png?v=2',
+    bio: 'Leading the Executive Administration with dedication to student welfare, academic excellence, data skills development, and industrial linkages.',
+    tenure: '2026/2027',
+    display_order: 1
+  },
+  {
+    id: 2,
+    name: 'Comr. Obunadike Vivian Chiemerie',
+    office: 'Vice President',
+    level: 400,
+    phone: '+234 916 664 5452',
+    email: 'cv.obunadike@stu.unizik.edu.ng',
+    photo_url: '/resources/images/executives/vice_president.jpg?v=2',
+    bio: 'Vice President of NASS UNIZIK Chapter, leading executive committee oversight, student welfare coordination, and collaborative departmental development.',
+    tenure: '2026/2027',
+    display_order: 2
+  },
+  {
+    id: 3,
+    name: 'Comr. Chidozie Rejoice Ogochukwu',
+    office: 'Secretary General',
+    level: 400,
+    phone: '07043119361',
+    email: 'ro.chidozie@stu.unizik.edu.ng',
+    photo_url: '/resources/images/executives/secretary_general.jpg?v=2',
+    bio: 'Managing administrative correspondence, official secretarial records, meeting archives, and departmental notifications.',
+    tenure: '2026/2027',
+    display_order: 3
+  },
+  {
+    id: 4,
+    name: 'Comr. Ejefonye Mmesoma Stephanie',
+    office: 'Director of Academics',
+    level: 300,
+    phone: '07062399227',
+    email: 'm.ejefonye@stu.unizik.edu.ng',
+    photo_url: '/resources/images/executives/director_of_academics.jpg?v=2',
+    bio: 'Directing academic affairs and scholastic development for statistics undergraduates. Coordinating course study circles, syllabus coverage, tutorial classes, and past question archives.',
+    tenure: '2026/2027',
+    display_order: 4
+  },
+  {
+    id: 5,
+    name: 'Comr. Chinedu Chidinma Veronica',
+    office: 'Financial Secretary',
+    level: 400,
+    phone: '09022372647',
+    email: 'vc.chinedu@stu.unizik.edu.ng',
+    photo_url: '/resources/images/executives/financial_secretary.jpg?v=2',
+    bio: 'Responsible for departmental association dues records, fiscal receipts, statutory accounting, and financial transparency.',
+    tenure: '2026/2027',
+    display_order: 5
+  },
+  {
+    id: 6,
+    name: 'Comr. Ezenwelu Chiamaka Princess',
+    office: 'Treasurer',
+    level: 400,
+    phone: '09071473090',
+    email: 'cp.ezenwelu@stu.unizik.edu.ng',
+    photo_url: '/resources/images/executives/treasurer.jpg?v=2',
+    bio: 'Custodian of association funds, managing treasury disbursements, banking transactions, and financial custody.',
+    tenure: '2026/2027',
+    display_order: 6
+  },
+  {
+    id: 7,
+    name: 'Comr. Ugochukwu Franklin',
+    office: 'Director of Sports',
+    level: 400,
+    phone: '08165607073',
+    email: 'f_878.ugochukwu@stu.unizik.edu.ng',
+    photo_url: '/resources/images/executives/director_of_sports.jpg?v=2',
+    bio: 'Coordinating departmental athletic events, Dean Cup championships, inter-level football fixtures, and student fitness activities.',
+    tenure: '2026/2027',
+    display_order: 7
+  },
+  {
+    id: 8,
+    name: 'Comr. Offorkee Chidera Elvis',
+    office: 'Director of Socials',
+    level: 300,
+    phone: '08144016159/09050148729',
+    email: '',
+    photo_url: '/resources/images/executives/director_of_socials.jpg?v=2',
+    bio: 'Coordinator of social activities in the department.',
+    tenure: '2026/2027',
+    display_order: 8
   }
+];
 
-  query += ' ORDER BY display_order ASC, name ASC';
-  const executives = db.prepare(query).all(...params);
-  res.json(executives.map(formatExecutive));
+function getExecutivesFallback() {
+  try {
+    const fs = require('node:fs');
+    const path = require('node:path');
+    const backupFile = path.resolve(process.cwd(), 'data', 'portal_state_backup.json');
+    if (fs.existsSync(backupFile)) {
+      const data = JSON.parse(fs.readFileSync(backupFile, 'utf-8'));
+      if (Array.isArray(data.executives) && data.executives.length > 0) {
+        return data.executives;
+      }
+    }
+  } catch (_) {}
+  return OFFICIAL_FALLBACK_EXECUTIVES;
+}
+
+router.get('/', (req, res) => {
+  try {
+    const { tenure } = req.query;
+    let query = 'SELECT * FROM executives WHERE 1=1';
+    const params = [];
+
+    if (tenure) {
+      query += ' AND tenure = ?';
+      params.push(tenure);
+    }
+
+    query += ' ORDER BY display_order ASC, name ASC';
+    let executives = [];
+    try {
+      executives = db.prepare(query).all(...params);
+    } catch (dbErr) {
+      console.warn('Executives DB query warning, using fallback:', dbErr.message);
+      executives = getExecutivesFallback();
+      if (tenure) {
+        executives = executives.filter(e => e.tenure === tenure);
+      }
+    }
+
+    if (!Array.isArray(executives) || executives.length === 0) {
+      executives = getExecutivesFallback();
+    }
+
+    res.json(executives.map(formatExecutive));
+  } catch (err) {
+    console.error('Unhandled error in /api/executives GET:', err);
+    res.json(getExecutivesFallback().map(formatExecutive));
+  }
 });
 
 router.get('/:id', (req, res) => {
-  const executive = db.prepare('SELECT * FROM executives WHERE id = ?').get(req.params.id);
-  if (!executive) {
-    return res.status(404).json({ error: 'Executive not found' });
+  try {
+    let executive;
+    try {
+      executive = db.prepare('SELECT * FROM executives WHERE id = ?').get(req.params.id);
+    } catch (dbErr) {
+      console.warn('Single executive DB query warning:', dbErr.message);
+    }
+
+    if (!executive) {
+      const fallbackList = getExecutivesFallback();
+      const targetId = parseInt(req.params.id, 10);
+      executive = fallbackList.find(e => e.id === targetId || String(e.id) === String(req.params.id));
+    }
+
+    if (!executive) {
+      return res.status(404).json({ error: 'Executive not found' });
+    }
+    res.json(formatExecutive(executive));
+  } catch (err) {
+    console.error('Unhandled error in /api/executives/:id GET:', err);
+    res.status(500).json({ error: 'Unable to retrieve executive record' });
   }
-  res.json(formatExecutive(executive));
 });
 
 router.post('/', requireAuth(), (req, res) => {
