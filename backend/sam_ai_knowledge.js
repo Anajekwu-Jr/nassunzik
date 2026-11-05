@@ -342,29 +342,48 @@ async function parsePdfFile(filePath, filename) {
  * Builds or refreshes the knowledge base chunks.
  */
 export async function buildKnowledgeBase(force = false) {
-  if (isIndexing) return cachedChunks;
-  isIndexing = true;
+  // If memory cache is already loaded and not forced, return immediately
+  if (!force && Array.isArray(cachedChunks) && cachedChunks.length > 0) {
+    return cachedChunks;
+  }
 
-  try {
-    // If not forced, check if cache is valid and no files were added or modified
-    if (!force && fs.existsSync(CACHE_FILE)) {
-      try {
-        const data = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf-8'));
-        const cacheTime = data.timestamp || 0;
-        if (!hasNewOrModifiedFiles(cacheTime) && Array.isArray(data.chunks) && data.chunks.length > 0) {
-          cachedChunks = data.chunks;
-          lastIndexedTime = cacheTime;
-          console.log(`[Sam AI] Loaded ${cachedChunks.length} chunks from cache (${data.pdfCount || 0} PDFs).`);
-          isIndexing = false;
-          return cachedChunks;
-        } else {
-          console.log('[Sam AI] New or modified files detected. Re-indexing knowledge base...');
-        }
-      } catch (err) {
-        console.warn('[Sam AI] Corrupted cache, rebuilding:', err.message);
-      }
+  if (isIndexing && cachedChunks.length > 0) return cachedChunks;
+
+  // Check candidate cache file paths
+  const candidateCacheFiles = [
+    CACHE_FILE,
+    path.join(ROOT_DIR, 'data', 'sam_ai_knowledge_cache.json'),
+    path.join(ROOT_DIR, 'dist', 'data', 'sam_ai_knowledge_cache.json'),
+    path.join('/tmp', 'sam_ai_knowledge_cache.json')
+  ];
+
+  let existingCachePath = null;
+  for (const p of candidateCacheFiles) {
+    if (fs.existsSync(p)) {
+      existingCachePath = p;
+      break;
     }
+  }
 
+  // If not forced and cache file exists, load immediately (takes ~40ms)
+  if (!force && existingCachePath) {
+    try {
+      const data = JSON.parse(fs.readFileSync(existingCachePath, 'utf-8'));
+      if (Array.isArray(data.chunks) && data.chunks.length > 0) {
+        const deptChunks = getDepartmentChunks();
+        const pdfChunks = data.chunks.filter(c => c.category === 'pdf_material' || (!c.id || !c.id.startsWith('dept-')));
+        cachedChunks = [...deptChunks, ...pdfChunks];
+        lastIndexedTime = data.timestamp || Date.now();
+        console.log(`[Sam AI] Knowledge base loaded: ${cachedChunks.length} chunks (${deptChunks.length} dept records, ${pdfChunks.length} PDF materials).`);
+        return cachedChunks;
+      }
+    } catch (err) {
+      console.warn('[Sam AI] Error reading cache file:', err.message);
+    }
+  }
+
+  isIndexing = true;
+  try {
     console.log('[Sam AI] Building knowledge base from PDFs and department records...');
     const allChunks = [];
     const seenFiles = new Set();

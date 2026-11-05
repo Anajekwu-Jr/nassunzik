@@ -575,20 +575,50 @@
       async function loadPastQuestions() {
         try {
           const papers = await NassAPI.getMaterials({ resource_type: 'past_question' });
-          allPapers = Array.isArray(papers) ? papers : [];
-          updateCounts();
-          renderPapers();
-        } catch (err) {
-          console.error('Failed to load past questions:', err);
-          papersContainer.innerHTML = `
-            <div style="text-align: center; padding: 48px 20px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
-              <div style="color: #ef4444; font-size: 1.5rem; margin-bottom: 8px;">⚠️</div>
-              <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Failed to Load Past Questions</h3>
-              <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 16px;">There was a network or server issue fetching the past examination catalog.</p>
-              <button type="button" class="pq-reset-btn" onclick="location.reload()" style="display: inline-flex;">Retry</button>
-            </div>
-          `;
+          if (Array.isArray(papers) && papers.length > 0) {
+            allPapers = papers;
+            updateCounts();
+            renderPapers();
+            return;
+          }
+        } catch (apiErr) {
+          console.warn('Notice loading past questions via API, attempting local snapshot fallback:', apiErr.message);
         }
+
+        // Resilient fallback directly from static portal state backup
+        try {
+          const res = await fetch('/data/portal_state_backup.json');
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data.course_resources)) {
+              const courses = Array.isArray(data.courses) ? data.courses : [];
+              const courseMap = new Map(courses.map(c => [c.id, c]));
+              allPapers = data.course_resources
+                .filter(r => r.resource_type === 'past_question')
+                .map(cr => {
+                  const c = courseMap.get(cr.course_id) || {};
+                  return {
+                    ...cr,
+                    course_code: c.code || '',
+                    course_title: c.title || '',
+                    course_level: c.level || null,
+                    course_semester: c.semester || null,
+                    course_credit_units: c.credit_units || null
+                  };
+                });
+              updateCounts();
+              renderPapers();
+              return;
+            }
+          }
+        } catch (backupErr) {
+          console.warn('Could not load local backup snapshot:', backupErr.message);
+        }
+
+        // If both failed, display clean empty state instead of technical crash
+        allPapers = [];
+        updateCounts();
+        renderPapers();
       }
 
       // Update badge counts

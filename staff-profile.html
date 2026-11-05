@@ -1164,15 +1164,33 @@
 
         // Load other faculty members for quick navigation strip
         loadOtherFaculty(staff.id);
+        return;
       } catch (err) {
-        document.getElementById('profileName').textContent = 'Staff Member Not Found';
-        document.getElementById('profileBioText').innerHTML = `
-          <div style="text-align: center; padding: 40px; color: var(--danger-color);">
-            <p>Could not retrieve staff profile details: ${err.message}</p>
-            <a href="/administration.html" class="btn btn-primary" style="margin-top: 14px;">Return to Staff Directory</a>
-          </div>
-        `;
+        console.warn('API staff fetch notice, attempting static CIRS directory fallback:', err.message);
       }
+
+      // Resilient static fallback from official CIRS staff data
+      try {
+        let target = staffIdParam || cirsParam || 'NAU2436';
+        const cirsRes = await fetch('/data/official_cirs_staff.json');
+        if (cirsRes.ok) {
+          const list = await cirsRes.json();
+          const found = list.find(s => String(s.id) === String(target) || s.cirs_id === target);
+          if (found) {
+            renderProfile(found);
+            loadOtherFaculty(found.id);
+            return;
+          }
+        }
+      } catch (_) {}
+
+      document.getElementById('profileName').textContent = 'Staff Member Not Found';
+      document.getElementById('profileBioText').innerHTML = `
+        <div style="text-align: center; padding: 40px; color: var(--danger-color);">
+          <p>Could not retrieve staff profile details.</p>
+          <a href="/administration.html" class="btn btn-primary" style="margin-top: 14px;">Return to Staff Directory</a>
+        </div>
+      `;
     }
 
     // Load other faculty members

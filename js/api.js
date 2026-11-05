@@ -362,8 +362,57 @@ const API = {
             return { items, grouped, availableYears: years };
           }
         }
+        if (clean === '/materials') {
+          if (Array.isArray(snapshot.course_resources) && snapshot.course_resources.length > 0) {
+            const courses = Array.isArray(snapshot.courses) ? snapshot.courses : [];
+            const courseMap = new Map(courses.map(c => [c.id, c]));
+            let list = snapshot.course_resources.map(cr => {
+              const c = courseMap.get(cr.course_id) || {};
+              return {
+                ...cr,
+                course_code: c.code || '',
+                course_title: c.title || '',
+                course_level: c.level || null,
+                course_semester: c.semester || null,
+                course_credit_units: c.credit_units || null
+              };
+            });
+            // Parse query filters
+            try {
+              const searchParams = new URL(endpoint, 'http://localhost').searchParams;
+              const resType = searchParams.get('resource_type');
+              const level = searchParams.get('level');
+              const semester = searchParams.get('semester');
+              const search = searchParams.get('search');
+              if (resType) list = list.filter(m => m.resource_type === resType);
+              if (level) list = list.filter(m => String(m.course_level) === level);
+              if (semester) list = list.filter(m => String(m.course_semester) === semester);
+              if (search) {
+                const q = search.toLowerCase().trim();
+                list = list.filter(m => (m.title || '').toLowerCase().includes(q) || (m.course_code || '').toLowerCase().includes(q));
+              }
+            } catch (_) {}
+            return list;
+          }
+        }
+        if (clean === '/careers') {
+          if (Array.isArray(snapshot.careers) && snapshot.careers.length > 0) {
+            return snapshot.careers;
+          }
+        }
       }
     } catch (_) {}
+
+    // Special fallback for careers from static data file
+    if (clean === '/careers') {
+      try {
+        const res = await fetch('/data/career_pathways.json');
+        if (res.ok) {
+          const list = await res.json();
+          if (Array.isArray(list) && list.length > 0) return list;
+        }
+      } catch (_) {}
+    }
 
     // Special fallback for staff from official CIRS staff json
     if (clean === '/staff') {

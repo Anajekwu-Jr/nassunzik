@@ -4,13 +4,74 @@ import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
+function getBackupMaterials(filters = {}) {
+  try {
+    const backupPaths = [
+      path.join(process.cwd(), 'data', 'portal_state_backup.json'),
+      path.join(process.cwd(), 'dist', 'data', 'portal_state_backup.json')
+    ];
+    let backup = null;
+    for (const bp of backupPaths) {
+      if (fs.existsSync(bp)) {
+        backup = JSON.parse(fs.readFileSync(bp, 'utf-8'));
+        break;
+      }
+    }
+    if (!backup || !Array.isArray(backup.course_resources)) return [];
+
+    const courses = Array.isArray(backup.courses) ? backup.courses : [];
+    const courseMap = new Map(courses.map(c => [c.id, c]));
+
+    let list = backup.course_resources.map(cr => {
+      const c = courseMap.get(cr.course_id) || {};
+      return {
+        ...cr,
+        course_code: c.code || '',
+        course_title: c.title || '',
+        course_level: c.level || null,
+        course_semester: c.semester || null,
+        course_credit_units: c.credit_units || null
+      };
+    });
+
+    if (filters.resource_type) {
+      list = list.filter(m => m.resource_type === filters.resource_type);
+    }
+    if (filters.level) {
+      const lvl = parseInt(filters.level, 10);
+      list = list.filter(m => m.course_level === lvl);
+    }
+    if (filters.semester) {
+      const sem = parseInt(filters.semester, 10);
+      list = list.filter(m => m.course_semester === sem);
+    }
+    if (filters.course_id) {
+      const cid = parseInt(filters.course_id, 10);
+      list = list.filter(m => m.course_id === cid);
+    }
+    if (filters.search) {
+      const q = filters.search.toLowerCase().trim();
+      list = list.filter(m =>
+        (m.title || '').toLowerCase().includes(q) ||
+        (m.course_code || '').toLowerCase().includes(q) ||
+        (m.course_title || '').toLowerCase().includes(q)
+      );
+    }
+
+    return list;
+  } catch (err) {
+    console.warn('Notice reading backup materials:', err.message);
+    return [];
+  }
+}
+
 // GET all materials with optional filtering by level, semester, resource_type, or search
 router.get('/', (req, res) => {
   const { level, semester, resource_type, search, course_id } = req.query;
   let query = `
     SELECT cr.*, c.code as course_code, c.title as course_title, c.level as course_level, c.semester as course_semester, c.credit_units as course_credit_units
     FROM course_resources cr
-    JOIN courses c ON cr.course_id = c.id
+    LEFT JOIN courses c ON cr.course_id = c.id
     WHERE 1=1
   `;
   const params = [];
@@ -39,10 +100,23 @@ router.get('/', (req, res) => {
 
   query += ' ORDER BY c.level ASC, c.code ASC, cr.academic_year DESC, cr.id DESC';
   try {
-    const materials = db.prepare(query).all(...params);
+    let materials = [];
+    if (db) {
+      try {
+        materials = db.prepare(query).all(...params);
+      } catch (dbErr) {
+        console.warn('DB query in /api/materials failed, falling back to backup snapshot:', dbErr.message);
+      }
+    }
+
+    if (!Array.isArray(materials) || materials.length === 0) {
+      materials = getBackupMaterials({ level, semester, resource_type, search, course_id });
+    }
+
     res.json(materials);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error in /api/materials:', err);
+    res.json(getBackupMaterials({ level, semester, resource_type, search, course_id }));
   }
 });
 
@@ -52,10 +126,19 @@ router.get('/:id', (req, res) => {
     const query = `
       SELECT cr.*, c.code as course_code, c.title as course_title, c.level as course_level, c.semester as course_semester
       FROM course_resources cr
-      JOIN courses c ON cr.course_id = c.id
+      LEFT JOIN courses c ON cr.course_id = c.id
       WHERE cr.id = ?
     `;
-    const material = db.prepare(query).get(req.params.id);
+    let material = null;
+    if (db) {
+      try {
+        material = db.prepare(query).get(req.params.id);
+      } catch (_) {}
+    }
+    if (!material) {
+      const all = getBackupMaterials({});
+      material = all.find(m => String(m.id) === String(req.params.id));
+    }
     if (!material) {
       return res.status(404).json({ error: 'Material not found' });
     }

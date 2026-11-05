@@ -209,7 +209,10 @@
 
   // Lightweight markdown and newline renderer
   function formatReply(text) {
-    let clean = escapeHTML(text);
+    let clean = (text || '')
+      .replace(/[\u2014\u2013]/g, ' - ')
+      .replace(/[\u{1F300}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
+    clean = escapeHTML(clean);
     // Bold **text**
     clean = clean.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     // Italic *text*
@@ -275,34 +278,51 @@
     scrollToBottom();
 
     try {
+      const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      const timeoutId = controller ? setTimeout(() => controller.abort(), 12000) : null;
+
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: query,
           history: chatHistory.slice(-6)
-        })
+        }),
+        signal: controller ? controller.signal : undefined
       });
 
-      const data = await res.json();
-      typingEl.remove();
+      if (timeoutId) clearTimeout(timeoutId);
 
-      if (res.ok && data.reply) {
+      let data = {};
+      try {
+        data = await res.json();
+      } catch (jsonErr) {
+        data = {};
+      }
+
+      typingEl?.remove();
+
+      if (data && data.reply) {
         chatHistory.push({
           role: 'assistant',
           content: data.reply
         });
+      } else if (res.ok && data && data.message) {
+        chatHistory.push({
+          role: 'assistant',
+          content: data.message
+        });
       } else {
         chatHistory.push({
           role: 'assistant',
-          content: data.error || "I don't have that exact detail right now. Could you check with the department or an executive officer? What else are we studying today?"
+          content: data.error || "Hey! I'm here. Ask me about our statistics courses, past questions, or anything about the department. What are we studying today?"
         });
       }
     } catch (err) {
       typingEl?.remove();
       chatHistory.push({
         role: 'assistant',
-        content: "Network connection error. Please verify your connection and try again."
+        content: "I had a quick hiccup connecting to the server. You can ask me again or check any course code, timetable schedule, or past questions!"
       });
     } finally {
       isSending = false;
