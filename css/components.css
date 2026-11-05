@@ -1238,17 +1238,7 @@
   margin-bottom: 32px;
 }
 
-@media (max-width: 900px) {
-  .pq-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
-@media (max-width: 480px) {
-  .pq-stats-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 .pq-stat-card {
   background-color: var(--surface-color);
@@ -1475,11 +1465,7 @@
   gap: 24px;
 }
 
-@media (max-width: 640px) {
-  .pq-card-grid {
-    grid-template-columns: 1fr;
-  }
-}
+
 
 .pq-card {
   background-color: var(--surface-color);

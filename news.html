@@ -2,7 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=1280, initial-scale=0.3">
+  <script>
+    (function() {
+      function fitDesktopViewport() {
+        var sw = window.screen && window.screen.width ? window.screen.width : window.innerWidth;
+        var vp = document.querySelector('meta[name="viewport"]');
+        if (!vp) {
+          vp = document.createElement('meta');
+          vp.name = 'viewport';
+          document.head.appendChild(vp);
+        }
+        if (sw < 1280) {
+          var scale = (sw / 1280).toFixed(4);
+          vp.setAttribute('content', 'width=1280, initial-scale=' + scale);
+        } else {
+          vp.setAttribute('content', 'width=1280, initial-scale=1.0');
+        }
+      }
+      fitDesktopViewport();
+      window.addEventListener('DOMContentLoaded', fitDesktopViewport);
+      window.addEventListener('resize', fitDesktopViewport);
+      window.addEventListener('orientationchange', fitDesktopViewport);
+    })();
+  </script>
   <title>Departmental News & Reports | NASS UNIZIK</title>
   <meta name="description" content="Stay updated with the latest news, announcements, academic briefings, and event reports from the Department of Statistics, UNIZIK.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
