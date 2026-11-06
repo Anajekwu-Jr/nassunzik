@@ -8,10 +8,12 @@ export interface Course {
   level: AcademicLevel;
   semester: SemesterNumber;
   units: number;
+  credit_units?: number;
   description: string;
   outline: string;
   lecturer?: string;
   resources_count?: number;
+  resources?: CourseResource[];
 }
 
 export type ResourceType = 'past_question' | 'lecture_note' | 'table' | 'syllabus' | 'siwes' | 'form' | 'document';

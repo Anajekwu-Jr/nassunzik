@@ -1,6 +1,6 @@
 Signature-Version: 1.0
 Created-By: 1.0 (Android APKSig Universal)
-SHA-256-Digest-Manifest: o2Z9SHKuk4VcF4UNbqVuxHVnMUfHFA94nz0PS5vkziY=
+SHA-256-Digest-Manifest: IExzmlZcuWWlO95Z5nIB5YALNtbNDG0jX1RpyixMngE=
 
 Name: AndroidManifest.xml
 SHA-256-Digest: eZdARuouwKWk4URYgKH8ydeLOAUI5BqV4O+4/razhKc=
@@ -381,7 +381,7 @@ Name: assets/data/course_resources_seed.json
 SHA-256-Digest: CrH7sZF9k64RkKfclMGhkuEOQh/TkeEqHqUY7EDgFiE=
 
 Name: assets/data/nass_portal.db
-SHA-256-Digest: nCRyZi3NM+ina1Gnb7TiPH5GuHXPlCpbXqZ/HwNP+tI=
+SHA-256-Digest: 8qoFk0VAn8oU+3EHHE8JYbX1dyHSmQHU1AqeuRR3bj8=
 
 Name: assets/data/official_cirs_details.json
 SHA-256-Digest: Vhlff/opjKJaieYlZs91q3P03/H49PDnsm9AB1epnKI=

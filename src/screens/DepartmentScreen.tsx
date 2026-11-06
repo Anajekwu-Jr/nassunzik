@@ -408,10 +408,10 @@ export const DepartmentScreen: React.FC = () => {
               <div>
                 <h4 className="text-xs font-bold text-white">HOD & Administrative Line</h4>
                 <a
-                  href="tel:+2348033421190"
+                  href="tel:+2348107175597"
                   className="text-xs text-slate-300 hover:text-amber-400 block mt-0.5"
                 >
-                  +234 803 342 1190
+                  +234 810 717 5597 (Prof. F.C. Eze, HOD)
                 </a>
               </div>
             </div>

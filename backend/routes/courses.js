@@ -4,6 +4,41 @@ import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
+function getLecturerMap() {
+  const map = {};
+  try {
+    const timetableRows = db.prepare('SELECT course_code, lecturer FROM timetable').all();
+    for (const row of timetableRows) {
+      if (row.course_code && row.lecturer) {
+        const norm = row.course_code.toUpperCase().replace(/\s+/g, '').replace('NAU-', '');
+        if (!map[norm]) map[norm] = row.lecturer;
+        const full = row.course_code.toUpperCase().trim();
+        if (!map[full]) map[full] = row.lecturer;
+      }
+    }
+  } catch (_) {
+    try {
+      const fs = require('node:fs');
+      const path = require('node:path');
+      const backupFile = path.resolve(process.cwd(), 'data', 'portal_state_backup.json');
+      if (fs.existsSync(backupFile)) {
+        const data = JSON.parse(fs.readFileSync(backupFile, 'utf-8'));
+        if (Array.isArray(data.timetable)) {
+          for (const row of data.timetable) {
+            if (row.course_code && row.lecturer) {
+              const norm = row.course_code.toUpperCase().replace(/\s+/g, '').replace('NAU-', '');
+              if (!map[norm]) map[norm] = row.lecturer;
+              const full = row.course_code.toUpperCase().trim();
+              if (!map[full]) map[full] = row.lecturer;
+            }
+          }
+        }
+      }
+    } catch (_) {}
+  }
+  return map;
+}
+
 function getCoursesFallback() {
   try {
     const fs = require('node:fs');
@@ -13,10 +48,20 @@ function getCoursesFallback() {
       const data = JSON.parse(fs.readFileSync(backupFile, 'utf-8'));
       if (Array.isArray(data.courses) && data.courses.length > 0) {
         const resources = Array.isArray(data.course_resources) ? data.course_resources : [];
-        return data.courses.map(c => ({
-          ...c,
-          resources: resources.filter(r => r.course_id === c.id)
-        }));
+        const lecturerMap = getLecturerMap();
+        return data.courses.map(c => {
+          const norm = (c.code || '').toUpperCase().replace(/\s+/g, '').replace('NAU-', '');
+          const full = (c.code || '').toUpperCase().trim();
+          const cr = resources.filter(r => r.course_id === c.id);
+          return {
+            ...c,
+            units: c.credit_units || c.units || 3,
+            credit_units: c.credit_units || c.units || 3,
+            lecturer: lecturerMap[norm] || lecturerMap[full] || c.lecturer || 'Department Faculty',
+            resources: cr,
+            resources_count: cr.length
+          };
+        });
       }
     }
   } catch (_) {}
@@ -110,13 +155,23 @@ router.get('/', (req, res) => {
       return res.json(courses);
     }
 
-    // Attach resources count
+    // Attach resources, units and timetable lecturer
+    const lecturerMap = getLecturerMap();
     const coursesWithResources = courses.map(c => {
       let resources = [];
       try {
         resources = db.prepare('SELECT * FROM course_resources WHERE course_id = ?').all(c.id);
       } catch (_) {}
-      return { ...c, resources };
+      const norm = (c.code || '').toUpperCase().replace(/\s+/g, '').replace('NAU-', '');
+      const full = (c.code || '').toUpperCase().trim();
+      return {
+        ...c,
+        units: c.credit_units || c.units || 3,
+        credit_units: c.credit_units || c.units || 3,
+        lecturer: lecturerMap[norm] || lecturerMap[full] || c.lecturer || 'Department Faculty',
+        resources,
+        resources_count: resources.length
+      };
     });
 
     res.json(coursesWithResources);
@@ -153,7 +208,17 @@ router.get('/:id', (req, res) => {
       resources = course.resources || [];
     }
 
-    res.json({ ...course, resources });
+    const lecturerMap = getLecturerMap();
+    const norm = (course.code || '').toUpperCase().replace(/\s+/g, '').replace('NAU-', '');
+    const full = (course.code || '').toUpperCase().trim();
+    res.json({
+      ...course,
+      units: course.credit_units || course.units || 3,
+      credit_units: course.credit_units || course.units || 3,
+      lecturer: lecturerMap[norm] || lecturerMap[full] || course.lecturer || 'Department Faculty',
+      resources,
+      resources_count: resources.length
+    });
   } catch (err) {
     console.error('Unhandled error in /api/courses/:id GET:', err);
     res.status(500).json({ error: 'Unable to retrieve course details' });

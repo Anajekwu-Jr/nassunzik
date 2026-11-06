@@ -62,7 +62,7 @@ export const CourseDetailSheet: React.FC = () => {
                   {activeCourse.code}
                 </span>
                 <span className="text-[11px] font-semibold text-slate-400">
-                  {activeCourse.level} Level · {activeCourse.units} Credit Units
+                  {activeCourse.level} Level · {activeCourse.units || activeCourse.credit_units || 3} Credit Units
                 </span>
               </div>
               <h2 className="text-sm font-bold text-white leading-snug">

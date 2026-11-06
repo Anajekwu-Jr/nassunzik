@@ -31,7 +31,7 @@ export const AcademicsScreen: React.FC = () => {
   const [activeSection, setActiveSection] = useState<'courses' | 'timetable' | 'programmes'>('courses');
   const [courses, setCourses] = useState<Course[]>([]);
   const [timetable, setTimetable] = useState<TimetableSlot[]>([]);
-  const [selectedDay, setSelectedDay] = useState<string>('Monday');
+  const [selectedDay, setSelectedDay] = useState<string>('All Week');
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -59,8 +59,8 @@ export const AcademicsScreen: React.FC = () => {
     );
   });
 
-  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-  const daySchedule = timetable.filter((t) => t.day === selectedDay);
+  const daysOfWeek = ['All Week', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  const daySchedule = selectedDay === 'All Week' ? timetable : timetable.filter((t) => t.day === selectedDay);
 
   return (
     <div className="flex-1 pb-20 px-4 pt-3 space-y-4">
@@ -218,7 +218,7 @@ export const AcademicsScreen: React.FC = () => {
                           {c.code}
                         </span>
                         <span className="text-[11px] font-medium text-slate-400">
-                          {c.units} Units · Semester {c.semester}
+                          {c.units || c.credit_units || 3} Credit Units · Semester {c.semester}
                         </span>
                       </div>
 
@@ -273,6 +273,17 @@ export const AcademicsScreen: React.FC = () => {
       {/* 2. TIMETABLE TAB */}
       {activeSection === 'timetable' && (
         <div className="space-y-3">
+          {/* Departmental Timetable Authorization Notice */}
+          <div className="p-3 rounded-2xl bg-gradient-to-r from-blue-950/80 via-slate-900 to-amber-950/40 border border-blue-900/60 space-y-1 shadow-sm">
+            <div className="flex items-center gap-1.5 text-amber-400 text-[11px] font-bold">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Official Harmonized Timetable · 2026/2027 Session</span>
+            </div>
+            <p className="text-[11px] text-slate-300 leading-relaxed">
+              Approved by <strong>Prof. Francis Chukwuemeka Eze</strong> (HOD) &amp; <strong>Dr. Chinwe Grace Okoye (G.C Okoye)</strong> (Timetable Officer). Departmental lectures held at <strong>STAT Hall</strong> · Computing lab sessions at <strong>STAT LAB</strong>.
+            </p>
+          </div>
+
           {/* Day of Week Selector */}
           <div className="flex items-center gap-1 overflow-x-auto no-scrollbar pb-1">
             {daysOfWeek.map((day) => (
@@ -285,7 +296,7 @@ export const AcademicsScreen: React.FC = () => {
                 }}
                 className={`py-1.5 px-3 rounded-lg text-xs font-semibold whitespace-nowrap transition border ${
                   selectedDay === day
-                    ? 'bg-amber-500 text-slate-950 border-amber-500'
+                    ? 'bg-amber-500 text-slate-950 border-amber-500 shadow-sm'
                     : 'bg-slate-900 text-slate-400 border-slate-800 hover:border-slate-700'
                 }`}
               >
@@ -296,26 +307,56 @@ export const AcademicsScreen: React.FC = () => {
 
           {/* Schedule Slots */}
           {daySchedule.length === 0 ? (
-            <div className="p-8 text-center rounded-2xl bg-slate-900/60 border border-slate-800">
-              <Calendar className="w-8 h-8 text-slate-500 mx-auto mb-2" />
-              <p className="text-xs font-semibold text-slate-300">
-                No lectures scheduled for {selectedDay}
-              </p>
-              <p className="text-[11px] text-slate-500 mt-0.5">
-                Free day or self-directed laboratory study for {selectedLevel} Level.
-              </p>
+            <div className="p-8 text-center rounded-2xl bg-slate-900/60 border border-slate-800 space-y-3">
+              <Calendar className="w-8 h-8 text-slate-500 mx-auto" />
+              <div>
+                <p className="text-xs font-semibold text-slate-300">
+                  {selectedSemester === 2
+                    ? 'Second Semester Timetable Under Harmonization'
+                    : `No lectures scheduled for ${selectedDay}`}
+                </p>
+                <p className="text-[11px] text-slate-400 mt-1 max-w-xs mx-auto">
+                  {selectedSemester === 2
+                    ? 'The active academic session is currently First Semester. The Timetable Committee will release Rain semester allocations closer to resumption.'
+                    : `Self-directed study or free period for ${selectedLevel} Level on ${selectedDay}.`}
+                </p>
+              </div>
+              {selectedSemester === 2 && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    triggerHaptic();
+                    setSelectedSemester(1);
+                  }}
+                  className="px-4 py-2 bg-amber-500 text-slate-950 font-bold text-xs rounded-xl shadow-sm hover:bg-amber-400 active:scale-95 transition"
+                >
+                  View First Semester Timetable
+                </button>
+              )}
             </div>
           ) : (
             <div className="space-y-2.5">
+              <div className="flex items-center justify-between px-1 text-[11px] text-slate-400">
+                <span>
+                  Showing {daySchedule.length} scheduled lecture{daySchedule.length > 1 ? 's' : ''} for {selectedLevel}L ({selectedDay})
+                </span>
+              </div>
               {daySchedule.map((slot) => (
                 <div
                   key={slot.id}
-                  className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5"
+                  className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5 shadow-sm"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-amber-400">
-                      {slot.course_code}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-amber-400 bg-amber-950/80 border border-amber-800/40 px-2 py-0.5 rounded-md">
+                        {slot.course_code}
+                      </span>
+                      {selectedDay === 'All Week' && (
+                        <span className="text-[10px] font-bold text-blue-300 bg-blue-950/80 border border-blue-800/40 px-2 py-0.5 rounded-md uppercase">
+                          {slot.day}
+                        </span>
+                      )}
+                    </div>
                     <span className="text-[11px] font-semibold text-slate-300 flex items-center gap-1 bg-slate-800/80 px-2 py-0.5 rounded-md">
                       <Clock className="w-3 h-3 text-amber-400" />
                       {slot.start_time} – {slot.end_time}
@@ -326,12 +367,12 @@ export const AcademicsScreen: React.FC = () => {
                     {slot.course_title}
                   </h4>
 
-                  <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800/80">
+                  <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1.5 border-t border-slate-800/80">
                     <span className="flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-amber-400" />
-                      {slot.venue}
+                      <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                      <span>{slot.venue}</span>
                     </span>
-                    <span className="text-slate-300 font-medium">{slot.lecturer}</span>
+                    <span className="text-slate-300 font-medium text-right line-clamp-1">{slot.lecturer}</span>
                   </div>
                 </div>
               ))}

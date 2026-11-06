@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
-import { X, Phone, Mail, Building, Award, BookOpen, ExternalLink } from 'lucide-react';
+import { X, Phone, Mail, Building, Award, BookOpen, ExternalLink, Calendar } from 'lucide-react';
+import { DEFAULT_TIMETABLE } from '../../data/portalBaseline';
 
 export const StaffDetailSheet: React.FC = () => {
   const { activeStaff, setActiveStaff, triggerHaptic } = useApp();
@@ -96,7 +97,7 @@ export const StaffDetailSheet: React.FC = () => {
             </div>
           )}
 
-          {/* Academic Bio */}
+          {/* Scholarly Biography */}
           {activeStaff.bio && (
             <div className="space-y-1.5">
               <h3 className="font-bold text-slate-300 uppercase tracking-wider text-[11px] flex items-center gap-1">
@@ -108,6 +109,43 @@ export const StaffDetailSheet: React.FC = () => {
               </p>
             </div>
           )}
+
+          {/* Assigned Lecture Slots from Official Timetable */}
+          {(() => {
+            const nameParts = (activeStaff.name || '').split(' ');
+            const surname = nameParts.length > 1 ? nameParts[nameParts.length - 1] : nameParts[0];
+            const assigned = DEFAULT_TIMETABLE.filter(t => 
+              t.lecturer && surname && t.lecturer.toLowerCase().includes(surname.toLowerCase())
+            );
+            if (assigned.length === 0) return null;
+            return (
+              <div className="space-y-2">
+                <h3 className="font-bold text-slate-300 uppercase tracking-wider text-[11px] flex items-center gap-1">
+                  <Calendar className="w-3.5 h-3.5 text-amber-400" />
+                  Harmonized Lecture Allocations ({assigned.length})
+                </h3>
+                <div className="space-y-1.5">
+                  {assigned.map((slot) => (
+                    <div
+                      key={slot.id}
+                      className="p-2.5 rounded-xl bg-[#040b17] border border-blue-900/50 flex items-center justify-between gap-2 text-[11px]"
+                    >
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5 mb-0.5">
+                          <span className="font-bold text-amber-400">{slot.course_code}</span>
+                          <span className="text-[10px] text-slate-400">· {slot.day} {slot.start_time}–{slot.end_time}</span>
+                        </div>
+                        <p className="text-white font-medium truncate">{slot.course_title}</p>
+                      </div>
+                      <span className="text-[10px] font-semibold text-blue-300 bg-blue-950/80 border border-blue-800/40 px-2 py-0.5 rounded shrink-0">
+                        {slot.venue}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
         </div>
       </div>
     </div>
