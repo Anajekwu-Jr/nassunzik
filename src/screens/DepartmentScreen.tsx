@@ -261,6 +261,27 @@ export const DepartmentScreen: React.FC = () => {
             <span className="text-amber-400 font-bold">2026/2027 Executive Council</span>
           </div>
 
+          {/* Traditional Council Link Banner */}
+          <a
+            href="/traditional-council"
+            className="p-3.5 rounded-2xl bg-gradient-to-r from-[#1e1812] via-[#2a1d12] to-[#1e1812] border border-amber-500/50 flex items-center justify-between shadow-md group hover:border-amber-400 transition"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">👑</span>
+              <div>
+                <h4 className="text-xs font-bold text-amber-300">
+                  NASS Traditional Council
+                </h4>
+                <p className="text-[11px] text-amber-100/70">
+                  Nzenaozo UNIZIK Statistics Royal Family
+                </p>
+              </div>
+            </div>
+            <span className="text-xs font-semibold text-amber-400 flex items-center gap-1 group-hover:translate-x-0.5 transition">
+              Explore <span>→</span>
+            </span>
+          </a>
+
           <div className="grid grid-cols-1 gap-2.5">
             {execList.map((exec) => (
               <div

@@ -10,7 +10,7 @@ import {
   Announcement
 } from '../types';
 
-export type TabType = 'home' | 'academics' | 'resources' | 'department' | 'events';
+export type TabType = 'home' | 'academics' | 'resources' | 'department' | 'events' | 'traditional-council';
 export type PlatformStyle = 'ios' | 'android';
 export type DeviceSimulatorMode = 'iphone' | 'pixel' | 'fullscreen';
 

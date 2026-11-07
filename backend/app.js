@@ -220,6 +220,8 @@ const pageRoutes = [
   { path: '/nass.html', file: 'nass.html' },
   { path: '/executives', file: 'nass.html' },
   { path: '/excos', file: 'nass.html' },
+  { path: '/traditional-council', file: 'traditional-council.html' },
+  { path: '/traditional-council.html', file: 'traditional-council.html' },
   { path: '/events', file: 'events.html' },
   { path: '/events.html', file: 'events.html' },
   { path: '/news', file: 'news.html' },

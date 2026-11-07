@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import { DeviceSimulatorFrame } from './components/navigation/DeviceSimulatorFrame';
 import { AppHeader } from './components/navigation/AppHeader';
@@ -10,6 +10,7 @@ import { AcademicsScreen } from './screens/AcademicsScreen';
 import { ResourcesScreen } from './screens/ResourcesScreen';
 import { DepartmentScreen } from './screens/DepartmentScreen';
 import { EventsScreen } from './screens/EventsScreen';
+import { TraditionalCouncilScreen } from './screens/TraditionalCouncilScreen';
 
 import { SearchModal } from './components/modals/SearchModal';
 import { DocumentViewerModal } from './components/modals/DocumentViewerModal';
@@ -30,11 +31,35 @@ const MainScreenContent: React.FC = () => {
       {activeTab === 'resources' && <ResourcesScreen />}
       {activeTab === 'department' && <DepartmentScreen />}
       {activeTab === 'events' && <EventsScreen />}
+      {activeTab === 'traditional-council' && <TraditionalCouncilScreen />}
     </main>
   );
 };
 
 export default function App() {
+  const [isTCPage, setIsTCPage] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    const p = window.location.pathname;
+    return p === '/traditional-council' || p === '/traditional-council.html';
+  });
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const p = window.location.pathname;
+      setIsTCPage(p === '/traditional-council' || p === '/traditional-council.html');
+    };
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []);
+
+  if (isTCPage) {
+    return (
+      <AppProvider>
+        <TraditionalCouncilScreen />
+      </AppProvider>
+    );
+  }
+
   return (
     <AppProvider>
       {/* App launch splash screen with NASS logo and "powered by PhanCore" */}

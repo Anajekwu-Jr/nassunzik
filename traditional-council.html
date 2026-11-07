@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=0.3">
+  <script>
+    (function() {
+      function fitDesktopViewport() {
+        var sw = window.screen && window.screen.width ? window.screen.width : window.innerWidth;
+        var vp = document.querySelector('meta[name="viewport"]');
+        if (!vp) {
+          vp = document.createElement('meta');
+          vp.name = 'viewport';
+          document.head.appendChild(vp);
+        }
+        if (sw < 1280) {
+          var scale = (sw / 1280).toFixed(4);
+          vp.setAttribute('content', 'width=1280, initial-scale=' + scale);
+        } else {
+          vp.setAttribute('content', 'width=1280, initial-scale=1.0');
+        }
+      }
+      fitDesktopViewport();
+      window.addEventListener('DOMContentLoaded', fitDesktopViewport);
+      window.addEventListener('resize', fitDesktopViewport);
+      window.addEventListener('orientationchange', fitDesktopViewport);
+    })();
+  </script>
+  <title>NASS Traditional Council · Nzenaozo Royal Family</title>
+  <meta name="description" content="Official home of the Nzenaozo UNIZIK Statistics Royal Family, National Association of Statistics Students (NASS) Traditional Council, Nnamdi Azikiwe University, Awka.">
+  <meta property="og:title" content="NASS Traditional Council · Nzenaozo Royal Family">
+  <meta property="og:description" content="Official home of the Nzenaozo UNIZIK Statistics Royal Family, National Association of Statistics Students (NASS) Traditional Council, Nnamdi Azikiwe University, Awka.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/jpeg" href="/resources/images/nass-logo.jpg">
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body style="margin: 0; background-color: #14100c; color: #f3e8d0;">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>
