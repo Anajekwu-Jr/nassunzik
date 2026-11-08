@@ -39,14 +39,14 @@ const MainScreenContent: React.FC = () => {
 export default function App() {
   const [isTCPage, setIsTCPage] = useState(() => {
     if (typeof window === 'undefined') return false;
-    const p = window.location.pathname;
-    return p === '/traditional-council' || p === '/traditional-council.html';
+    const p = window.location.pathname.toLowerCase();
+    return p.includes('traditional-council') || p.includes('traditionalcouncil') || p.includes('nzenaozo');
   });
 
   useEffect(() => {
     const handleLocationChange = () => {
-      const p = window.location.pathname;
-      setIsTCPage(p === '/traditional-council' || p === '/traditional-council.html');
+      const p = window.location.pathname.toLowerCase();
+      setIsTCPage(p.includes('traditional-council') || p.includes('traditionalcouncil') || p.includes('nzenaozo'));
     };
     window.addEventListener('popstate', handleLocationChange);
     return () => window.removeEventListener('popstate', handleLocationChange);

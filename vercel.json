@@ -91,6 +91,22 @@
       "destination": "/nass.html"
     },
     {
+      "source": "/traditional-council",
+      "destination": "/traditional-council.html"
+    },
+    {
+      "source": "/traditional-council.html",
+      "destination": "/traditional-council.html"
+    },
+    {
+      "source": "/traditionalcouncil",
+      "destination": "/traditional-council.html"
+    },
+    {
+      "source": "/nzenaozo",
+      "destination": "/traditional-council.html"
+    },
+    {
       "source": "/events",
       "destination": "/events.html"
     },
