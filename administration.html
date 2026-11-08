@@ -94,7 +94,6 @@
         <a href="/academia.html" class="nav-link">Academia</a>
         <a href="/past-questions.html" class="nav-link">Past Questions</a>
         <a href="/timetable.html" class="nav-link">Timetable</a>
-        <a href="/siwes.html" class="nav-link">SIWES</a>
         <a href="/administration.html" class="nav-link active">Staff</a>
         <a href="/nass.html" class="nav-link">NASS Exco</a>
         <a href="/traditional-council" class="nav-link">Traditional Council</a>
@@ -139,7 +138,6 @@
       <li><a href="/academia.html" class="mobile-nav-link">Academia & Courses</a></li>
       <li><a href="/past-questions.html" class="mobile-nav-link">Past Questions Repository</a></li>
       <li><a href="/timetable.html" class="mobile-nav-link">Lecture Timetable</a></li>
-      <li><a href="/siwes.html" class="mobile-nav-link">SIWES Industrial Training</a></li>
       <li><a href="/administration.html" class="mobile-nav-link active">Administration & Staff</a></li>
       <li><a href="/nass.html" class="mobile-nav-link">NASS Executive Council</a></li>
       <li><a href="/traditional-council" class="mobile-nav-link">Traditional Council</a></li>
@@ -174,9 +172,7 @@
         </p>
       </div>
     </div>
-
-    <!-- Main Staff Section -->
-    <section class="section">
+<section class="section">
       <div class="container">
         
         <!-- Departmental Leadership & Mission Banner -->
@@ -313,8 +309,8 @@
 
         <!-- Column 3: Quick Links & Media -->
         <div>
-          <h4 class="footer-col-title">Quick Links</h4>
-          <ul class="footer-links">
+          
+            <li><a href="/siwes.html">SIWES Industrial Training</a></li>
             <li><a href="/archive.html">Gallery</a></li>
             <li><a href="/news.html">Departmental News</a></li>
             <li><a href="/events.html">Events & Workshops</a></li>
@@ -463,9 +459,7 @@
 
               <!-- Brief Bio / Specialization -->
               <p class="staff-bio" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 12px;">${s.bio || (s.specialization ? `Specialist in ${s.specialization}. Academic faculty member of the Department of Statistics, UNIZIK.` : 'Academic faculty member of the Department of Statistics, UNIZIK, committed to empirical research, teaching, and data analytics.')}</p>
-              
-              <!-- Academic & Office Details -->
-              <div class="staff-meta-row" style="margin-bottom: 12px;">
+<div class="staff-meta-row" style="margin-bottom: 12px;">
                 ${s.specialization ? `
                   <div class="staff-meta-item" style="font-size: 0.8125rem;">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
@@ -609,7 +603,5 @@
     window.loadAdministration = loadStaff;
     document.addEventListener('DOMContentLoaded', loadStaff);
   </script>
-  <!-- Gemini AI Floating Chat Widget -->
-  <script defer src="/js/sam-ai-widget.js"></script>
 </body>
 </html>

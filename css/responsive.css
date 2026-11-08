@@ -11,7 +11,7 @@ html, body {
   padding: 0;
   width: 100%;
   min-width: 1280px !important;
-  overflow-x: auto !important;
+  overflow-x: clip !important;
   overscroll-behavior-x: auto !important;
   -webkit-text-size-adjust: 100%;
 }
@@ -32,8 +32,12 @@ html, body {
   box-sizing: border-box !important;
 }
 
-/* 3. Site Header & Institutional Topbar (Always Desktop) */
+/* 3. Site Header & Institutional Topbar (Always Desktop & Sticky) */
 .site-header {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
   width: 100% !important;
   min-width: 1280px !important;
 }

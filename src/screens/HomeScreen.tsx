@@ -12,9 +12,7 @@ import {
   MapPin,
   Clock,
   ShieldCheck,
-  Bookmark,
-  Bot,
-  MessageSquare
+  Bookmark
 } from 'lucide-react';
 
 export const HomeScreen: React.FC = () => {
@@ -277,43 +275,6 @@ export const HomeScreen: React.FC = () => {
         </div>
       </div>
 
-      {/* Sam AI Companion Spotlight Card */}
-      <div
-        onClick={() => {
-          triggerHaptic();
-          ((window as any).openSamAI || (window as any).openGeminiAI)?.();
-        }}
-        role="button"
-        tabIndex={0}
-        className={`relative overflow-hidden rounded-2xl p-3.5 border shadow-sm cursor-pointer transition active:scale-[0.98] select-none ${
-          isLight
-            ? 'bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 border-amber-500/40 text-white'
-            : 'bg-gradient-to-r from-[#071526] via-[#0c2340] to-[#173661] border-amber-500/40 text-white hover:border-amber-400'
-        }`}
-      >
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl border-2 border-amber-400/80 overflow-hidden shadow-md shrink-0 bg-slate-900">
-              <img
-                src="/resources/images/sam-ai.jpg"
-                alt="SAM AI"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <h4 className="text-xs font-extrabold uppercase tracking-wider text-white">SAM AI</h4>
-              </div>
-              <p className="text-[11px] text-slate-300 line-clamp-1 mt-0.5">
-                Friendly study companion for statistics students
-              </p>
-            </div>
-          </div>
-          <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center text-amber-400 shrink-0">
-            <MessageSquare className="w-3.5 h-3.5" />
-          </div>
-        </div>
-      </div>
 
       {/* Featured Resource Spotlight: Official Statistical Tables */}
       {featuredResource && (
