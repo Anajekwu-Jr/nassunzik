@@ -124,28 +124,62 @@ export const TraditionalCouncilScreen: React.FC = () => {
     }
   };
 
-  // Scroll border draw-in animation with IntersectionObserver
+  // Scroll border draw-in animation with IntersectionObserver and document scroll enabling
   useEffect(() => {
+    // Enable full-page natural scrolling on document and root
+    document.documentElement.classList.add('tc-scrollable');
+    document.body.classList.add('tc-scrollable');
+    document.documentElement.style.setProperty('height', 'auto', 'important');
+    document.documentElement.style.setProperty('overflow-y', 'auto', 'important');
+    document.body.style.setProperty('height', 'auto', 'important');
+    document.body.style.setProperty('min-height', '100vh', 'important');
+    document.body.style.setProperty('overflow-y', 'auto', 'important');
+    document.body.style.setProperty('touch-action', 'pan-y pinch-zoom', 'important');
+    document.body.style.setProperty('user-select', 'auto', 'important');
+
+    const rootEl = document.getElementById('root');
+    if (rootEl) {
+      rootEl.style.setProperty('height', 'auto', 'important');
+      rootEl.style.setProperty('min-height', '100vh', 'important');
+      rootEl.style.setProperty('overflow-y', 'visible', 'important');
+    }
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
-    const bands = document.querySelectorAll('.tc-scope .band');
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('in');
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    bands.forEach((b) => io.observe(b));
+    let io: IntersectionObserver | null = null;
+    if (!prefersReducedMotion) {
+      const bands = document.querySelectorAll('.tc-scope .band');
+      io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io?.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      bands.forEach((b) => io?.observe(b));
+    }
 
     return () => {
-      io.disconnect();
+      document.documentElement.classList.remove('tc-scrollable');
+      document.body.classList.remove('tc-scrollable');
+      document.documentElement.style.removeProperty('height');
+      document.documentElement.style.removeProperty('overflow-y');
+      document.body.style.removeProperty('height');
+      document.body.style.removeProperty('min-height');
+      document.body.style.removeProperty('overflow-y');
+      document.body.style.removeProperty('touch-action');
+      document.body.style.removeProperty('user-select');
+      if (rootEl) {
+        rootEl.style.removeProperty('height');
+        rootEl.style.removeProperty('min-height');
+        rootEl.style.removeProperty('overflow-y');
+      }
+      if (io) {
+        io.disconnect();
+      }
     };
   }, []);
 
@@ -162,6 +196,20 @@ export const TraditionalCouncilScreen: React.FC = () => {
       />
 
       <style>{`
+        html, body {
+          overflow-y: auto !important;
+          height: auto !important;
+          min-height: 100vh !important;
+          touch-action: pan-y pinch-zoom !important;
+          -webkit-overflow-scrolling: touch !important;
+        }
+
+        #root {
+          height: auto !important;
+          min-height: 100vh !important;
+          overflow: visible !important;
+        }
+
         .tc-scope {
           --ink: #14100c;
           --ink2: #1e1812;
@@ -181,6 +229,10 @@ export const TraditionalCouncilScreen: React.FC = () => {
           width: 100%;
           position: relative;
           text-align: left;
+          overflow-x: hidden;
+          overflow-y: visible;
+          touch-action: pan-y pinch-zoom;
+          -webkit-overflow-scrolling: touch;
         }
 
         .tc-scope * {
