@@ -675,13 +675,23 @@ function seedInitialData() {
   if (fs.existsSync(pqManifestPath)) {
     try {
       const existingPqCount = db.prepare("SELECT COUNT(*) as count FROM course_resources WHERE resource_type = 'past_question'").get();
-      if (existingPqCount.count < 10) {
+      if (existingPqCount.count < 50) {
+        db.prepare("DELETE FROM course_resources WHERE file_path LIKE '/resources/past_questions/%'").run();
         const manifest = JSON.parse(fs.readFileSync(pqManifestPath, "utf-8"));
         const courseLookup = {
+          // 200L Courses
+          'STA 211': { id: 42, code: 'STA 211', title: 'Probability II', level: 200, semester: 1 },
+          'STA 212': { id: 53, code: 'STA 212', title: 'Introduction to Social & Economic Statistics', level: 200, semester: 2 },
+          'STA 214': { id: 54, code: 'NAU-STA 214', title: 'Probability and Probability Distribution', level: 200, semester: 2 },
+          'STA 221': { id: 43, code: 'STA 221', title: 'Statistical Inference II', level: 200, semester: 1 },
+
+          // 300L Courses
           'STA 311': { id: 61, code: 'STA 311', title: 'Probability III', level: 300, semester: 1 },
           'STA 312': { id: 71, code: 'STA 312', title: 'Distribution theory I', level: 300, semester: 2 },
           'STA 321': { id: 62, code: 'STA 321', title: 'Statistical Inference III', level: 300, semester: 1 },
+          'STA 322': { id: 73, code: 'NAU-STA 322', title: 'Statistical Quality Control I', level: 300, semester: 2 },
           'STA 324': { id: 72, code: 'STA 324', title: 'Survey methods and sampling theory', level: 300, semester: 2 },
+          'STA 341': { id: 64, code: 'NAU-STA 341', title: 'Regression Analysis I', level: 300, semester: 1 },
           'STA 342': { id: 75, code: 'NAU-STA 342', title: 'Statistical Application of Matrix Algebra', level: 300, semester: 2 },
           'STA 351': { id: 65, code: 'NAU-STA 351', title: 'Analysis of Variance I', level: 300, semester: 1 },
           'STA 361': { id: 66, code: 'NAU-STA 361', title: 'Demography', level: 300, semester: 1 },

@@ -307,7 +307,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Discrete and continuous random variables, probability mass and density functions, cumulative distribution functions, mathematical expectation, variance, moments, moment generating functions, and standard probability models.",
     "outline": "Unit 1: Univariate discrete distributions: Bernoulli, Binomial, Poisson, Geometric, Negative Binomial, Hypergeometric.\nUnit 2: Univariate continuous distributions: Uniform, Normal, Exponential, Gamma, Beta, and Weibull.\nUnit 3: Mathematical expectations, higher-order moments, and skewness/kurtosis measures.\nUnit 4: Moment Generating Functions (MGF) and characteristic functions properties.\nUnit 5: Chebyshev's Inequality, Markov's Inequality, and Law of Large Numbers intro.",
     "lecturer": "G. A. Osuji and C. I. Nnabude",
-    "resources_count": 2
+    "resources_count": 4
   },
   {
     "id": 43,
@@ -320,7 +320,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Sampling distributions (Student's t, Chi-Square, Snedecor's F), point estimation principles, properties of estimators (unbiasedness, consistency, efficiency, sufficiency), Method of Moments, Maximum Likelihood Estimation, and interval estimation.",
     "outline": "Unit 1: Derivations and properties of Chi-Square, t, and F sampling distributions.\nUnit 2: Point estimation: concept of estimator properties (unbiasedness, minimum variance, consistency).\nUnit 3: Sufficiency and the Fisher-Neyman Factorization Theorem.\nUnit 4: Estimation methods: Method of Moments and Maximum Likelihood Estimation (MLE).\nUnit 5: Exact confidence intervals for one and two population means, variances, and proportions.",
     "lecturer": "V. C. Chukwunenye and C. E. Onyenekwe",
-    "resources_count": 1
+    "resources_count": 3
   },
   {
     "id": 44,
@@ -450,7 +450,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Official statistical systems, National Bureau of Statistics (NBS) structure, national accounts, index numbers (Laspeyres, Paasche, Fisher), Consumer Price Index (CPI), inflation metrics, vital statistics, and demographic indicators.",
     "outline": "Unit 1: National official statistical architecture: NBS, statistical coordination, and data governance.\nUnit 2: Index numbers: simple, weighted aggregate, price and quantity relatives, tests of consistency.\nUnit 3: Consumer Price Index (CPI) methodology, inflation computation, and purchasing power parity.\nUnit 4: Vital statistics: crude and age-specific birth/death rates, infant mortality, and fertility indices.\nUnit 5: Population census procedures, socio-economic surveys, and poverty headcount metrics.",
     "lecturer": "Department Faculty",
-    "resources_count": 1
+    "resources_count": 3
   },
   {
     "id": 54,
@@ -463,7 +463,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Bivariate probability distributions, joint probability mass and density functions, marginal and conditional distributions, stochastic independence, covariance, correlation coefficient, conditional expectation, and bivariate normal distribution.",
     "outline": "Unit 1: Joint probability distributions of discrete and continuous random variables.\nUnit 2: Marginal distributions and conditional probability distributions.\nUnit 3: Stochastic independence of random variables and conditional expectation.\nUnit 4: Covariance, Pearson correlation coefficient, and properties of variance of sums.\nUnit 5: Bivariate transformation techniques and the Bivariate Normal Distribution derivation.",
     "lecturer": "Department Faculty",
-    "resources_count": 2
+    "resources_count": 3
   },
   {
     "id": 55,
@@ -554,7 +554,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Advanced probability spaces, distributions of functions of random variables, Jacobian transformation techniques, order statistics and their distributions, multivariate distributions, characteristic functions, and probability inequalities.",
     "outline": "Unit 1: Probability spaces, sigma-algebras, Borel sets, and probability measures.\nUnit 2: Jacobians of single and multi-variable transformations of random variables.\nUnit 3: Order statistics: joint and marginal distributions of smallest, largest, and median values.\nUnit 4: Characteristic functions, inversion formula, and uniqueness theorems.\nUnit 5: Modes of convergence (in probability, almost surely, in distribution) and Central Limit Theorem.",
     "lecturer": "J. O. Obulezi and C. C. Nnanatu",
-    "resources_count": 8
+    "resources_count": 7
   },
   {
     "id": 62,
@@ -567,7 +567,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Point estimation theory: Fisher information, Cramer-Rao Lower Bound (CRLB), efficiency, complete and sufficient statistics, Rao-Blackwell Theorem, Lehmann-Scheffe Theorem, UMVUE, and asymptotic properties.",
     "outline": "Unit 1: Likelihood function, score function, and Fisher Information matrix.\nUnit 2: Cramer-Rao Lower Bound regularity conditions and proof for unbiased estimators.\nUnit 3: Exponential family of probability distributions and complete sufficient statistics.\nUnit 4: Rao-Blackwellization and Lehmann-Scheffe theorem for finding UMVUE estimators.\nUnit 5: Asymptotic efficiency and normality of Maximum Likelihood Estimators.",
     "lecturer": "E. U. Umeh and C. I. Nnabude",
-    "resources_count": 9
+    "resources_count": 6
   },
   {
     "id": 63,
@@ -593,7 +593,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Simple and multiple linear regression, Ordinary Least Squares (OLS) estimation in matrix notation, Gauss-Markov theorem, coefficient of determination, hypothesis testing on regression coefficients, and ANOVA in regression.",
     "outline": "Unit 1: Simple linear regression: assumptions, derivation of OLS estimators, and properties.\nUnit 2: Multiple linear regression in matrix notation: Y = Xb + e, normal equations, and (X'X)^-1.\nUnit 3: Gauss-Markov theorem and proof that OLS is BLUE (Best Linear Unbiased Estimator).\nUnit 4: Tests of significance: t-tests for coefficients, overall F-test, and R-squared/adjusted R-squared.\nUnit 5: Confidence intervals and prediction intervals for mean responses and individual forecasts.",
     "lecturer": "H. O. Etaga and K. F. Aforka",
-    "resources_count": 3
+    "resources_count": 5
   },
   {
     "id": 65,
@@ -619,7 +619,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Demographic data collection, errors in demographic data, mortality analysis, fertility indices, reproduction rates, complete and abridged life tables, population growth models, population estimation, and demographic transition.",
     "outline": "Unit 1: Nature of demography, sources of data, census procedures, and post-enumeration surveys.\nUnit 2: Evaluation of age and sex data: Whipple's Index, Myers' Blended Index, and UN Age-Sex Index.\nUnit 3: Measures of mortality: crude death rate, age-specific death rates, infant mortality, and standardization.\nUnit 4: Measures of fertility: CBR, GFR, ASFR, Total Fertility Rate (TFR), GRR, and NRR.\nUnit 5: Life tables: construction of complete/abridged life tables, stationary populations, and projections.",
     "lecturer": "C. A. Uzuke and G. C. Okoye",
-    "resources_count": 4
+    "resources_count": 5
   },
   {
     "id": 67,
@@ -632,7 +632,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Introduction to operations research, mathematical modeling, Linear Programming (LP) formulation, graphical solution method, the Simplex algorithm, artificial variable techniques (Big M, Two-Phase), and duality theory.",
     "outline": "Unit 1: History, methodology, and mathematical formulation of Linear Programming problems.\nUnit 2: Graphical solution method for two-variable linear optimization models.\nUnit 3: The Simplex algorithm: tableau construction, pivot operations, and optimality criteria.\nUnit 4: Artificial variable methods: Big-M method and Two-Phase Simplex technique.\nUnit 5: Duality in linear programming: primal-dual relationships, economic interpretation, and dual simplex.",
     "lecturer": "H. O. Obiora-Ilouno and S. Enogwe",
-    "resources_count": 6
+    "resources_count": 4
   },
   {
     "id": 68,
@@ -684,7 +684,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Advanced distribution theory: Pearson system of distributions, compound distributions, truncated distributions, convolutions of random variables, order statistics distributions, and multivariate probability families.",
     "outline": "Unit 1: The Pearson family of frequency curves: differential equation and classification of types.\nUnit 2: Compound and mixture distributions: Poisson-Gamma (Negative Binomial), Binomial-Beta.\nUnit 3: Truncated distributions: left, right, and doubly truncated probability models.\nUnit 4: Sums and convolutions of independent random variables using transforms.\nUnit 5: Sampling distributions derived from normal populations and non-central distributions.",
     "lecturer": "Department Faculty",
-    "resources_count": 21
+    "resources_count": 18
   },
   {
     "id": 72,
@@ -697,7 +697,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Principles and practice of sample surveys: survey planning, questionnaire design, sampling and non-sampling errors, Simple Random Sampling (SRS), Stratified Random Sampling, optimum allocation, Systematic Sampling, and Cluster Sampling.",
     "outline": "Unit 1: Planning and execution of sample surveys, sampling frame, questionnaire design, and pre-testing.\nUnit 2: Simple Random Sampling (SRSWOR & SRSWR): estimation of population mean, total, and variances.\nUnit 3: Stratified Random Sampling: proportional allocation, Neyman allocation, and gain in precision.\nUnit 4: Systematic sampling: circular and linear systematic selection, and comparison with SRS.\nUnit 5: Cluster sampling with equal clusters, two-stage sampling, and non-sampling error reduction.",
     "lecturer": "Department Faculty",
-    "resources_count": 8
+    "resources_count": 7
   },
   {
     "id": 73,
@@ -710,7 +710,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Statistical quality control philosophy, control charts for variables (X-bar, R, and S charts), control charts for attributes (p, np, c, and u charts), operating characteristic curves, process capability analysis, and acceptance sampling.",
     "outline": "Unit 1: Quality concepts, Deming philosophy, chance and assignable causes of process variation.\nUnit 2: Shewhart control charts for variables: X-bar and R charts, trial control limits, and interpretation.\nUnit 3: Control charts for attributes: fraction nonconforming (p and np charts) and defects (c and u charts).\nUnit 4: Process capability indices: Cp, Cpk, and Cpm calculations and interpretations.\nUnit 5: Acceptance sampling for attributes: single sampling plans, OC curves, AQL, and LTPD.",
     "lecturer": "Department Faculty",
-    "resources_count": 3
+    "resources_count": 5
   },
   {
     "id": 74,
@@ -723,7 +723,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Statistical methods in public health: epidemiological study designs (cohort, case-control, cross-sectional), measures of disease occurrence, measures of association (relative risk, odds ratio), confounding, standardization, and survival curves.",
     "outline": "Unit 1: Fundamental principles of epidemiology, disease causation, and observational study designs.\nUnit 2: Measures of disease frequency: incidence rate, incidence proportion (risk), and prevalence.\nUnit 3: Measures of association: Risk Ratio (RR), Odds Ratio (OR), Attributable Risk, and population AR.\nUnit 4: Confounding and interaction (effect modification): Mantel-Haenszel stratified methods.\nUnit 5: Standardization of rates (direct and indirect) and introduction to Kaplan-Meier survival curves.",
     "lecturer": "Department Faculty",
-    "resources_count": 11
+    "resources_count": 6
   },
   {
     "id": 75,
@@ -736,7 +736,7 @@ export const DEFAULT_COURSES: Course[] = [
     "description": "Matrix operations in statistical theory: partitioned matrices, determinants, trace properties, generalized inverses (Moore-Penrose), idempotent matrices, quadratic forms, eigenvalues, spectral decomposition, and distributions of quadratic forms.",
     "outline": "Unit 1: Review of matrix operations: partitioned matrices, Kronecker products, trace, and rank.\nUnit 2: Generalized inverses (g-inverses): definitions, Moore-Penrose inverse, and solving linear systems.\nUnit 3: Idempotent matrices, projection operators, and orthogonal projections in linear models.\nUnit 4: Quadratic forms: positive definiteness, spectral decomposition, and differentiation with respect to vectors.\nUnit 5: Distribution of quadratic forms, Cochran's Theorem, and independence of linear and quadratic forms.",
     "lecturer": "Department Faculty",
-    "resources_count": 9
+    "resources_count": 7
   },
   {
     "id": 76,
@@ -3809,7 +3809,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/materials/sta331_regression_module_6.pdf"
   },
   {
-    "id": 206,
+    "id": 264,
     "course_id": 61,
     "title": "STA 311: Probability III Past Examination Paper (Paper 1)",
     "resource_type": "past_question",
@@ -3821,7 +3821,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_311_pq_01.jpg"
   },
   {
-    "id": 207,
+    "id": 265,
     "course_id": 61,
     "title": "STA 311: Probability III Past Examination Paper (Paper 2)",
     "resource_type": "past_question",
@@ -3833,7 +3833,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_311_pq_02.jpg"
   },
   {
-    "id": 208,
+    "id": 266,
     "course_id": 61,
     "title": "STA 311: Probability III Past Examination Paper (Paper 3)",
     "resource_type": "past_question",
@@ -3845,7 +3845,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_311_pq_03.jpg"
   },
   {
-    "id": 209,
+    "id": 267,
     "course_id": 71,
     "title": "STA 312: Distribution theory I Past Examination Paper (Paper 1)",
     "resource_type": "past_question",
@@ -3857,7 +3857,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_312_pq_04.jpg"
   },
   {
-    "id": 210,
+    "id": 268,
     "course_id": 71,
     "title": "STA 312: Distribution theory I Past Examination Paper (Paper 2)",
     "resource_type": "past_question",
@@ -3869,7 +3869,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_312_pq_05.jpg"
   },
   {
-    "id": 211,
+    "id": 269,
     "course_id": 71,
     "title": "STA 312: Distribution theory I Past Examination Paper (Paper 3)",
     "resource_type": "past_question",
@@ -3881,7 +3881,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_312_pq_06.jpg"
   },
   {
-    "id": 212,
+    "id": 270,
     "course_id": 71,
     "title": "STA 312: Distribution theory I Past Examination Paper (Paper 4)",
     "resource_type": "past_question",
@@ -3893,7 +3893,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_312_pq_07.jpg"
   },
   {
-    "id": 213,
+    "id": 271,
     "course_id": 71,
     "title": "STA 312: Distribution theory I Past Examination Paper (Paper 5)",
     "resource_type": "past_question",
@@ -3905,7 +3905,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_312_pq_08.jpg"
   },
   {
-    "id": 214,
+    "id": 272,
     "course_id": 62,
     "title": "STA 321: Statistical Inference III Past Examination Paper (Paper 1)",
     "resource_type": "past_question",
@@ -3917,7 +3917,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_321_pq_09.jpg"
   },
   {
-    "id": 215,
+    "id": 273,
     "course_id": 62,
     "title": "STA 321: Statistical Inference III Past Examination Paper (Paper 2)",
     "resource_type": "past_question",
@@ -3929,7 +3929,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_321_pq_10.jpg"
   },
   {
-    "id": 216,
+    "id": 274,
     "course_id": 62,
     "title": "STA 321: Statistical Inference III Past Examination Paper (Paper 3)",
     "resource_type": "past_question",
@@ -3941,7 +3941,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_321_pq_11.jpg"
   },
   {
-    "id": 217,
+    "id": 275,
     "course_id": 62,
     "title": "STA 321: Statistical Inference III Past Examination Paper (Paper 4)",
     "resource_type": "past_question",
@@ -3953,7 +3953,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_321_pq_12.jpg"
   },
   {
-    "id": 218,
+    "id": 276,
     "course_id": 72,
     "title": "STA 324: Survey methods and sampling theory Past Examination Paper (Paper 1)",
     "resource_type": "past_question",
@@ -3965,7 +3965,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_324_pq_13.jpg"
   },
   {
-    "id": 219,
+    "id": 277,
     "course_id": 72,
     "title": "STA 324: Survey methods and sampling theory Past Examination Paper (Paper 2)",
     "resource_type": "past_question",
@@ -3977,7 +3977,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_324_pq_14.jpg"
   },
   {
-    "id": 220,
+    "id": 278,
     "course_id": 72,
     "title": "STA 324: Survey methods and sampling theory Past Examination Paper (Paper 3)",
     "resource_type": "past_question",
@@ -3989,7 +3989,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_324_pq_15.jpg"
   },
   {
-    "id": 221,
+    "id": 279,
     "course_id": 75,
     "title": "NAU-STA 342: Statistical Application of Matrix Algebra Past Examination Paper (Paper 1)",
     "resource_type": "past_question",
@@ -4001,7 +4001,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_342_pq_16.jpg"
   },
   {
-    "id": 222,
+    "id": 280,
     "course_id": 75,
     "title": "NAU-STA 342: Statistical Application of Matrix Algebra Past Examination Paper (Paper 2)",
     "resource_type": "past_question",
@@ -4013,7 +4013,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_342_pq_17.jpg"
   },
   {
-    "id": 223,
+    "id": 281,
     "course_id": 75,
     "title": "NAU-STA 342: Statistical Application of Matrix Algebra Past Examination Paper (Paper 3)",
     "resource_type": "past_question",
@@ -4025,7 +4025,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_342_pq_18.jpg"
   },
   {
-    "id": 224,
+    "id": 282,
     "course_id": 75,
     "title": "NAU-STA 342: Statistical Application of Matrix Algebra Past Examination Paper (Paper 4)",
     "resource_type": "past_question",
@@ -4037,7 +4037,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_342_pq_19.jpg"
   },
   {
-    "id": 225,
+    "id": 283,
     "course_id": 65,
     "title": "NAU-STA 351: Analysis of Variance I Past Examination Paper (Paper 1)",
     "resource_type": "past_question",
@@ -4049,7 +4049,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_351_pq_20.jpg"
   },
   {
-    "id": 226,
+    "id": 284,
     "course_id": 65,
     "title": "NAU-STA 351: Analysis of Variance I Past Examination Paper (Paper 2)",
     "resource_type": "past_question",
@@ -4061,7 +4061,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_351_pq_21.jpg"
   },
   {
-    "id": 227,
+    "id": 285,
     "course_id": 66,
     "title": "NAU-STA 361: Demography Past Examination Paper (Paper 1)",
     "resource_type": "past_question",
@@ -4073,7 +4073,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_361_pq_22.jpg"
   },
   {
-    "id": 228,
+    "id": 286,
     "course_id": 74,
     "title": "NAU-STA 362: Statistical Methods In Epidemiology Past Examination Paper (Paper 1)",
     "resource_type": "past_question",
@@ -4085,7 +4085,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_362_pq_23.jpg"
   },
   {
-    "id": 229,
+    "id": 287,
     "course_id": 74,
     "title": "NAU-STA 362: Statistical Methods In Epidemiology Past Examination Paper (Paper 2)",
     "resource_type": "past_question",
@@ -4097,7 +4097,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_362_pq_24.jpg"
   },
   {
-    "id": 230,
+    "id": 288,
     "course_id": 74,
     "title": "NAU-STA 362: Statistical Methods In Epidemiology Past Examination Paper (Paper 3)",
     "resource_type": "past_question",
@@ -4109,7 +4109,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_362_pq_25.jpg"
   },
   {
-    "id": 231,
+    "id": 289,
     "course_id": 74,
     "title": "NAU-STA 362: Statistical Methods In Epidemiology Past Examination Paper (Paper 4)",
     "resource_type": "past_question",
@@ -4121,7 +4121,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_362_pq_26.jpg"
   },
   {
-    "id": 232,
+    "id": 290,
     "course_id": 74,
     "title": "NAU-STA 362: Statistical Methods In Epidemiology Past Examination Paper (Paper 5)",
     "resource_type": "past_question",
@@ -4133,7 +4133,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_362_pq_27.jpg"
   },
   {
-    "id": 233,
+    "id": 291,
     "course_id": 67,
     "title": "NAU-STA 371: Operations Research I Past Examination Paper (Paper 1)",
     "resource_type": "past_question",
@@ -4145,7 +4145,7 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_371_pq_28.jpg"
   },
   {
-    "id": 234,
+    "id": 292,
     "course_id": 67,
     "title": "NAU-STA 371: Operations Research I Past Examination Paper (Paper 2)",
     "resource_type": "past_question",
@@ -4157,351 +4157,291 @@ export const DEFAULT_RESOURCES: CourseResource[] = [
     "download_url": "/resources/past_questions/sta_371_pq_29.jpg"
   },
   {
-    "id": 235,
+    "id": 293,
+    "course_id": 42,
+    "title": "STA 211: Probability II Past Examination Paper (Paper 1)",
+    "resource_type": "past_question",
+    "file_name": "sta_211_pq_30.jpg",
+    "file_path": "/resources/past_questions/sta_211_pq_30.jpg",
+    "file_size": 3975300,
+    "semester": 1,
+    "academic_year": "2023/2024",
+    "download_url": "/resources/past_questions/sta_211_pq_30.jpg"
+  },
+  {
+    "id": 294,
+    "course_id": 42,
+    "title": "STA 211: Probability II Past Examination Paper (Paper 2)",
+    "resource_type": "past_question",
+    "file_name": "sta_211_pq_31.jpg",
+    "file_path": "/resources/past_questions/sta_211_pq_31.jpg",
+    "file_size": 3789528,
+    "semester": 1,
+    "academic_year": "2023/2024",
+    "download_url": "/resources/past_questions/sta_211_pq_31.jpg"
+  },
+  {
+    "id": 295,
+    "course_id": 53,
+    "title": "STA 212: Introduction to Social & Economic Statistics Past Examination Paper (Paper 1)",
+    "resource_type": "past_question",
+    "file_name": "sta_212_pq_32.jpg",
+    "file_path": "/resources/past_questions/sta_212_pq_32.jpg",
+    "file_size": 3531726,
+    "semester": 2,
+    "academic_year": "2023/2024",
+    "download_url": "/resources/past_questions/sta_212_pq_32.jpg"
+  },
+  {
+    "id": 296,
+    "course_id": 53,
+    "title": "STA 212: Introduction to Social & Economic Statistics Past Examination Paper (Paper 2)",
+    "resource_type": "past_question",
+    "file_name": "sta_212_pq_33.jpg",
+    "file_path": "/resources/past_questions/sta_212_pq_33.jpg",
+    "file_size": 3800370,
+    "semester": 2,
+    "academic_year": "2023/2024",
+    "download_url": "/resources/past_questions/sta_212_pq_33.jpg"
+  },
+  {
+    "id": 297,
+    "course_id": 54,
+    "title": "NAU-STA 214: Probability and Probability Distribution Past Examination Paper (Paper 1)",
+    "resource_type": "past_question",
+    "file_name": "sta_214_pq_34.jpg",
+    "file_path": "/resources/past_questions/sta_214_pq_34.jpg",
+    "file_size": 3878463,
+    "semester": 2,
+    "academic_year": "2023/2024",
+    "download_url": "/resources/past_questions/sta_214_pq_34.jpg"
+  },
+  {
+    "id": 298,
+    "course_id": 43,
+    "title": "STA 221: Statistical Inference II Past Examination Paper (Paper 1)",
+    "resource_type": "past_question",
+    "file_name": "sta_221_pq_35.jpg",
+    "file_path": "/resources/past_questions/sta_221_pq_35.jpg",
+    "file_size": 3857566,
+    "semester": 1,
+    "academic_year": "2023/2024",
+    "download_url": "/resources/past_questions/sta_221_pq_35.jpg"
+  },
+  {
+    "id": 299,
+    "course_id": 43,
+    "title": "STA 221: Statistical Inference II Past Examination Paper (Paper 2)",
+    "resource_type": "past_question",
+    "file_name": "sta_221_pq_36.jpg",
+    "file_path": "/resources/past_questions/sta_221_pq_36.jpg",
+    "file_size": 3307241,
+    "semester": 1,
+    "academic_year": "2023/2024",
+    "download_url": "/resources/past_questions/sta_221_pq_36.jpg"
+  },
+  {
+    "id": 300,
     "course_id": 61,
-    "title": "STA 311: Probability III Past Examination Paper (Paper 1)",
+    "title": "STA 311: Probability III Past Examination Paper (Paper 4)",
     "resource_type": "past_question",
-    "file_name": "sta_311_pq_01.jpg",
-    "file_path": "/resources/past_questions/sta_311_pq_01.jpg",
-    "file_size": 33076,
+    "file_name": "sta_311_pq_37.jpg",
+    "file_path": "/resources/past_questions/sta_311_pq_37.jpg",
+    "file_size": 3591908,
     "semester": 1,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_311_pq_01.jpg"
+    "download_url": "/resources/past_questions/sta_311_pq_37.jpg"
   },
   {
-    "id": 236,
+    "id": 301,
     "course_id": 61,
-    "title": "STA 311: Probability III Past Examination Paper (Paper 2)",
+    "title": "STA 311: Probability III Past Examination Paper (Paper 5)",
     "resource_type": "past_question",
-    "file_name": "sta_311_pq_02.jpg",
-    "file_path": "/resources/past_questions/sta_311_pq_02.jpg",
-    "file_size": 71828,
+    "file_name": "sta_311_pq_38.jpg",
+    "file_path": "/resources/past_questions/sta_311_pq_38.jpg",
+    "file_size": 3615053,
     "semester": 1,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_311_pq_02.jpg"
+    "download_url": "/resources/past_questions/sta_311_pq_38.jpg"
   },
   {
-    "id": 237,
-    "course_id": 61,
-    "title": "STA 311: Probability III Past Examination Paper (Paper 3)",
-    "resource_type": "past_question",
-    "file_name": "sta_311_pq_03.jpg",
-    "file_path": "/resources/past_questions/sta_311_pq_03.jpg",
-    "file_size": 78414,
-    "semester": 1,
-    "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_311_pq_03.jpg"
-  },
-  {
-    "id": 238,
+    "id": 302,
     "course_id": 71,
-    "title": "STA 312: Distribution theory I Past Examination Paper (Paper 1)",
+    "title": "STA 312: Distribution theory I Past Examination Paper (Paper 6)",
     "resource_type": "past_question",
-    "file_name": "sta_312_pq_04.jpg",
-    "file_path": "/resources/past_questions/sta_312_pq_04.jpg",
-    "file_size": 36656,
+    "file_name": "sta_312_pq_39.jpg",
+    "file_path": "/resources/past_questions/sta_312_pq_39.jpg",
+    "file_size": 3310587,
     "semester": 2,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_312_pq_04.jpg"
+    "download_url": "/resources/past_questions/sta_312_pq_39.jpg"
   },
   {
-    "id": 239,
+    "id": 303,
     "course_id": 71,
-    "title": "STA 312: Distribution theory I Past Examination Paper (Paper 2)",
+    "title": "STA 312: Distribution theory I Past Examination Paper (Paper 7)",
     "resource_type": "past_question",
-    "file_name": "sta_312_pq_05.jpg",
-    "file_path": "/resources/past_questions/sta_312_pq_05.jpg",
-    "file_size": 54810,
+    "file_name": "sta_312_pq_40.jpg",
+    "file_path": "/resources/past_questions/sta_312_pq_40.jpg",
+    "file_size": 3644692,
     "semester": 2,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_312_pq_05.jpg"
+    "download_url": "/resources/past_questions/sta_312_pq_40.jpg"
   },
   {
-    "id": 240,
-    "course_id": 71,
-    "title": "STA 312: Distribution theory I Past Examination Paper (Paper 3)",
-    "resource_type": "past_question",
-    "file_name": "sta_312_pq_06.jpg",
-    "file_path": "/resources/past_questions/sta_312_pq_06.jpg",
-    "file_size": 30754,
-    "semester": 2,
-    "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_312_pq_06.jpg"
-  },
-  {
-    "id": 241,
-    "course_id": 71,
-    "title": "STA 312: Distribution theory I Past Examination Paper (Paper 4)",
-    "resource_type": "past_question",
-    "file_name": "sta_312_pq_07.jpg",
-    "file_path": "/resources/past_questions/sta_312_pq_07.jpg",
-    "file_size": 53448,
-    "semester": 2,
-    "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_312_pq_07.jpg"
-  },
-  {
-    "id": 242,
-    "course_id": 71,
-    "title": "STA 312: Distribution theory I Past Examination Paper (Paper 5)",
-    "resource_type": "past_question",
-    "file_name": "sta_312_pq_08.jpg",
-    "file_path": "/resources/past_questions/sta_312_pq_08.jpg",
-    "file_size": 28352,
-    "semester": 2,
-    "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_312_pq_08.jpg"
-  },
-  {
-    "id": 243,
+    "id": 304,
     "course_id": 62,
-    "title": "STA 321: Statistical Inference III Past Examination Paper (Paper 1)",
+    "title": "STA 321: Statistical Inference III Past Examination Paper (Paper 5)",
     "resource_type": "past_question",
-    "file_name": "sta_321_pq_09.jpg",
-    "file_path": "/resources/past_questions/sta_321_pq_09.jpg",
-    "file_size": 52627,
+    "file_name": "sta_321_pq_41.jpg",
+    "file_path": "/resources/past_questions/sta_321_pq_41.jpg",
+    "file_size": 4159191,
     "semester": 1,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_321_pq_09.jpg"
+    "download_url": "/resources/past_questions/sta_321_pq_41.jpg"
   },
   {
-    "id": 244,
-    "course_id": 62,
-    "title": "STA 321: Statistical Inference III Past Examination Paper (Paper 2)",
+    "id": 305,
+    "course_id": 73,
+    "title": "NAU-STA 322: Statistical Quality Control I Past Examination Paper (Paper 1)",
     "resource_type": "past_question",
-    "file_name": "sta_321_pq_10.jpg",
-    "file_path": "/resources/past_questions/sta_321_pq_10.jpg",
-    "file_size": 67574,
-    "semester": 1,
+    "file_name": "sta_322_pq_42.jpg",
+    "file_path": "/resources/past_questions/sta_322_pq_42.jpg",
+    "file_size": 3391788,
+    "semester": 2,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_321_pq_10.jpg"
+    "download_url": "/resources/past_questions/sta_322_pq_42.jpg"
   },
   {
-    "id": 245,
-    "course_id": 62,
-    "title": "STA 321: Statistical Inference III Past Examination Paper (Paper 3)",
+    "id": 306,
+    "course_id": 73,
+    "title": "NAU-STA 322: Statistical Quality Control I Past Examination Paper (Paper 2)",
     "resource_type": "past_question",
-    "file_name": "sta_321_pq_11.jpg",
-    "file_path": "/resources/past_questions/sta_321_pq_11.jpg",
-    "file_size": 66830,
-    "semester": 1,
+    "file_name": "sta_322_pq_43.jpg",
+    "file_path": "/resources/past_questions/sta_322_pq_43.jpg",
+    "file_size": 3824303,
+    "semester": 2,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_321_pq_11.jpg"
+    "download_url": "/resources/past_questions/sta_322_pq_43.jpg"
   },
   {
-    "id": 246,
-    "course_id": 62,
-    "title": "STA 321: Statistical Inference III Past Examination Paper (Paper 4)",
-    "resource_type": "past_question",
-    "file_name": "sta_321_pq_12.jpg",
-    "file_path": "/resources/past_questions/sta_321_pq_12.jpg",
-    "file_size": 43512,
-    "semester": 1,
-    "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_321_pq_12.jpg"
-  },
-  {
-    "id": 247,
+    "id": 307,
     "course_id": 72,
-    "title": "STA 324: Survey methods and sampling theory Past Examination Paper (Paper 1)",
+    "title": "STA 324: Survey methods and sampling theory Past Examination Paper (Paper 4)",
     "resource_type": "past_question",
-    "file_name": "sta_324_pq_13.jpg",
-    "file_path": "/resources/past_questions/sta_324_pq_13.jpg",
-    "file_size": 114038,
+    "file_name": "sta_324_pq_44.jpg",
+    "file_path": "/resources/past_questions/sta_324_pq_44.jpg",
+    "file_size": 3436887,
     "semester": 2,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_324_pq_13.jpg"
+    "download_url": "/resources/past_questions/sta_324_pq_44.jpg"
   },
   {
-    "id": 248,
+    "id": 308,
     "course_id": 72,
-    "title": "STA 324: Survey methods and sampling theory Past Examination Paper (Paper 2)",
+    "title": "STA 324: Survey methods and sampling theory Past Examination Paper (Paper 5)",
     "resource_type": "past_question",
-    "file_name": "sta_324_pq_14.jpg",
-    "file_path": "/resources/past_questions/sta_324_pq_14.jpg",
-    "file_size": 195738,
+    "file_name": "sta_324_pq_45.jpg",
+    "file_path": "/resources/past_questions/sta_324_pq_45.jpg",
+    "file_size": 3597409,
     "semester": 2,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_324_pq_14.jpg"
+    "download_url": "/resources/past_questions/sta_324_pq_45.jpg"
   },
   {
-    "id": 249,
-    "course_id": 72,
-    "title": "STA 324: Survey methods and sampling theory Past Examination Paper (Paper 3)",
+    "id": 309,
+    "course_id": 64,
+    "title": "NAU-STA 341: Regression Analysis I Past Examination Paper (Paper 1)",
     "resource_type": "past_question",
-    "file_name": "sta_324_pq_15.jpg",
-    "file_path": "/resources/past_questions/sta_324_pq_15.jpg",
-    "file_size": 192997,
-    "semester": 2,
+    "file_name": "sta_341_pq_46.jpg",
+    "file_path": "/resources/past_questions/sta_341_pq_46.jpg",
+    "file_size": 3783278,
+    "semester": 1,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_324_pq_15.jpg"
+    "download_url": "/resources/past_questions/sta_341_pq_46.jpg"
   },
   {
-    "id": 250,
+    "id": 310,
+    "course_id": 64,
+    "title": "NAU-STA 341: Regression Analysis I Past Examination Paper (Paper 2)",
+    "resource_type": "past_question",
+    "file_name": "sta_341_pq_47.jpg",
+    "file_path": "/resources/past_questions/sta_341_pq_47.jpg",
+    "file_size": 3931779,
+    "semester": 1,
+    "academic_year": "2023/2024",
+    "download_url": "/resources/past_questions/sta_341_pq_47.jpg"
+  },
+  {
+    "id": 311,
     "course_id": 75,
-    "title": "NAU-STA 342: Statistical Application of Matrix Algebra Past Examination Paper (Paper 1)",
+    "title": "NAU-STA 342: Statistical Application of Matrix Algebra Past Examination Paper (Paper 5)",
     "resource_type": "past_question",
-    "file_name": "sta_342_pq_16.jpg",
-    "file_path": "/resources/past_questions/sta_342_pq_16.jpg",
-    "file_size": 48294,
+    "file_name": "sta_342_pq_48.jpg",
+    "file_path": "/resources/past_questions/sta_342_pq_48.jpg",
+    "file_size": 3180256,
     "semester": 2,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_342_pq_16.jpg"
+    "download_url": "/resources/past_questions/sta_342_pq_48.jpg"
   },
   {
-    "id": 251,
+    "id": 312,
     "course_id": 75,
-    "title": "NAU-STA 342: Statistical Application of Matrix Algebra Past Examination Paper (Paper 2)",
+    "title": "NAU-STA 342: Statistical Application of Matrix Algebra Past Examination Paper (Paper 6)",
     "resource_type": "past_question",
-    "file_name": "sta_342_pq_17.jpg",
-    "file_path": "/resources/past_questions/sta_342_pq_17.jpg",
-    "file_size": 52726,
+    "file_name": "sta_342_pq_49.jpg",
+    "file_path": "/resources/past_questions/sta_342_pq_49.jpg",
+    "file_size": 3457985,
     "semester": 2,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_342_pq_17.jpg"
+    "download_url": "/resources/past_questions/sta_342_pq_49.jpg"
   },
   {
-    "id": 252,
-    "course_id": 75,
-    "title": "NAU-STA 342: Statistical Application of Matrix Algebra Past Examination Paper (Paper 3)",
-    "resource_type": "past_question",
-    "file_name": "sta_342_pq_18.jpg",
-    "file_path": "/resources/past_questions/sta_342_pq_18.jpg",
-    "file_size": 46626,
-    "semester": 2,
-    "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_342_pq_18.jpg"
-  },
-  {
-    "id": 253,
-    "course_id": 75,
-    "title": "NAU-STA 342: Statistical Application of Matrix Algebra Past Examination Paper (Paper 4)",
-    "resource_type": "past_question",
-    "file_name": "sta_342_pq_19.jpg",
-    "file_path": "/resources/past_questions/sta_342_pq_19.jpg",
-    "file_size": 49175,
-    "semester": 2,
-    "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_342_pq_19.jpg"
-  },
-  {
-    "id": 254,
+    "id": 313,
     "course_id": 65,
-    "title": "NAU-STA 351: Analysis of Variance I Past Examination Paper (Paper 1)",
+    "title": "NAU-STA 351: Analysis of Variance I Past Examination Paper (Paper 3)",
     "resource_type": "past_question",
-    "file_name": "sta_351_pq_20.jpg",
-    "file_path": "/resources/past_questions/sta_351_pq_20.jpg",
-    "file_size": 90447,
+    "file_name": "sta_351_pq_50.jpg",
+    "file_path": "/resources/past_questions/sta_351_pq_50.jpg",
+    "file_size": 3318810,
     "semester": 1,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_351_pq_20.jpg"
+    "download_url": "/resources/past_questions/sta_351_pq_50.jpg"
   },
   {
-    "id": 255,
+    "id": 314,
     "course_id": 65,
-    "title": "NAU-STA 351: Analysis of Variance I Past Examination Paper (Paper 2)",
+    "title": "NAU-STA 351: Analysis of Variance I Past Examination Paper (Paper 4)",
     "resource_type": "past_question",
-    "file_name": "sta_351_pq_21.jpg",
-    "file_path": "/resources/past_questions/sta_351_pq_21.jpg",
-    "file_size": 65617,
+    "file_name": "sta_351_pq_51.jpg",
+    "file_path": "/resources/past_questions/sta_351_pq_51.jpg",
+    "file_size": 3612763,
     "semester": 1,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_351_pq_21.jpg"
+    "download_url": "/resources/past_questions/sta_351_pq_51.jpg"
   },
   {
-    "id": 256,
+    "id": 315,
     "course_id": 66,
-    "title": "NAU-STA 361: Demography Past Examination Paper (Paper 1)",
+    "title": "NAU-STA 361: Demography Past Examination Paper (Paper 2)",
     "resource_type": "past_question",
-    "file_name": "sta_361_pq_22.jpg",
-    "file_path": "/resources/past_questions/sta_361_pq_22.jpg",
-    "file_size": 64637,
+    "file_name": "sta_361_pq_52.jpg",
+    "file_path": "/resources/past_questions/sta_361_pq_52.jpg",
+    "file_size": 3486441,
     "semester": 1,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_361_pq_22.jpg"
+    "download_url": "/resources/past_questions/sta_361_pq_52.jpg"
   },
   {
-    "id": 257,
-    "course_id": 74,
-    "title": "NAU-STA 362: Statistical Methods In Epidemiology Past Examination Paper (Paper 1)",
+    "id": 316,
+    "course_id": 66,
+    "title": "NAU-STA 361: Demography Past Examination Paper (Paper 3)",
     "resource_type": "past_question",
-    "file_name": "sta_362_pq_23.jpg",
-    "file_path": "/resources/past_questions/sta_362_pq_23.jpg",
-    "file_size": 55189,
-    "semester": 2,
-    "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_362_pq_23.jpg"
-  },
-  {
-    "id": 258,
-    "course_id": 74,
-    "title": "NAU-STA 362: Statistical Methods In Epidemiology Past Examination Paper (Paper 2)",
-    "resource_type": "past_question",
-    "file_name": "sta_362_pq_24.jpg",
-    "file_path": "/resources/past_questions/sta_362_pq_24.jpg",
-    "file_size": 37483,
-    "semester": 2,
-    "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_362_pq_24.jpg"
-  },
-  {
-    "id": 259,
-    "course_id": 74,
-    "title": "NAU-STA 362: Statistical Methods In Epidemiology Past Examination Paper (Paper 3)",
-    "resource_type": "past_question",
-    "file_name": "sta_362_pq_25.jpg",
-    "file_path": "/resources/past_questions/sta_362_pq_25.jpg",
-    "file_size": 27789,
-    "semester": 2,
-    "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_362_pq_25.jpg"
-  },
-  {
-    "id": 260,
-    "course_id": 74,
-    "title": "NAU-STA 362: Statistical Methods In Epidemiology Past Examination Paper (Paper 4)",
-    "resource_type": "past_question",
-    "file_name": "sta_362_pq_26.jpg",
-    "file_path": "/resources/past_questions/sta_362_pq_26.jpg",
-    "file_size": 51925,
-    "semester": 2,
-    "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_362_pq_26.jpg"
-  },
-  {
-    "id": 261,
-    "course_id": 74,
-    "title": "NAU-STA 362: Statistical Methods In Epidemiology Past Examination Paper (Paper 5)",
-    "resource_type": "past_question",
-    "file_name": "sta_362_pq_27.jpg",
-    "file_path": "/resources/past_questions/sta_362_pq_27.jpg",
-    "file_size": 23897,
-    "semester": 2,
-    "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_362_pq_27.jpg"
-  },
-  {
-    "id": 262,
-    "course_id": 67,
-    "title": "NAU-STA 371: Operations Research I Past Examination Paper (Paper 1)",
-    "resource_type": "past_question",
-    "file_name": "sta_371_pq_28.jpg",
-    "file_path": "/resources/past_questions/sta_371_pq_28.jpg",
-    "file_size": 67724,
+    "file_name": "sta_361_pq_53.jpg",
+    "file_path": "/resources/past_questions/sta_361_pq_53.jpg",
+    "file_size": 3659855,
     "semester": 1,
     "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_371_pq_28.jpg"
-  },
-  {
-    "id": 263,
-    "course_id": 67,
-    "title": "NAU-STA 371: Operations Research I Past Examination Paper (Paper 2)",
-    "resource_type": "past_question",
-    "file_name": "sta_371_pq_29.jpg",
-    "file_path": "/resources/past_questions/sta_371_pq_29.jpg",
-    "file_size": 68502,
-    "semester": 1,
-    "academic_year": "2023/2024",
-    "download_url": "/resources/past_questions/sta_371_pq_29.jpg"
+    "download_url": "/resources/past_questions/sta_361_pq_53.jpg"
   }
 ];
