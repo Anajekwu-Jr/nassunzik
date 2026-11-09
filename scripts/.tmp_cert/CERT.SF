@@ -1,6 +1,6 @@
 Signature-Version: 1.0
 Created-By: 1.0 (Android APKSig Universal)
-SHA-256-Digest-Manifest: 4Hn2SwMPhOfU8MnXExs5BjPtDxsEUP+WRYlAl59RsbI=
+SHA-256-Digest-Manifest: /NnalKHnvg78cvcM/8RZZ6u/Q2Es/WaXqaRnehUqpkw=
 
 Name: AndroidManifest.xml
 SHA-256-Digest: eZdARuouwKWk4URYgKH8ydeLOAUI5BqV4O+4/razhKc=
@@ -381,7 +381,7 @@ Name: assets/data/course_resources_seed.json
 SHA-256-Digest: CrH7sZF9k64RkKfclMGhkuEOQh/TkeEqHqUY7EDgFiE=
 
 Name: assets/data/nass_portal.db
-SHA-256-Digest: DQS/VLunTC08xgWYFPqXs/2WBQXfQZgdBcKkJGx2R8c=
+SHA-256-Digest: b3kfvF5x1L9UyAFB9Q6aYoN60VhIIYX1FUb4/2Z3W+M=
 
 Name: assets/data/official_cirs_details.json
 SHA-256-Digest: Vhlff/opjKJaieYlZs91q3P03/H49PDnsm9AB1epnKI=
@@ -390,7 +390,7 @@ Name: assets/data/official_cirs_staff.json
 SHA-256-Digest: 47U+7QB5aCVkGjhWNmVPtky1NaCLJmE7ecNcP4koGnM=
 
 Name: assets/data/portal_state_backup.json
-SHA-256-Digest: Ikkd/OApBvJT0oV2e70ZGAe+kO9Ph/56yiShWimXuIQ=
+SHA-256-Digest: bWtTem/PxLgANiOMZvR2gRtQlYL/EI+Ue86ldbzYocI=
 
 Name: assets/data/sam_ai_knowledge_cache.json
 SHA-256-Digest: oM8/u61pQwn4h/xW7KuBsn2diRaULfRzeEOaX4bPQoc=

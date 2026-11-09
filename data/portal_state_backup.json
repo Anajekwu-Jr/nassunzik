@@ -4351,8 +4351,8 @@
       "bio": "Leading the Executive Administration with dedication to student welfare, academic excellence, data skills development, and industrial linkages.",
       "tenure": "2026/2027",
       "display_order": 1,
-      "created_at": "2026-11-09 10:06:07",
-      "updated_at": "2026-11-09 10:06:07"
+      "created_at": "2026-11-09 11:03:01",
+      "updated_at": "2026-11-09 11:03:01"
     },
     {
       "id": 2,
@@ -4365,8 +4365,8 @@
       "bio": "Vice President of NASS UNIZIK Chapter, leading executive committee oversight, student welfare coordination, and collaborative departmental development.",
       "tenure": "2026/2027",
       "display_order": 2,
-      "created_at": "2026-11-09 10:06:07",
-      "updated_at": "2026-11-09 10:06:07"
+      "created_at": "2026-11-09 11:03:01",
+      "updated_at": "2026-11-09 11:03:01"
     },
     {
       "id": 3,
@@ -4379,8 +4379,8 @@
       "bio": "Managing administrative correspondence, official secretarial records, meeting archives, and departmental notifications.",
       "tenure": "2026/2027",
       "display_order": 3,
-      "created_at": "2026-11-09 10:06:07",
-      "updated_at": "2026-11-09 10:06:07"
+      "created_at": "2026-11-09 11:03:01",
+      "updated_at": "2026-11-09 11:03:01"
     },
     {
       "id": 4,
@@ -4393,8 +4393,8 @@
       "bio": "Directing academic affairs and scholastic development for statistics undergraduates. Coordinating course study circles, syllabus coverage, tutorial classes, and past question archives.",
       "tenure": "2026/2027",
       "display_order": 4,
-      "created_at": "2026-11-09 10:06:07",
-      "updated_at": "2026-11-09 10:06:07"
+      "created_at": "2026-11-09 11:03:01",
+      "updated_at": "2026-11-09 11:03:01"
     },
     {
       "id": 5,
@@ -4407,8 +4407,8 @@
       "bio": "Responsible for departmental association dues records, fiscal receipts, statutory accounting, and financial transparency.",
       "tenure": "2026/2027",
       "display_order": 5,
-      "created_at": "2026-11-09 10:06:07",
-      "updated_at": "2026-11-09 10:06:07"
+      "created_at": "2026-11-09 11:03:01",
+      "updated_at": "2026-11-09 11:03:01"
     },
     {
       "id": 6,
@@ -4421,8 +4421,8 @@
       "bio": "Custodian of association funds, managing treasury disbursements, banking transactions, and financial custody.",
       "tenure": "2026/2027",
       "display_order": 6,
-      "created_at": "2026-11-09 10:06:07",
-      "updated_at": "2026-11-09 10:06:07"
+      "created_at": "2026-11-09 11:03:01",
+      "updated_at": "2026-11-09 11:03:01"
     },
     {
       "id": 7,
@@ -4435,8 +4435,8 @@
       "bio": "Coordinating departmental athletic events, Dean Cup championships, inter-level football fixtures, and student fitness activities.",
       "tenure": "2026/2027",
       "display_order": 7,
-      "created_at": "2026-11-09 10:06:07",
-      "updated_at": "2026-11-09 10:06:07"
+      "created_at": "2026-11-09 11:03:01",
+      "updated_at": "2026-11-09 11:03:01"
     },
     {
       "id": 8,
@@ -4449,8 +4449,8 @@
       "bio": "Coordinator of social activities in the department.",
       "tenure": "2026/2027",
       "display_order": 8,
-      "created_at": "2026-11-09 10:06:07",
-      "updated_at": "2026-11-09 10:06:07"
+      "created_at": "2026-11-09 11:03:01",
+      "updated_at": "2026-11-09 11:03:01"
     }
   ],
   "timetable": [
@@ -5596,33 +5596,43 @@
   ],
   "announcements": [
     {
-      "id": 1,
-      "title": "First Semester 2026/2027 Resumption & Course Registration",
-      "content": "Per official Senate memorandum (Ref: NAU/R/E/032/97), new students resume Oct 12; returning students resume Oct 14. Course registration and payment verification are active on the portal. Ensure your academic adviser signs your green file before submitting to the General Office.",
+      "id": 7,
+      "title": "UNIZIK Senate Approves First Semester 2026/2027 Academic Calendar: Key Resumption, Matriculation & Exam Dates",
+      "content": "The Senate of Nnamdi Azikiwe University, at its 246th meeting on September 30, 2026, officially approved the 2026/2027 Academic Calendar (Ref: NAU/R/E/032/97) for regular undergraduate students.",
       "priority": "URGENT",
       "is_active": 1,
-      "created_at": "2026-10-12 08:00:00",
-      "updated_at": "2026-10-12 08:00:00",
+      "created_at": "2026-11-09 11:05:30",
+      "updated_at": "2026-11-09 11:05:30",
       "image_url": null
     },
     {
-      "id": 2,
-      "title": "SIWES Orientation & Placement Submission Notice",
-      "content": "Students preparing for the 3-month SIWES industrial training (conducted twice: after 200 Level second semester and after 300 Level second semester) must obtain their departmental introductory letter and submit signed acceptance forms to Coordinator Mr. Charles Anabike.",
+      "id": 8,
+      "title": "Resumption Schedule: Fresh Students Resume Oct 12, Returning Students Resume Oct 14, 2026",
+      "content": "Staggered resumption schedule for the 2026/2027 session: Freshmen continue registration on October 12, while returning students return October 14, 2026 for fees payment and course enrolment.",
       "priority": "IMPORTANT",
       "is_active": 1,
-      "created_at": "2026-10-08 09:00:00",
-      "updated_at": "2026-10-08 09:00:00",
+      "created_at": "2026-11-09 11:05:30",
+      "updated_at": "2026-11-09 11:05:30",
       "image_url": null
     },
     {
-      "id": 3,
-      "title": "Matriculation & Examination Dates Fixed",
-      "content": "Matriculation holds on Friday, January 29, 2027. First Semester degree examinations (CBE & PBE) commence Monday, February 22 through Friday, March 19, 2027. Lecture and examination timetables are published on the portal.",
+      "id": 9,
+      "title": "Matriculation Ceremony for 2026/2027 Freshmen Scheduled for Friday, January 29, 2027",
+      "content": "The University Senate has fixed Friday, January 29, 2027, for the official Matriculation Ceremony for all newly admitted undergraduates across all faculties at the UNIZIK Convocation Arena.",
       "priority": "NORMAL",
       "is_active": 1,
-      "created_at": "2026-10-05 10:00:00",
-      "updated_at": "2026-10-05 10:00:00",
+      "created_at": "2026-11-09 11:05:30",
+      "updated_at": "2026-11-09 11:05:30",
+      "image_url": null
+    },
+    {
+      "id": 10,
+      "title": "First Semester Examination Dates Announced: Monday, February 22 to Friday, March 19, 2027",
+      "content": "First Semester Degree Examinations (CBE & PBE) commence February 22, 2027. Revision Week begins February 15, and General Studies (GS) exams run March 15–19, 2027.",
+      "priority": "NORMAL",
+      "is_active": 1,
+      "created_at": "2026-11-09 11:05:30",
+      "updated_at": "2026-11-09 11:05:30",
       "image_url": null
     }
   ],

@@ -2419,27 +2419,35 @@ export const DEFAULT_EVENTS: EventItem[] = [
 export const DEFAULT_ANNOUNCEMENTS: Announcement[] = [
   {
     "id": 1,
-    "title": "First Semester 2026/2027 Resumption & Course Registration",
-    "content": "Per official Senate memorandum (Ref: NAU/R/E/032/97), new students resume Oct 12; returning students resume Oct 14. Course registration and payment verification are active on the portal. Ensure your academic adviser signs your green file before submitting to the General Office.",
-    "priority": "normal",
-    "date": "Oct 2026",
-    "author": "Department of Statistics"
+    "title": "UNIZIK Senate Approves First Semester 2026/2027 Academic Calendar: Key Resumption, Matriculation & Exam Dates",
+    "content": "The Senate of Nnamdi Azikiwe University, at its 246th meeting on September 30, 2026, officially approved the 2026/2027 Academic Calendar (Ref: NAU/R/E/032/97) for regular undergraduate students.",
+    "priority": "high",
+    "date": "Oct 02, 2026",
+    "author": "Office of the Registrar / NASS Academic Desk"
   },
   {
     "id": 2,
-    "title": "SIWES Orientation & Placement Submission Notice",
-    "content": "Students preparing for the 3-month SIWES industrial training (conducted twice: after 200 Level second semester and after 300 Level second semester) must obtain their departmental introductory letter and submit signed acceptance forms to Coordinator Mr. Charles Anabike.",
-    "priority": "normal",
-    "date": "Oct 2026",
-    "author": "Department of Statistics"
+    "title": "Resumption Schedule: Fresh Students Resume Oct 12, Returning Students Resume Oct 14, 2026",
+    "content": "Staggered resumption schedule for the 2026/2027 session: Freshmen continue registration on October 12, while returning students return October 14, 2026 for fees payment and course enrolment.",
+    "priority": "high",
+    "date": "Oct 02, 2026",
+    "author": "NASS Secretariat"
   },
   {
     "id": 3,
-    "title": "Matriculation & Examination Dates Fixed",
-    "content": "Matriculation holds on Friday, January 29, 2027. First Semester degree examinations (CBE & PBE) commence Monday, February 22 through Friday, March 19, 2027. Lecture and examination timetables are published on the portal.",
+    "title": "Matriculation Ceremony for 2026/2027 Freshmen Scheduled for Friday, January 29, 2027",
+    "content": "The University Senate has fixed Friday, January 29, 2027, for the official Matriculation Ceremony for all newly admitted undergraduates across all faculties at the UNIZIK Convocation Arena.",
     "priority": "normal",
-    "date": "Oct 2026",
-    "author": "Department of Statistics"
+    "date": "Oct 03, 2026",
+    "author": "NASS Executive Council"
+  },
+  {
+    "id": 4,
+    "title": "First Semester Examination Dates Announced: Monday, February 22 to Friday, March 19, 2027",
+    "content": "First Semester Degree Examinations (CBE & PBE) commence February 22, 2027. Revision Week begins February 15, and General Studies (GS) exams run March 15–19, 2027.",
+    "priority": "normal",
+    "date": "Oct 03, 2026",
+    "author": "NASS Academic Directorate"
   }
 ];
 

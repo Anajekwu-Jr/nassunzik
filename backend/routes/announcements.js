@@ -6,31 +6,51 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   try {
-    const { active_only } = req.query;
-    let query = 'SELECT * FROM announcements WHERE 1=1';
-    if (active_only === 'true') {
-      query += ' AND is_active = 1';
-    }
-    query += ` ORDER BY 
-      CASE priority
-        WHEN 'URGENT' THEN 1
-        WHEN 'IMPORTANT' THEN 2
-        ELSE 3
-      END ASC,
-      id DESC`;
+    // STRICT REQUIREMENT: Only featured information from the news/event page on the website can be on the Noticeboard Bulletin and App's announcement board!
+    const featuredNews = db.prepare('SELECT * FROM news WHERE is_featured = 1 ORDER BY published_at DESC, id DESC').all();
+    const featuredEvents = db.prepare('SELECT * FROM events WHERE is_featured = 1 ORDER BY event_date ASC, id ASC').all();
 
-    let announcements = [];
-    try {
-      announcements = db.prepare(query).all();
-    } catch (_) {
-      const fs = require('node:fs');
-      const path = require('node:path');
-      const backupFile = path.resolve(process.cwd(), 'data', 'portal_state_backup.json');
-      if (fs.existsSync(backupFile)) {
-        const data = JSON.parse(fs.readFileSync(backupFile, 'utf-8'));
-        announcements = data.announcements || [];
+    const announcements = [];
+
+    // 1. Featured News dispatches
+    for (const n of featuredNews) {
+      const isUrgent = n.category === 'Academic Notice' || n.category === 'Resumption';
+      announcements.push({
+        id: n.id,
+        title: n.title,
+        content: n.summary || (n.content ? n.content.substring(0, 240) + '...' : ''),
+        priority: isUrgent ? 'URGENT' : 'IMPORTANT',
+        date: n.published_at ? new Date(n.published_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : 'Oct 2026',
+        author: n.author || 'Head of Department & Senate',
+        category: n.category,
+        source: 'news',
+        url: `/news.html?id=${n.id}`,
+        is_active: 1
+      });
+    }
+
+    // 2. Featured Events milestone dispatches (only if not duplicate of a news item)
+    for (const e of featuredEvents) {
+      const alreadyCovered = announcements.some(a => 
+        a.title.toLowerCase().includes(e.title.toLowerCase().slice(0, 15)) ||
+        (e.category && a.category && a.category.toLowerCase() === e.category.toLowerCase())
+      );
+      if (!alreadyCovered) {
+        announcements.push({
+          id: 1000 + e.id,
+          title: `${e.title} · ${e.event_date}`,
+          content: `${e.description} Venue: ${e.venue}. Time: ${e.event_time || 'TBA'}`,
+          priority: 'NORMAL',
+          date: e.event_date ? new Date(e.event_date).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : 'Upcoming',
+          author: 'NASS Academic Desk',
+          category: e.category,
+          source: 'events',
+          url: `/events.html#event-${e.id}`,
+          is_active: 1
+        });
       }
     }
+
     res.json(announcements);
   } catch (err) {
     console.error('Unhandled error in /api/announcements GET:', err);
