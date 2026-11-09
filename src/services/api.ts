@@ -31,11 +31,11 @@ export {
 };
 
 const API_BASE = '/api';
-const CACHE_KEY = 'nass_unizik_mobile_cache_v5';
+const CACHE_KEY = 'nass_unizik_mobile_cache_v7';
 
 // Clear legacy cached data from prior versions with fake data
 try {
-  const legacyKeys = ['nass_unizik_mobile_cache_v1', 'nass_unizik_mobile_cache_v2', 'nass_unizik_mobile_cache_v3', 'nass_unizik_mobile_cache_v4'];
+  const legacyKeys = ['nass_unizik_mobile_cache_v1', 'nass_unizik_mobile_cache_v2', 'nass_unizik_mobile_cache_v3', 'nass_unizik_mobile_cache_v4', 'nass_unizik_mobile_cache_v5', 'nass_unizik_mobile_cache_v6'];
   for (const k of legacyKeys) {
     localStorage.removeItem(k);
   }

@@ -2302,6 +2302,11 @@
     }
 
     function authHeaders() {
+      if (!AUTH_TOKEN) {
+        try {
+          AUTH_TOKEN = localStorage.getItem('nass_admin_token') || '';
+        } catch (_) {}
+      }
       return {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${AUTH_TOKEN}`

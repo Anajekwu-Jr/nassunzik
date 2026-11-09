@@ -2023,7 +2023,7 @@ a:hover {
 }
 
 .footer-links a {
-  color: #cbd5e1;
+  color: #ffffff !important;
   font-size: 0.875rem;
   transition: all var(--transition-fast);
   display: inline-flex;
@@ -2032,7 +2032,7 @@ a:hover {
 }
 
 .footer-links a:hover {
-  color: #ffffff;
+  color: #fbbf24 !important;
   padding-left: 3px;
 }
 

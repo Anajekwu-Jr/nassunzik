@@ -23,8 +23,7 @@ export default defineConfig(() => {
       rollupOptions: {
         input: {
           main: path.resolve(__dirname, 'index.html'),
-          app: path.resolve(__dirname, 'app.html'),
-          traditionalCouncil: path.resolve(__dirname, 'traditional-council.html')
+          app: path.resolve(__dirname, 'app.html')
         }
       }
     }

@@ -2440,14 +2440,6 @@ export const DEFAULT_ANNOUNCEMENTS: Announcement[] = [
     "priority": "normal",
     "date": "Oct 2026",
     "author": "Department of Statistics"
-  },
-  {
-    "id": 4,
-    "title": "NASS Annual Statistics Bootcamp & R/Python Workshop",
-    "content": "The NASS Academic Committee in partnership with NAU-LISA will host weekly statistical computing workshops covering R, SPSS, and Python every Saturday at 11:00 AM in the Departmental Computer Laboratory. Bring your laptops.",
-    "priority": "normal",
-    "date": "Oct 2026",
-    "author": "Department of Statistics"
   }
 ];
 

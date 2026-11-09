@@ -510,12 +510,6 @@ function seedInitialData() {
       'NORMAL',
       1
     );
-    insertAnn.run(
-      'NASS Annual Statistics Bootcamp & R/Python Workshop',
-      'The NASS Academic Committee in partnership with NAU-LISA will host weekly statistical computing workshops covering R, SPSS, and Python every Saturday at 11:00 AM in the Departmental Computer Laboratory. Bring your laptops.',
-      'NORMAL',
-      1
-    );
   }
 
   // Seed Courses if empty

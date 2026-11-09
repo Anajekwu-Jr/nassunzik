@@ -64,26 +64,7 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [activeTab, setActiveTabState] = useState<TabType>(() => {
-    if (typeof window !== 'undefined') {
-      const p = window.location.pathname.toLowerCase();
-      if (p.includes('traditional-council') || p.includes('traditionalcouncil') || p.includes('nzenaozo')) {
-        return 'traditional-council';
-      }
-    }
-    return 'home';
-  });
-
-  useEffect(() => {
-    const handlePopState = () => {
-      const p = window.location.pathname.toLowerCase();
-      if (p.includes('traditional-council') || p.includes('traditionalcouncil') || p.includes('nzenaozo')) {
-        setActiveTabState('traditional-council');
-      }
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  const [activeTab, setActiveTabState] = useState<TabType>('home');
   const [selectedLevel, setSelectedLevel] = useState<AcademicLevel>(100);
   const [selectedSemester, setSelectedSemester] = useState<SemesterNumber>(1);
   const [platformStyle, setPlatformStyle] = useState<PlatformStyle>('ios');

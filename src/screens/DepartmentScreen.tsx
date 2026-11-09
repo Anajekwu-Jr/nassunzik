@@ -266,7 +266,6 @@ export const DepartmentScreen: React.FC = () => {
             type="button"
             onClick={() => {
               triggerHaptic();
-              window.history.pushState(null, '', '/traditional-council');
               setActiveTab('traditional-council');
             }}
             className="w-full text-left p-3.5 rounded-2xl bg-gradient-to-r from-[#1e1812] via-[#2a1d12] to-[#1e1812] border border-amber-500/50 flex items-center justify-between shadow-md group hover:border-amber-400 transition cursor-pointer"

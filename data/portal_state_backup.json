@@ -4351,8 +4351,8 @@
       "bio": "Leading the Executive Administration with dedication to student welfare, academic excellence, data skills development, and industrial linkages.",
       "tenure": "2026/2027",
       "display_order": 1,
-      "created_at": "2026-11-08 20:12:04",
-      "updated_at": "2026-11-08 20:12:04"
+      "created_at": "2026-11-09 10:06:07",
+      "updated_at": "2026-11-09 10:06:07"
     },
     {
       "id": 2,
@@ -4365,8 +4365,8 @@
       "bio": "Vice President of NASS UNIZIK Chapter, leading executive committee oversight, student welfare coordination, and collaborative departmental development.",
       "tenure": "2026/2027",
       "display_order": 2,
-      "created_at": "2026-11-08 20:12:04",
-      "updated_at": "2026-11-08 20:12:04"
+      "created_at": "2026-11-09 10:06:07",
+      "updated_at": "2026-11-09 10:06:07"
     },
     {
       "id": 3,
@@ -4379,8 +4379,8 @@
       "bio": "Managing administrative correspondence, official secretarial records, meeting archives, and departmental notifications.",
       "tenure": "2026/2027",
       "display_order": 3,
-      "created_at": "2026-11-08 20:12:04",
-      "updated_at": "2026-11-08 20:12:04"
+      "created_at": "2026-11-09 10:06:07",
+      "updated_at": "2026-11-09 10:06:07"
     },
     {
       "id": 4,
@@ -4393,8 +4393,8 @@
       "bio": "Directing academic affairs and scholastic development for statistics undergraduates. Coordinating course study circles, syllabus coverage, tutorial classes, and past question archives.",
       "tenure": "2026/2027",
       "display_order": 4,
-      "created_at": "2026-11-08 20:12:04",
-      "updated_at": "2026-11-08 20:12:04"
+      "created_at": "2026-11-09 10:06:07",
+      "updated_at": "2026-11-09 10:06:07"
     },
     {
       "id": 5,
@@ -4407,8 +4407,8 @@
       "bio": "Responsible for departmental association dues records, fiscal receipts, statutory accounting, and financial transparency.",
       "tenure": "2026/2027",
       "display_order": 5,
-      "created_at": "2026-11-08 20:12:04",
-      "updated_at": "2026-11-08 20:12:04"
+      "created_at": "2026-11-09 10:06:07",
+      "updated_at": "2026-11-09 10:06:07"
     },
     {
       "id": 6,
@@ -4421,8 +4421,8 @@
       "bio": "Custodian of association funds, managing treasury disbursements, banking transactions, and financial custody.",
       "tenure": "2026/2027",
       "display_order": 6,
-      "created_at": "2026-11-08 20:12:04",
-      "updated_at": "2026-11-08 20:12:04"
+      "created_at": "2026-11-09 10:06:07",
+      "updated_at": "2026-11-09 10:06:07"
     },
     {
       "id": 7,
@@ -4435,8 +4435,8 @@
       "bio": "Coordinating departmental athletic events, Dean Cup championships, inter-level football fixtures, and student fitness activities.",
       "tenure": "2026/2027",
       "display_order": 7,
-      "created_at": "2026-11-08 20:12:04",
-      "updated_at": "2026-11-08 20:12:04"
+      "created_at": "2026-11-09 10:06:07",
+      "updated_at": "2026-11-09 10:06:07"
     },
     {
       "id": 8,
@@ -4449,8 +4449,8 @@
       "bio": "Coordinator of social activities in the department.",
       "tenure": "2026/2027",
       "display_order": 8,
-      "created_at": "2026-11-08 20:12:04",
-      "updated_at": "2026-11-08 20:12:04"
+      "created_at": "2026-11-09 10:06:07",
+      "updated_at": "2026-11-09 10:06:07"
     }
   ],
   "timetable": [
@@ -5623,16 +5623,6 @@
       "is_active": 1,
       "created_at": "2026-10-05 10:00:00",
       "updated_at": "2026-10-05 10:00:00",
-      "image_url": null
-    },
-    {
-      "id": 4,
-      "title": "NASS Annual Statistics Bootcamp & R/Python Workshop",
-      "content": "The NASS Academic Committee in partnership with NAU-LISA will host weekly statistical computing workshops covering R, SPSS, and Python every Saturday at 11:00 AM in the Departmental Computer Laboratory. Bring your laptops.",
-      "priority": "NORMAL",
-      "is_active": 1,
-      "created_at": "2026-09-28 11:00:00",
-      "updated_at": "2026-09-28 11:00:00",
       "image_url": null
     }
   ],

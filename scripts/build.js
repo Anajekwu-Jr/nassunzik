@@ -27,10 +27,10 @@ try {
   console.error('Vite build error:', err);
 }
 
-// Copy all root HTML files (preserving Vite-compiled app.html and traditional-council.html)
+// Copy all root HTML files (preserving Vite-compiled app.html)
 const rootFiles = fs.readdirSync(rootDir);
 for (const file of rootFiles) {
-  if ((file.endsWith('.html') && file !== 'app.html' && file !== 'traditional-council.html') || file === 'manifest.json' || file === 'sw.js' || file === 'favicon.ico' || file === 'metadata.json') {
+  if ((file.endsWith('.html') && file !== 'app.html') || file === 'manifest.json' || file === 'sw.js' || file === 'favicon.ico' || file === 'metadata.json') {
     const src = path.join(rootDir, file);
     const dest = path.join(distDir, file);
     fs.copyFileSync(src, dest);
