@@ -124,26 +124,8 @@ export const TraditionalCouncilScreen: React.FC = () => {
     }
   };
 
-  // Scroll border draw-in animation with IntersectionObserver and document scroll enabling
+  // Scroll border draw-in animation with IntersectionObserver
   useEffect(() => {
-    // Enable full-page natural scrolling on document and root
-    document.documentElement.classList.add('tc-scrollable');
-    document.body.classList.add('tc-scrollable');
-    document.documentElement.style.setProperty('height', 'auto', 'important');
-    document.documentElement.style.setProperty('overflow-y', 'auto', 'important');
-    document.body.style.setProperty('height', 'auto', 'important');
-    document.body.style.setProperty('min-height', '100vh', 'important');
-    document.body.style.setProperty('overflow-y', 'auto', 'important');
-    document.body.style.setProperty('touch-action', 'pan-y pinch-zoom', 'important');
-    document.body.style.setProperty('user-select', 'auto', 'important');
-
-    const rootEl = document.getElementById('root');
-    if (rootEl) {
-      rootEl.style.setProperty('height', 'auto', 'important');
-      rootEl.style.setProperty('min-height', '100vh', 'important');
-      rootEl.style.setProperty('overflow-y', 'visible', 'important');
-    }
-
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let io: IntersectionObserver | null = null;
     if (!prefersReducedMotion) {
@@ -157,26 +139,12 @@ export const TraditionalCouncilScreen: React.FC = () => {
             }
           });
         },
-        { threshold: 0.3 }
+        { threshold: 0.2 }
       );
       bands.forEach((b) => io?.observe(b));
     }
 
     return () => {
-      document.documentElement.classList.remove('tc-scrollable');
-      document.body.classList.remove('tc-scrollable');
-      document.documentElement.style.removeProperty('height');
-      document.documentElement.style.removeProperty('overflow-y');
-      document.body.style.removeProperty('height');
-      document.body.style.removeProperty('min-height');
-      document.body.style.removeProperty('overflow-y');
-      document.body.style.removeProperty('touch-action');
-      document.body.style.removeProperty('user-select');
-      if (rootEl) {
-        rootEl.style.removeProperty('height');
-        rootEl.style.removeProperty('min-height');
-        rootEl.style.removeProperty('overflow-y');
-      }
       if (io) {
         io.disconnect();
       }
@@ -196,20 +164,6 @@ export const TraditionalCouncilScreen: React.FC = () => {
       />
 
       <style>{`
-        html, body {
-          overflow-y: auto !important;
-          height: auto !important;
-          min-height: 100vh !important;
-          touch-action: pan-y pinch-zoom !important;
-          -webkit-overflow-scrolling: touch !important;
-        }
-
-        #root {
-          height: auto !important;
-          min-height: 100vh !important;
-          overflow: visible !important;
-        }
-
         .tc-scope {
           --ink: #14100c;
           --ink2: #1e1812;
@@ -222,17 +176,15 @@ export const TraditionalCouncilScreen: React.FC = () => {
           background: var(--ink);
           color: var(--cream);
           font-family: "Cormorant Garamond", Georgia, serif;
-          font-size: 1.15rem;
+          font-size: 1.05rem;
           font-weight: 500;
-          line-height: 1.65;
-          min-height: 100vh;
+          line-height: 1.6;
+          min-height: 100%;
           width: 100%;
           position: relative;
           text-align: left;
           overflow-x: hidden;
-          overflow-y: visible;
-          touch-action: pan-y pinch-zoom;
-          -webkit-overflow-scrolling: touch;
+          padding-bottom: 5.5rem;
         }
 
         .tc-scope * {
@@ -254,9 +206,9 @@ export const TraditionalCouncilScreen: React.FC = () => {
         }
 
         .tc-scope .wrap {
-          max-width: 68rem;
+          max-width: 100%;
           margin: auto;
-          padding: 0 1.25rem;
+          padding: 0 1rem;
         }
 
         .tc-scope .band {
@@ -446,7 +398,7 @@ export const TraditionalCouncilScreen: React.FC = () => {
         .tc-scope .grid {
           display: grid;
           gap: 1.4rem;
-          grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+          grid-template-columns: 1fr;
         }
 
         .tc-scope .card {
@@ -555,7 +507,7 @@ export const TraditionalCouncilScreen: React.FC = () => {
         .tc-scope .emblem {
           display: grid;
           gap: 1rem;
-          grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+          grid-template-columns: 1fr;
         }
 
         .tc-scope .emblem div {
@@ -620,8 +572,8 @@ export const TraditionalCouncilScreen: React.FC = () => {
 
         .tc-scope .ogene {
           position: fixed;
-          right: 1.25rem;
-          bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+          right: 1rem;
+          bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
           z-index: 50;
           width: 3.4rem;
           height: 3.4rem;

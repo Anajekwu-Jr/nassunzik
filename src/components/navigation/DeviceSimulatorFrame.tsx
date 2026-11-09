@@ -128,6 +128,7 @@ export const DeviceSimulatorFrame: React.FC<DeviceSimulatorFrameProps> = ({ chil
                 height: '100dvh',
                 minHeight: '100dvh',
                 maxHeight: '100dvh',
+                transform: 'translateZ(0)',
                 paddingTop: 'env(safe-area-inset-top, 0px)',
                 paddingBottom: 'env(safe-area-inset-bottom, 0px)',
                 overscrollBehavior: 'none',

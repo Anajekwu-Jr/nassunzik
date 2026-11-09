@@ -1,6 +1,6 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
-import { Search, Bell, Settings2, WifiOff, Sparkles } from 'lucide-react';
+import { Search, Bell, Settings2, WifiOff } from 'lucide-react';
 
 export const AppHeader: React.FC = () => {
   const {

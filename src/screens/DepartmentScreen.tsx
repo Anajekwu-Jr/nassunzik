@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 
 export const DepartmentScreen: React.FC = () => {
-  const { setActiveStaff, triggerHaptic } = useApp();
+  const { setActiveStaff, triggerHaptic, setActiveTab } = useApp();
 
   const [activeSubTab, setActiveSubTab] = useState<'staff' | 'executives' | 'about' | 'contact'>('staff');
   const [staffList, setStaffList] = useState<StaffMember[]>([]);
@@ -262,9 +262,14 @@ export const DepartmentScreen: React.FC = () => {
           </div>
 
           {/* Traditional Council Link Banner */}
-          <a
-            href="/traditional-council"
-            className="p-3.5 rounded-2xl bg-gradient-to-r from-[#1e1812] via-[#2a1d12] to-[#1e1812] border border-amber-500/50 flex items-center justify-between shadow-md group hover:border-amber-400 transition"
+          <button
+            type="button"
+            onClick={() => {
+              triggerHaptic();
+              window.history.pushState(null, '', '/traditional-council');
+              setActiveTab('traditional-council');
+            }}
+            className="w-full text-left p-3.5 rounded-2xl bg-gradient-to-r from-[#1e1812] via-[#2a1d12] to-[#1e1812] border border-amber-500/50 flex items-center justify-between shadow-md group hover:border-amber-400 transition cursor-pointer"
           >
             <div className="flex items-center gap-3">
               <span className="text-2xl">👑</span>
@@ -280,7 +285,7 @@ export const DepartmentScreen: React.FC = () => {
             <span className="text-xs font-semibold text-amber-400 flex items-center gap-1 group-hover:translate-x-0.5 transition">
               Explore <span>→</span>
             </span>
-          </a>
+          </button>
 
           <div className="grid grid-cols-1 gap-2.5">
             {execList.map((exec) => (

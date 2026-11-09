@@ -1,8 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" style="overflow-y: auto; height: auto;">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <script>
+    (function() {
+      function forceMobileResolution() {
+        var smallest = Math.min(window.screen.width, window.screen.height);
+        var ua = navigator.userAgent || '';
+        var isMobile = smallest <= 600 || /Android|iPhone|iPod|iPad/i.test(ua);
+        var meta = document.querySelector('meta[name="viewport"]');
+        if (!meta) {
+          meta = document.createElement('meta');
+          meta.name = 'viewport';
+          document.head.appendChild(meta);
+        }
+        if (isMobile) {
+          var targetW = (smallest >= 320 && smallest <= 480) ? smallest : 412;
+          meta.setAttribute('content', 'width=' + targetW + ', initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
+        } else {
+          meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
+        }
+      }
+      forceMobileResolution();
+      window.addEventListener('resize', forceMobileResolution);
+      window.addEventListener('orientationchange', forceMobileResolution);
+    })();
+  </script>
   <title>NASS Traditional Council · Nzenaozo Royal Family</title>
   <meta name="description" content="Official home of the Nzenaozo UNIZIK Statistics Royal Family, National Association of Statistics Students (NASS) Traditional Council, Nnamdi Azikiwe University, Awka.">
   <meta property="og:title" content="NASS Traditional Council · Nzenaozo Royal Family">
@@ -10,9 +34,12 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/jpeg" href="/resources/images/nass-logo.jpg">
   <link rel="manifest" href="/manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body style="margin: 0; background-color: #14100c; color: #f3e8d0; overflow-y: auto; height: auto; min-height: 100vh; -webkit-overflow-scrolling: touch;">
-  <div id="root" style="min-height: 100vh; height: auto; overflow: visible;"></div>
+<body class="bg-slate-950 text-slate-100 antialiased">
+  <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
