@@ -2086,35 +2086,15 @@ a:hover {
 .mb-6 { margin-bottom: 1.5rem; }
 
 /* ==========================================================================
-   Theme Toggle Controls
+   Theme Toggle Controls - Removed
    ========================================================================== */
-.theme-toggle-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background-color: var(--surface-muted);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: 6px 10px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  font-family: var(--font-mono);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  white-space: nowrap;
-}
-
-.theme-toggle-btn:hover {
-  background-color: var(--surface-color);
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-}
-
-.theme-toggle-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.theme-toggle-btn,
+.header-theme-toggle,
+#headerThemeToggle,
+.mobile-theme-item {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 /* ==========================================================================
@@ -2237,89 +2217,14 @@ a:hover {
   background: var(--surface-color);
 }
 
-/* Theme Toggle Button */
-.theme-toggle-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  background: var(--surface-color);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  user-select: none;
-  line-height: 1;
-}
-
-.theme-toggle-btn:hover {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-  background: var(--surface-muted);
-}
-
-.theme-toggle-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-
-.theme-toggle-icon svg {
-  display: block;
-}
-
-.theme-toggle-label {
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-/* Header Theme Toggle (Sitting Right Next to the Search Bar) */
-.header-theme-toggle {
-  height: 36px;
-  padding: 0 12px;
-  background-color: var(--surface-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  color: var(--text-secondary);
-  font-size: 0.75rem;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  white-space: nowrap;
-}
-
-.header-theme-toggle:hover {
-  background-color: var(--surface-muted);
-  color: var(--primary-color);
-  border-color: var(--primary-color);
-}
-
-.header-theme-toggle .theme-toggle-icon svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* Dark mode overrides for search bar & adjacent theme toggle */
-[data-theme="dark"] .search-trigger-btn,
-[data-theme="dark"] .header-theme-toggle {
+/* Dark mode overrides for search bar */
+[data-theme="dark"] .search-trigger-btn {
   background-color: var(--surface-muted);
   border-color: var(--border-color);
   color: var(--text-secondary);
 }
 
-[data-theme="dark"] .search-trigger-btn:hover,
-[data-theme="dark"] .header-theme-toggle:hover {
+[data-theme="dark"] .search-trigger-btn:hover {
   background-color: var(--surface-color);
   border-color: var(--primary-color);
   color: var(--text-primary);

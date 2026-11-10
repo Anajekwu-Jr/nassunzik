@@ -6,68 +6,11 @@
 
 (function() {
   function setupThemeSupport() {
-    // 1. Ensure theme script or logic exists
-    if (!window.NassTheme) {
-      const script = document.createElement('script');
-      script.src = '/js/theme.js';
-      document.head.appendChild(script);
-    }
-
-    // 2. Remove any previous toggle in institutional topbar to keep header clean
-    const oldTopbarBtn = document.querySelector('.institutional-topbar .theme-toggle-btn');
-    if (oldTopbarBtn) {
-      oldTopbarBtn.remove();
-    }
-
-    // 3. Inject theme toggle in header-actions right next to the search bar
-    const headerActions = document.querySelector('.header-actions');
-    if (headerActions && !headerActions.querySelector('.header-theme-toggle')) {
-      const toggleBtn = document.createElement('button');
-      toggleBtn.type = 'button';
-      toggleBtn.className = 'theme-toggle-btn header-theme-toggle';
-      toggleBtn.id = 'headerThemeToggle';
-      toggleBtn.setAttribute('aria-label', 'Toggle Dark / Light Theme');
-      toggleBtn.setAttribute('title', 'Toggle Dark / Light Theme');
-      toggleBtn.innerHTML = `
-        <span class="theme-toggle-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </span>
-        <span class="theme-toggle-label">Theme</span>
-      `;
-      toggleBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (window.NassTheme && typeof window.NassTheme.toggle === 'function') {
-          window.NassTheme.toggle();
-        } else {
-          const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-          if (isDark) document.documentElement.removeAttribute('data-theme');
-          else document.documentElement.setAttribute('data-theme', 'dark');
-        }
-      });
-
-      const searchBtn = headerActions.querySelector('.search-trigger-btn, #searchTriggerBtn');
-      if (searchBtn) {
-        searchBtn.insertAdjacentElement('afterend', toggleBtn);
-      } else {
-        headerActions.insertBefore(toggleBtn, headerActions.firstChild);
-      }
-    }
-
-    // 4. Ensure navigation drawer does not contain a theme toggle
-    const mobileDrawer = document.getElementById('mobileNavDrawer');
-    if (mobileDrawer) {
-      mobileDrawer.querySelectorAll('.mobile-theme-item, .theme-toggle-btn').forEach((el) => {
-        const item = el.closest('li') || el;
-        item.remove();
-      });
-    }
-
-    // Refresh button icons/text if NassTheme is ready
-    if (window.NassTheme && typeof window.NassTheme.getTheme === 'function') {
-      window.NassTheme.setTheme(window.NassTheme.getTheme());
-    }
+    // Purge any and all theme toggle buttons across the DOM
+    document.querySelectorAll('.theme-toggle-btn, .header-theme-toggle, #headerThemeToggle, .mobile-theme-item').forEach((el) => {
+      const item = el.closest('li') || el;
+      item.remove();
+    });
   }
 
   function modernizeNavIcons() {
@@ -84,7 +27,9 @@
       'contacts': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
       'about': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="16" y2="12"/><line x1="12" x2="12.01" y1="8" y2="8"/></svg>',
       'archive': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>',
-      'install': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><line x1="12" x2="12.01" y1="18" y2="18"/><path d="M12 6v6m-3-3 3 3 3-3"/></svg>'
+      'traditional': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>',
+      'search': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+      'install': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><line x1="12" x2="12.01" y2="18" y2="18"/><path d="M12 6v6m-3-3 3 3 3-3"/></svg>'
     };
 
     document.querySelectorAll('.mobile-nav-link').forEach(link => {
@@ -94,7 +39,8 @@
       else if (href.includes('timetable')) key = 'timetable';
       else if (href.includes('siwes')) key = 'siwes';
       else if (href.includes('projects')) key = 'projects';
-      else if (href.includes('administration')) key = 'administration';
+      else if (href.includes('administration') || href.includes('staff')) key = 'administration';
+      else if (href.includes('traditional')) key = 'traditional';
       else if (href.includes('nass')) key = 'nass';
       else if (href.includes('news')) key = 'news';
       else if (href.includes('events')) key = 'events';
@@ -102,6 +48,7 @@
       else if (href.includes('about')) key = 'about';
       else if (href.includes('past-questions') || href.includes('archive')) key = 'archive';
       else if (href.includes('apk') || href.includes('download') || href.includes('install')) key = 'install';
+      else if (link.classList.contains('search-trigger-btn') || link.classList.contains('mobile-search-btn')) key = 'search';
       else if (href === '/' || href.includes('index')) key = 'home';
 
       // Strip legacy emoji characters and wrap text

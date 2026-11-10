@@ -82,17 +82,14 @@ html, body {
   gap: 12px !important;
 }
 
+.main-nav .search-trigger-btn,
 .header-actions .search-trigger-btn {
-  display: flex !important;
+  display: inline-flex !important;
 }
 
-.header-actions .search-trigger-btn .search-placeholder,
-.header-actions .search-trigger-btn .search-shortcut {
+.search-trigger-btn .search-placeholder,
+.search-trigger-btn .search-shortcut {
   display: inline-block !important;
-}
-
-.header-actions .theme-toggle-btn .theme-toggle-label {
-  display: inline !important;
 }
 
 /* 7. Desktop Hero Section & CTA */
