@@ -21,10 +21,12 @@ router.get('/', (req, res) => {
 
 // POST create a new scheduled recurring campaign
 router.post('/', requireAuth(), (req, res) => {
-  const { title, content, priority, target_cohort, times_of_day, start_date, total_days } = req.body;
+  const title = (req.body.title || '').trim();
+  const content = (req.body.content || req.body.message || req.body.body || '').trim();
+  const { priority, target_cohort, times_of_day, start_date, total_days } = req.body;
 
   if (!title || !content) {
-    return res.status(400).json({ error: 'Title and content are required' });
+    return res.status(400).json({ error: 'Title and content/message are required' });
   }
 
   const daysCount = parseInt(total_days, 10) || 3;
@@ -86,8 +88,8 @@ router.post('/:id/toggle', requireAuth(), (req, res) => {
   }
 });
 
-// POST trigger immediate dispatch test
-router.post('/:id/trigger', requireAuth(), (req, res) => {
+// POST trigger immediate dispatch test (supports both /trigger and /push)
+router.post(['/:id/trigger', '/:id/push'], requireAuth(), (req, res) => {
   try {
     const item = db.prepare('SELECT * FROM scheduled_notifications WHERE id = ?').get(req.params.id);
     if (!item) {
