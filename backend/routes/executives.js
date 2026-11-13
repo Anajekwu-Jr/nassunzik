@@ -1,13 +1,39 @@
 import express from 'express';
+import fs from 'node:fs';
+import path from 'node:path';
 import { db, exportSnapshot } from '../database.js';
 import { requireAuth } from '../middleware/auth.js';
+import {
+  NASS_EXECS_DRIVE_FOLDER_ID,
+  NASS_EXECS_DRIVE_FOLDER_URL,
+  getDriveExecutiveFolderMap,
+  resolveDriveFileIdForExecutive,
+  shouldUseDrivePhoto,
+  fetchDrivePhoto,
+  resolveLocalFallbackPath,
+  clearDriveCaches
+} from '../services/driveExecutivesSync.js';
 
 const router = express.Router();
 
-function formatExecutive(exec) {
+function formatExecutive(exec, driveEntries = null) {
   if (!exec) return null;
+  const basePhotoUrl = exec.photo_url || '/resources/images/executives/president.jpg?v=3';
+  let resolvedPhotoUrl = basePhotoUrl;
+  let driveFileId = null;
+
+  if (driveEntries && shouldUseDrivePhoto(basePhotoUrl)) {
+    driveFileId = resolveDriveFileIdForExecutive(exec, driveEntries);
+    if (driveFileId) {
+      resolvedPhotoUrl = `/api/executives/drive-photo/${driveFileId}?fallback=${encodeURIComponent(basePhotoUrl)}`;
+    }
+  }
+
   return {
     ...exec,
+    photo_url: resolvedPhotoUrl,
+    local_photo_url: basePhotoUrl,
+    drive_file_id: driveFileId,
     portfolio: exec.office,
     role: exec.office
   };
@@ -21,7 +47,7 @@ const OFFICIAL_FALLBACK_EXECUTIVES = [
     level: 400,
     phone: '08087955696',
     email: 'cp.anajekwu@stu.unizik.edu.ng',
-    photo_url: '/resources/images/executives/president.png?v=2',
+    photo_url: '/resources/images/executives/president.jpg?v=3',
     bio: 'Leading the Executive Administration with dedication to student welfare, academic excellence, data skills development, and industrial linkages.',
     tenure: '2026/2027',
     display_order: 1
@@ -114,8 +140,6 @@ const OFFICIAL_FALLBACK_EXECUTIVES = [
 
 function getExecutivesFallback() {
   try {
-    const fs = require('node:fs');
-    const path = require('node:path');
     const backupFile = path.resolve(process.cwd(), 'data', 'portal_state_backup.json');
     if (fs.existsSync(backupFile)) {
       const data = JSON.parse(fs.readFileSync(backupFile, 'utf-8'));
@@ -127,7 +151,70 @@ function getExecutivesFallback() {
   return OFFICIAL_FALLBACK_EXECUTIVES;
 }
 
-router.get('/', (req, res) => {
+// Live Google Drive photo proxy with in-memory/tmp caching & local fallback
+router.get('/drive-photo/:fileId', async (req, res) => {
+  const { fileId } = req.params;
+  const forceRefresh = req.query.refresh === '1' || req.query.refresh === 'true';
+
+  try {
+    const photo = await fetchDrivePhoto(fileId, forceRefresh);
+    if (photo && photo.buffer) {
+      res.setHeader('Content-Type', photo.contentType || 'image/jpeg');
+      res.setHeader('Cache-Control', 'public, max-age=300, stale-while-revalidate=86400');
+      res.setHeader('X-Image-Source', 'google-drive');
+      return res.send(photo.buffer);
+    }
+  } catch (_) {}
+
+  const fallbackPath =
+    resolveLocalFallbackPath(req.query.fallback) ||
+    resolveLocalFallbackPath('/resources/images/executives/president.jpg');
+
+  if (fallbackPath) {
+    res.setHeader('Cache-Control', 'public, max-age=300');
+    res.setHeader('X-Image-Source', 'local-fallback');
+    return res.sendFile(fallbackPath);
+  }
+
+  return res.status(404).json({ error: 'Executive photo not found' });
+});
+
+// Inspect connected Google Drive folder status
+router.get('/drive-status', async (req, res) => {
+  const forceRefresh = req.query.refresh === '1' || req.query.refresh === 'true';
+  const folder = await getDriveExecutiveFolderMap(forceRefresh);
+  res.json({
+    folderId: NASS_EXECS_DRIVE_FOLDER_ID,
+    folderUrl: NASS_EXECS_DRIVE_FOLDER_URL,
+    fetchedAt: folder.fetchedAt ? new Date(folder.fetchedAt).toISOString() : null,
+    lastError: folder.lastError,
+    entries: folder.entries,
+    rawFiles: folder.rawList
+  });
+});
+
+// Force immediate refresh from connected Google Drive folder
+router.post('/sync-drive', requireAuth(), async (_req, res) => {
+  clearDriveCaches();
+  const folder = await getDriveExecutiveFolderMap(true);
+  res.json({
+    success: true,
+    folderId: NASS_EXECS_DRIVE_FOLDER_ID,
+    folderUrl: NASS_EXECS_DRIVE_FOLDER_URL,
+    entries: folder.entries,
+    rawFiles: folder.rawList,
+    lastError: folder.lastError
+  });
+});
+
+router.get('/', async (req, res) => {
+  const forceSync = req.query.sync === '1' || req.query.sync === 'true';
+  let driveEntries = null;
+  try {
+    const folder = await getDriveExecutiveFolderMap(forceSync);
+    driveEntries = folder.entries;
+  } catch (_) {}
+
   try {
     const { tenure } = req.query;
     let query = 'SELECT * FROM executives WHERE 1=1';
@@ -154,14 +241,20 @@ router.get('/', (req, res) => {
       executives = getExecutivesFallback();
     }
 
-    res.json(executives.map(formatExecutive));
+    res.json(executives.map(ex => formatExecutive(ex, driveEntries)));
   } catch (err) {
     console.error('Unhandled error in /api/executives GET:', err);
-    res.json(getExecutivesFallback().map(formatExecutive));
+    res.json(getExecutivesFallback().map(ex => formatExecutive(ex, driveEntries)));
   }
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
+  let driveEntries = null;
+  try {
+    const folder = await getDriveExecutiveFolderMap(false);
+    driveEntries = folder.entries;
+  } catch (_) {}
+
   try {
     let executive;
     try {
@@ -179,7 +272,7 @@ router.get('/:id', (req, res) => {
     if (!executive) {
       return res.status(404).json({ error: 'Executive not found' });
     }
-    res.json(formatExecutive(executive));
+    res.json(formatExecutive(executive, driveEntries));
   } catch (err) {
     console.error('Unhandled error in /api/executives/:id GET:', err);
     res.status(500).json({ error: 'Unable to retrieve executive record' });

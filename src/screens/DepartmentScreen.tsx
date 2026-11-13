@@ -296,7 +296,7 @@ export const DepartmentScreen: React.FC = () => {
                   <img
                     src={exec.photo_url || '/resources/images/exec_default.jpg'}
                     alt={exec.name}
-                    className="w-14 h-14 rounded-xl object-cover ring-1 ring-amber-500/30 shrink-0"
+                    className="w-14 h-14 rounded-xl object-cover object-top ring-1 ring-amber-500/30 shrink-0"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = '/resources/images/staff_default.jpg';
                     }}

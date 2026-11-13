@@ -2201,7 +2201,7 @@ export const DEFAULT_EXECUTIVES: Executive[] = [
     "level": 400,
     "phone": "08087955696",
     "email": "cp.anajekwu@stu.unizik.edu.ng",
-    "photo_url": "/resources/images/executives/president.png?v=2",
+    "photo_url": "/resources/images/executives/president.jpg?v=3",
     "bio": "Leading the Executive Administration with dedication to student welfare, academic excellence, data skills development, and industrial linkages.",
     "tenure": "2026/2027",
     "display_order": 1

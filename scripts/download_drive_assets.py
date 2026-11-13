@@ -36,7 +36,11 @@ gallery_files = [
 
 # 2. Executives (Folder: 1MkzqmRZR2NxPFdO48d2i0MrrUkl9ZWHF)
 exec_files = [
-    ('1ZjZOzpoaW-fOAhoPFXW9ewrqGL7uxhAr', 'resources/images/executives/president_chidera_anajekwu.jpg'),
+    ('1sbosrFA0k6wQinDtW5wv21mfds6uGUj3', 'resources/images/executives/president_chidera_anajekwu.jpg'),
+    ('1sbosrFA0k6wQinDtW5wv21mfds6uGUj3', 'resources/images/executives/president.jpg'),
+    ('1sbosrFA0k6wQinDtW5wv21mfds6uGUj3', 'resources/images/executives/president.png'),
+    ('1sbosrFA0k6wQinDtW5wv21mfds6uGUj3', 'public/resources/images/executives/president.jpg'),
+    ('1sbosrFA0k6wQinDtW5wv21mfds6uGUj3', 'public/resources/images/executives/president.png'),
     ('1HfayfvaInv6Tg0STALyCtYfP0vsSnHUB', 'resources/images/executives/vice_president_vivian_obunadike.jpg'),
     ('15ffzBJW7sonbh8WphCphk1llvKOSnGpB', 'resources/images/executives/secretary_general_rejoice_chidozie.jpg'),
     ('1DH3yNQckAVwMyp6uON4efWS1OaSYihOi', 'resources/images/executives/director_academics_mmesoma_ejefonye.jpg'),
