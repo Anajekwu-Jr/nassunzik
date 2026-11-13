@@ -196,6 +196,18 @@ app.get('/sw.js', (req, res) => {
   res.sendFile(path.join(ROOT_DIR, 'sw.js'));
 });
 
+// Local non-Vercel fallback for Vercel Web Analytics & Speed Insights scripts
+if (!process.env.VERCEL && !process.env.VERCEL_ENV) {
+  app.get('/_vercel/insights/script.js', (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+    res.send('/* Vercel Web Analytics runs automatically when hosted on Vercel */');
+  });
+  app.get('/_vercel/speed-insights/script.js', (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+    res.send('/* Vercel Speed Insights runs automatically when hosted on Vercel */');
+  });
+}
+
 // Website reference routes (The original multi-page departmental website)
 const pageRoutes = [
   { path: '/', file: 'website.html' },
