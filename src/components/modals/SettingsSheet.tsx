@@ -100,6 +100,76 @@ export const SettingsSheet: React.FC = () => {
 
         {/* Settings Body */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3 text-xs">
+          {/* App Theme Toggle (Light / Dark Mode - App Only) */}
+          <div
+            className={`p-3.5 rounded-2xl border flex items-center justify-between shadow-sm transition-colors ${
+              isLight
+                ? 'bg-slate-50 border-slate-200/90'
+                : 'bg-[#091b36] border-blue-800/50'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div
+                className={`w-8 h-8 rounded-xl flex items-center justify-center ${
+                  isLight
+                    ? 'bg-amber-100 text-amber-600'
+                    : 'bg-blue-500/20 text-amber-300'
+                }`}
+              >
+                {isLight ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </div>
+              <div>
+                <p
+                  className={`font-semibold text-xs ${
+                    isLight ? 'text-slate-900' : 'text-white'
+                  }`}
+                >
+                  App Appearance
+                </p>
+                <p className={`text-[10px] ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+                  {isLight ? 'Light Mode active' : 'Dark Mode active'}
+                </p>
+              </div>
+            </div>
+
+            <div
+              className={`inline-flex items-center p-1 rounded-xl border ${
+                isLight
+                  ? 'bg-slate-200/80 border-slate-300/70'
+                  : 'bg-[#061226] border-blue-900/60'
+              }`}
+              role="group"
+              aria-label="App Theme Mode"
+            >
+              <button
+                type="button"
+                onClick={() => setTheme('light')}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1 transition ${
+                  isLight
+                    ? 'bg-white text-amber-600 shadow-sm'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+                aria-pressed={isLight}
+              >
+                <Sun className="w-3.5 h-3.5" />
+                <span>Light</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setTheme('dark')}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1 transition ${
+                  !isLight
+                    ? 'bg-amber-500 text-slate-950 shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+                aria-pressed={!isLight}
+              >
+                <Moon className="w-3.5 h-3.5" />
+                <span>Dark</span>
+              </button>
+            </div>
+          </div>
+
           {/* Push Notification row with default ON toggle */}
           <div
             className={`p-3.5 rounded-2xl border flex items-center justify-between shadow-sm transition-colors ${

@@ -103,6 +103,17 @@ html.light-mode .text-white {
   color: #0f172a !important;
 }
 
+html.light-mode .bg-black.text-white,
+html.light-mode .bg-black .text-white,
+html.light-mode .bg-slate-900.text-white,
+html.light-mode .bg-slate-900\/90.text-white,
+html.light-mode .bg-\[\#850b05\].text-white,
+html.light-mode .bg-\[\#850b05\]\/90 .text-white,
+html.light-mode .bg-blue-600.text-white,
+html.light-mode .bg-emerald-600.text-white {
+  color: #ffffff !important;
+}
+
 html.light-mode .text-slate-200,
 html.light-mode .text-slate-300 {
   color: #334155 !important;

@@ -1,11 +1,12 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
-import { Search, Bell, Settings2, WifiOff } from 'lucide-react';
+import { Search, Bell, Settings2, WifiOff, Sun, Moon } from 'lucide-react';
 
 export const AppHeader: React.FC = () => {
   const {
     isOnline,
     theme,
+    setTheme,
     setSearchOpen,
     setNotificationsOpen,
     setSettingsOpen,
@@ -66,8 +67,23 @@ export const AppHeader: React.FC = () => {
           </div>
         </div>
 
-        {/* Right: Action Buttons (Search, Notifications, Settings) */}
-        <div className="flex items-center gap-1.5">
+        {/* Right: Action Buttons (Theme, Search, Notifications, Settings) */}
+        <div className="flex items-center gap-1">
+          {/* App Theme Toggle (Light / Dark) */}
+          <button
+            type="button"
+            onClick={() => setTheme(isLight ? 'dark' : 'light')}
+            className={`w-9 h-9 rounded-full flex items-center justify-center active:scale-95 transition ${
+              isLight
+                ? 'text-slate-600 hover:text-amber-600 hover:bg-amber-50'
+                : 'text-amber-300 hover:text-amber-200 hover:bg-blue-900/40'
+            }`}
+            aria-label={isLight ? 'Switch App to Dark Mode' : 'Switch App to Light Mode'}
+            title={isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+          >
+            {isLight ? <Moon className="w-4.5 h-4.5" /> : <Sun className="w-4.5 h-4.5" />}
+          </button>
+
           {/* Global Search */}
           <button
             type="button"
