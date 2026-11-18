@@ -142,76 +142,66 @@ A global search index is available across every page:
 
 ## 6. Environment Variables
 
-Create a `.env` file in the root directory (based on `.env.example`):
+Create a `.env` file in the root directory (based on `.env.example`) for local Express development or external Node backend hosting:
 
+### Frontend / Cloudflare Pages Variables (`VITE_*`)
+- `VITE_API_BASE_URL` *(Optional)*: Full base URL of an externally hosted Express API (e.g., `https://api.example.com/api`). Leave unset for static Cloudflare Pages deployments, which default to `/api` and automatically fall back to offline/static JSON snapshots (`/data/portal_state_backup.json`, `/data/official_cirs_staff.json`, `/data/career_pathways.json`).
+- **Firebase Status**: This codebase currently uses Express + SQLite (`sql.js`) + static JSON snapshots and does **not** use Firebase SDKs, Firestore, or Firebase Auth. If Firebase is integrated in the future, configure public client settings strictly using `VITE_FIREBASE_*` environment variables and never expose Firebase Admin private credentials in frontend code.
+
+### Backend-Only Variables (Express Server — NEVER expose via `VITE_*`)
 ```env
-# Server Configuration
+GEMINI_API_KEY="MY_GEMINI_API_KEY"
+APP_URL="MY_APP_URL"
+JWT_SECRET="super_secure_nass_unizik_jwt_secret_key_2026_change_in_production"
 PORT=3000
-NODE_ENV=production
-
-# Security & Authentication
-JWT_SECRET=super_secure_nass_unizik_jwt_secret_key_2026_change_in_production
-ADMIN_DEFAULT_PASSWORD=nassAdmin2026!
-
-# Upload Settings
-MAX_FILE_SIZE_MB=15
 ```
 
 ---
 
 ## 7. Deployment Guide
 
-### A. Local Development
+### A. Cloudflare Pages Production Deployment (Recommended)
+
+- **GitHub Repository**: `https://github.com/Anajekwu-Jr/nass-unizik`
+- **Production Branch**: `main`
+- **Framework Preset**: Vite (or None / Custom)
+- **Build Command**: `npm run build`
+- **Build Output Directory**: `dist`
+- **Node.js Version**: `22` (matches `"engines": { "node": "22.x" }` in `package.json`)
+
+#### Cloudflare Pages Configuration Details
+1. **Routing & SPA Fallback (`public/_redirects` -> `dist/_redirects`)**:
+   - Clean extensionless URLs (`/academia`, `/past-questions`, `/staff`, `/nass`, `/traditional-council`, `/news`, `/events`, `/siwes`, `/projects`, `/timetable`, `/archive`, `/contacts`, `/about`, `/admin`, `/privacy`, `/terms`, `/website`, `/home`, `/portal`) rewrite directly with `200` status to their corresponding `.html` pages.
+   - Legacy `/careers*` URLs redirect `301` to `/about.html#where-statistics-can-take-you`.
+   - The React Mobile Application (`/app` and `/app/*`) uses SPA fallback routing to `/app.html` (`200`) so direct navigation and browser refreshes on nested app routes resolve reliably.
+   - Download aliases (`/NASS_UNIZIK.apk`, `/NASS_UNIZIK.mobileconfig`, `/NASS_UNIZIK_Software_Package.zip`, `/Statistical_Tables.pdf`) and large Google Drive-hosted PDFs under `/resources/materials/` route via `302` redirects.
+   - `/api/*` requests are intentionally **not** hijacked by an SPA catch-all so static client helpers (`js/api.js` and `src/services/api.ts`) seamlessly serve bundled static JSON fallbacks when no external API server is configured.
+2. **Headers (`public/_headers` -> `dist/_headers`)**:
+   - Sets proper `Content-Type` and `Content-Disposition` headers for `.apk`, `.mobileconfig`, `.zip`, `/manifest.json`, and `/sw.js` (`Service-Worker-Allowed: /`), alongside `X-Content-Type-Options: nosniff` and `Referrer-Policy`.
+3. **25 MiB File Size Compliance & Public Snapshot Sanitization**:
+   - Large (>2.5 MB) course textbooks redirect to official Google Drive links (`data/drive_materials_map.json`).
+   - `npm run build` automatically validates that every single file inside `dist/` is strictly under Cloudflare Pages' **25 MiB** per-file limit and strips admin user password hashes (`users`, `scheduled_notifications`) from `dist/data/portal_state_backup.json`.
+4. **GitHub Synchronization**:
+   - Push changes directly to the `main` branch (`git push origin main`). Cloudflare Pages will automatically run `npm run build` and deploy `dist/` without modifying existing Git history.
+
+### B. Local Development
 ```bash
 # 1. Install dependencies
 npm install
 
-# 2. Run initial database migration & seeding
-node backend/seed.js
+# 2. Run production build verification into dist/
+npm run build
 
-# 3. Start development server
+# 3. Start full-stack Express + Vite dev server on port 3000
 npm run dev
 # Server accessible at http://localhost:3000
 ```
 
-### B. Ubuntu / Debian VPS Deployment (Systemd + Nginx)
+### C. Ubuntu / Debian VPS Deployment (Systemd + Nginx)
 1. Clone the repository into `/var/www/nass-portal`.
-2. Run `npm install --production`.
-3. Seed the database: `node backend/seed.js`.
-4. Create a systemd service `/etc/systemd/system/nass-portal.service`:
-   ```ini
-   [Unit]
-   Description=NASS UNIZIK Departmental Portal
-   After=network.target
-
-   [Service]
-   Type=simple
-   User=www-data
-   WorkingDirectory=/var/www/nass-portal
-   ExecStart=/usr/bin/node backend/server.js
-   Restart=on-failure
-   Environment=NODE_ENV=production PORT=3000
-
-   [Install]
-   WantedBy=multi-user.target
-   ```
-5. Enable & start service:
-   ```bash
-   sudo systemctl enable --now nass-portal
-   ```
-6. Set up Nginx reverse proxy routing port 80/443 to `http://127.0.0.1:3000`.
-
-### C. Docker Deployment
-```dockerfile
-FROM node:22-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm install --production
-COPY . .
-RUN node backend/seed.js
-EXPOSE 3000
-CMD ["node", "backend/server.js"]
-```
+2. Run `npm install`.
+3. Build static bundle: `npm run build`.
+4. Run Express server via `node backend/server.js` behind Nginx reverse proxy routing port 80/443 to `http://127.0.0.1:3000`.
 
 ---
 

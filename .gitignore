@@ -7,3 +7,8 @@ coverage/
 .env*
 !.env.example
 .vercel
+.wrangler/
+.cloudflare/
+scripts/.tmp_cert/
+data/*.db-wal
+data/*.db-shm

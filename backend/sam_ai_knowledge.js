@@ -1,13 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
-import { PDFParse } from 'pdf-parse';
 import { db } from './database.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
-const CACHE_FILE = path.join(ROOT_DIR, 'data', 'sam_ai_knowledge_cache.json');
+const CACHE_FILE = path.join(ROOT_DIR, 'data', 'sam_ai_knowledge_cache.json.gz');
 
 // Directories to scan for PDF files
 const PDF_DIRS = [
@@ -312,6 +312,12 @@ async function parsePdfFile(filePath, filename) {
       return [];
     }
 
+    let PDFParse;
+    try {
+      ({ PDFParse } = await import('pdf-parse'));
+    } catch {
+      return [];
+    }
     const parser = new PDFParse({ data: buffer });
     await parser.load();
     const result = await parser.getText();
@@ -349,11 +355,14 @@ export async function buildKnowledgeBase(force = false) {
 
   if (isIndexing && cachedChunks.length > 0) return cachedChunks;
 
-  // Check candidate cache file paths
+  // Check candidate cache file paths (.json.gz preferred, .json fallback)
   const candidateCacheFiles = [
     CACHE_FILE,
+    path.join(ROOT_DIR, 'data', 'sam_ai_knowledge_cache.json.gz'),
+    path.join(ROOT_DIR, 'dist', 'data', 'sam_ai_knowledge_cache.json.gz'),
     path.join(ROOT_DIR, 'data', 'sam_ai_knowledge_cache.json'),
     path.join(ROOT_DIR, 'dist', 'data', 'sam_ai_knowledge_cache.json'),
+    path.join('/tmp', 'sam_ai_knowledge_cache.json.gz'),
     path.join('/tmp', 'sam_ai_knowledge_cache.json')
   ];
 
@@ -368,7 +377,10 @@ export async function buildKnowledgeBase(force = false) {
   // If not forced and cache file exists, load immediately (takes ~40ms)
   if (!force && existingCachePath) {
     try {
-      const data = JSON.parse(fs.readFileSync(existingCachePath, 'utf-8'));
+      const rawJson = existingCachePath.endsWith('.gz')
+        ? zlib.gunzipSync(fs.readFileSync(existingCachePath)).toString('utf-8')
+        : fs.readFileSync(existingCachePath, 'utf-8');
+      const data = JSON.parse(rawJson);
       if (Array.isArray(data.chunks) && data.chunks.length > 0) {
         const deptChunks = getDepartmentChunks();
         const pdfChunks = data.chunks.filter(c => c.category === 'pdf_material' || (!c.id || !c.id.startsWith('dept-')));
@@ -425,12 +437,13 @@ export async function buildKnowledgeBase(force = false) {
       if (!fs.existsSync(cacheDir)) {
         fs.mkdirSync(cacheDir, { recursive: true });
       }
-      fs.writeFileSync(CACHE_FILE, JSON.stringify({
+      const payload = JSON.stringify({
         timestamp: lastIndexedTime,
         pdfCount,
         chunkCount: cachedChunks.length,
         chunks: cachedChunks
-      }, null, 2));
+      });
+      fs.writeFileSync(CACHE_FILE, zlib.gzipSync(payload));
       console.log(`[Sam AI] Knowledge base saved to cache: ${cachedChunks.length} total chunks from ${pdfCount} PDFs.`);
     } catch (saveErr) {
       console.warn('[Sam AI] Could not write cache file:', saveErr.message);

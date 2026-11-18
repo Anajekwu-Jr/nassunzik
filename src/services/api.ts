@@ -30,7 +30,7 @@ export {
   DEFAULT_RESOURCES
 };
 
-const API_BASE = '/api';
+const API_BASE = ((import.meta as any).env?.VITE_API_BASE_URL || '/api').replace(/\/$/, '');
 const CACHE_KEY = 'nass_unizik_mobile_cache_v8';
 
 // Clear legacy cached data from prior versions with fake data

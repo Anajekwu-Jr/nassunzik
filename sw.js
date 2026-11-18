@@ -1,7 +1,7 @@
 // NASS UNIZIK Departmental Service Worker
 // Provides offline capability, asset caching, PWA installability, and clean text-only push alerts
 
-const CACHE_NAME = 'nass-unizik-v5';
+const CACHE_NAME = 'nass-unizik-v6';
 const PRECACHE_URLS = [
   '/',
   '/website.html',

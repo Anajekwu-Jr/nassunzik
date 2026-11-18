@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { X, Bookmark, ExternalLink, FileText, Share2 } from 'lucide-react';
 
+let cachedDriveMap: Record<string, string> | null = null;
+
 export const DocumentViewerModal: React.FC = () => {
   const { activeResource, setActiveResource, triggerHaptic } = useApp();
+  const [driveMap, setDriveMap] = useState<Record<string, string>>(cachedDriveMap || {});
+
+  useEffect(() => {
+    if (cachedDriveMap) return;
+    fetch('/data/drive_materials_map.json')
+      .then(r => (r.ok ? r.json() : {}))
+      .then((m) => {
+        if (m && typeof m === 'object' && !Array.isArray(m)) {
+          const typed = m as Record<string, string>;
+          cachedDriveMap = typed;
+          setDriveMap(typed);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   if (!activeResource) return null;
 
-  const fileUrl = activeResource.file_path || activeResource.download_url || '/downloads/Statistical_Tables.pdf';
+  const rawUrl = activeResource.file_path || activeResource.download_url || '/downloads/Statistical_Tables.pdf';
+  const fileName = rawUrl.split('?')[0].split('/').pop() || '';
+  const driveId = rawUrl.startsWith('/resources/materials/') ? driveMap[fileName] : undefined;
+  const previewUrl = driveId ? `https://drive.google.com/file/d/${driveId}/preview` : rawUrl;
+  const fileUrl = driveId ? `https://drive.google.com/uc?export=download&id=${driveId}` : rawUrl;
 
   const handleShare = async () => {
     triggerHaptic();
@@ -75,17 +96,17 @@ export const DocumentViewerModal: React.FC = () => {
 
       {/* Viewer Content Frame */}
       <div className="flex-1 w-full bg-[#040b17] overflow-y-auto relative flex flex-col items-center justify-center p-2">
-        {/\.(jpg|jpeg|png|webp|gif)$/i.test(fileUrl) ? (
+        {/\.(jpg|jpeg|png|webp|gif)$/i.test(rawUrl) ? (
           <div className="w-full h-full flex items-center justify-center overflow-auto py-2">
             <img
-              src={fileUrl}
+              src={rawUrl}
               alt={activeResource.title}
               className="max-w-full max-h-[72vh] object-contain rounded-lg shadow-2xl border border-slate-800"
             />
           </div>
         ) : (
           <iframe
-            src={`${fileUrl}#toolbar=0`}
+            src={`${previewUrl}#toolbar=0`}
             title={activeResource.title}
             className="w-full h-full border-0 bg-white"
           />

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
 import { AppProvider, useApp } from './context/AppContext';
 import { DeviceSimulatorFrame } from './components/navigation/DeviceSimulatorFrame';
 import { AppHeader } from './components/navigation/AppHeader';
@@ -61,10 +59,6 @@ export default function App() {
         <AnnouncementDetailModal />
         <EventDetailModal />
       </DeviceSimulatorFrame>
-
-      {/* Vercel Web Analytics & Speed Insights */}
-      <Analytics />
-      <SpeedInsights />
     </AppProvider>
   );
 }

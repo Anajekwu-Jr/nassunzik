@@ -66,8 +66,17 @@ app.use('/api', (req, res, next) => {
   next();
 });
 
+// Load external Google Drive materials manifest for large offloaded PDFs
+let DRIVE_MATERIALS_MAP = {};
+try {
+  const mapPath = path.join(ROOT_DIR, 'data', 'drive_materials_map.json');
+  if (fs.existsSync(mapPath)) {
+    DRIVE_MATERIALS_MAP = JSON.parse(fs.readFileSync(mapPath, 'utf-8'));
+  }
+} catch (_) {}
+
 // Direct Package Download Routes (Explicitly placed before static middleware for correct MIME & Content-Disposition)
-app.get(['/downloads/NASS_UNIZIK.apk', '/downloads/nass-unizik.apk', '/NASS_UNIZIK.apk', '/nass-unizik.apk'], (req, res) => {
+app.get(['/downloads/NASS_UNIZIK.apk', '/downloads/nass-unizik.apk', '/NASS_UNIZIK.apk', '/nass-unizik.apk', '/resources/documents/NASS_UNIZIK.apk'], (req, res) => {
   const apkPath = path.join(ROOT_DIR, 'public/downloads/NASS_UNIZIK.apk');
   const fallbackPath = path.join(ROOT_DIR, 'NASS_UNIZIK.apk');
   const targetPath = fs.existsSync(apkPath) ? apkPath : fallbackPath;
@@ -75,6 +84,13 @@ app.get(['/downloads/NASS_UNIZIK.apk', '/downloads/nass-unizik.apk', '/NASS_UNIZ
   res.setHeader('Content-Type', 'application/vnd.android.package-archive');
   res.setHeader('Content-Disposition', 'attachment; filename="NASS_UNIZIK.apk"');
   res.sendFile(targetPath);
+});
+
+app.get(['/downloads/NASS_UNIZIK_Software_Package.zip', '/downloads/NASS_UNIZIK_App.zip', '/NASS_UNIZIK_Software_Package.zip', '/NASS_UNIZIK_App.zip'], (req, res) => {
+  const zipPath = path.join(ROOT_DIR, 'public/downloads/NASS_UNIZIK_Software_Package.zip');
+  res.setHeader('Content-Type', 'application/zip');
+  res.setHeader('Content-Disposition', 'attachment; filename="NASS_UNIZIK_Software_Package.zip"');
+  res.sendFile(zipPath);
 });
 
 app.get(['/downloads/NASS_UNIZIK.mobileconfig', '/downloads/nass-unizik.mobileconfig', '/NASS_UNIZIK.mobileconfig', '/nass-unizik.mobileconfig'], (req, res) => {
@@ -97,23 +113,17 @@ app.get(['/downloads/Statistical_Tables.pdf', '/Statistical_Tables.pdf', '/downl
 // Static asset folders
 app.use('/css', express.static(path.join(ROOT_DIR, 'css')));
 app.use('/js', express.static(path.join(ROOT_DIR, 'js')));
+app.get('/resources/materials/:filename', (req, res, next) => {
+  const driveId = DRIVE_MATERIALS_MAP[req.params.filename];
+  if (driveId) {
+    return res.redirect(302, `https://drive.google.com/uc?export=download&id=${encodeURIComponent(driveId)}`);
+  }
+  return next();
+});
 app.use('/resources', express.static(path.join(ROOT_DIR, 'resources')));
 app.use('/uploads', express.static(path.join(ROOT_DIR, 'uploads')));
 app.use('/vendor/katex', express.static(path.join(ROOT_DIR, 'node_modules/katex/dist')));
 app.use(express.static(path.join(ROOT_DIR, 'public')));
-
-// PWA Service Worker & Manifest headers
-app.get('/sw.js', (req, res) => {
-  res.setHeader('Content-Type', 'application/javascript');
-  res.setHeader('Service-Worker-Allowed', '/');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.sendFile(path.join(ROOT_DIR, 'public/sw.js'));
-});
-
-app.get('/manifest.json', (req, res) => {
-  res.setHeader('Content-Type', 'application/manifest+json');
-  res.sendFile(path.join(ROOT_DIR, 'public/manifest.json'));
-});
 
 // If on Vercel or cloud environments, also serve /tmp/uploads
 if (process.env.VERCEL && fs.existsSync('/tmp/uploads')) {
@@ -184,7 +194,7 @@ app.post('/api/portal-state/sync', (req, res) => {
 });
 
 // PWA Manifest and Service Worker routes
-app.get('/manifest.json', (req, res) => {
+app.get(['/manifest.json', '/manifest.webmanifest'], (req, res) => {
   res.setHeader('Content-Type', 'application/manifest+json; charset=utf-8');
   res.sendFile(path.join(ROOT_DIR, 'manifest.json'));
 });
@@ -195,18 +205,6 @@ app.get('/sw.js', (req, res) => {
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(ROOT_DIR, 'sw.js'));
 });
-
-// Local non-Vercel fallback for Vercel Web Analytics & Speed Insights scripts
-if (!process.env.VERCEL && !process.env.VERCEL_ENV) {
-  app.get('/_vercel/insights/script.js', (req, res) => {
-    res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
-    res.send('/* Vercel Web Analytics runs automatically when hosted on Vercel */');
-  });
-  app.get('/_vercel/speed-insights/script.js', (req, res) => {
-    res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
-    res.send('/* Vercel Speed Insights runs automatically when hosted on Vercel */');
-  });
-}
 
 // Website reference routes (The original multi-page departmental website)
 const pageRoutes = [
@@ -262,47 +260,6 @@ const pageRoutes = [
   { path: '/terms.html', file: 'terms.html' },
   { path: '/terms-and-conditions', file: 'terms.html' }
 ];
-
-// 14MB+ Full Departmental Software Package (Universal cross-platform offline bundle)
-app.get(['/downloads/NASS_UNIZIK_Software_Package.zip', '/downloads/NASS_UNIZIK_App.zip', '/NASS_UNIZIK_Software_Package.zip', '/NASS_UNIZIK_App.zip'], (req, res) => {
-  const zipPath = path.join(ROOT_DIR, 'public/downloads/NASS_UNIZIK_Software_Package.zip');
-  const fallbackPath = path.join(ROOT_DIR, 'public/downloads/NASS_UNIZIK_App.zip');
-  const targetPath = fs.existsSync(zipPath) ? zipPath : fallbackPath;
-
-  res.setHeader('Content-Type', 'application/zip');
-  res.setHeader('Content-Disposition', 'attachment; filename="NASS_UNIZIK_Software_Package.zip"');
-  res.sendFile(targetPath);
-});
-
-// Direct Android APK Native App download route
-app.get(['/downloads/NASS_UNIZIK.apk', '/downloads/nass-unizik.apk', '/NASS_UNIZIK.apk', '/nass-unizik.apk'], (req, res) => {
-  const apkPath = path.join(ROOT_DIR, 'public/downloads/NASS_UNIZIK.apk');
-  const fallbackPath = path.join(ROOT_DIR, 'NASS_UNIZIK.apk');
-  const targetPath = fs.existsSync(apkPath) ? apkPath : fallbackPath;
-
-  res.setHeader('Content-Type', 'application/vnd.android.package-archive');
-  res.setHeader('Content-Disposition', 'attachment; filename="NASS_UNIZIK.apk"');
-  res.sendFile(targetPath);
-});
-
-// Apple iOS Native WebClip configuration profile download route
-app.get(['/downloads/NASS_UNIZIK.mobileconfig', '/downloads/nass-unizik.mobileconfig', '/NASS_UNIZIK.mobileconfig', '/nass-unizik.mobileconfig'], (req, res) => {
-  const configPath = path.join(ROOT_DIR, 'public/downloads/NASS_UNIZIK.mobileconfig');
-  const fallbackPath = path.join(ROOT_DIR, 'NASS_UNIZIK.mobileconfig');
-  const targetPath = fs.existsSync(configPath) ? configPath : fallbackPath;
-
-  res.setHeader('Content-Type', 'application/x-apple-aspen-config; charset=utf-8');
-  res.setHeader('Content-Disposition', 'attachment; filename="NASS_UNIZIK.mobileconfig"');
-  res.sendFile(targetPath);
-});
-
-// Statistical Tables PDF download route
-app.get(['/downloads/Statistical_Tables.pdf', '/Statistical_Tables.pdf', '/downloads/statistical-tables.pdf', '/statistical-tables.pdf'], (req, res) => {
-  const filePath = path.join(ROOT_DIR, 'resources/documents/Statistical_Tables.pdf');
-  res.setHeader('Content-Type', 'application/pdf');
-  res.setHeader('Content-Disposition', 'attachment; filename="Statistical_Tables_UNIZIK.pdf"');
-  res.sendFile(filePath);
-});
 
 // KaTeX vendor static assets for mathematical formula rendering
 app.use('/vendor/katex', express.static(path.join(ROOT_DIR, 'public/vendor/katex')));

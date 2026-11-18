@@ -1,0 +1,81 @@
+# NASS UNIZIK - Cloudflare Pages Redirects & Rewrites
+# Docs: https://developers.cloudflare.com/pages/configuration/redirects/
+
+# --- Legacy & Career Section Redirects ---
+/careers /about.html#where-statistics-can-take-you 301
+/careers.html /about.html#where-statistics-can-take-you 301
+/where-statistics-can-take-you /about.html#where-statistics-can-take-you 301
+/where-can-statistics-take-you /about.html#where-statistics-can-take-you 301
+
+# --- Native Package & Document Download Aliases ---
+/NASS_UNIZIK.apk /downloads/NASS_UNIZIK.apk 302
+/nass-unizik.apk /downloads/NASS_UNIZIK.apk 302
+/downloads/nass-unizik.apk /downloads/NASS_UNIZIK.apk 302
+/resources/documents/NASS_UNIZIK.apk /downloads/NASS_UNIZIK.apk 302
+/NASS_UNIZIK.mobileconfig /downloads/NASS_UNIZIK.mobileconfig 302
+/nass-unizik.mobileconfig /downloads/NASS_UNIZIK.mobileconfig 302
+/downloads/nass-unizik.mobileconfig /downloads/NASS_UNIZIK.mobileconfig 302
+/NASS_UNIZIK_Software_Package.zip /downloads/NASS_UNIZIK_Software_Package.zip 302
+/NASS_UNIZIK_App.zip /downloads/NASS_UNIZIK_Software_Package.zip 302
+/downloads/NASS_UNIZIK_App.zip /downloads/NASS_UNIZIK_Software_Package.zip 302
+/Statistical_Tables.pdf /downloads/Statistical_Tables.pdf 302
+/statistical-tables.pdf /downloads/Statistical_Tables.pdf 302
+/downloads/statistical-tables.pdf /downloads/Statistical_Tables.pdf 302
+/manifest.webmanifest /manifest.json 200
+
+# --- Offloaded Large Course Materials (>2.5 MB) Hosted on Official NASS Google Drive ---
+/resources/materials/stat324_biometrics.pdf https://drive.google.com/uc?export=download&id=1Xihq1uf-Vo2Fjtpi6fJ99n-3qhXTc4nd 302
+/resources/materials/mat102_calculus_coordinate_geometry.pdf https://drive.google.com/uc?export=download&id=1Ge-Ys2LdBghZr689nM7a7Rrb4W8cdNEo 302
+/resources/materials/sta214_note.pdf https://drive.google.com/uc?export=download&id=1Xhi29qNmbPusWecLtuesmWkrUlrHhVFd 302
+/resources/materials/mat202_mathematical_methods_notes.pdf https://drive.google.com/uc?export=download&id=1QC_eGi7rgK5BnCq1RkVPip6zmvu1_qia 302
+/resources/materials/schaums_probability.pdf https://drive.google.com/uc?export=download&id=1-FMtbOh6xO6QiUSlAfMBapYcl_xIoNnk 302
+/resources/materials/bio102_cell_culture_techniques.pdf https://drive.google.com/uc?export=download&id=1uhYh3bx8UZa_ns9NbL-Sg8hZatz3jOvg 302
+/resources/materials/bio102_culture_notes.pdf https://drive.google.com/uc?export=download&id=1uhYh3bx8UZa_ns9NbL-Sg8hZatz3jOvg 302
+/resources/materials/bio102_merged_handbook.pdf https://drive.google.com/uc?export=download&id=194NiDAHu8dKsAXPMQWOCK9FlKJ1XHqNm 302
+/resources/materials/sta312_advanced_distribution_notes.pdf https://drive.google.com/uc?export=download&id=17xcnkCzGF6Qk7sxC79dTabQ_9_5MeykU 302
+/resources/materials/schaums_outline_statistics.pdf https://drive.google.com/uc?export=download&id=1tA1h7D08gQtV4_y7a-QpLOS5DxhHkqL0 302
+/resources/materials/bio102_iweze_compressed.pdf https://drive.google.com/uc?export=download&id=1v5x1Fda5T3lxDEIhkkm65NQv7joNPIka 302
+/resources/materials/cos102_introduction_to_problem_solving.pdf https://drive.google.com/uc?export=download&id=1qPOHz5-17O7LG6lFd8I56CVQRMo5GTSu 302
+/resources/materials/sta371_operations_research_dr_ikediuwa.pdf https://drive.google.com/uc?export=download&id=1J2wRAeQgZbLdGIuFDvpCAKCfw50tmCTW 302
+/resources/materials/mat102_conics_section_lecture_notes.pdf https://drive.google.com/uc?export=download&id=1lbkePbcIb59eUdBAPCbvYbFlymo776L- 302
+/resources/materials/sta111_probability_note.pdf https://drive.google.com/uc?export=download&id=1QZKYMQ6vVGWa2i1V9AU4_NG95uyh--64 302
+
+# --- Clean Portal Page Rewrites (200) ---
+/home /website.html 200
+/website /website.html 200
+/portal /website.html 200
+/academia /academia.html 200
+/academics /academia.html 200
+/past-questions /past-questions.html 200
+/pastquestions /past-questions.html 200
+/administration /administration.html 200
+/staff /administration.html 200
+/staff-profile /staff-profile.html 200
+/profile /staff-profile.html 200
+/nass /nass.html 200
+/executives /nass.html 200
+/excos /nass.html 200
+/traditional-council /traditional-council.html 200
+/traditional-council/ /traditional-council.html 200
+/traditionalcouncil /traditional-council.html 200
+/nzenaozo /traditional-council.html 200
+/news /news.html 200
+/events /events.html 200
+/siwes /siwes.html 200
+/projects /projects.html 200
+/resources /projects.html 200
+/timetable /timetable.html 200
+/archive /archive.html 200
+/gallery /archive.html 200
+/contacts /contacts.html 200
+/contact /contacts.html 200
+/about /about.html 200
+/admin /admin.html 200
+/privacy /privacy.html 200
+/privacy-policy /privacy.html 200
+/terms /terms.html 200
+/terms-and-conditions /terms.html 200
+
+# --- React Mobile Application SPA Fallback ---
+/app /app.html 200
+/app/* /app.html 200

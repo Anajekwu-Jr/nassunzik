@@ -4,7 +4,7 @@
  */
 
 const API = {
-  baseUrl: '/api',
+  baseUrl: (typeof window !== 'undefined' && window.NASS_API_BASE) ? String(window.NASS_API_BASE).replace(/\/$/, '') : '/api',
 
   getToken() {
     return localStorage.getItem('nass_auth_token');
@@ -326,25 +326,68 @@ const API = {
 
   async getAsyncFallback(endpoint) {
     const clean = endpoint.split('?')[0].replace(/^\/api/, '');
-    const sync = this.getFallback(endpoint);
-    if (sync !== null) return sync;
 
     try {
       const snapshot = this._snapshot || (await this.fetchBackupSnapshot());
       if (snapshot) {
+        if (clean === '/settings' && Array.isArray(snapshot.site_settings) && snapshot.site_settings.length > 0) {
+          const settingsObj = {};
+          for (const row of snapshot.site_settings) {
+            if (row && row.key) settingsObj[row.key] = row.value;
+          }
+          return settingsObj;
+        }
         if (clean === '/staff') {
           if (Array.isArray(snapshot.staff) && snapshot.staff.length > 0) return snapshot.staff;
         }
+        if (clean.startsWith('/staff/') && Array.isArray(snapshot.staff)) {
+          const target = decodeURIComponent(clean.slice('/staff/'.length)).toLowerCase();
+          const hit = snapshot.staff.find(s =>
+            String(s.id) === target ||
+            (s.cirs_id && s.cirs_id.toLowerCase() === target) ||
+            (s.name && s.name.toLowerCase().includes(target))
+          );
+          if (hit) return hit;
+        }
+        if (clean === '/executives' || clean === '/excos') {
+          if (Array.isArray(snapshot.executives) && snapshot.executives.length > 0) return snapshot.executives;
+        }
         if (clean === '/timetable') {
-          if (Array.isArray(snapshot.timetable) && snapshot.timetable.length > 0) return snapshot.timetable;
+          if (Array.isArray(snapshot.timetable) && snapshot.timetable.length > 0) {
+            let list = snapshot.timetable;
+            try {
+              const sp = new URL(endpoint, 'http://localhost').searchParams;
+              const level = sp.get('level');
+              const semester = sp.get('semester');
+              if (level) list = list.filter(t => String(t.level) === level);
+              if (semester) list = list.filter(t => String(t.semester) === semester);
+            } catch (_) {}
+            return list;
+          }
         }
         if (clean === '/courses') {
           if (Array.isArray(snapshot.courses) && snapshot.courses.length > 0) {
             const resources = Array.isArray(snapshot.course_resources) ? snapshot.course_resources : [];
-            return snapshot.courses.map(c => ({
+            let list = snapshot.courses.map(c => ({
               ...c,
               resources: resources.filter(r => r.course_id === c.id)
             }));
+            try {
+              const sp = new URL(endpoint, 'http://localhost').searchParams;
+              const level = sp.get('level');
+              const semester = sp.get('semester');
+              if (level) list = list.filter(c => String(c.level) === level);
+              if (semester) list = list.filter(c => String(c.semester) === semester);
+            } catch (_) {}
+            return list;
+          }
+        }
+        if (clean.startsWith('/courses/') && Array.isArray(snapshot.courses)) {
+          const cid = decodeURIComponent(clean.slice('/courses/'.length));
+          const resources = Array.isArray(snapshot.course_resources) ? snapshot.course_resources : [];
+          const found = snapshot.courses.find(c => String(c.id) === cid || (c.code && c.code.toLowerCase() === cid.toLowerCase()));
+          if (found) {
+            return { ...found, resources: resources.filter(r => r.course_id === found.id) };
           }
         }
         if (clean === '/contacts') {
@@ -352,6 +395,56 @@ const API = {
         }
         if (clean === '/announcements') {
           if (Array.isArray(snapshot.announcements) && snapshot.announcements.length > 0) return snapshot.announcements;
+        }
+        if (clean === '/news') {
+          if (Array.isArray(snapshot.news) && snapshot.news.length > 0) {
+            let list = [...snapshot.news];
+            try {
+              const sp = new URL(endpoint, 'http://localhost').searchParams;
+              const cat = sp.get('category');
+              const limit = parseInt(sp.get('limit') || '0', 10);
+              if (cat) list = list.filter(n => (n.category || '').toLowerCase() === cat.toLowerCase());
+              if (limit > 0) list = list.slice(0, limit);
+            } catch (_) {}
+            return list;
+          }
+        }
+        if (clean.startsWith('/news/') && Array.isArray(snapshot.news)) {
+          const key = decodeURIComponent(clean.slice('/news/'.length));
+          const found = snapshot.news.find(n => String(n.id) === key || n.slug === key);
+          if (found) return found;
+        }
+        if (clean === '/events') {
+          if (Array.isArray(snapshot.events) && snapshot.events.length > 0) {
+            let list = [...snapshot.events];
+            try {
+              const sp = new URL(endpoint, 'http://localhost').searchParams;
+              const status = sp.get('status');
+              const cat = sp.get('category');
+              if (status) list = list.filter(ev => (ev.status || '').toUpperCase() === status.toUpperCase());
+              if (cat) list = list.filter(ev => (ev.category || '').toLowerCase() === cat.toLowerCase());
+            } catch (_) {}
+            return list;
+          }
+        }
+        if (clean === '/faqs') {
+          if (Array.isArray(snapshot.faqs) && snapshot.faqs.length > 0) return snapshot.faqs;
+        }
+        if (clean === '/siwes') {
+          if (Array.isArray(snapshot.siwes_resources)) return snapshot.siwes_resources;
+        }
+        if (clean === '/projects') {
+          if (Array.isArray(snapshot.project_resources)) return snapshot.project_resources;
+        }
+        if (clean === '/stats') {
+          return {
+            courses: (snapshot.courses || []).length,
+            staff: (snapshot.staff || []).length,
+            executives: (snapshot.executives || []).length,
+            materials: (snapshot.course_resources || []).length,
+            events: (snapshot.events || []).length,
+            news: (snapshot.news || []).length
+          };
         }
         if (clean === '/gallery') {
           if (Array.isArray(snapshot.gallery) && snapshot.gallery.length > 0) {
@@ -377,7 +470,6 @@ const API = {
                 course_credit_units: c.credit_units || null
               };
             });
-            // Parse query filters
             try {
               const searchParams = new URL(endpoint, 'http://localhost').searchParams;
               const resType = searchParams.get('resource_type');
@@ -399,6 +491,35 @@ const API = {
           if (Array.isArray(snapshot.careers) && snapshot.careers.length > 0) {
             return snapshot.careers;
           }
+        }
+        if (clean === '/search') {
+          const sp = new URL(endpoint, 'http://localhost').searchParams;
+          const q = (sp.get('q') || '').toLowerCase().trim();
+          const match = (str) => String(str || '').toLowerCase().includes(q);
+          const courses = Array.isArray(snapshot.courses) ? snapshot.courses : [];
+          const courseMap = new Map(courses.map(c => [c.id, c]));
+          const categories = {
+            course_resources: (snapshot.course_resources || []).filter(r => {
+              const c = courseMap.get(r.course_id) || {};
+              return match(r.title) || match(r.file_name) || match(c.code) || match(c.title);
+            }).slice(0, 15).map(r => {
+              const c = courseMap.get(r.course_id) || {};
+              return { ...r, course_code: c.code || '', downloadUrl: r.file_path, url: r.file_path, subtitle: `${c.code || 'Course'} · ${(r.resource_type || 'material').toUpperCase()}` };
+            }),
+            courses: courses.filter(c => match(c.code) || match(c.title) || match(c.description)).slice(0, 12).map(c => ({ ...c, url: `/academia.html?level=${c.level}`, subtitle: `${c.level} Level · ${c.credit_units || 3} Units` })),
+            staff: (snapshot.staff || []).filter(s => match(s.name) || match(s.specialization) || match(s.title) || match(s.office)).slice(0, 12).map(s => ({ ...s, title: s.name, url: `/staff-profile.html?id=${s.id}`, subtitle: `${s.title || ''} · ${s.specialization || ''}` })),
+            executives: (snapshot.executives || []).filter(e => match(e.name) || match(e.office) || match(e.bio)).slice(0, 10).map(e => ({ ...e, title: e.name, url: '/nass.html', subtitle: `${e.office} · ${e.level}L` })),
+            siwes: (snapshot.siwes_resources || []).filter(s => match(s.title) || match(s.description)).slice(0, 8).map(s => ({ ...s, url: '/siwes.html', downloadUrl: s.file_path })),
+            projects: (snapshot.project_resources || []).filter(p => match(p.title) || match(p.description)).slice(0, 8).map(p => ({ ...p, url: '/projects.html', downloadUrl: p.file_path })),
+            timetable: (snapshot.timetable || []).filter(t => match(t.course_code) || match(t.course_title) || match(t.venue) || match(t.lecturer)).slice(0, 10).map(t => ({ ...t, title: `${t.course_code}: ${t.course_title}`, url: `/timetable.html?level=${t.level}`, subtitle: `${t.day} ${t.start_time}-${t.end_time} · ${t.venue}` })),
+            gallery: (snapshot.gallery || []).filter(g => match(g.title) || match(g.description)).slice(0, 8).map(g => ({ ...g, url: '/archive.html' })),
+            news: (snapshot.news || []).filter(n => match(n.title) || match(n.summary) || match(n.content)).slice(0, 8).map(n => ({ ...n, url: `/news.html?id=${n.id}` })),
+            events: (snapshot.events || []).filter(ev => match(ev.title) || match(ev.description) || match(ev.venue)).slice(0, 8).map(ev => ({ ...ev, url: '/events.html', subtitle: `${ev.event_date} · ${ev.venue}` })),
+            faqs: (snapshot.faqs || []).filter(f => match(f.question) || match(f.answer)).slice(0, 8).map(f => ({ ...f, title: f.question, url: '/about.html' })),
+            contacts: (snapshot.contacts || []).filter(c => match(c.name) || match(c.role) || match(c.office)).slice(0, 8).map(c => ({ ...c, title: c.name, url: '/contacts.html', subtitle: c.role }))
+          };
+          const total = Object.values(categories).reduce((acc, arr) => acc + arr.length, 0);
+          return { query: sp.get('q') || '', total, categories };
         }
       }
     } catch (_) {}
@@ -425,7 +546,7 @@ const API = {
       } catch (_) {}
     }
 
-    return null;
+    return this.getFallback(endpoint);
   },
 
   async request(endpoint, options = {}, retries = 2) {
@@ -454,9 +575,11 @@ const API = {
     while (attempt <= retries) {
       try {
         const res = await fetch(`${this.baseUrl}${finalEndpoint}`, config);
-        const data = await res.json().catch(() => ({}));
+        const contentType = res.headers.get('content-type') || '';
+        const isJsonResponse = contentType.includes('application/json');
+        const data = isJsonResponse ? await res.json().catch(() => ({})) : {};
 
-        if (!res.ok) {
+        if (!res.ok || (isGet && !isJsonResponse)) {
           if (isGet) {
             // Check cache first
             try {

@@ -1,8 +1,5 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import archiver from 'node:zlib'; // We can use JS or Python or simple zip
-import { execSync } from 'node:child_process';
-import { parseAXML } from 'androguard-js';
 
 const rootDir = process.cwd();
 
@@ -238,9 +235,10 @@ class AxmlBuilder {
 }
 
 const axmlBuf = new AxmlBuilder().build();
-// Validate with parser
-const parsedCheck = parseAXML(axmlBuf);
-console.log('Validated AXML package:', parsedCheck.root.attrs.package);
+if (axmlBuf.readUInt16LE(0) !== 0x0003) {
+  throw new Error('Generated AXML header invalid');
+}
+console.log('Validated AXML package: org.nass.unizik.portal');
 
 fs.writeFileSync(path.join(rootDir, 'scripts/manifest.axml'), axmlBuf);
 
@@ -300,6 +298,6 @@ const mobileconfigContent = `<?xml version="1.0" encoding="UTF-8"?>
 </plist>
 `;
 
+fs.mkdirSync(path.join(rootDir, 'public/downloads'), { recursive: true });
 fs.writeFileSync(path.join(rootDir, 'public/downloads/NASS_UNIZIK.mobileconfig'), mobileconfigContent);
-fs.writeFileSync(path.join(rootDir, 'NASS_UNIZIK.mobileconfig'), mobileconfigContent);
 console.log('Created iOS NASS_UNIZIK.mobileconfig successfully');

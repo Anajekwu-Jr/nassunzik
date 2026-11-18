@@ -95,9 +95,9 @@ const offlineHtml = `<!DOCTYPE html>
         <div class="doc-item" data-search="STA 371 Operations Research Dr Ikediuwa">
           <div class="doc-info">
             <div class="doc-name">STA 371: Operations Research (Dr. Ikediuwa)</div>
-            <div class="doc-meta">300 Level • 3.8 MB • Linear Programming & Duality</div>
+            <div class="doc-meta">300 Level • 3.8 MB • Google Drive PDF</div>
           </div>
-          <a href="materials/sta371_operations_research_dr_ikediuwa.pdf" class="btn btn-gold" download>Read / Save</a>
+          <a href="https://drive.google.com/uc?export=download&id=1J2wRAeQgZbLdGIuFDvpCAKCfw50tmCTW" target="_blank" rel="noopener" class="btn btn-gold">Open / Save</a>
         </div>
         <div class="doc-item" data-search="COS 201 C++ Programming Lecture Note">
           <div class="doc-info">
@@ -137,9 +137,9 @@ const offlineHtml = `<!DOCTYPE html>
         <div class="doc-item" data-search="Schaum's Outline Statistics Schaums Probability">
           <div class="doc-info">
             <div class="doc-name">Schaum's Outline: Probability & Statistics</div>
-            <div class="doc-meta">4.3 MB • Solved Problems Reference Book</div>
+            <div class="doc-meta">4.3 MB • Solved Problems Reference (Google Drive)</div>
           </div>
-          <a href="materials/schaums_outline_statistics.pdf" class="btn btn-gold" download>Read / Save</a>
+          <a href="https://drive.google.com/uc?export=download&id=1tA1h7D08gQtV4_y7a-QpLOS5DxhHkqL0" target="_blank" rel="noopener" class="btn btn-gold">Open / Save</a>
         </div>
       </div>
     </div>
@@ -227,7 +227,7 @@ Designed by NASS UNIZIK • Powered by PhanCore
 zip.addFile('README_HOW_TO_INSTALL.txt', Buffer.from(readme, 'utf8'));
 
 // 3. Add iOS mobileconfig
-const mobileconfigPath = path.join(rootDir, 'NASS_UNIZIK.mobileconfig');
+const mobileconfigPath = path.join(rootDir, 'public/downloads/NASS_UNIZIK.mobileconfig');
 if (fs.existsSync(mobileconfigPath)) {
   zip.addFile('NASS_UNIZIK.mobileconfig', fs.readFileSync(mobileconfigPath));
 }
@@ -238,20 +238,17 @@ if (fs.existsSync(dbPath)) {
   zip.addFile('database/nass_portal.db', fs.readFileSync(dbPath));
 }
 
-// 5. Add Key PDF materials up to ~14.5MB
+// 5. Add core offline PDFs from resources/documents/
 const materials = [
   { src: 'resources/documents/STA_312_Bivariate_Distributions_Theory.pdf', dest: 'materials/STA_312_Bivariate_Distributions_Theory.pdf' },
   { src: 'resources/documents/STA_312_Order_Statistics_Part_1.pdf', dest: 'materials/STA_312_Order_Statistics_Part_1.pdf' },
   { src: 'resources/documents/STA_322_Course_Material.pdf', dest: 'materials/STA_322_Course_Material.pdf' },
   { src: 'resources/documents/STA_331_Regression_Analysis_Course_Compendium.pdf', dest: 'materials/STA_331_Regression_Analysis_Course_Compendium.pdf' },
-  { src: 'resources/materials/sta371_operations_research_dr_ikediuwa.pdf', dest: 'materials/sta371_operations_research_dr_ikediuwa.pdf' },
   { src: 'resources/documents/COS_201_Lecture_Note_on_C_Plus_Plus.pdf', dest: 'materials/COS_201_Lecture_Note_on_C_Plus_Plus.pdf' },
   { src: 'resources/documents/CSC_202_Course_Material_and_Practice_Module.pdf', dest: 'materials/CSC_202_Course_Material_and_Practice_Module.pdf' },
   { src: 'resources/documents/ENT_312_Chapters_1_to_15_Complete_Notes.pdf', dest: 'materials/ENT_312_Chapters_1_to_15_Complete_Notes.pdf' },
   { src: 'resources/documents/GST_312_Complete_12_Chapters_Master_Summary.pdf', dest: 'materials/GST_312_Complete_12_Chapters_Master_Summary.pdf' },
-  { src: 'resources/documents/Statistical_Tables.pdf', dest: 'materials/Statistical_Tables.pdf' },
-  { src: 'resources/materials/schaums_outline_statistics.pdf', dest: 'materials/schaums_outline_statistics.pdf' },
-  { src: 'resources/materials/mat202_mathematical_methods_notes.pdf', dest: 'materials/mat202_mathematical_methods_notes.pdf' }
+  { src: 'resources/documents/Statistical_Tables.pdf', dest: 'materials/Statistical_Tables.pdf' }
 ];
 
 for (const m of materials) {
@@ -264,16 +261,8 @@ for (const m of materials) {
 const zipBuffer = zip.toBuffer();
 console.log('Final Software Package Size:', (zipBuffer.length / (1024 * 1024)).toFixed(2), 'MB');
 
-const targets = [
-  path.join(publicDownloads, 'NASS_UNIZIK_Software_Package.zip'),
-  path.join(publicDownloads, 'NASS_UNIZIK_App.zip'),
-  path.join(rootDir, 'dist/downloads/NASS_UNIZIK_Software_Package.zip'),
-  path.join(rootDir, 'dist/downloads/NASS_UNIZIK_App.zip')
-];
-
-for (const t of targets) {
-  fs.mkdirSync(path.dirname(t), { recursive: true });
-  fs.writeFileSync(t, zipBuffer);
-  console.log('Saved to:', t);
-}
+const target = path.join(publicDownloads, 'NASS_UNIZIK_Software_Package.zip');
+fs.mkdirSync(path.dirname(target), { recursive: true });
+fs.writeFileSync(target, zipBuffer);
+console.log('Saved to:', target);
 console.log('Software Packaging complete!');

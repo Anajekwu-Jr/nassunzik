@@ -6,9 +6,20 @@
 (function () {
   async function syncSiteSettings() {
     try {
-      const res = await fetch('/api/settings?_t=' + Date.now());
-      if (!res.ok) return;
-      const settings = await res.json();
+      let settings = null;
+      try {
+        const res = await fetch('/api/settings?_t=' + Date.now());
+        const ct = res.headers.get('content-type') || '';
+        if (res.ok && ct.includes('application/json')) {
+          settings = await res.json();
+        }
+      } catch (_) {}
+
+      if (!settings && window.NassAPI && typeof window.NassAPI.getSettings === 'function') {
+        settings = await window.NassAPI.getSettings().catch(() => null);
+      }
+
+      if (!settings) return;
       window.NassSettings = settings;
 
       // Handle key aliases

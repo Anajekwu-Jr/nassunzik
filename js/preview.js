@@ -86,21 +86,58 @@
     openModal();
   }
 
-  function showPdf(pdfUrl, title = 'Course Material / Past Question (PDF)') {
+  let driveMaterialsMap = null;
+  let driveMapPromise = null;
+
+  function loadDriveMap() {
+    if (driveMaterialsMap) return Promise.resolve(driveMaterialsMap);
+    if (driveMapPromise) return driveMapPromise;
+    driveMapPromise = fetch('/data/drive_materials_map.json')
+      .then(r => (r.ok ? r.json() : {}))
+      .then(m => {
+        driveMaterialsMap = (m && typeof m === 'object') ? m : {};
+        return driveMaterialsMap;
+      })
+      .catch(() => ({}));
+    return driveMapPromise;
+  }
+
+  // Pre-warm map quietly
+  if (typeof window !== 'undefined') loadDriveMap();
+
+  async function resolvePdfUrls(pdfUrl) {
+    if (!pdfUrl || !pdfUrl.startsWith('/resources/materials/')) {
+      return { previewUrl: pdfUrl, downloadUrl: pdfUrl };
+    }
+    const cleanName = pdfUrl.split('?')[0].split('/').pop();
+    const map = await loadDriveMap();
+    const driveId = map && cleanName ? map[cleanName] : null;
+    if (!driveId) {
+      return { previewUrl: pdfUrl, downloadUrl: pdfUrl };
+    }
+    return {
+      previewUrl: `https://drive.google.com/file/d/${driveId}/preview`,
+      downloadUrl: `https://drive.google.com/uc?export=download&id=${driveId}`
+    };
+  }
+
+  async function showPdf(pdfUrl, title = 'Course Material / Past Question (PDF)') {
     ensureModal();
     modalTitle.textContent = title;
 
+    const { previewUrl, downloadUrl } = await resolvePdfUrls(pdfUrl);
+
     const downloadBtn = document.getElementById('nassPreviewDownload');
-    downloadBtn.href = pdfUrl;
+    downloadBtn.href = downloadUrl;
     downloadBtn.download = (title || 'document').toLowerCase().replace(/[^a-z0-9]/g, '_') + '.pdf';
     downloadBtn.style.display = 'inline-flex';
 
     modalBody.innerHTML = `
       <div style="width:100%; height:70vh; display:flex; flex-direction:column;">
-        <iframe src="${pdfUrl}#toolbar=1" style="width:100%; height:100%; border:1px solid var(--border-color); border-radius:4px; background:#fff;">
+        <iframe src="${previewUrl}#toolbar=1" style="width:100%; height:100%; border:1px solid var(--border-color); border-radius:4px; background:#fff;">
           <div style="text-align:center; padding:40px;">
             <p>Your browser does not support embedded PDF viewing.</p>
-            <a href="${pdfUrl}" target="_blank" class="btn btn-primary" download>Click to Download PDF Document</a>
+            <a href="${downloadUrl}" target="_blank" class="btn btn-primary" download>Click to Download PDF Document</a>
           </div>
         </iframe>
       </div>

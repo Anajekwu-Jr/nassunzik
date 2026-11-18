@@ -19,7 +19,10 @@ try {
   console.error('Error generating native app packages:', err);
 }
 
-// Run vite build first to compile React mobile app
+// Clean previous dist directory to prevent stale duplicate artifacts
+fs.rmSync(distDir, { recursive: true, force: true });
+
+// Run vite build first to compile React mobile app and copy public/* into dist/
 try {
   console.log('Building React mobile application with Vite...');
   execSync('npx vite build', { stdio: 'inherit' });
@@ -28,9 +31,10 @@ try {
 }
 
 // Copy all root HTML files (preserving Vite-compiled app.html)
+const SKIP_ROOT_HTML = new Set(['app.html', 'sample_profile_nau2436.html', 'unizik_statistics_page.html']);
 const rootFiles = fs.readdirSync(rootDir);
 for (const file of rootFiles) {
-  if ((file.endsWith('.html') && file !== 'app.html') || file === 'manifest.json' || file === 'sw.js' || file === 'favicon.ico' || file === 'metadata.json') {
+  if ((file.endsWith('.html') && !SKIP_ROOT_HTML.has(file)) || file === 'manifest.json' || file === 'sw.js' || file === 'favicon.ico' || file === 'metadata.json') {
     const src = path.join(rootDir, file);
     const dest = path.join(distDir, file);
     fs.copyFileSync(src, dest);
@@ -38,13 +42,14 @@ for (const file of rootFiles) {
   }
 }
 
-// Helper to copy directories recursively
+// Helper to copy directories recursively (skips nested APK/temp files inside resources)
 function copyDirSync(srcDir, destDir) {
   if (!fs.existsSync(srcDir)) return;
   fs.mkdirSync(destDir, { recursive: true });
   const entries = fs.readdirSync(srcDir, { withFileTypes: true });
 
   for (const entry of entries) {
+    if (entry.name === '.gitkeep' || entry.name.endsWith('.apk')) continue;
     const srcPath = path.join(srcDir, entry.name);
     const destPath = path.join(destDir, entry.name);
 
@@ -56,8 +61,8 @@ function copyDirSync(srcDir, destDir) {
   }
 }
 
-// Copy static asset directories
-const assetDirs = ['css', 'js', 'resources', 'uploads', 'data', 'public'];
+// Copy static asset directories once (Vite already copies public/* to dist root)
+const assetDirs = ['css', 'js', 'resources', 'uploads', 'data'];
 for (const dir of assetDirs) {
   const src = path.join(rootDir, dir);
   const dest = path.join(distDir, dir);
@@ -67,43 +72,47 @@ for (const dir of assetDirs) {
   }
 }
 
-// Ensure dist/downloads exists and contains all downloadable artifacts
-const distDownloads = path.join(distDir, 'downloads');
-fs.mkdirSync(distDownloads, { recursive: true });
-
-const publicDownloads = path.join(rootDir, 'public/downloads');
-if (fs.existsSync(publicDownloads)) {
-  copyDirSync(publicDownloads, distDownloads);
-  console.log('Copied all public/downloads to dist/downloads/');
-}
-
-// Copy APK binary to dist root and dist/downloads/
-if (fs.existsSync(path.join(rootDir, 'NASS_UNIZIK.apk'))) {
-  fs.copyFileSync(path.join(rootDir, 'NASS_UNIZIK.apk'), path.join(distDir, 'NASS_UNIZIK.apk'));
-  const distDownloads = path.join(distDir, 'downloads');
-  if (!fs.existsSync(distDownloads)) fs.mkdirSync(distDownloads, { recursive: true });
-  fs.copyFileSync(path.join(rootDir, 'NASS_UNIZIK.apk'), path.join(distDownloads, 'NASS_UNIZIK.apk'));
-  console.log('Copied NASS_UNIZIK.apk to dist/ and dist/downloads/');
-}
-
-// Copy iOS mobileconfig to dist root and dist/downloads/
-if (fs.existsSync(path.join(rootDir, 'NASS_UNIZIK.mobileconfig'))) {
-  fs.copyFileSync(path.join(rootDir, 'NASS_UNIZIK.mobileconfig'), path.join(distDir, 'NASS_UNIZIK.mobileconfig'));
-  const distDownloads = path.join(distDir, 'downloads');
-  if (!fs.existsSync(distDownloads)) fs.mkdirSync(distDownloads, { recursive: true });
-  fs.copyFileSync(path.join(rootDir, 'NASS_UNIZIK.mobileconfig'), path.join(distDownloads, 'NASS_UNIZIK.mobileconfig'));
-  console.log('Copied NASS_UNIZIK.mobileconfig to dist/ and dist/downloads/');
-}
-
-// Copy zip packages to dist root and dist/downloads/
-const zipNames = ['NASS_UNIZIK_Software_Package.zip', 'NASS_UNIZIK_App.zip'];
-for (const zipName of zipNames) {
-  const publicZip = path.join(publicDownloads, zipName);
-  if (fs.existsSync(publicZip)) {
-    fs.copyFileSync(publicZip, path.join(distDir, zipName));
-    fs.copyFileSync(publicZip, path.join(distDownloads, zipName));
-    console.log(`Copied ${zipName} to dist/ and dist/downloads/`);
+// Sanitize static portal_state_backup.json copy in dist/ so no private user hashes or server-only schedules are exposed publicly
+const distBackupPath = path.join(distDir, 'data', 'portal_state_backup.json');
+if (fs.existsSync(distBackupPath)) {
+  try {
+    const backupJson = JSON.parse(fs.readFileSync(distBackupPath, 'utf-8'));
+    delete backupJson.users;
+    delete backupJson.scheduled_notifications;
+    fs.writeFileSync(distBackupPath, JSON.stringify(backupJson));
+    console.log('Sanitized dist/data/portal_state_backup.json for public static hosting.');
+  } catch (err) {
+    console.warn('Warning sanitizing dist backup JSON:', err.message);
   }
 }
 
+// Verify Cloudflare Pages per-file limit (25 MiB = 26,214,400 bytes) & required routing files
+const CF_MAX_FILE_BYTES = 25 * 1024 * 1024;
+const oversizedFiles = [];
+function auditDistSizes(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      auditDistSizes(fullPath);
+    } else {
+      const size = fs.statSync(fullPath).size;
+      if (size > CF_MAX_FILE_BYTES) {
+        oversizedFiles.push({ path: path.relative(distDir, fullPath), mb: (size / (1024 * 1024)).toFixed(2) });
+      }
+    }
+  }
+}
+auditDistSizes(distDir);
+
+if (!fs.existsSync(path.join(distDir, '_redirects')) || !fs.existsSync(path.join(distDir, '_headers'))) {
+  throw new Error('Cloudflare Pages configuration missing: dist/_redirects or dist/_headers not found.');
+}
+
+if (oversizedFiles.length > 0) {
+  throw new Error(
+    `Cloudflare Pages 25 MiB per-file limit exceeded by: ${oversizedFiles.map(f => `${f.path} (${f.mb} MB)`).join(', ')}`
+  );
+}
+
+console.log('Cloudflare Pages audit passed: all dist/ files are under 25 MiB and _redirects/_headers are present.');
 console.log('Build completed successfully! Output directory "dist" is ready.');
