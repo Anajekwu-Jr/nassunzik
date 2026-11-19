@@ -181,8 +181,8 @@ PORT=3000
 3. **25 MiB File Size Compliance & Public Snapshot Sanitization**:
    - Large (>2.5 MB) course textbooks redirect to official Google Drive links (`data/drive_materials_map.json`).
    - `npm run build` automatically validates that every single file inside `dist/` is strictly under Cloudflare Pages' **25 MiB** per-file limit and strips admin user password hashes (`users`, `scheduled_notifications`) from `dist/data/portal_state_backup.json`.
-4. **GitHub Synchronization**:
-   - Push changes directly to the `main` branch (`git push origin main`). Cloudflare Pages will automatically run `npm run build` and deploy `dist/` without modifying existing Git history.
+4. **GitHub Synchronization & Lockfile (`bun.lock`)**:
+   - Push changes directly to the `main` branch (`git push origin main`). Cloudflare Pages runs `bun install --frozen-lockfile` automatically when `bun.lock` is present, so always commit the updated `bun.lock` alongside `package.json` (run `bun install` if dependencies change). Cloudflare Pages will then run `npm run build` and deploy `dist/` without modifying existing Git history.
 
 ### B. Local Development
 ```bash
